@@ -95,6 +95,7 @@ typedef enum {
     SGRP_BRIGHTNESS = 0,
     SGRP_SYSTEM,
     SGRP_TIMELAPSE,
+    SGRP_DRONE,
     SGRP_ZEROING,
     SGRP_COUNT,
 } SettingGroup;
@@ -103,6 +104,7 @@ static const char *setting_group_names[SGRP_COUNT] = {
     "BRIGHTNESS",
     "SYSTEM",
     "TIMELAPSE",
+    "DRONE MODE",
     "ZEROING",
 };
 
@@ -113,6 +115,10 @@ typedef enum {
     SETTING_LOGO_THEME,
     SETTING_TL_INTERVAL,
     SETTING_TL_STEPDIST,
+    SETTING_DRONE_ACCEL,
+    SETTING_DRONE_ACTDECEL,
+    SETTING_DRONE_RELDECEL,
+    SETTING_DRONE_COOLDOWN,
     SETTING_HOME_SET,
     SETTING_HOME_GO,
     SETTING_HOME_CLEAR,
@@ -140,19 +146,23 @@ typedef struct {
 } SettingDef;
 
 static SettingDef settings[SETTING_COUNT] = {
-    [SETTING_MTX_BRIGHTNESS] = { "Matrix",            "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 5,   5,   0,   100, 1,  true,  false },
-    [SETTING_BRIGHTNESS]     = { "Display",           "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 100, 100, 0,   100, 1,  false, false },
-    [SETTING_RUMBLE_MUTE]    = { "Rumble Mute",      "",   SGRP_SYSTEM,    STYPE_BOOL,      0,   0,   0,   1,   1,  true,  false },
-    [SETTING_LOGO_THEME]     = { "Logo Theme",       "",   SGRP_SYSTEM,    STYPE_BOOL,      0,   0,   0,   1,   1,  false, false },
-    [SETTING_TL_INTERVAL]    = { "Interval",         "s",  SGRP_TIMELAPSE, STYPE_INT_RANGE, 15,  15,  1,   99,  1,  true,  true  },
-    [SETTING_TL_STEPDIST]    = { "Step Dist",        "ms", SGRP_TIMELAPSE, STYPE_INT_RANGE, 100, 100, 20,  150, 10, true,  true  },
-    [SETTING_HOME_SET]       = { "Set Home",         "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
-    [SETTING_HOME_GO]        = { "Go Home",          "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
-    [SETTING_HOME_CLEAR]     = { "Clear Home",       "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
+    [SETTING_MTX_BRIGHTNESS] = { "Matrix",            "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 5,    5,    0,    100,  1,   true,  false },
+    [SETTING_BRIGHTNESS]     = { "Display",           "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 100,  100,  0,    100,  1,   false, false },
+    [SETTING_RUMBLE_MUTE]    = { "Rumble Mute",      "",   SGRP_SYSTEM,    STYPE_BOOL,      0,    0,    0,    1,    1,   true,  false },
+    [SETTING_LOGO_THEME]     = { "Logo Theme",       "",   SGRP_SYSTEM,    STYPE_BOOL,      0,    0,    0,    1,    1,   false, false },
+    [SETTING_TL_INTERVAL]    = { "Interval",         "s",  SGRP_TIMELAPSE, STYPE_INT_RANGE, 15,   15,   1,    99,   1,   true,  true  },
+    [SETTING_TL_STEPDIST]    = { "Step Dist",        "ms", SGRP_TIMELAPSE, STYPE_INT_RANGE, 100,  100,  20,   150,  10,  true,  true  },
+    [SETTING_DRONE_ACCEL]    = { "Ramp Up",          "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1100, 1100, 200,  3000, 100, true,  false },
+    [SETTING_DRONE_ACTDECEL] = { "Boost Decel",      "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1300, 1300, 200,  3000, 100, true,  false },
+    [SETTING_DRONE_RELDECEL] = { "Release Decel",    "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1100, 1100, 200,  3000, 100, true,  false },
+    [SETTING_DRONE_COOLDOWN] = { "Rev Cooldown",     "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1400, 1400, 200,  5000, 100, true,  false },
+    [SETTING_HOME_SET]       = { "Set Home",         "",   SGRP_ZEROING,   STYPE_ACTION,    0,    0,    0,    0,    0,   true,  false },
+    [SETTING_HOME_GO]        = { "Go Home",          "",   SGRP_ZEROING,   STYPE_ACTION,    0,    0,    0,    0,    0,   true,  false },
+    [SETTING_HOME_CLEAR]     = { "Clear Home",       "",   SGRP_ZEROING,   STYPE_ACTION,    0,    0,    0,    0,    0,   true,  false },
 };
 
 /* NVS keys for the 5 settings (short for 15-char NVS limit) */
-static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "tl_int", "tl_step", "h_set", "h_go", "h_clr" };
+static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "tl_int", "tl_step", "dr_accel", "dr_actdec", "dr_reldec", "dr_cooldown", "h_set", "h_go", "h_clr" };
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -263,7 +273,9 @@ static lv_obj_t *fl_icon_label          = NULL;
 static lv_obj_t *fl_status_text_label   = NULL;
 static lv_obj_t *fl_wp_num_label        = NULL;
 static lv_obj_t *fl_wp_word_label       = NULL;
-static lv_obj_t *fl_wp_squares[FL_WP_MAX_SQUARES];
+static lv_obj_t *fl_wp_squares[FL_WP_MAX_SQUARES]; /* used when total <= 8 */
+static lv_obj_t *fl_wp_bar              = NULL;  /* waypoint progress bar track (total > 8) */
+static lv_obj_t *fl_wp_bar_fill         = NULL;  /* waypoint progress bar fill  (total > 8) */
 static lv_obj_t *fl_divider_line        = NULL;
 static lv_obj_t *fl_prompt_label        = NULL;
 static lv_obj_t *fl_title_line_left     = NULL;
@@ -271,7 +283,7 @@ static lv_obj_t *fl_title_line_right    = NULL;
 static lv_obj_t *fl_capture_bar         = NULL;
 static lv_obj_t *fl_capture_fill        = NULL;
 #define FL_CAPTURE_BAR_W 520
-#define FL_CAPTURE_BAR_H 18
+#define FL_CAPTURE_BAR_H 72
 static lv_obj_t *settings_list_panel = NULL;
 static lv_obj_t *settings_editor_panel = NULL;
 static lv_obj_t *settings_confirm_panel = NULL;
@@ -331,16 +343,16 @@ static bool flowlapse_playback_active = false;
 #define DRONE_HORIZ_INDICATOR_OFFSET 60
 
 #define FLOWLAPSE_BAR_NORMAL_X 60
-#define FLOWLAPSE_BAR_NORMAL_Y 144
+#define FLOWLAPSE_BAR_NORMAL_Y 120
 #define FLOWLAPSE_BAR_NORMAL_W (LCD_H_RES - 120)
-#define FLOWLAPSE_BAR_NORMAL_H 36
+#define FLOWLAPSE_BAR_NORMAL_H 144
 
-#define FLOWLAPSE_LABEL_NORMAL_Y 148
+#define FLOWLAPSE_LABEL_NORMAL_Y (FLOWLAPSE_BAR_NORMAL_Y + ((FLOWLAPSE_BAR_NORMAL_H - 28) / 2))
 
 #define FLOWLAPSE_BAR_PLAYBACK_X 20
-#define FLOWLAPSE_BAR_PLAYBACK_Y 184
+#define FLOWLAPSE_BAR_PLAYBACK_Y 120
 #define FLOWLAPSE_BAR_PLAYBACK_W (LCD_H_RES - 40)
-#define FLOWLAPSE_BAR_PLAYBACK_H (FLOWLAPSE_BAR_NORMAL_H * 4)
+#define FLOWLAPSE_BAR_PLAYBACK_H FLOWLAPSE_BAR_NORMAL_H
 #define FLOWLAPSE_LABEL_PLAYBACK_Y (FLOWLAPSE_BAR_PLAYBACK_Y + ((FLOWLAPSE_BAR_PLAYBACK_H - 28) / 2))
 #define FLOWLAPSE_LABEL_PREVIEW_COMPLETE_Y (FLOWLAPSE_LABEL_PLAYBACK_Y - 20)
 #define FLOWLAPSE_SUBLABEL_PREVIEW_COMPLETE_Y (FLOWLAPSE_LABEL_PREVIEW_COMPLETE_Y + 52)
@@ -592,6 +604,18 @@ static void send_set_command(SettingId id)
         break;
     case SETTING_TL_STEPDIST:
         snprintf(cmd, sizeof(cmd), "SET:TL_STEP:%d\n", settings[id].value);
+        break;
+    case SETTING_DRONE_ACCEL:
+        snprintf(cmd, sizeof(cmd), "SET:DRONE_ACCEL:%d\n", settings[id].value);
+        break;
+    case SETTING_DRONE_ACTDECEL:
+        snprintf(cmd, sizeof(cmd), "SET:DRONE_ACTDECEL:%d\n", settings[id].value);
+        break;
+    case SETTING_DRONE_RELDECEL:
+        snprintf(cmd, sizeof(cmd), "SET:DRONE_RELDECEL:%d\n", settings[id].value);
+        break;
+    case SETTING_DRONE_COOLDOWN:
+        snprintf(cmd, sizeof(cmd), "SET:DRONE_COOLDOWN:%d\n", settings[id].value);
         break;
     case SETTING_RUMBLE_MUTE:
         snprintf(cmd, sizeof(cmd), "SET:RUMBLE_MUTE:%d\n", settings[id].value);
@@ -2304,6 +2328,8 @@ static void refresh_flowlapse_card(void)
     if (fl_divider_line)  lv_obj_add_flag(fl_divider_line,  LV_OBJ_FLAG_HIDDEN);
     if (fl_prompt_label)  lv_obj_add_flag(fl_prompt_label,  LV_OBJ_FLAG_HIDDEN);
     if (fl_capture_bar)   lv_obj_add_flag(fl_capture_bar,   LV_OBJ_FLAG_HIDDEN);
+    if (fl_wp_bar)        lv_obj_add_flag(fl_wp_bar,        LV_OBJ_FLAG_HIDDEN);
+    if (fl_wp_bar_fill)   lv_obj_add_flag(fl_wp_bar_fill,   LV_OBJ_FLAG_HIDDEN);
     for (int i = 0; i < FL_WP_MAX_SQUARES; i++) {
         if (fl_wp_squares[i]) lv_obj_add_flag(fl_wp_squares[i], LV_OBJ_FLAG_HIDDEN);
     }
@@ -2373,7 +2399,9 @@ static void refresh_flowlapse_card(void)
     }
     if (fl_status_text_label) lv_label_set_text(fl_status_text_label, display_text);
 
-    /* Waypoint count + progress squares */
+    /* Waypoint count + progress indicator:
+     * <= 8 waypoints: individual squares (original style, larger & more readable)
+     * >  8 waypoints: continuous progress bar capped within card width */
     if (flowlapse_waypoint_total > 0) {
         if (fl_wp_num_label) {
             char wp_text[16];
@@ -2386,23 +2414,39 @@ static void refresh_flowlapse_card(void)
 
         int total      = flowlapse_waypoint_total;
         int current_wp = flowlapse_waypoint_current;
-        int sq_total_w = total * 46 + (total > 1 ? (total - 1) * 8 : 0);
-        int sq_x_start = (LCD_H_RES - sq_total_w) / 2;
-        lv_color_t filled_col  = lv_color_make(240, 180, 0);
-        lv_color_t empty_col   = lv_color_make(35,  35,  40);
-        lv_color_t border_col  = lv_color_make(100, 100, 100);
-        for (int i = 0; i < FL_WP_MAX_SQUARES; i++) {
-            if (!fl_wp_squares[i]) continue;
-            if (i >= total) {
-                lv_obj_add_flag(fl_wp_squares[i], LV_OBJ_FLAG_HIDDEN);
-            } else {
-                lv_obj_set_x(fl_wp_squares[i], sq_x_start + i * 54);
-                bool is_filled = (i < current_wp);
-                lv_obj_set_style_bg_color(fl_wp_squares[i],
-                    is_filled ? filled_col : empty_col, LV_PART_MAIN);
-                lv_obj_set_style_border_color(fl_wp_squares[i],
-                    is_filled ? filled_col : border_col, LV_PART_MAIN);
-                lv_obj_clear_flag(fl_wp_squares[i], LV_OBJ_FLAG_HIDDEN);
+
+        if (total <= FL_WP_MAX_SQUARES) {
+            /* Squares mode */
+            int sq_total_w = total * 46 + (total > 1 ? (total - 1) * 8 : 0);
+            int sq_x_start = (LCD_H_RES - sq_total_w) / 2;
+            lv_color_t filled_col  = lv_color_make(240, 180, 0);
+            lv_color_t empty_col   = lv_color_make(35,  35,  40);
+            lv_color_t border_col  = lv_color_make(100, 100, 100);
+            for (int i = 0; i < FL_WP_MAX_SQUARES; i++) {
+                if (!fl_wp_squares[i]) continue;
+                if (i >= total) {
+                    lv_obj_add_flag(fl_wp_squares[i], LV_OBJ_FLAG_HIDDEN);
+                } else {
+                    lv_obj_set_x(fl_wp_squares[i], sq_x_start + i * 54);
+                    bool is_filled = (i < current_wp);
+                    lv_obj_set_style_bg_color(fl_wp_squares[i],
+                        is_filled ? filled_col : empty_col, LV_PART_MAIN);
+                    lv_obj_set_style_border_color(fl_wp_squares[i],
+                        is_filled ? filled_col : border_col, LV_PART_MAIN);
+                    lv_obj_clear_flag(fl_wp_squares[i], LV_OBJ_FLAG_HIDDEN);
+                }
+            }
+        } else {
+            /* Progress bar mode */
+            if (fl_wp_bar) lv_obj_clear_flag(fl_wp_bar, LV_OBJ_FLAG_HIDDEN);
+            if (fl_wp_bar_fill) {
+                int fill_w = (current_wp > 0) ? (520 * current_wp / total) : 0;
+                lv_obj_set_width(fl_wp_bar_fill, fill_w);
+                if (fill_w > 0) {
+                    lv_obj_clear_flag(fl_wp_bar_fill, LV_OBJ_FLAG_HIDDEN);
+                } else {
+                    lv_obj_add_flag(fl_wp_bar_fill, LV_OBJ_FLAG_HIDDEN);
+                }
             }
         }
     }
@@ -3224,15 +3268,9 @@ static void status_uart_task(void *arg)
                             msg = "TILT SOLO\nDOWN";
                         } else if (strcmp(control, "L3_WAYPOINT_RECORD") == 0) {
                             int next_current = flowlapse_waypoint_current + 1;
-                            int total = flowlapse_waypoint_total;
-                            if (total <= 0) {
-                                total = 8;
-                            }
-                            if (next_current > total) {
-                                next_current = total;
-                            }
+                            /* Total always equals the new recorded count — no upper limit shown */
                             flowlapse_waypoint_indicator_active = true;
-                            set_flowlapse_waypoint_count(next_current, total);
+                            set_flowlapse_waypoint_count(next_current, next_current);
                         } else if (strcmp(control, "L3_BOUNCE_ENDPOINT") == 0) {
                             msg = "L3\nBOUNCE\nENDPOINT SET";
                         }
@@ -3266,6 +3304,12 @@ static void status_uart_task(void *arg)
                         } else if (strncmp(mode_msg, "DRONE", 5) == 0) {
                             if (current_display_mode != DISPLAY_MODE_DRONE)
                                 switch_display_mode(DISPLAY_MODE_DRONE, NULL, now_ms);
+                        } else if (strncmp(mode_msg, "FLOWLAPSE", 9) == 0) {
+                            /* Capture running — stay in drone mode, ensure drone UI visible
+                             * so the red waypoint indicator shows and counts down on return */
+                            if (current_display_mode != DISPLAY_MODE_DRONE)
+                                switch_display_mode(DISPLAY_MODE_DRONE, NULL, now_ms);
+                            set_drone_mode_visible(true);
                         } else if (strncmp(mode_msg, "TIMELAPSE", 9) == 0) {
                             int variant = 0;
                             sscanf(mode_msg + 9, " %d", &variant);
@@ -3335,10 +3379,6 @@ static void status_uart_task(void *arg)
                     int waypoint_total = 0;
                     if (sscanf(line, "WAYPOINT_COUNT:%d/%d", &waypoint_current, &waypoint_total) == 2) {
                         set_flowlapse_waypoint_count(waypoint_current, waypoint_total);
-                        flowlapse_waypoint_indicator_active = (waypoint_current > 0);
-                        if (!flowlapse_waypoint_indicator_active) {
-                            set_flowlapse_status(false, "FLOWLAPSE READY");
-                        }
                     }
                     xSemaphoreGive(lvgl_mux);
                 }
@@ -3347,7 +3387,6 @@ static void status_uart_task(void *arg)
                     int waypoint_current = 0;
                     int waypoint_total = 0;
                     if (sscanf(line, "PREVIEW_WAYPOINT:%d/%d", &waypoint_current, &waypoint_total) == 2) {
-                        flowlapse_waypoint_indicator_active = true;
                         set_flowlapse_waypoint_count(waypoint_current, waypoint_total);
                         set_flowlapse_status(true, "FLOWLAPSE PREVIEW");
                     }
@@ -3378,9 +3417,6 @@ static void status_uart_task(void *arg)
                     if (sscanf(line, "Flowlapse: waypoint recorded %d/%d", &waypoint_current, &waypoint_total) == 2) {
                         flowlapse_waypoint_indicator_active = true;
                         set_flowlapse_waypoint_count(waypoint_current, waypoint_total);
-                        if (current_display_mode == DISPLAY_MODE_DRONE) {
-                            lv_obj_clear_flag(drone_flowlapse_waypoint_label, LV_OBJ_FLAG_HIDDEN);
-                        }
                     }
                     xSemaphoreGive(lvgl_mux);
                 }
@@ -3416,19 +3452,22 @@ static void status_uart_task(void *arg)
                         set_flowlapse_status(false, "FLOWLAPSE READY");
                     } else if (strstr(line, "returning to waypoint 1") != NULL) {
                         flowlapse_playback_active = true;
+                        flowlapse_waypoint_indicator_active = false;
                         set_flowlapse_status(true, "RETURNING TO WP 1");
                     } else if (strstr(line, "return to waypoint 1 complete") != NULL) {
                         flowlapse_playback_active = false;
+                        flowlapse_waypoint_indicator_active = false;
                         set_flowlapse_status(true, "AT WP 1 - PRESS START");
                     } else if (strstr(line, "preview started") != NULL) {
                         flowlapse_playback_active = true;
-                        flowlapse_waypoint_indicator_active = true;
                         set_flowlapse_status(true, "FLOWLAPSE PREVIEW");
                     } else if (strstr(line, "preview complete") != NULL) {
                         flowlapse_playback_active = false;
+                        flowlapse_waypoint_indicator_active = false;
                         set_flowlapse_status(true, "PREVIEW COMPLETE press START to run capture");
                     } else if (strstr(line, "capture run started") != NULL) {
                         flowlapse_playback_active = true;
+                        flowlapse_waypoint_indicator_active = false;
                         set_flowlapse_status(true, "FLOWLAPSE CAPTURE");
                         set_flowlapse_progress(0);
                     } else if (strstr(line, "capture paused") != NULL) {
@@ -3996,8 +4035,8 @@ void app_main(void)
     lv_obj_set_size(drone_flowlapse_fill, 0, FLOWLAPSE_BAR_NORMAL_H - 6);
     lv_obj_set_pos(drone_flowlapse_fill, 3, 3);
     lv_obj_set_style_radius(drone_flowlapse_fill, 4, LV_PART_MAIN);
-    lv_obj_set_style_bg_color(drone_flowlapse_fill, lv_color_make(50, 0, 120), LV_PART_MAIN);
-    lv_obj_set_style_bg_grad_color(drone_flowlapse_fill, lv_color_make(140, 40, 255), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(drone_flowlapse_fill, lv_color_make(130, 0, 160), LV_PART_MAIN);
+    lv_obj_set_style_bg_grad_color(drone_flowlapse_fill, lv_color_make(200, 40, 255), LV_PART_MAIN);
     lv_obj_set_style_bg_grad_dir(drone_flowlapse_fill, LV_GRAD_DIR_HOR, LV_PART_MAIN);
     lv_obj_set_style_bg_opa(drone_flowlapse_fill, LV_OPA_COVER, LV_PART_MAIN);
 
@@ -4029,13 +4068,13 @@ void app_main(void)
 
     /* ================================================================
      * Flowlapse status card — reference-style full-screen panel
-     * Screen: 600 x 450.  Card: x=20 y=58 w=560 h=265
+     * Screen: 600 x 450.  Card: x=20 y=58 w=560 h=315
      * ================================================================ */
 
     /* Background card */
     flowlapse_status_card = lv_obj_create(lv_scr_act());
     lv_obj_remove_style_all(flowlapse_status_card);
-    lv_obj_set_size(flowlapse_status_card, 560, 265);
+    lv_obj_set_size(flowlapse_status_card, 560, 315);
     lv_obj_set_pos(flowlapse_status_card, 20, 58);
     lv_obj_set_style_radius(flowlapse_status_card, 10, LV_PART_MAIN);
     lv_obj_set_style_border_width(flowlapse_status_card, 2, LV_PART_MAIN);
@@ -4095,7 +4134,7 @@ void app_main(void)
     lv_obj_set_pos(fl_wp_word_label, 298, 208);
     lv_obj_add_flag(fl_wp_word_label, LV_OBJ_FLAG_HIDDEN);
 
-    /* Progress squares — 8 max, 46 x 20 px each, 8 px gap, centred at y=254 */
+    /* Progress squares (used when total <= 8) — 46×20 px each, 8 px gap, centred at y=254 */
     for (int i = 0; i < FL_WP_MAX_SQUARES; i++) {
         fl_wp_squares[i] = lv_obj_create(lv_scr_act());
         lv_obj_remove_style_all(fl_wp_squares[i]);
@@ -4108,6 +4147,29 @@ void app_main(void)
         lv_obj_set_style_border_color(fl_wp_squares[i], lv_color_make(100, 100, 100), LV_PART_MAIN);
         lv_obj_add_flag(fl_wp_squares[i], LV_OBJ_FLAG_HIDDEN);
     }
+
+    /* Progress bar (used when total > 8) — x=40 y=252 w=520 h=10, fits inside card */
+    fl_wp_bar = lv_obj_create(lv_scr_act());
+    lv_obj_remove_style_all(fl_wp_bar);
+    lv_obj_set_size(fl_wp_bar, 520, 40);
+    lv_obj_set_pos(fl_wp_bar, 40, 245);
+    lv_obj_set_style_radius(fl_wp_bar, 6, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(fl_wp_bar, lv_color_make(35, 35, 40), LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(fl_wp_bar, LV_OPA_COVER, LV_PART_MAIN);
+    lv_obj_set_style_border_width(fl_wp_bar, 1, LV_PART_MAIN);
+    lv_obj_set_style_border_color(fl_wp_bar, lv_color_make(80, 80, 80), LV_PART_MAIN);
+    lv_obj_add_flag(fl_wp_bar, LV_OBJ_FLAG_HIDDEN);
+
+    fl_wp_bar_fill = lv_obj_create(lv_scr_act());
+    lv_obj_remove_style_all(fl_wp_bar_fill);
+    lv_obj_set_size(fl_wp_bar_fill, 0, 40);
+    lv_obj_set_pos(fl_wp_bar_fill, 40, 245);
+    lv_obj_set_style_radius(fl_wp_bar_fill, 6, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(fl_wp_bar_fill, lv_color_make(130, 0, 180), LV_PART_MAIN);
+    lv_obj_set_style_bg_grad_color(fl_wp_bar_fill, lv_color_make(200, 40, 255), LV_PART_MAIN);
+    lv_obj_set_style_bg_grad_dir(fl_wp_bar_fill, LV_GRAD_DIR_HOR, LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(fl_wp_bar_fill, LV_OPA_COVER, LV_PART_MAIN);
+    lv_obj_add_flag(fl_wp_bar_fill, LV_OBJ_FLAG_HIDDEN);
 
     /* Horizontal divider above prompt */
     fl_divider_line = lv_obj_create(lv_scr_act());
@@ -4163,8 +4225,8 @@ void app_main(void)
     lv_obj_set_size(fl_capture_fill, 0, FL_CAPTURE_BAR_H - 6);
     lv_obj_set_pos(fl_capture_fill, 3, 3);
     lv_obj_set_style_radius(fl_capture_fill, 3, LV_PART_MAIN);
-    lv_obj_set_style_bg_color(fl_capture_fill, lv_color_make(0, 130, 180), LV_PART_MAIN);
-    lv_obj_set_style_bg_grad_color(fl_capture_fill, lv_color_make(0, 210, 210), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(fl_capture_fill, lv_color_make(130, 0, 180), LV_PART_MAIN);
+    lv_obj_set_style_bg_grad_color(fl_capture_fill, lv_color_make(200, 40, 255), LV_PART_MAIN);
     lv_obj_set_style_bg_grad_dir(fl_capture_fill, LV_GRAD_DIR_HOR, LV_PART_MAIN);
     lv_obj_set_style_bg_opa(fl_capture_fill, LV_OPA_COVER, LV_PART_MAIN);
 

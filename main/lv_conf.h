@@ -17,7 +17,7 @@
 
 /* Memory */
 #define LV_MEM_CUSTOM 0
-#define LV_MEM_SIZE (48U * 1024U)
+#define LV_MEM_SIZE (72U * 1024U)
 #define LV_MEM_ADR 0
 #define LV_MEM_POOL_INCLUDE <stdlib.h>
 #define LV_MEM_POOL_ALLOC malloc
