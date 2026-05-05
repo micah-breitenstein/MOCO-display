@@ -61,7 +61,7 @@ static const char *TAG = "RIG";
 
 #define LVGL_TICK_PERIOD_MS 2
 #define LVGL_TASK_MAX_DELAY_MS 10
-#define LVGL_TASK_STACK_SIZE (6 * 1024)
+#define LVGL_TASK_STACK_SIZE (10 * 1024)
 #define LVGL_TASK_PRIORITY 2
 #define LVGL_BUF_HEIGHT (LCD_V_RES / 10)
 #define TEST_FORCE_CONTROLLER_ERROR 0
@@ -3738,11 +3738,15 @@ void app_main(void)
     ESP_ERROR_CHECK(uart_driver_install(STATUS_UART_PORT, STATUS_UART_BUF_SIZE, 0, 0, NULL, 0));
     ESP_ERROR_CHECK(uart_param_config(STATUS_UART_PORT, &uart_cfg));
     ESP_ERROR_CHECK(uart_set_pin(STATUS_UART_PORT, STATUS_UART_TX_PIN, STATUS_UART_RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
-    xTaskCreatePinnedToCore(status_uart_task, "status_uart", 4096, NULL, 3, NULL, 1);
+    xTaskCreatePinnedToCore(status_uart_task, "status_uart", 6144, NULL, 3, NULL, 1);
 
-    /* Push boot-time matrix brightness to hardware now that UART is ready. */
+    /* Push boot-time settings to Mega now that UART is ready. */
     vTaskDelay(pdMS_TO_TICKS(200));
     send_set_command(SETTING_MTX_BRIGHTNESS);
+    send_set_command(SETTING_DRONE_ACCEL);
+    send_set_command(SETTING_DRONE_ACTDECEL);
+    send_set_command(SETTING_DRONE_RELDECEL);
+    send_set_command(SETTING_DRONE_COOLDOWN);
 
     /* I2C for touch */
     const i2c_config_t i2c_conf = {
