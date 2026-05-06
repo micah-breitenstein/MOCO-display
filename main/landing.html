@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MOCO Jib</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+header{background:#111;border-bottom:2px solid #e87700;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.brand{font-size:1.25em;font-weight:700;color:#ff9000;letter-spacing:4px}
+.conn{display:flex;align-items:center;gap:8px;font-size:0.75em;color:#888}
+.dot{width:9px;height:9px;border-radius:50%;background:#333;transition:background .4s,box-shadow .4s}
+.dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
+#log{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:1px}
+.ev{display:flex;gap:12px;font-size:0.82em;padding:4px 0;border-bottom:1px solid #181818}
+.ts{color:#444;white-space:nowrap;flex-shrink:0}
+.msg{word-break:break-word}
+.msg.sys{color:#ffa040}
+.msg.evt{color:#b0d4b0}
+footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0.7em;color:#444;flex-shrink:0}
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">MOCO JIB</span>
+  <div class="conn">
+    <div class="dot" id="dot"></div>
+    <span id="status">Connecting&hellip;</span>
+  </div>
+</header>
+<div id="log"></div>
+<footer>192.168.4.1 &nbsp;&bull;&nbsp; MOCO Jib Console</footer>
+<script>
+(function(){
+  var ws,rt,log=document.getElementById('log'),dot=document.getElementById('dot'),st=document.getElementById('status');
+  function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
+  function row(msg,cls){
+    var el=document.createElement('div');el.className='ev';
+    el.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'evt')+'">'+String(msg).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>';
+    log.appendChild(el);
+    if(log.children.length>500)log.removeChild(log.firstChild);
+    log.scrollTop=log.scrollHeight;
+  }
+  function connect(){
+    clearTimeout(rt);
+    ws=new WebSocket('ws://'+location.host+'/ws');
+    ws.onopen=function(){dot.className='dot live';st.textContent='Live';row('Console connected','sys')};
+    ws.onmessage=function(e){row(e.data)};
+    ws.onclose=function(){dot.className='dot';st.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000)};
+    ws.onerror=function(){ws.close()};
+  }
+  connect();
+})();
+</script>
+</body>
+</html>

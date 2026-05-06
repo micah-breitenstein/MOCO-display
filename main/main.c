@@ -20,6 +20,7 @@
 #include "driver/i2c.h"
 #include "nvs.h"
 #include "nvs_flash.h"
+#include "web_console.h"
 
 extern const lv_font_t lv_font_montserrat_150;
 extern const lv_font_t lv_font_montserrat_120;
@@ -525,6 +526,7 @@ static void apply_night_mode(void)
         /* Update stored values so UI reflects actual hardware state */
         settings[SETTING_BRIGHTNESS].value = 10;
         settings[SETTING_MTX_BRIGHTNESS].value = 0;
+        web_console_log_event("Night Mode: ON");
     } else {
         /* Restore display to 100%, matrix to its saved value */
         settings[SETTING_BRIGHTNESS].value = 100;
@@ -532,6 +534,7 @@ static void apply_night_mode(void)
             settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
         }
         night_saved_mtx = -1;
+        web_console_log_event("Night Mode: OFF");
     }
     /* Apply display brightness */
     if (panel_io_global) {
@@ -660,12 +663,15 @@ static void send_set_command(SettingId id)
         break;
     case SETTING_HOME_SET:
         snprintf(cmd, sizeof(cmd), "SET:HOME_SET:1\n");
+        web_console_log_event("Home: Set");
         break;
     case SETTING_HOME_GO:
         snprintf(cmd, sizeof(cmd), "SET:HOME_GO:1\n");
+        web_console_log_event("Home: Go");
         break;
     case SETTING_HOME_CLEAR:
         snprintf(cmd, sizeof(cmd), "SET:HOME_CLEAR:1\n");
+        web_console_log_event("Home: Cleared");
         break;
     default:
         return;
@@ -890,6 +896,7 @@ static void handle_settings_nav(const char *nav_cmd)
             /* Notify MEGA to rumble */
             const char *saved_cmd = "SETTINGS_SAVED\n";
             uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
+            web_console_log_event("Settings saved");
             close_editor();
         } else if (strcmp(nav_cmd, "BACK") == 0) {
             controller_hold_start_us = 0;  /* Reset on BACK */
@@ -1251,6 +1258,7 @@ static void editor_save_cb(lv_event_t *e)
     /* Notify MEGA to rumble */
     const char *saved_cmd = "SETTINGS_SAVED\n";
     uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
+    web_console_log_event("Settings saved");
     clear_confirm_dialog_state();
     close_editor();
 }
@@ -3051,6 +3059,20 @@ static void switch_display_mode(DisplayMode mode, const char *detail_msg, uint64
     current_display_mode = mode;
     set_drone_mode_visible(false);
 
+    /* Log mode transitions to web console */
+    {
+        const char *mn = (mode == DISPLAY_MODE_DRONE)     ? "Drone Mode"  :
+                         (mode == DISPLAY_MODE_TIMELAPSE) ? "Timelapse"   :
+                         (mode == DISPLAY_MODE_BOUNCE)    ? "Bounce"      :
+                         (mode == DISPLAY_MODE_ERROR)     ? "Error"       :
+                         (mode == DISPLAY_MODE_MANUAL)    ? "Manual"      : "Unknown";
+        if (mode != previous_mode) {
+            char _buf[64];
+            snprintf(_buf, sizeof(_buf), "Mode: %s", mn);
+            web_console_log_event(_buf);
+        }
+    }
+
     if (mode == DISPLAY_MODE_ERROR) {
         mode_message_active = false;
         restore_mode_after_message = false;
@@ -3725,9 +3747,13 @@ void app_main(void)
     }
     load_settings_from_nvs();
 
+    /* WiFi AP + web event console */
+    web_console_init();
+
     /* Always reset matrix brightness to 5% on boot (UI and hardware stay in sync). */
     settings[SETTING_MTX_BRIGHTNESS].value = 5;
     save_setting_to_nvs(SETTING_MTX_BRIGHTNESS);
+    web_console_log_event("MOCO Jib booted");
 
     static lv_disp_drv_t disp_drv;
 
