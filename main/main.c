@@ -3059,10 +3059,27 @@ static void switch_display_mode(DisplayMode mode, const char *detail_msg, uint64
     current_display_mode = mode;
     set_drone_mode_visible(false);
 
-    /* Log mode transitions to web console */
+    /* Log mode transitions to web console — debounce: skip if same mode+detail
+     * fired again within 400 ms to suppress bursts from rapid UART messages. */
     {
+        static DisplayMode  _last_log_mode   = -1;
+        static char         _last_log_detail[48] = "";
+        static int64_t      _last_log_us     = 0;
+        int64_t _now_us = esp_timer_get_time();
         bool is_variant_mode = (mode == DISPLAY_MODE_BOUNCE || mode == DISPLAY_MODE_TIMELAPSE);
-        if (mode != previous_mode || is_variant_mode) {
+        /* Build candidate detail string for comparison */
+        char _cmp_detail[48] = "";
+        if (is_variant_mode && detail_msg && detail_msg[0]) {
+            strncpy(_cmp_detail, detail_msg, sizeof(_cmp_detail) - 1);
+            _cmp_detail[sizeof(_cmp_detail) - 1] = '\0';
+        }
+        bool same_as_last = (mode == _last_log_mode) &&
+                            (strcmp(_cmp_detail, _last_log_detail) == 0);
+        bool too_soon     = (_now_us - _last_log_us) < 400000LL; /* 400 ms */
+        if (!(same_as_last && too_soon) && (mode != previous_mode || is_variant_mode)) {
+            _last_log_mode = mode;
+            strncpy(_last_log_detail, _cmp_detail, sizeof(_last_log_detail));
+            _last_log_us = _now_us;
             char _buf[80];
             if (is_variant_mode && detail_msg && detail_msg[0]) {
                 /* Collapse newlines in detail for single-line log entry */

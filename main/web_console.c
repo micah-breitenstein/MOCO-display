@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "esp_timer.h"
+
 #include "esp_err.h"
 #include "esp_event.h"
 #include "esp_http_server.h"
@@ -224,7 +226,14 @@ void web_console_init(void)
 void web_console_log_event(const char *msg)
 {
     if (!s_eq || !msg) return;
+    /* Prepend ESP32 uptime HH:MM:SS so browser shows when the event
+     * actually occurred, not when the browser received the WS frame. */
+    uint64_t us   = (uint64_t)esp_timer_get_time();
+    uint32_t secs = (uint32_t)(us / 1000000ULL);
+    uint32_t hh   = secs / 3600;
+    uint32_t mm   = (secs % 3600) / 60;
+    uint32_t ss   = secs % 60;
     char buf[EVENT_MSG_LEN];
-    snprintf(buf, sizeof(buf), "%s", msg);
+    snprintf(buf, sizeof(buf), "%02lu:%02lu:%02lu %s", (unsigned long)hh, (unsigned long)mm, (unsigned long)ss, msg);
     xQueueSendToBack(s_eq, buf, 0);   /* non-blocking; drops if full */
 }

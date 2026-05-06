@@ -34,10 +34,10 @@ footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0
 <script>
 (function(){
   var ws,rt,log=document.getElementById('log'),dot=document.getElementById('dot'),st=document.getElementById('status');
-  function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
-  function row(msg,cls){
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function row(msg,cls,ts){
     var el=document.createElement('div');el.className='ev';
-    el.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'evt')+'">'+String(msg).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>';
+    el.innerHTML='<span class="ts">'+(ts||'--:--:--')+'</span><span class="msg '+(cls||'evt')+'">'+esc(msg)+'</span>';
     log.appendChild(el);
     if(log.children.length>500)log.removeChild(log.firstChild);
     log.scrollTop=log.scrollHeight;
@@ -46,7 +46,11 @@ footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0
     clearTimeout(rt);
     ws=new WebSocket('ws://'+location.host+'/ws');
     ws.onopen=function(){dot.className='dot live';st.textContent='Live';row('Console connected','sys')};
-    ws.onmessage=function(e){row(e.data)};
+    ws.onmessage=function(e){
+      /* Messages are prefixed with HH:MM:SS from ESP32 uptime */
+      var m=e.data.match(/^(\d{2}:\d{2}:\d{2}) ([\s\S]*)$/);
+      if(m)row(m[2],'evt',m[1]);else row(e.data);
+    };
     ws.onclose=function(){dot.className='dot';st.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000)};
     ws.onerror=function(){ws.close()};
   }
