@@ -3747,13 +3747,9 @@ void app_main(void)
     }
     load_settings_from_nvs();
 
-    /* WiFi AP + web event console */
-    web_console_init();
-
     /* Always reset matrix brightness to 5% on boot (UI and hardware stay in sync). */
     settings[SETTING_MTX_BRIGHTNESS].value = 5;
     save_setting_to_nvs(SETTING_MTX_BRIGHTNESS);
-    web_console_log_event("MOCO Jib booted");
 
     static lv_disp_drv_t disp_drv;
 
@@ -3804,6 +3800,9 @@ void app_main(void)
     /* Kill the default theme so it never injects styles into our objects */
     lv_disp_set_theme(disp, NULL);
 
+    /* WiFi AP + web event console — started AFTER DMA buffers are allocated */
+    web_console_init();
+
     /* Touch input device */
     static lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);
@@ -3843,6 +3842,7 @@ void app_main(void)
     send_set_command(SETTING_DRONE_ACTDECEL);
     send_set_command(SETTING_DRONE_RELDECEL);
     send_set_command(SETTING_DRONE_COOLDOWN);
+    web_console_log_event("MOCO Jib booted");
 
     /* I2C for touch */
     const i2c_config_t i2c_conf = {
