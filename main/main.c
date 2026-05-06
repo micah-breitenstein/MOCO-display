@@ -1090,10 +1090,16 @@ static void editor_dec_cb(lv_event_t *e)
     editor_value_pop();
     if (!s->mega_backed) {
         save_setting_to_nvs(editor_setting_id);
-        if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
+        if (editor_setting_id == SETTING_BRIGHTNESS) {
+            /* Changing display brightness explicitly deactivates night mode */
+            settings[SETTING_NIGHT_MODE].value = 0;
+            apply_brightness();
+        }
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
         if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
+        /* Changing matrix brightness explicitly deactivates night mode */
+        settings[SETTING_NIGHT_MODE].value = 0;
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
@@ -1116,10 +1122,16 @@ static void editor_inc_cb(lv_event_t *e)
     editor_value_pop();
     if (!s->mega_backed) {
         save_setting_to_nvs(editor_setting_id);
-        if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
+        if (editor_setting_id == SETTING_BRIGHTNESS) {
+            /* Changing display brightness explicitly deactivates night mode */
+            settings[SETTING_NIGHT_MODE].value = 0;
+            apply_brightness();
+        }
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
         if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
+        /* Changing matrix brightness explicitly deactivates night mode */
+        settings[SETTING_NIGHT_MODE].value = 0;
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
@@ -2029,6 +2041,8 @@ static void close_settings_menu(void)
         settings[editor_setting_id].value = editor_original_value;
         if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
+        if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
+        if (editor_setting_id == SETTING_MTX_BRIGHTNESS) send_set_command(editor_setting_id);
     }
     settings_visible = false;
     editor_visible = false;
