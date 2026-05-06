@@ -111,6 +111,7 @@ static const char *setting_group_names[SGRP_COUNT] = {
 typedef enum {
     SETTING_MTX_BRIGHTNESS = 0,
     SETTING_BRIGHTNESS,
+    SETTING_NIGHT_MODE,
     SETTING_RUMBLE_MUTE,
     SETTING_LOGO_THEME,
     SETTING_TL_INTERVAL,
@@ -148,6 +149,7 @@ typedef struct {
 static SettingDef settings[SETTING_COUNT] = {
     [SETTING_MTX_BRIGHTNESS] = { "Matrix",            "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 5,    5,    0,    100,  1,   true,  false },
     [SETTING_BRIGHTNESS]     = { "Display",           "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 100,  100,  0,    100,  1,   false, false },
+    [SETTING_NIGHT_MODE]     = { "Night Mode",        "",  SGRP_BRIGHTNESS, STYPE_BOOL,      0,    0,    0,    1,    1,   false, false },
     [SETTING_RUMBLE_MUTE]    = { "Rumble Mute",      "",   SGRP_SYSTEM,    STYPE_BOOL,      0,    0,    0,    1,    1,   true,  false },
     [SETTING_LOGO_THEME]     = { "Logo Theme",       "",   SGRP_SYSTEM,    STYPE_BOOL,      0,    0,    0,    1,    1,   false, false },
     [SETTING_TL_INTERVAL]    = { "Interval",         "s",  SGRP_TIMELAPSE, STYPE_INT_RANGE, 15,   15,   1,    99,   1,   true,  true  },
@@ -162,7 +164,7 @@ static SettingDef settings[SETTING_COUNT] = {
 };
 
 /* NVS keys for the 5 settings (short for 15-char NVS limit) */
-static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "tl_int", "tl_step", "dr_accel", "dr_actdec", "dr_reldec", "dr_cooldown", "h_set", "h_go", "h_clr" };
+static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "night", "r_mute", "theme", "tl_int", "tl_step", "dr_accel", "dr_actdec", "dr_reldec", "dr_cooldown", "h_set", "h_go", "h_clr" };
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -509,6 +511,25 @@ static void apply_brightness(void)
     uint8_t level = (uint8_t)((pct * 255) / 100);
     uint32_t lcd_cmd = ((uint32_t)LCD_QSPI_WRITE_CMD << 24) | ((uint32_t)0x51 << 8);
     esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
+}
+
+static void apply_night_mode(void)
+{
+    bool active = (settings[SETTING_NIGHT_MODE].value != 0);
+    /* Display brightness: 10% when on, restore to display setting when off */
+    if (panel_io_global) {
+        int pct = active ? 10 : settings[SETTING_BRIGHTNESS].value;
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+        uint8_t level = (uint8_t)((pct * 255) / 100);
+        uint32_t lcd_cmd = ((uint32_t)LCD_QSPI_WRITE_CMD << 24) | ((uint32_t)0x51 << 8);
+        esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
+    }
+    /* Matrix brightness: 0 when on, restore to matrix setting when off */
+    char cmd[32];
+    int mtx = active ? 0 : settings[SETTING_MTX_BRIGHTNESS].value;
+    snprintf(cmd, sizeof(cmd), "SET:MTX_BRT:%d\n", mtx);
+    uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
 }
 
 /* ================================================================
@@ -1070,6 +1091,7 @@ static void editor_dec_cb(lv_event_t *e)
         save_setting_to_nvs(editor_setting_id);
         if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
+        if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
@@ -1095,6 +1117,7 @@ static void editor_inc_cb(lv_event_t *e)
         save_setting_to_nvs(editor_setting_id);
         if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
+        if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
@@ -1195,6 +1218,7 @@ static void editor_exit_cb(lv_event_t *e)
     settings[editor_setting_id].value = editor_original_value;
     if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
     if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
+    if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     if (editor_setting_id == SETTING_MTX_BRIGHTNESS) send_set_command(editor_setting_id);
     clear_confirm_dialog_state();
     close_editor();
