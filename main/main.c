@@ -461,6 +461,7 @@ static void lvgl_task(void *arg)
 
 static bool setting_is_persisted(SettingId id)
 {
+    if (id == SETTING_NIGHT_MODE) return false;
     return settings[id].type != STYPE_ACTION;
 }
 
