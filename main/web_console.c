@@ -18,7 +18,7 @@
 
 /* ------------------------------------------------------------------ */
 #define AP_SSID        "MOCO Jib"
-#define AP_PASS        "openjib"
+#define AP_PASS        "openjib1"
 #define AP_MAX_CONN    4
 
 #define EVENT_QUEUE_DEPTH  64
