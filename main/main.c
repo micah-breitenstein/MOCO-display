@@ -3061,14 +3061,23 @@ static void switch_display_mode(DisplayMode mode, const char *detail_msg, uint64
 
     /* Log mode transitions to web console */
     {
-        const char *mn = (mode == DISPLAY_MODE_DRONE)     ? "Drone Mode"  :
-                         (mode == DISPLAY_MODE_TIMELAPSE) ? "Timelapse"   :
-                         (mode == DISPLAY_MODE_BOUNCE)    ? "Bounce"      :
-                         (mode == DISPLAY_MODE_ERROR)     ? "Error"       :
-                         (mode == DISPLAY_MODE_MANUAL)    ? "Manual"      : "Unknown";
-        if (mode != previous_mode) {
-            char _buf[64];
-            snprintf(_buf, sizeof(_buf), "Mode: %s", mn);
+        bool is_variant_mode = (mode == DISPLAY_MODE_BOUNCE || mode == DISPLAY_MODE_TIMELAPSE);
+        if (mode != previous_mode || is_variant_mode) {
+            char _buf[80];
+            if (is_variant_mode && detail_msg && detail_msg[0]) {
+                /* Collapse newlines in detail for single-line log entry */
+                char detail[48];
+                strncpy(detail, detail_msg, sizeof(detail) - 1);
+                detail[sizeof(detail) - 1] = '\0';
+                for (int _i = 0; detail[_i]; _i++) if (detail[_i] == '\n') detail[_i] = ' ';
+                snprintf(_buf, sizeof(_buf), "Mode: %s — %s",
+                    (mode == DISPLAY_MODE_BOUNCE) ? "Bounce" : "Timelapse", detail);
+            } else {
+                const char *mn = (mode == DISPLAY_MODE_DRONE)  ? "Drone Mode" :
+                                 (mode == DISPLAY_MODE_ERROR)  ? "Error"      :
+                                 (mode == DISPLAY_MODE_MANUAL) ? "Manual"     : "Unknown";
+                snprintf(_buf, sizeof(_buf), "Mode: %s", mn);
+            }
             web_console_log_event(_buf);
         }
     }
