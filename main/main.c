@@ -514,22 +514,35 @@ static void apply_brightness(void)
     esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
 }
 
+static int night_saved_mtx = -1;  /* matrix value saved before night mode activated */
+
 static void apply_night_mode(void)
 {
     bool active = (settings[SETTING_NIGHT_MODE].value != 0);
-    /* Display brightness: 10% when on, restore to display setting when off */
+    if (active) {
+        /* Save originals so we can restore them */
+        night_saved_mtx = settings[SETTING_MTX_BRIGHTNESS].value;
+        /* Update stored values so UI reflects actual hardware state */
+        settings[SETTING_BRIGHTNESS].value = 10;
+        settings[SETTING_MTX_BRIGHTNESS].value = 0;
+    } else {
+        /* Restore display to 100%, matrix to its saved value */
+        settings[SETTING_BRIGHTNESS].value = 100;
+        if (night_saved_mtx >= 0) {
+            settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
+        }
+        night_saved_mtx = -1;
+    }
+    /* Apply display brightness */
     if (panel_io_global) {
-        int pct = active ? 10 : settings[SETTING_BRIGHTNESS].value;
-        if (pct < 0) pct = 0;
-        if (pct > 100) pct = 100;
+        int pct = settings[SETTING_BRIGHTNESS].value;
         uint8_t level = (uint8_t)((pct * 255) / 100);
         uint32_t lcd_cmd = ((uint32_t)LCD_QSPI_WRITE_CMD << 24) | ((uint32_t)0x51 << 8);
         esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
     }
-    /* Matrix brightness: 0 when on, restore to matrix setting when off */
+    /* Apply matrix brightness */
     char cmd[32];
-    int mtx = active ? 0 : settings[SETTING_MTX_BRIGHTNESS].value;
-    snprintf(cmd, sizeof(cmd), "SET:MTX_BRT:%d\n", mtx);
+    snprintf(cmd, sizeof(cmd), "SET:MTX_BRT:%d\n", settings[SETTING_MTX_BRIGHTNESS].value);
     uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
 }
 
@@ -1092,7 +1105,15 @@ static void editor_dec_cb(lv_event_t *e)
         save_setting_to_nvs(editor_setting_id);
         if (editor_setting_id == SETTING_BRIGHTNESS) {
             /* Changing display brightness explicitly deactivates night mode */
-            settings[SETTING_NIGHT_MODE].value = 0;
+            if (settings[SETTING_NIGHT_MODE].value) {
+                settings[SETTING_NIGHT_MODE].value = 0;
+                /* Restore matrix to its pre-night-mode value */
+                if (night_saved_mtx >= 0) {
+                    settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
+                    night_saved_mtx = -1;
+                }
+                send_set_command(SETTING_MTX_BRIGHTNESS);
+            }
             apply_brightness();
         }
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
@@ -1100,6 +1121,7 @@ static void editor_dec_cb(lv_event_t *e)
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
         /* Changing matrix brightness explicitly deactivates night mode */
         settings[SETTING_NIGHT_MODE].value = 0;
+        night_saved_mtx = -1;
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
@@ -1124,7 +1146,15 @@ static void editor_inc_cb(lv_event_t *e)
         save_setting_to_nvs(editor_setting_id);
         if (editor_setting_id == SETTING_BRIGHTNESS) {
             /* Changing display brightness explicitly deactivates night mode */
-            settings[SETTING_NIGHT_MODE].value = 0;
+            if (settings[SETTING_NIGHT_MODE].value) {
+                settings[SETTING_NIGHT_MODE].value = 0;
+                /* Restore matrix to its pre-night-mode value */
+                if (night_saved_mtx >= 0) {
+                    settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
+                    night_saved_mtx = -1;
+                }
+                send_set_command(SETTING_MTX_BRIGHTNESS);
+            }
             apply_brightness();
         }
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
@@ -1132,6 +1162,7 @@ static void editor_inc_cb(lv_event_t *e)
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
         /* Changing matrix brightness explicitly deactivates night mode */
         settings[SETTING_NIGHT_MODE].value = 0;
+        night_saved_mtx = -1;
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
