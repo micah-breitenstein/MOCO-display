@@ -513,6 +513,9 @@ static void apply_brightness(void)
     uint8_t level = (uint8_t)((pct * 255) / 100);
     uint32_t lcd_cmd = ((uint32_t)LCD_QSPI_WRITE_CMD << 24) | ((uint32_t)0x51 << 8);
     esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
+    char _b[32];
+    snprintf(_b, sizeof(_b), "Brightness: %d%%", pct);
+    web_console_log_event(_b);
 }
 
 static int night_saved_mtx = -1;  /* matrix value saved before night mode activated */
