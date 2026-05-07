@@ -7,17 +7,40 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-header{background:#111;border-bottom:2px solid #e87700;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.brand{font-size:1.25em;font-weight:700;color:#ff9000;letter-spacing:4px}
+header{background:#111;border-bottom:2px solid #e87700;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.brand{font-size:1.2em;font-weight:700;color:#ff9000;letter-spacing:4px}
 .conn{display:flex;align-items:center;gap:8px;font-size:0.75em;color:#888}
 .dot{width:9px;height:9px;border-radius:50%;background:#333;transition:background .4s,box-shadow .4s}
 .dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
+/* Tabs */
+.tabs{display:flex;background:#111;border-bottom:1px solid #222;flex-shrink:0}
+.tab{flex:1;padding:11px 0;text-align:center;font-size:0.78em;color:#666;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;letter-spacing:1px;user-select:none}
+.tab.active{color:#ff9000;border-bottom-color:#ff9000}
+/* Panels */
+.panel{display:none;flex:1;overflow-y:auto;flex-direction:column}
+.panel.active{display:flex}
+/* Console */
 #log{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:1px}
 .ev{display:flex;gap:12px;font-size:0.82em;padding:4px 0;border-bottom:1px solid #181818}
 .ts{color:#444;white-space:nowrap;flex-shrink:0}
 .msg{word-break:break-word}
 .msg.sys{color:#ffa040}
 .msg.evt{color:#b0d4b0}
+.msg.ok{color:#00e676}
+.msg.err{color:#ff4444}
+/* Control panels */
+.ctrl{padding:14px 14px 20px;display:flex;flex-direction:column;gap:14px}
+.ctrl-status{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;font-size:0.8em;color:#888;min-height:38px;display:flex;align-items:center;gap:8px}
+.ctrl-status .indicator{width:8px;height:8px;border-radius:50%;background:#333;flex-shrink:0}
+.ctrl-status.running .indicator{background:#ff9000;box-shadow:0 0 6px #ff9000}
+.ctrl-status.running{color:#ff9000}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode-btn{background:#1a1a1a;border:1px solid #2c2c2c;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:background .15s,border-color .15s;-webkit-tap-highlight-color:transparent;user-select:none;display:flex;flex-direction:column;gap:5px;align-items:center}
+.mode-btn:active,.mode-btn.active{background:#2a1f00;border-color:#ff9000}
+.mode-btn .icon{font-size:1.5em;line-height:1}
+.mode-btn .lbl{font-size:0.72em;color:#aaa;line-height:1.3}
+.stop-btn{background:#1a0000;border:2px solid #660000;border-radius:10px;padding:16px;text-align:center;cursor:pointer;color:#ff4444;font-size:1em;letter-spacing:2px;transition:background .15s,border-color .15s;-webkit-tap-highlight-color:transparent;user-select:none}
+.stop-btn:active{background:#2a0000;border-color:#ff0000}
 footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0.7em;color:#444;flex-shrink:0}
 </style>
 </head>
@@ -29,12 +52,81 @@ footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0
     <span id="status">Connecting&hellip;</span>
   </div>
 </header>
-<div id="log"></div>
-<footer>192.168.4.1 &nbsp;&bull;&nbsp; MOCO Jib Console</footer>
+<div class="tabs">
+  <div class="tab active" id="tab-console" onclick="showTab('console')">CONSOLE</div>
+  <div class="tab" id="tab-timelapse" onclick="showTab('timelapse')">TIMELAPSE</div>
+  <div class="tab" id="tab-bounce" onclick="showTab('bounce')">BOUNCE</div>
+</div>
+
+<!-- Console panel -->
+<div class="panel active" id="panel-console">
+  <div id="log"></div>
+</div>
+
+<!-- Timelapse panel -->
+<div class="panel" id="panel-timelapse">
+  <div class="ctrl">
+    <div class="ctrl-status" id="tl-status">
+      <span class="indicator"></span><span id="tl-status-text">Idle</span>
+    </div>
+    <div class="mode-grid">
+      <div class="mode-btn" onclick="tlStart(1)"><span class="icon">↙</span><span class="lbl">Swing L<br>Boom ↓</span></div>
+      <div class="mode-btn" onclick="tlStart(2)"><span class="icon">↖</span><span class="lbl">Swing L<br>Boom ↑</span></div>
+      <div class="mode-btn" onclick="tlStart(3)"><span class="icon">↗</span><span class="lbl">Swing R<br>Boom ↑</span></div>
+      <div class="mode-btn" onclick="tlStart(4)"><span class="icon">↘</span><span class="lbl">Swing R<br>Boom ↓</span></div>
+      <div class="mode-btn" onclick="tlStart(5)"><span class="icon">←</span><span class="lbl">Swing Left</span></div>
+      <div class="mode-btn" onclick="tlStart(6)"><span class="icon">↑</span><span class="lbl">Boom Up</span></div>
+      <div class="mode-btn" onclick="tlStart(7)"><span class="icon">→</span><span class="lbl">Swing Right</span></div>
+      <div class="mode-btn" onclick="tlStart(8)"><span class="icon">↓</span><span class="lbl">Boom Down</span></div>
+    </div>
+    <div class="stop-btn" onclick="remoteStop()">&#9632; STOP</div>
+  </div>
+</div>
+
+<!-- Bounce panel -->
+<div class="panel" id="panel-bounce">
+  <div class="ctrl">
+    <div class="ctrl-status" id="bn-status">
+      <span class="indicator"></span><span id="bn-status-text">Idle</span>
+    </div>
+    <div class="mode-grid">
+      <div class="mode-btn" onclick="bnStart(1)"><span class="icon">↙</span><span class="lbl">Swing L<br>Boom ↓</span></div>
+      <div class="mode-btn" onclick="bnStart(2)"><span class="icon">↖</span><span class="lbl">Swing L<br>Boom ↑</span></div>
+      <div class="mode-btn" onclick="bnStart(3)"><span class="icon">↗</span><span class="lbl">Swing R<br>Boom ↑</span></div>
+      <div class="mode-btn" onclick="bnStart(4)"><span class="icon">↘</span><span class="lbl">Swing R<br>Boom ↓</span></div>
+      <div class="mode-btn" onclick="bnStart(5)"><span class="icon">←</span><span class="lbl">Swing Left</span></div>
+      <div class="mode-btn" onclick="bnStart(6)"><span class="icon">↑</span><span class="lbl">Boom Up</span></div>
+      <div class="mode-btn" onclick="bnStart(7)"><span class="icon">→</span><span class="lbl">Swing Right</span></div>
+      <div class="mode-btn" onclick="bnStart(8)"><span class="icon">↓</span><span class="lbl">Boom Down</span></div>
+    </div>
+    <div class="stop-btn" onclick="remoteStop()">&#9632; STOP</div>
+  </div>
+</div>
+
+<footer>192.168.4.1 &nbsp;&bull;&nbsp; MOCO Jib</footer>
 <script>
 (function(){
-  var ws,rt,log=document.getElementById('log'),dot=document.getElementById('dot'),st=document.getElementById('status');
+  var ws,rt;
+  var log=document.getElementById('log');
+  var dot=document.getElementById('dot');
+  var st=document.getElementById('status');
+  var tlSt=document.getElementById('tl-status');
+  var tlStTxt=document.getElementById('tl-status-text');
+  var bnSt=document.getElementById('bn-status');
+  var bnStTxt=document.getElementById('bn-status-text');
+
+  /* Tab switching */
+  window.showTab=function(name){
+    ['console','timelapse','bounce'].forEach(function(n){
+      document.getElementById('tab-'+n).classList.toggle('active',n===name);
+      document.getElementById('panel-'+n).classList.toggle('active',n===name);
+    });
+  };
+
+  /* Helpers */
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function send(msg){if(ws&&ws.readyState===1)ws.send(msg);}
+
   function row(msg,cls,ts){
     var el=document.createElement('div');el.className='ev';
     el.innerHTML='<span class="ts">'+(ts||'--:--:--')+'</span><span class="msg '+(cls||'evt')+'">'+esc(msg)+'</span>';
@@ -42,17 +134,41 @@ footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0
     if(log.children.length>500)log.removeChild(log.firstChild);
     log.scrollTop=log.scrollHeight;
   }
+
+  /* Update status banners from incoming events */
+  function updateStatus(raw){
+    if(/^Mode: Timelapse/.test(raw)){
+      tlSt.className='ctrl-status running';
+      tlStTxt.textContent=raw.replace('Mode: ','');
+    } else if(/^Mode: Bounce/.test(raw)){
+      bnSt.className='ctrl-status running';
+      bnStTxt.textContent=raw.replace('Mode: ','');
+    } else if(/^Mode: (Manual|Drone|Error)/.test(raw)||/REMOTE_STOP|EMERGENCY_STOP/.test(raw)){
+      tlSt.className='ctrl-status';tlStTxt.textContent='Idle';
+      bnSt.className='ctrl-status';bnStTxt.textContent='Idle';
+    } else if(/TL_START:BLOCKED|BOUNCE_START:BLOCKED/.test(raw)){
+      row(raw,'err');
+    }
+  }
+
+  /* Control actions */
+  window.tlStart=function(n){send('SET:TL_START:'+n);row('→ Timelapse mode '+n,'sys');};
+  window.bnStart=function(n){send('SET:BOUNCE_START:'+n);row('→ Bounce mode '+n,'sys');};
+  window.remoteStop=function(){send('SET:STOP:1');row('→ STOP','sys');};
+
+  /* WebSocket */
   function connect(){
     clearTimeout(rt);
     ws=new WebSocket('ws://'+location.host+'/ws');
-    ws.onopen=function(){dot.className='dot live';st.textContent='Live';row('Console connected','sys')};
+    ws.onopen=function(){dot.className='dot live';st.textContent='Live';row('Connected','sys');};
     ws.onmessage=function(e){
-      /* Messages are prefixed with HH:MM:SS from ESP32 uptime */
       var m=e.data.match(/^(\d{2}:\d{2}:\d{2}) ([\s\S]*)$/);
-      if(m)row(m[2],'evt',m[1]);else row(e.data);
+      var ts=m?m[1]:null, msg=m?m[2]:e.data;
+      updateStatus(msg);
+      row(msg,'evt',ts);
     };
-    ws.onclose=function(){dot.className='dot';st.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000)};
-    ws.onerror=function(){ws.close()};
+    ws.onclose=function(){dot.className='dot';st.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000);};
+    ws.onerror=function(){ws.close();};
   }
   connect();
 })();

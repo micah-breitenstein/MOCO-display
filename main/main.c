@@ -3212,6 +3212,19 @@ static void status_uart_task(void *arg)
 
         int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(5));
         if (len <= 0) {
+            /* Poll for commands queued by the web UI and relay them to the Mega. */
+            char web_cmd[64];
+            while (web_console_get_pending_cmd(web_cmd, sizeof(web_cmd))) {
+                /* Append newline if missing */
+                size_t clen = strlen(web_cmd);
+                if (clen > 0 && clen < sizeof(web_cmd) - 1 && web_cmd[clen - 1] != '\n') {
+                    web_cmd[clen]     = '\n';
+                    web_cmd[clen + 1] = '\0';
+                    clen++;
+                }
+                uart_write_bytes(STATUS_UART_PORT, web_cmd, clen);
+                ESP_LOGI(TAG, "Web cmd → Mega: %s", web_cmd);
+            }
             continue;
         }
 

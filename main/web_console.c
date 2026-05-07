@@ -25,6 +25,8 @@
 
 #define EVENT_QUEUE_DEPTH  64
 #define EVENT_MSG_LEN      160
+#define CMD_QUEUE_DEPTH    16
+#define CMD_MSG_LEN        64
 
 static const char *TAG = "web_console";
 
@@ -35,7 +37,8 @@ extern const uint8_t landing_html_end[]   asm("_binary_landing_html_end");
 /* ------------------------------------------------------------------ */
 static httpd_handle_t s_server = NULL;
 static int            s_ws_fd  = -1;   /* fd of the active WebSocket client */
-static QueueHandle_t  s_eq     = NULL;
+static QueueHandle_t  s_eq     = NULL; /* outgoing event queue (ESP32 → browser) */
+static QueueHandle_t  s_cq     = NULL; /* incoming command queue (browser → Mega)  */
 
 /* ------------------------------------------------------------------ */
 /*  Async WebSocket send (runs inside the httpd task via queue_work)   */
@@ -87,14 +90,18 @@ static esp_err_t ws_handler(httpd_req_t *req)
     }
     /* Drain incoming frames (we only care about outbound events) */
     httpd_ws_frame_t f = {0};
-    uint8_t buf[8] = {0};
+    uint8_t buf[CMD_MSG_LEN] = {0};
     f.payload = buf;
-    esp_err_t err = httpd_ws_recv_frame(req, &f, sizeof(buf));
+    esp_err_t err = httpd_ws_recv_frame(req, &f, sizeof(buf) - 1);
     if (err != ESP_OK) {
         return err;
     }
     if (f.type == HTTPD_WS_TYPE_CLOSE) {
         s_ws_fd = -1;
+    } else if (f.type == HTTPD_WS_TYPE_TEXT && f.len > 0 && s_cq) {
+        /* Commands from browser: enqueue for relay to Mega over UART */
+        buf[f.len < sizeof(buf) ? f.len : sizeof(buf) - 1] = '\0';
+        xQueueSendToBack(s_cq, buf, 0);
     }
     return ESP_OK;
 }
@@ -187,6 +194,11 @@ void web_console_init(void)
         ESP_LOGE(TAG, "Failed to create event queue");
         return;
     }
+    s_cq = xQueueCreate(CMD_QUEUE_DEPTH, CMD_MSG_LEN);
+    if (!s_cq) {
+        ESP_LOGE(TAG, "Failed to create command queue");
+        return;
+    }
 
     ESP_ERROR_CHECK(esp_netif_init());
 
@@ -236,4 +248,14 @@ void web_console_log_event(const char *msg)
     char buf[EVENT_MSG_LEN];
     snprintf(buf, sizeof(buf), "%02lu:%02lu:%02lu %s", (unsigned long)hh, (unsigned long)mm, (unsigned long)ss, msg);
     xQueueSendToBack(s_eq, buf, 0);   /* non-blocking; drops if full */
+}
+
+bool web_console_get_pending_cmd(char *buf, size_t len)
+{
+    if (!s_cq || !buf || len == 0) return false;
+    char tmp[CMD_MSG_LEN];
+    if (xQueueReceive(s_cq, tmp, 0) != pdTRUE) return false;
+    strncpy(buf, tmp, len - 1);
+    buf[len - 1] = '\0';
+    return true;
 }
