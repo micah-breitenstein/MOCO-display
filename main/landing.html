@@ -7,17 +7,31 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-header{background:#111;border-bottom:2px solid #e87700;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.brand{font-size:1.15em;font-weight:700;color:#ff9000;letter-spacing:4px}
+header{background:#111;border-bottom:2px solid #e87700;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.brand{font-size:1.1em;font-weight:700;color:#ff9000;letter-spacing:4px}
 .conn{display:flex;align-items:center;gap:8px;font-size:0.75em;color:#888}
 .dot{width:9px;height:9px;border-radius:50%;background:#333;transition:background .4s,box-shadow .4s}
 .dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
-#log{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:1px}
+#content{flex:1;overflow:hidden;position:relative}
+.pane{position:absolute;inset:0;overflow-y:auto;display:none;flex-direction:column}
+.pane.active{display:flex}
+/* log */
+#pane-log{padding:10px 16px;gap:1px}
 .ev{display:flex;gap:12px;font-size:0.82em;padding:4px 0;border-bottom:1px solid #181818}
 .ts{color:#444;white-space:nowrap;flex-shrink:0}
 .msg{word-break:break-word}
 .msg.sys{color:#ffa040}
 .msg.evt{color:#b0d4b0}
+/* bounce */
+#pane-bounce{align-items:center;justify-content:center;gap:20px;padding:24px}
+.pill{padding:5px 18px;border-radius:20px;font-size:0.75em;font-weight:700;letter-spacing:2px;border:2px solid #333;color:#555;background:#1a1a1a}
+.pill.on{border-color:#e87700;color:#ff9000;background:#2a1400}
+#b-variant{font-size:1.5em;font-weight:700;color:#e0e0e0;text-align:center;line-height:1.5}
+#b-time{font-size:0.7em;color:#444}
+/* tabs */
+nav{display:flex;background:#111;border-top:1px solid #222;flex-shrink:0}
+.tab{flex:1;padding:10px 0;background:none;border:none;border-top:2px solid transparent;color:#555;font-family:'Courier New',monospace;font-size:0.78em;letter-spacing:1px;cursor:pointer;transition:color .2s,border-color .2s}
+.tab.active{color:#ff9000;border-top-color:#e87700}
 </style>
 </head>
 <body>
@@ -25,30 +39,63 @@ header{background:#111;border-bottom:2px solid #e87700;padding:12px 20px;display
   <span class="brand">MOCO JIB</span>
   <div class="conn">
     <div class="dot" id="dot"></div>
-    <span id="conn-status">Connecting&hellip;</span>
+    <span id="cst">Connecting&hellip;</span>
   </div>
 </header>
-<div id="log"></div>
+<div id="content">
+  <div class="pane active" id="pane-log"></div>
+  <div class="pane" id="pane-bounce">
+    <div class="pill" id="b-pill">INACTIVE</div>
+    <div id="b-variant">—</div>
+    <div id="b-time"></div>
+  </div>
+</div>
+<nav>
+  <button class="tab active" onclick="showTab('log',this)">LOG</button>
+  <button class="tab" onclick="showTab('bounce',this)">BOUNCE</button>
+</nav>
 <script>
 (function(){
-  var log=document.getElementById('log');
+  var log=document.getElementById('pane-log');
   var dot=document.getElementById('dot');
-  var connSt=document.getElementById('conn-status');
+  var cst=document.getElementById('cst');
+  var bPill=document.getElementById('b-pill');
+  var bVar=document.getElementById('b-variant');
+  var bTime=document.getElementById('b-time');
   var ws,rt;
   function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
   function logRow(msg,cls){
     var el=document.createElement('div');el.className='ev';
-    el.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'evt')+'">'+String(msg).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>';
+    el.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'evt')+'">'+esc(msg)+'</span>';
     log.appendChild(el);
     if(log.children.length>500)log.removeChild(log.firstChild);
     log.scrollTop=log.scrollHeight;
   }
+  function handleMsg(msg){
+    logRow(msg);
+    var bm=msg.match(/^Mode: Bounce \u2014 (.*)/);
+    if(bm){
+      var v=bm[1].replace(/^BOUNCE\s*/i,'').trim();
+      bPill.className='pill on';bPill.textContent='ACTIVE';
+      bVar.textContent=v||'—';
+      bTime.textContent='Since '+ts();
+    } else if(/^Mode: (Manual|Drone Mode|Error)/.test(msg)){
+      bPill.className='pill';bPill.textContent='INACTIVE';
+    }
+  }
+  window.showTab=function(id,btn){
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('active')});
+    document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active')});
+    document.getElementById('pane-'+id).classList.add('active');
+    btn.classList.add('active');
+  };
   function connect(){
     clearTimeout(rt);
     ws=new WebSocket('ws://'+location.host+'/ws');
-    ws.onopen=function(){dot.className='dot live';connSt.textContent='Live';logRow('Console connected','sys')};
-    ws.onmessage=function(e){logRow(e.data)};
-    ws.onclose=function(){dot.className='dot';connSt.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000)};
+    ws.onopen=function(){dot.className='dot live';cst.textContent='Live';logRow('Console connected','sys')};
+    ws.onmessage=function(e){handleMsg(e.data)};
+    ws.onclose=function(){dot.className='dot';cst.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000)};
     ws.onerror=function(){ws.close()};
   }
   connect();
