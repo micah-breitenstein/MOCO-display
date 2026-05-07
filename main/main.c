@@ -3773,6 +3773,9 @@ void app_main(void)
     }
     load_settings_from_nvs();
 
+    /* Display brightness always starts at 100% on boot — not persisted across power cycles. */
+    settings[SETTING_BRIGHTNESS].value = 100;
+
     /* Always reset matrix brightness to 5% on boot (UI and hardware stay in sync). */
     settings[SETTING_MTX_BRIGHTNESS].value = 5;
     save_setting_to_nvs(SETTING_MTX_BRIGHTNESS);
@@ -3804,6 +3807,9 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_lcd_new_panel_sh8601(io_handle, &panel_config, &panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
+
+    /* Turn the backlight on immediately after panel init — default 100%. */
+    apply_brightness();
 
     lv_init();
 
