@@ -211,7 +211,7 @@ static void start_http_server(void)
 {
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
-    cfg.max_open_sockets     = 5;
+    cfg.max_open_sockets     = 10;
     cfg.uri_match_fn         = httpd_uri_match_wildcard;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {

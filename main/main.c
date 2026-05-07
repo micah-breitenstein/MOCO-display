@@ -3207,7 +3207,8 @@ static void status_uart_task(void *arg)
             }
 
             line[line_len] = '\0';
-            if (strncmp(line, "DRONE_STICK:", 12) != 0) {
+            if (strncmp(line, "DRONE_STICK:", 12) != 0 &&
+                strncmp(line, "CONTROLLER_OK:", 14) != 0) {
                 ESP_LOGI(TAG, "Mega status: %s", line);
             }
             last_status_rx_ms = now_ms;
