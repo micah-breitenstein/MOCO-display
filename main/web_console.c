@@ -8,6 +8,8 @@
 #include "esp_err.h"
 #include "esp_event.h"
 #include "esp_http_server.h"
+#include "lwip/sockets.h"
+#include "lwip/netdb.h"
 #include "esp_log.h"
 #include "esp_mac.h"
 #include "esp_netif.h"
@@ -64,6 +66,56 @@ static void ws_do_send(void *arg)
 }
 
 /* ------------------------------------------------------------------ */
+/*  Captive-portal DNS responder — answers every query with 192.168.4.1 */
+/* ------------------------------------------------------------------ */
+static void dns_task(void *arg)
+{
+    (void)arg;
+    static const uint8_t AP_IP[4] = {192, 168, 4, 1};
+    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock < 0) { vTaskDelete(NULL); return; }
+
+    struct sockaddr_in saddr = {
+        .sin_family = AF_INET,
+        .sin_port   = htons(53),
+        .sin_addr.s_addr = htonl(INADDR_ANY),
+    };
+    if (bind(sock, (struct sockaddr *)&saddr, sizeof(saddr)) < 0) {
+        close(sock); vTaskDelete(NULL); return;
+    }
+    ESP_LOGI(TAG, "DNS responder started (port 53)");
+
+    uint8_t buf[256];
+    struct sockaddr_in caddr;
+    socklen_t clen = sizeof(caddr);
+
+    for (;;) {
+        int n = recvfrom(sock, buf, sizeof(buf) - 1, 0,
+                         (struct sockaddr *)&caddr, &clen);
+        if (n < 12) continue;
+
+        uint8_t resp[512];
+        int qlen = n;
+        memcpy(resp, buf, qlen);
+        resp[2] = 0x81; resp[3] = 0x80;
+        resp[6] = 0x00; resp[7] = 0x01;
+        resp[8] = 0x00; resp[9] = 0x00;
+        resp[10]= 0x00; resp[11]= 0x00;
+        int p = qlen;
+        if (p + 16 > (int)sizeof(resp)) { continue; }
+        resp[p++] = 0xC0; resp[p++] = 0x0C;
+        resp[p++] = 0x00; resp[p++] = 0x01;
+        resp[p++] = 0x00; resp[p++] = 0x01;
+        resp[p++] = 0x00; resp[p++] = 0x00;
+        resp[p++] = 0x00; resp[p++] = 0x3C;
+        resp[p++] = 0x00; resp[p++] = 0x04;
+        resp[p++] = AP_IP[0]; resp[p++] = AP_IP[1];
+        resp[p++] = AP_IP[2]; resp[p++] = AP_IP[3];
+        sendto(sock, resp, p, 0, (struct sockaddr *)&caddr, clen);
+    }
+}
+
+/* ------------------------------------------------------------------ */
 /*  HTTP handlers                                                       */
 /* ------------------------------------------------------------------ */
 
@@ -74,6 +126,7 @@ static esp_err_t root_handler(httpd_req_t *req)
     size_t len = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
+    httpd_resp_set_hdr(req, "Connection", "close");
     return httpd_resp_send(req, (const char *)landing_html_start, (ssize_t)len);
 }
 
@@ -226,6 +279,7 @@ void web_console_init(void)
     ap_cfg.ap.ssid_len       = (uint8_t)(sizeof(AP_SSID) - 1);
     ap_cfg.ap.max_connection = AP_MAX_CONN;
     ap_cfg.ap.authmode       = WIFI_AUTH_WPA2_PSK;
+    ap_cfg.ap.pmf_cfg.capable  = false;
     ap_cfg.ap.pmf_cfg.required = false;
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
@@ -237,6 +291,7 @@ void web_console_init(void)
     start_http_server();
 
     xTaskCreatePinnedToCore(web_event_task, "web_evt", 4096, NULL, 2, NULL, 1);
+    xTaskCreatePinnedToCore(dns_task,        "dns",     3072, NULL, 5, NULL, 0);
 }
 
 void web_console_log_event(const char *msg)

@@ -3193,6 +3193,7 @@ static void status_uart_task(void *arg)
 
         int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(5));
         if (len <= 0) {
+            vTaskDelay(pdMS_TO_TICKS(10));
             continue;
         }
 
