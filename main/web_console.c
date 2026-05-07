@@ -76,6 +76,7 @@ static esp_err_t root_handler(httpd_req_t *req)
     size_t len = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
+    httpd_resp_set_hdr(req, "Connection", "close");
     return httpd_resp_send(req, (const char *)landing_html_start, (ssize_t)len);
 }
 

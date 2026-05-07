@@ -3210,7 +3210,7 @@ static void status_uart_task(void *arg)
             }
         }
 
-        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(5));
+        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(50));
         if (len <= 0) {
             /* Poll for commands queued by the web UI and relay them to the Mega. */
             char web_cmd[64];
