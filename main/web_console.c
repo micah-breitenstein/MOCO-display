@@ -19,6 +19,7 @@
 #include "freertos/task.h"
 #include "lwip/sockets.h"
 #include "lwip/netdb.h"
+#include <fcntl.h>
 
 /* ------------------------------------------------------------------ */
 #define AP_SSID        "MOCO Jib"
@@ -77,9 +78,8 @@ static esp_err_t root_handler(httpd_req_t *req)
 {
     ESP_LOGI(TAG, "HTTP GET %s", req->uri);
 
-    /* Captive-portal probe URLs (iOS /hotspot-detect.html, Android /generate_204, etc.)
-     * get a tiny 302 redirect so the OS mini-browser opens our actual page.
-     * Only serve the full HTML for requests to "/" itself. */
+    /* Captive-portal probe URLs get an instant 302 so the OS mini-browser
+     * doesn't have to receive 9KB HTML. */
     if (strcmp(req->uri, "/") != 0) {
         httpd_resp_set_status(req, "302 Found");
         httpd_resp_set_hdr(req, "Location", "http://192.168.4.1/");
@@ -87,22 +87,39 @@ static esp_err_t root_handler(httpd_req_t *req)
         return httpd_resp_send(req, NULL, 0);
     }
 
+    /* httpd enables O_NONBLOCK on all sockets when WS support is compiled in.
+     * Non-blocking send() returns EAGAIN immediately if the TCP send buffer
+     * is momentarily full — causing the handler to fail before the 9KB page
+     * is delivered.  Temporarily clear O_NONBLOCK and add a 10-second send
+     * timeout so the kernel waits for ACKs instead of bailing out. */
+    int sockfd = httpd_req_to_sockfd(req);
+    int saved_flags = fcntl(sockfd, F_GETFL, 0);
+    fcntl(sockfd, F_SETFL, saved_flags & ~O_NONBLOCK);
+    struct timeval snd_tv = { .tv_sec = 10, .tv_usec = 0 };
+    setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &snd_tv, sizeof(snd_tv));
+
     const char *p    = (const char *)landing_html_start;
     size_t remaining = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
     httpd_resp_set_hdr(req, "Connection", "close");
-    /* Send in 1 KB chunks so the lwIP send buffer never overflows */
+
+    esp_err_t res = ESP_OK;
     while (remaining > 0) {
         size_t chunk = remaining < 1024 ? remaining : 1024;
         if (httpd_resp_send_chunk(req, p, (ssize_t)chunk) != ESP_OK) {
             httpd_resp_send_chunk(req, NULL, 0);
-            return ESP_FAIL;
+            res = ESP_FAIL;
+            break;
         }
         p         += chunk;
         remaining -= chunk;
     }
-    return httpd_resp_send_chunk(req, NULL, 0);
+    if (res == ESP_OK) httpd_resp_send_chunk(req, NULL, 0);
+
+    /* Restore non-blocking so the WebSocket handler still works on this fd */
+    fcntl(sockfd, F_SETFL, saved_flags);
+    return res;
 }
 
 /* WebSocket upgrade + frame handler */
