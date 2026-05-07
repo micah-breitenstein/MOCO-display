@@ -76,7 +76,18 @@ static void ws_do_send(void *arg)
 static esp_err_t root_handler(httpd_req_t *req)
 {
     ESP_LOGI(TAG, "HTTP GET %s", req->uri);
-    const char *p   = (const char *)landing_html_start;
+
+    /* Captive-portal probe URLs (iOS /hotspot-detect.html, Android /generate_204, etc.)
+     * get a tiny 302 redirect so the OS mini-browser opens our actual page.
+     * Only serve the full HTML for requests to "/" itself. */
+    if (strcmp(req->uri, "/") != 0) {
+        httpd_resp_set_status(req, "302 Found");
+        httpd_resp_set_hdr(req, "Location", "http://192.168.4.1/");
+        httpd_resp_set_hdr(req, "Connection", "close");
+        return httpd_resp_send(req, NULL, 0);
+    }
+
+    const char *p    = (const char *)landing_html_start;
     size_t remaining = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
@@ -91,7 +102,7 @@ static esp_err_t root_handler(httpd_req_t *req)
         p         += chunk;
         remaining -= chunk;
     }
-    return httpd_resp_send_chunk(req, NULL, 0); /* terminate chunked response */
+    return httpd_resp_send_chunk(req, NULL, 0);
 }
 
 /* WebSocket upgrade + frame handler */
