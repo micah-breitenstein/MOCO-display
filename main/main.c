@@ -894,7 +894,14 @@ static void handle_settings_nav(const char *nav_cmd)
             /* Notify MEGA to rumble */
             const char *saved_cmd = "SETTINGS_SAVED\n";
             uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
-            web_console_log_event("Settings saved");
+            {
+                char _log[64];
+                if (s->type == STYPE_BOOL)
+                    snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, s->value ? "ON" : "OFF");
+                else
+                    snprintf(_log, sizeof(_log), "Saved: %s = %d%s", s->name, s->value, (s->unit && s->unit[0]) ? s->unit : "");
+                web_console_log_event(_log);
+            }
             close_editor();
         } else if (strcmp(nav_cmd, "BACK") == 0) {
             controller_hold_start_us = 0;  /* Reset on BACK */
@@ -1256,7 +1263,14 @@ static void editor_save_cb(lv_event_t *e)
     /* Notify MEGA to rumble */
     const char *saved_cmd = "SETTINGS_SAVED\n";
     uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
-    web_console_log_event("Settings saved");
+    {
+        char _log[64];
+        if (s->type == STYPE_BOOL)
+            snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, s->value ? "ON" : "OFF");
+        else
+            snprintf(_log, sizeof(_log), "Saved: %s = %d%s", s->name, s->value, (s->unit && s->unit[0]) ? s->unit : "");
+        web_console_log_event(_log);
+    }
     clear_confirm_dialog_state();
     close_editor();
 }
