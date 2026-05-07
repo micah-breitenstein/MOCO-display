@@ -899,9 +899,12 @@ static void handle_settings_nav(const char *nav_cmd)
             uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
             {
                 char _log[64];
-                if (s->type == STYPE_BOOL)
-                    snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, s->value ? "ON" : "OFF");
-                else
+                if (s->type == STYPE_BOOL) {
+                    const char *bval = (editor_setting_id == SETTING_LOGO_THEME)
+                        ? (s->value ? "Light" : "Dark")
+                        : (s->value ? "ON" : "OFF");
+                    snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, bval);
+                } else
                     snprintf(_log, sizeof(_log), "Saved: %s = %d%s", s->name, s->value, (s->unit && s->unit[0]) ? s->unit : "");
                 web_console_log_event(_log);
             }
@@ -1268,9 +1271,12 @@ static void editor_save_cb(lv_event_t *e)
     uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
     {
         char _log[64];
-        if (s->type == STYPE_BOOL)
-            snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, s->value ? "ON" : "OFF");
-        else
+        if (s->type == STYPE_BOOL) {
+            const char *bval = (editor_setting_id == SETTING_LOGO_THEME)
+                ? (s->value ? "Light" : "Dark")
+                : (s->value ? "ON" : "OFF");
+            snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, bval);
+        } else
             snprintf(_log, sizeof(_log), "Saved: %s = %d%s", s->name, s->value, (s->unit && s->unit[0]) ? s->unit : "");
         web_console_log_event(_log);
     }
