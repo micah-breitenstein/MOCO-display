@@ -75,11 +75,23 @@ static void ws_do_send(void *arg)
  * satisfies iOS captive-portal detection so Safari opens automatically. */
 static esp_err_t root_handler(httpd_req_t *req)
 {
-    size_t len = (size_t)(landing_html_end - landing_html_start);
+    ESP_LOGI(TAG, "HTTP GET %s", req->uri);
+    const char *p   = (const char *)landing_html_start;
+    size_t remaining = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
     httpd_resp_set_hdr(req, "Connection", "close");
-    return httpd_resp_send(req, (const char *)landing_html_start, (ssize_t)len);
+    /* Send in 1 KB chunks so the lwIP send buffer never overflows */
+    while (remaining > 0) {
+        size_t chunk = remaining < 1024 ? remaining : 1024;
+        if (httpd_resp_send_chunk(req, p, (ssize_t)chunk) != ESP_OK) {
+            httpd_resp_send_chunk(req, NULL, 0);
+            return ESP_FAIL;
+        }
+        p         += chunk;
+        remaining -= chunk;
+    }
+    return httpd_resp_send_chunk(req, NULL, 0); /* terminate chunked response */
 }
 
 /* WebSocket upgrade + frame handler */
@@ -210,6 +222,7 @@ static void dns_task(void *arg)
         resp[p++] = AP_IP[2]; resp[p++] = AP_IP[3];
 
         sendto(sock, resp, p, 0, (struct sockaddr *)&caddr, clen);
+        vTaskDelay(1); /* yield so WiFi/lwIP tasks get CPU */
     }
 }
 
@@ -220,7 +233,8 @@ static void start_http_server(void)
 {
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
-    cfg.max_open_sockets     = 5;
+    cfg.max_open_sockets     = 7;
+    cfg.stack_size           = 8192;
     cfg.uri_match_fn         = httpd_uri_match_wildcard;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
