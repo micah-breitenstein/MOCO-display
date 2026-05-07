@@ -17,6 +17,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
+#include "lwip/sockets.h"
+#include "lwip/netdb.h"
 
 /* ------------------------------------------------------------------ */
 #define AP_SSID        "MOCO Jib"
@@ -151,6 +153,67 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
 }
 
 /* ------------------------------------------------------------------ */
+/*  Captive-portal DNS responder — answers every query with 192.168.4.1 */
+/* ------------------------------------------------------------------ */
+static void dns_task(void *arg)
+{
+    (void)arg;
+    /* DNS response template: all A-record queries answered with our IP */
+    static const uint8_t AP_IP[4] = {192, 168, 4, 1};
+    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock < 0) { vTaskDelete(NULL); return; }
+
+    struct sockaddr_in saddr = {
+        .sin_family = AF_INET,
+        .sin_port   = htons(53),
+        .sin_addr.s_addr = htonl(INADDR_ANY),
+    };
+    if (bind(sock, (struct sockaddr *)&saddr, sizeof(saddr)) < 0) {
+        close(sock); vTaskDelete(NULL); return;
+    }
+    ESP_LOGI(TAG, "DNS responder started (port 53)");
+
+    uint8_t buf[256];
+    struct sockaddr_in caddr;
+    socklen_t clen = sizeof(caddr);
+
+    for (;;) {
+        int n = recvfrom(sock, buf, sizeof(buf) - 1, 0,
+                         (struct sockaddr *)&caddr, &clen);
+        if (n < 12) continue; /* too short to be a DNS query */
+
+        /* Build response in-place:
+         *  - flip QR bit, set AA+RA, copy question into answer section */
+        uint8_t resp[512];
+        int qlen = n;
+        memcpy(resp, buf, qlen);
+
+        /* Flags: QR=1, Opcode=0, AA=1, TC=0, RD=copy, RA=1, RCODE=0 */
+        resp[2] = 0x81;
+        resp[3] = 0x80;
+        /* ANCOUNT = 1 */
+        resp[6] = 0x00; resp[7] = 0x01;
+        /* NSCOUNT = 0, ARCOUNT = 0 */
+        resp[8] = 0x00; resp[9] = 0x00;
+        resp[10]= 0x00; resp[11]= 0x00;
+
+        /* Append answer: pointer to question name, A, IN, TTL=60, RDLENGTH=4, IP */
+        int p = qlen;
+        if (p + 16 > (int)sizeof(resp)) { continue; }
+        resp[p++] = 0xC0; resp[p++] = 0x0C; /* pointer to name at offset 12 */
+        resp[p++] = 0x00; resp[p++] = 0x01; /* Type A */
+        resp[p++] = 0x00; resp[p++] = 0x01; /* Class IN */
+        resp[p++] = 0x00; resp[p++] = 0x00; /* TTL (high) */
+        resp[p++] = 0x00; resp[p++] = 0x3C; /* TTL = 60s */
+        resp[p++] = 0x00; resp[p++] = 0x04; /* RDLENGTH */
+        resp[p++] = AP_IP[0]; resp[p++] = AP_IP[1];
+        resp[p++] = AP_IP[2]; resp[p++] = AP_IP[3];
+
+        sendto(sock, resp, p, 0, (struct sockaddr *)&caddr, clen);
+    }
+}
+
+/* ------------------------------------------------------------------ */
 /*  HTTP server startup                                                 */
 /* ------------------------------------------------------------------ */
 static void start_http_server(void)
@@ -233,6 +296,7 @@ void web_console_init(void)
 
     start_http_server();
 
+    xTaskCreatePinnedToCore(dns_task,       "dns",     3072, NULL, 5, NULL, 0);
     xTaskCreatePinnedToCore(web_event_task, "web_evt", 4096, NULL, 2, NULL, 1);
 }
 
