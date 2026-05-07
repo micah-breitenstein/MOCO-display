@@ -2069,6 +2069,7 @@ static void open_settings_menu(void)
     /* Notify MEGA → matrix */
     const char *cmd = "SETTINGS:OPEN\n";
     uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
+    web_console_log_event("Settings: opened");
 }
 
 static void close_settings_menu(void)
@@ -2095,6 +2096,7 @@ static void close_settings_menu(void)
     /* Notify MEGA → matrix */
     const char *cmd = "SETTINGS:CLOSE\n";
     uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
+    web_console_log_event("Settings: closed");
 
     /* restore display */
     if (current_display_mode == DISPLAY_MODE_MANUAL && !status_error_active && !mode_message_active) {
