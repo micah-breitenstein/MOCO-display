@@ -3732,6 +3732,23 @@ static void show_controller_error_cb(lv_timer_t *timer)
 }
 #endif
 
+/* ================================================================
+ *  Web console command handler — forwards browser CMD: messages to Mega
+ * ================================================================ */
+static void web_cmd_handler(const char *cmd)
+{
+    /* Forward CMD: messages to the Mega via UART verbatim, appending newline */
+    if (strncmp(cmd, "CMD:", 4) == 0) {
+        char buf[80];
+        snprintf(buf, sizeof(buf), "%s\n", cmd);
+        uart_write_bytes(STATUS_UART_PORT, buf, strlen(buf));
+        /* Echo to event log */
+        char log_buf[80];
+        snprintf(log_buf, sizeof(log_buf), "Web CMD: %s", cmd + 4);
+        web_console_log_event(log_buf);
+    }
+}
+
 void app_main(void)
 {
     ESP_LOGI(TAG, "Initialize SPI bus");
@@ -3809,6 +3826,7 @@ void app_main(void)
 
     /* WiFi AP + web event console — started AFTER DMA buffers are allocated */
     web_console_init();
+    web_console_set_cmd_handler(web_cmd_handler);
 
     /* Touch input device */
     static lv_indev_drv_t indev_drv;

@@ -7,40 +7,38 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-header{background:#111;border-bottom:2px solid #e87700;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.brand{font-size:1.2em;font-weight:700;color:#ff9000;letter-spacing:4px}
+header{background:#111;border-bottom:2px solid #e87700;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.brand{font-size:1.15em;font-weight:700;color:#ff9000;letter-spacing:4px}
 .conn{display:flex;align-items:center;gap:8px;font-size:0.75em;color:#888}
 .dot{width:9px;height:9px;border-radius:50%;background:#333;transition:background .4s,box-shadow .4s}
 .dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
-/* Tabs */
-.tabs{display:flex;background:#111;border-bottom:1px solid #222;flex-shrink:0}
-.tab{flex:1;padding:11px 0;text-align:center;font-size:0.78em;color:#666;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;letter-spacing:1px;user-select:none}
-.tab.active{color:#ff9000;border-bottom-color:#ff9000}
-/* Panels */
-.panel{display:none;flex:1;overflow-y:auto;flex-direction:column}
-.panel.active{display:flex}
-/* Console */
-#log{flex:1;overflow-y:auto;padding:10px 16px;display:flex;flex-direction:column;gap:1px}
+nav{background:#0a0a0a;border-bottom:1px solid #222;display:flex;flex-shrink:0}
+nav button{flex:1;background:none;border:none;border-bottom:2px solid transparent;color:#666;font-family:inherit;font-size:0.78em;letter-spacing:2px;padding:10px 4px;cursor:pointer;transition:color .2s,border-color .2s;text-transform:uppercase}
+nav button.active{color:#ff9000;border-bottom-color:#ff9000}
+nav button:active{opacity:.7}
+.page{flex:1;overflow-y:auto;display:none;flex-direction:column}
+.page.active{display:flex}
+/* ---- Log page ---- */
+#log{padding:10px 16px;display:flex;flex-direction:column;gap:1px}
 .ev{display:flex;gap:12px;font-size:0.82em;padding:4px 0;border-bottom:1px solid #181818}
 .ts{color:#444;white-space:nowrap;flex-shrink:0}
 .msg{word-break:break-word}
 .msg.sys{color:#ffa040}
 .msg.evt{color:#b0d4b0}
-.msg.ok{color:#00e676}
-.msg.err{color:#ff4444}
-/* Control panels */
-.ctrl{padding:14px 14px 20px;display:flex;flex-direction:column;gap:14px}
-.ctrl-status{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;font-size:0.8em;color:#888;min-height:38px;display:flex;align-items:center;gap:8px}
-.ctrl-status .indicator{width:8px;height:8px;border-radius:50%;background:#333;flex-shrink:0}
-.ctrl-status.running .indicator{background:#ff9000;box-shadow:0 0 6px #ff9000}
-.ctrl-status.running{color:#ff9000}
+/* ---- Control pages ---- */
+.ctrl-page{padding:20px 18px;gap:16px;flex-direction:column}
+.section-title{font-size:0.7em;letter-spacing:3px;color:#555;text-transform:uppercase;margin-bottom:4px}
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mode-btn{background:#1a1a1a;border:1px solid #2c2c2c;border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:background .15s,border-color .15s;-webkit-tap-highlight-color:transparent;user-select:none;display:flex;flex-direction:column;gap:5px;align-items:center}
-.mode-btn:active,.mode-btn.active{background:#2a1f00;border-color:#ff9000}
-.mode-btn .icon{font-size:1.5em;line-height:1}
-.mode-btn .lbl{font-size:0.72em;color:#aaa;line-height:1.3}
-.stop-btn{background:#1a0000;border:2px solid #660000;border-radius:10px;padding:16px;text-align:center;cursor:pointer;color:#ff4444;font-size:1em;letter-spacing:2px;transition:background .15s,border-color .15s;-webkit-tap-highlight-color:transparent;user-select:none}
-.stop-btn:active{background:#2a0000;border-color:#ff0000}
+.mode-btn{background:#161616;border:1px solid #2a2a2a;border-radius:6px;color:#ccc;font-family:inherit;font-size:0.8em;padding:14px 10px;cursor:pointer;text-align:center;line-height:1.4;transition:background .15s,border-color .15s}
+.mode-btn:active{background:#222}
+.mode-btn.danger{border-color:#5a1a1a;color:#e87070}
+.mode-btn.danger:active{background:#2a0e0e}
+.mode-btn .label{font-weight:700;font-size:1em;letter-spacing:1px}
+.mode-btn .sub{font-size:0.8em;color:#555;margin-top:3px}
+.stop-btn{background:#1a0a0a;border:1px solid #8b2020;border-radius:6px;color:#f06060;font-family:inherit;font-size:0.85em;font-weight:700;letter-spacing:2px;padding:16px;cursor:pointer;text-align:center;text-transform:uppercase;transition:background .15s}
+.stop-btn:active{background:#2a0e0e}
+.status-chip{background:#111;border:1px solid #222;border-radius:4px;padding:8px 12px;font-size:0.78em;color:#888}
+.status-chip span{color:#e0e0e0}
 footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0.7em;color:#444;flex-shrink:0}
 </style>
 </head>
@@ -49,126 +47,128 @@ footer{background:#111;border-top:1px solid #1e1e1e;padding:6px 18px;font-size:0
   <span class="brand">MOCO JIB</span>
   <div class="conn">
     <div class="dot" id="dot"></div>
-    <span id="status">Connecting&hellip;</span>
+    <span id="conn-status">Connecting&hellip;</span>
   </div>
 </header>
-<div class="tabs">
-  <div class="tab active" id="tab-console" onclick="showTab('console')">CONSOLE</div>
-  <div class="tab" id="tab-timelapse" onclick="showTab('timelapse')">TIMELAPSE</div>
-  <div class="tab" id="tab-bounce" onclick="showTab('bounce')">BOUNCE</div>
-</div>
+<nav>
+  <button class="active" onclick="showPage('log',this)">Log</button>
+  <button onclick="showPage('timelapse',this)">Timelapse</button>
+  <button onclick="showPage('bounce',this)">Bounce</button>
+  <button onclick="showPage('drone',this)">Drone</button>
+</nav>
 
-<!-- Console panel -->
-<div class="panel active" id="panel-console">
+<!-- LOG PAGE -->
+<div class="page active" id="page-log">
   <div id="log"></div>
 </div>
 
-<!-- Timelapse panel -->
-<div class="panel" id="panel-timelapse">
-  <div class="ctrl">
-    <div class="ctrl-status" id="tl-status">
-      <span class="indicator"></span><span id="tl-status-text">Idle</span>
-    </div>
+<!-- TIMELAPSE PAGE -->
+<div class="page ctrl-page" id="page-timelapse">
+  <div>
+    <div class="section-title">Status</div>
+    <div class="status-chip">Mode: <span id="tl-status">Idle</span></div>
+  </div>
+  <div>
+    <div class="section-title">Start Direction</div>
     <div class="mode-grid">
-      <div class="mode-btn" onclick="tlStart(1)"><span class="icon">↙</span><span class="lbl">Swing L<br>Boom ↓</span></div>
-      <div class="mode-btn" onclick="tlStart(2)"><span class="icon">↖</span><span class="lbl">Swing L<br>Boom ↑</span></div>
-      <div class="mode-btn" onclick="tlStart(3)"><span class="icon">↗</span><span class="lbl">Swing R<br>Boom ↑</span></div>
-      <div class="mode-btn" onclick="tlStart(4)"><span class="icon">↘</span><span class="lbl">Swing R<br>Boom ↓</span></div>
-      <div class="mode-btn" onclick="tlStart(5)"><span class="icon">←</span><span class="lbl">Swing Left</span></div>
-      <div class="mode-btn" onclick="tlStart(6)"><span class="icon">↑</span><span class="lbl">Boom Up</span></div>
-      <div class="mode-btn" onclick="tlStart(7)"><span class="icon">→</span><span class="lbl">Swing Right</span></div>
-      <div class="mode-btn" onclick="tlStart(8)"><span class="icon">↓</span><span class="lbl">Boom Down</span></div>
+      <button class="mode-btn" onclick="send('CMD:TL_START:5')"><div class="label">&#8592; Swing L</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:7')"><div class="label">Swing R &#8594;</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:6')"><div class="label">Boom &#8593;</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:8')"><div class="label">Boom &#8595;</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:2')"><div class="label">&#8592; Swing L</div><div class="sub">+ Boom &#8593;</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:3')"><div class="label">Swing R &#8594;</div><div class="sub">+ Boom &#8593;</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:1')"><div class="label">&#8592; Swing L</div><div class="sub">+ Boom &#8595;</div></button>
+      <button class="mode-btn" onclick="send('CMD:TL_START:4')"><div class="label">Swing R &#8594;</div><div class="sub">+ Boom &#8595;</div></button>
     </div>
-    <div class="stop-btn" onclick="remoteStop()">&#9632; STOP</div>
+  </div>
+  <button class="stop-btn" onclick="send('CMD:TL_STOP')">&#9632; Stop Timelapse</button>
+</div>
+
+<!-- BOUNCE PAGE -->
+<div class="page ctrl-page" id="page-bounce">
+  <div>
+    <div class="section-title">Status</div>
+    <div class="status-chip">Mode: <span id="bounce-status">Idle</span></div>
+  </div>
+  <div>
+    <div class="section-title">Direction</div>
+    <div class="mode-grid">
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:5')"><div class="label">&#8592; Swing L</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:7')"><div class="label">Swing R &#8594;</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:6')"><div class="label">Boom &#8593;</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:8')"><div class="label">Boom &#8595;</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:2')"><div class="label">&#8592; Swing L</div><div class="sub">+ Boom &#8593;</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:3')"><div class="label">Swing R &#8594;</div><div class="sub">+ Boom &#8593;</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:1')"><div class="label">&#8592; Swing L</div><div class="sub">+ Boom &#8595;</div></button>
+      <button class="mode-btn" onclick="send('CMD:BOUNCE_START:4')"><div class="label">Swing R &#8594;</div><div class="sub">+ Boom &#8595;</div></button>
+    </div>
+  </div>
+  <button class="stop-btn" onclick="send('CMD:BOUNCE_STOP')">&#9632; Stop Bounce</button>
+</div>
+
+<!-- DRONE PAGE -->
+<div class="page ctrl-page" id="page-drone">
+  <div>
+    <div class="section-title">Status</div>
+    <div class="status-chip">Mode: <span id="drone-status">Manual</span></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <button class="mode-btn" style="padding:18px" onclick="send('CMD:DRONE_ON')"><div class="label">&#9654; Activate Drone Mode</div></button>
+    <button class="stop-btn" onclick="send('CMD:DRONE_OFF')">&#9632; Deactivate Drone Mode</button>
   </div>
 </div>
 
-<!-- Bounce panel -->
-<div class="panel" id="panel-bounce">
-  <div class="ctrl">
-    <div class="ctrl-status" id="bn-status">
-      <span class="indicator"></span><span id="bn-status-text">Idle</span>
-    </div>
-    <div class="mode-grid">
-      <div class="mode-btn" onclick="bnStart(1)"><span class="icon">↙</span><span class="lbl">Swing L<br>Boom ↓</span></div>
-      <div class="mode-btn" onclick="bnStart(2)"><span class="icon">↖</span><span class="lbl">Swing L<br>Boom ↑</span></div>
-      <div class="mode-btn" onclick="bnStart(3)"><span class="icon">↗</span><span class="lbl">Swing R<br>Boom ↑</span></div>
-      <div class="mode-btn" onclick="bnStart(4)"><span class="icon">↘</span><span class="lbl">Swing R<br>Boom ↓</span></div>
-      <div class="mode-btn" onclick="bnStart(5)"><span class="icon">←</span><span class="lbl">Swing Left</span></div>
-      <div class="mode-btn" onclick="bnStart(6)"><span class="icon">↑</span><span class="lbl">Boom Up</span></div>
-      <div class="mode-btn" onclick="bnStart(7)"><span class="icon">→</span><span class="lbl">Swing Right</span></div>
-      <div class="mode-btn" onclick="bnStart(8)"><span class="icon">↓</span><span class="lbl">Boom Down</span></div>
-    </div>
-    <div class="stop-btn" onclick="remoteStop()">&#9632; STOP</div>
-  </div>
-</div>
-
-<footer>192.168.4.1 &nbsp;&bull;&nbsp; MOCO Jib</footer>
+<footer>192.168.4.1 &nbsp;&bull;&nbsp; MOCO Jib Console</footer>
 <script>
 (function(){
   var ws,rt;
   var log=document.getElementById('log');
   var dot=document.getElementById('dot');
-  var st=document.getElementById('status');
-  var tlSt=document.getElementById('tl-status');
-  var tlStTxt=document.getElementById('tl-status-text');
-  var bnSt=document.getElementById('bn-status');
-  var bnStTxt=document.getElementById('bn-status-text');
+  var connSt=document.getElementById('conn-status');
 
-  /* Tab switching */
-  window.showTab=function(name){
-    ['console','timelapse','bounce'].forEach(function(n){
-      document.getElementById('tab-'+n).classList.toggle('active',n===name);
-      document.getElementById('panel-'+n).classList.toggle('active',n===name);
-    });
+  window.showPage=function(id,btn){
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+    document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active')});
+    document.getElementById('page-'+id).classList.add('active');
+    btn.classList.add('active');
   };
 
-  /* Helpers */
-  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-  function send(msg){if(ws&&ws.readyState===1)ws.send(msg);}
+  window.send=function(cmd){
+    if(ws&&ws.readyState===1){ws.send(cmd)}
+    else{logRow('Not connected','sys')}
+  };
 
-  function row(msg,cls,ts){
+  function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
+  function logRow(msg,cls){
     var el=document.createElement('div');el.className='ev';
-    el.innerHTML='<span class="ts">'+(ts||'--:--:--')+'</span><span class="msg '+(cls||'evt')+'">'+esc(msg)+'</span>';
+    el.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'evt')+'">'+String(msg).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>';
     log.appendChild(el);
     if(log.children.length>500)log.removeChild(log.firstChild);
     log.scrollTop=log.scrollHeight;
   }
-
-  /* Update status banners from incoming events */
-  function updateStatus(raw){
-    if(/^Mode: Timelapse/.test(raw)){
-      tlSt.className='ctrl-status running';
-      tlStTxt.textContent=raw.replace('Mode: ','');
-    } else if(/^Mode: Bounce/.test(raw)){
-      bnSt.className='ctrl-status running';
-      bnStTxt.textContent=raw.replace('Mode: ','');
-    } else if(/^Mode: (Manual|Drone|Error)/.test(raw)||/REMOTE_STOP|EMERGENCY_STOP/.test(raw)){
-      tlSt.className='ctrl-status';tlStTxt.textContent='Idle';
-      bnSt.className='ctrl-status';bnStTxt.textContent='Idle';
-    } else if(/TL_START:BLOCKED|BOUNCE_START:BLOCKED/.test(raw)){
-      row(raw,'err');
+  function updateStatus(msg){
+    /* update status chips from event stream */
+    if(msg.indexOf('Mode: Timelapse')===0||msg.indexOf('TIMELAPSE')>=0){
+      var s=msg.replace(/^Mode:\s*/,'');
+      document.getElementById('tl-status').textContent=s;
+    } else if(msg.indexOf('Mode: Bounce')===0||msg.indexOf('BOUNCE')>=0){
+      var s=msg.replace(/^Mode:\s*/,'');
+      document.getElementById('bounce-status').textContent=s;
+    } else if(msg.indexOf('Mode: Drone')===0){
+      document.getElementById('drone-status').textContent='Drone Mode Active';
+    } else if(msg.indexOf('Mode: Manual')===0){
+      document.getElementById('drone-status').textContent='Manual';
+      document.getElementById('tl-status').textContent='Idle';
+      document.getElementById('bounce-status').textContent='Idle';
     }
   }
-
-  /* Control actions */
-  window.tlStart=function(n){send('SET:TL_START:'+n);row('→ Timelapse mode '+n,'sys');};
-  window.bnStart=function(n){send('SET:BOUNCE_START:'+n);row('→ Bounce mode '+n,'sys');};
-  window.remoteStop=function(){send('SET:STOP:1');row('→ STOP','sys');};
-
-  /* WebSocket */
   function connect(){
     clearTimeout(rt);
     ws=new WebSocket('ws://'+location.host+'/ws');
-    ws.onopen=function(){dot.className='dot live';st.textContent='Live';row('Connected','sys');};
-    ws.onmessage=function(e){
-      var m=e.data.match(/^(\d{2}:\d{2}:\d{2}) ([\s\S]*)$/);
-      var ts=m?m[1]:null, msg=m?m[2]:e.data;
-      updateStatus(msg);
-      row(msg,'evt',ts);
-    };
-    ws.onclose=function(){dot.className='dot';st.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000);};
-    ws.onerror=function(){ws.close();};
+    ws.onopen=function(){dot.className='dot live';connSt.textContent='Live';logRow('Console connected','sys')};
+    ws.onmessage=function(e){logRow(e.data);updateStatus(e.data)};
+    ws.onclose=function(){dot.className='dot';connSt.textContent='Reconnecting\u2026';rt=setTimeout(connect,3000)};
+    ws.onerror=function(){ws.close()};
   }
   connect();
 })();

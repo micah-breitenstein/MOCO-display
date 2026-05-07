@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "esp_timer.h"
-
 #include "esp_err.h"
 #include "esp_event.h"
 #include "esp_http_server.h"
@@ -17,9 +15,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
-#include "lwip/sockets.h"
-#include "lwip/netdb.h"
-#include <fcntl.h>
 
 /* ------------------------------------------------------------------ */
 #define AP_SSID        "MOCO Jib"
@@ -28,8 +23,6 @@
 
 #define EVENT_QUEUE_DEPTH  64
 #define EVENT_MSG_LEN      160
-#define CMD_QUEUE_DEPTH    16
-#define CMD_MSG_LEN        64
 
 static const char *TAG = "web_console";
 
@@ -38,10 +31,11 @@ extern const uint8_t landing_html_start[] asm("_binary_landing_html_start");
 extern const uint8_t landing_html_end[]   asm("_binary_landing_html_end");
 
 /* ------------------------------------------------------------------ */
-static httpd_handle_t s_server = NULL;
-static int            s_ws_fd  = -1;   /* fd of the active WebSocket client */
-static QueueHandle_t  s_eq     = NULL; /* outgoing event queue (ESP32 → browser) */
-static QueueHandle_t  s_cq     = NULL; /* incoming command queue (browser → Mega)  */
+static httpd_handle_t  s_server   = NULL;
+static int             s_ws_fd   = -1;   /* fd of the active WebSocket client */
+static QueueHandle_t   s_eq      = NULL;
+static SemaphoreHandle_t s_send_sem = NULL; /* serialises one in-flight WS frame */
+static web_console_cmd_handler_t s_cmd_handler = NULL;
 
 /* ------------------------------------------------------------------ */
 /*  Async WebSocket send (runs inside the httpd task via queue_work)   */
@@ -66,6 +60,7 @@ static void ws_do_send(void *arg)
         s_ws_fd = -1;   /* mark disconnected */
     }
     free(w);
+    xSemaphoreGive(s_send_sem);   /* allow next send */
 }
 
 /* ------------------------------------------------------------------ */
@@ -76,50 +71,10 @@ static void ws_do_send(void *arg)
  * satisfies iOS captive-portal detection so Safari opens automatically. */
 static esp_err_t root_handler(httpd_req_t *req)
 {
-    ESP_LOGI(TAG, "HTTP GET %s", req->uri);
-
-    /* Captive-portal probe URLs get an instant 302 so the OS mini-browser
-     * doesn't have to receive 9KB HTML. */
-    if (strcmp(req->uri, "/") != 0) {
-        httpd_resp_set_status(req, "302 Found");
-        httpd_resp_set_hdr(req, "Location", "http://192.168.4.1/");
-        httpd_resp_set_hdr(req, "Connection", "close");
-        return httpd_resp_send(req, NULL, 0);
-    }
-
-    /* httpd enables O_NONBLOCK on all sockets when WS support is compiled in.
-     * Non-blocking send() returns EAGAIN immediately if the TCP send buffer
-     * is momentarily full — causing the handler to fail before the 9KB page
-     * is delivered.  Temporarily clear O_NONBLOCK and add a 10-second send
-     * timeout so the kernel waits for ACKs instead of bailing out. */
-    int sockfd = httpd_req_to_sockfd(req);
-    int saved_flags = fcntl(sockfd, F_GETFL, 0);
-    fcntl(sockfd, F_SETFL, saved_flags & ~O_NONBLOCK);
-    struct timeval snd_tv = { .tv_sec = 10, .tv_usec = 0 };
-    setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &snd_tv, sizeof(snd_tv));
-
-    const char *p    = (const char *)landing_html_start;
-    size_t remaining = (size_t)(landing_html_end - landing_html_start);
+    size_t len = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
-    httpd_resp_set_hdr(req, "Connection", "close");
-
-    esp_err_t res = ESP_OK;
-    while (remaining > 0) {
-        size_t chunk = remaining < 1024 ? remaining : 1024;
-        if (httpd_resp_send_chunk(req, p, (ssize_t)chunk) != ESP_OK) {
-            httpd_resp_send_chunk(req, NULL, 0);
-            res = ESP_FAIL;
-            break;
-        }
-        p         += chunk;
-        remaining -= chunk;
-    }
-    if (res == ESP_OK) httpd_resp_send_chunk(req, NULL, 0);
-
-    /* Restore non-blocking so the WebSocket handler still works on this fd */
-    fcntl(sockfd, F_SETFL, saved_flags);
-    return res;
+    return httpd_resp_send(req, (const char *)landing_html_start, (ssize_t)len);
 }
 
 /* WebSocket upgrade + frame handler */
@@ -133,18 +88,18 @@ static esp_err_t ws_handler(httpd_req_t *req)
     }
     /* Drain incoming frames (we only care about outbound events) */
     httpd_ws_frame_t f = {0};
-    uint8_t buf[CMD_MSG_LEN] = {0};
+    uint8_t buf[64] = {0};
     f.payload = buf;
     esp_err_t err = httpd_ws_recv_frame(req, &f, sizeof(buf) - 1);
     if (err != ESP_OK) {
         return err;
     }
+    if (f.type == HTTPD_WS_TYPE_TEXT && f.len > 0 && s_cmd_handler) {
+        buf[f.len < sizeof(buf) ? f.len : sizeof(buf) - 1] = '\0';
+        s_cmd_handler((const char *)buf);
+    }
     if (f.type == HTTPD_WS_TYPE_CLOSE) {
         s_ws_fd = -1;
-    } else if (f.type == HTTPD_WS_TYPE_TEXT && f.len > 0 && s_cq) {
-        /* Commands from browser: enqueue for relay to Mega over UART */
-        buf[f.len < sizeof(buf) ? f.len : sizeof(buf) - 1] = '\0';
-        xQueueSendToBack(s_cq, buf, 0);
     }
     return ESP_OK;
 }
@@ -166,9 +121,13 @@ static void web_event_task(void *arg)
         w->fd = s_ws_fd;
         snprintf(w->msg, sizeof(w->msg), "%s", msg);
 
+        /* Wait for the previous frame to finish sending (max 1 s) */
+        xSemaphoreTake(s_send_sem, pdMS_TO_TICKS(1000));
+
         if (httpd_queue_work(s_server, ws_do_send, w) != ESP_OK) {
             free(w);
             s_ws_fd = -1;
+            xSemaphoreGive(s_send_sem);  /* unblock for next attempt */
         }
     }
 }
@@ -193,76 +152,13 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
 }
 
 /* ------------------------------------------------------------------ */
-/*  Captive-portal DNS responder — answers every query with 192.168.4.1 */
-/* ------------------------------------------------------------------ */
-static void dns_task(void *arg)
-{
-    (void)arg;
-    /* DNS response template: all A-record queries answered with our IP */
-    static const uint8_t AP_IP[4] = {192, 168, 4, 1};
-    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (sock < 0) { vTaskDelete(NULL); return; }
-
-    struct sockaddr_in saddr = {
-        .sin_family = AF_INET,
-        .sin_port   = htons(53),
-        .sin_addr.s_addr = htonl(INADDR_ANY),
-    };
-    if (bind(sock, (struct sockaddr *)&saddr, sizeof(saddr)) < 0) {
-        close(sock); vTaskDelete(NULL); return;
-    }
-    ESP_LOGI(TAG, "DNS responder started (port 53)");
-
-    uint8_t buf[256];
-    struct sockaddr_in caddr;
-    socklen_t clen = sizeof(caddr);
-
-    for (;;) {
-        int n = recvfrom(sock, buf, sizeof(buf) - 1, 0,
-                         (struct sockaddr *)&caddr, &clen);
-        if (n < 12) continue; /* too short to be a DNS query */
-
-        /* Build response in-place:
-         *  - flip QR bit, set AA+RA, copy question into answer section */
-        uint8_t resp[512];
-        int qlen = n;
-        memcpy(resp, buf, qlen);
-
-        /* Flags: QR=1, Opcode=0, AA=1, TC=0, RD=copy, RA=1, RCODE=0 */
-        resp[2] = 0x81;
-        resp[3] = 0x80;
-        /* ANCOUNT = 1 */
-        resp[6] = 0x00; resp[7] = 0x01;
-        /* NSCOUNT = 0, ARCOUNT = 0 */
-        resp[8] = 0x00; resp[9] = 0x00;
-        resp[10]= 0x00; resp[11]= 0x00;
-
-        /* Append answer: pointer to question name, A, IN, TTL=60, RDLENGTH=4, IP */
-        int p = qlen;
-        if (p + 16 > (int)sizeof(resp)) { continue; }
-        resp[p++] = 0xC0; resp[p++] = 0x0C; /* pointer to name at offset 12 */
-        resp[p++] = 0x00; resp[p++] = 0x01; /* Type A */
-        resp[p++] = 0x00; resp[p++] = 0x01; /* Class IN */
-        resp[p++] = 0x00; resp[p++] = 0x00; /* TTL (high) */
-        resp[p++] = 0x00; resp[p++] = 0x3C; /* TTL = 60s */
-        resp[p++] = 0x00; resp[p++] = 0x04; /* RDLENGTH */
-        resp[p++] = AP_IP[0]; resp[p++] = AP_IP[1];
-        resp[p++] = AP_IP[2]; resp[p++] = AP_IP[3];
-
-        sendto(sock, resp, p, 0, (struct sockaddr *)&caddr, clen);
-        vTaskDelay(1); /* yield so WiFi/lwIP tasks get CPU */
-    }
-}
-
-/* ------------------------------------------------------------------ */
 /*  HTTP server startup                                                 */
 /* ------------------------------------------------------------------ */
 static void start_http_server(void)
 {
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
-    cfg.max_open_sockets     = 7;
-    cfg.stack_size           = 8192;
+    cfg.max_open_sockets     = 5;
     cfg.uri_match_fn         = httpd_uri_match_wildcard;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
@@ -300,11 +196,13 @@ void web_console_init(void)
         ESP_LOGE(TAG, "Failed to create event queue");
         return;
     }
-    s_cq = xQueueCreate(CMD_QUEUE_DEPTH, CMD_MSG_LEN);
-    if (!s_cq) {
-        ESP_LOGE(TAG, "Failed to create command queue");
+
+    s_send_sem = xSemaphoreCreateBinary();
+    if (!s_send_sem) {
+        ESP_LOGE(TAG, "Failed to create send semaphore");
         return;
     }
+    xSemaphoreGive(s_send_sem);  /* start in available state */
 
     ESP_ERROR_CHECK(esp_netif_init());
 
@@ -338,31 +236,18 @@ void web_console_init(void)
 
     start_http_server();
 
-    xTaskCreatePinnedToCore(dns_task,       "dns",     3072, NULL, 5, NULL, 0);
     xTaskCreatePinnedToCore(web_event_task, "web_evt", 4096, NULL, 2, NULL, 1);
 }
 
 void web_console_log_event(const char *msg)
 {
     if (!s_eq || !msg) return;
-    /* Prepend ESP32 uptime HH:MM:SS so browser shows when the event
-     * actually occurred, not when the browser received the WS frame. */
-    uint64_t us   = (uint64_t)esp_timer_get_time();
-    uint32_t secs = (uint32_t)(us / 1000000ULL);
-    uint32_t hh   = secs / 3600;
-    uint32_t mm   = (secs % 3600) / 60;
-    uint32_t ss   = secs % 60;
     char buf[EVENT_MSG_LEN];
-    snprintf(buf, sizeof(buf), "%02lu:%02lu:%02lu %s", (unsigned long)hh, (unsigned long)mm, (unsigned long)ss, msg);
+    snprintf(buf, sizeof(buf), "%s", msg);
     xQueueSendToBack(s_eq, buf, 0);   /* non-blocking; drops if full */
 }
 
-bool web_console_get_pending_cmd(char *buf, size_t len)
+void web_console_set_cmd_handler(web_console_cmd_handler_t handler)
 {
-    if (!s_cq || !buf || len == 0) return false;
-    char tmp[CMD_MSG_LEN];
-    if (xQueueReceive(s_cq, tmp, 0) != pdTRUE) return false;
-    strncpy(buf, tmp, len - 1);
-    buf[len - 1] = '\0';
-    return true;
+    s_cmd_handler = handler;
 }

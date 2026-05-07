@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stdbool.h>
-#include <stddef.h>
-
 /**
  * web_console.h
  *
@@ -35,12 +32,12 @@ void web_console_init(void);
 void web_console_log_event(const char *msg);
 
 /**
- * Retrieve the next command received from a browser WebSocket client.
- * Returns true and fills buf (null-terminated) if a command is pending.
- * Returns false if the queue is empty.
- * Intended to be polled from the UART task to relay browser commands to the Mega.
+ * Register a callback that is invoked (from the httpd task context) when
+ * the browser sends a text frame over WebSocket.  Pass NULL to deregister.
+ * The callback must be non-blocking.
  */
-bool web_console_get_pending_cmd(char *buf, size_t len);
+typedef void (*web_console_cmd_handler_t)(const char *cmd);
+void web_console_set_cmd_handler(web_console_cmd_handler_t handler);
 
 #ifdef __cplusplus
 }
