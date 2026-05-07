@@ -528,11 +528,9 @@ static void apply_night_mode(void)
         settings[SETTING_MTX_BRIGHTNESS].value = 0;
         web_console_log_event("Night Mode: ON");
     } else {
-        /* Restore display to 100%, matrix to its saved value */
+        /* Restore display to 100%, matrix to 5% */
         settings[SETTING_BRIGHTNESS].value = 100;
-        if (night_saved_mtx >= 0) {
-            settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
-        }
+        settings[SETTING_MTX_BRIGHTNESS].value = 5;
         night_saved_mtx = -1;
         web_console_log_event("Night Mode: OFF");
     }
@@ -3059,27 +3057,10 @@ static void switch_display_mode(DisplayMode mode, const char *detail_msg, uint64
     current_display_mode = mode;
     set_drone_mode_visible(false);
 
-    /* Log mode transitions to web console — debounce: skip if same mode+detail
-     * fired again within 400 ms to suppress bursts from rapid UART messages. */
+    /* Log mode transitions to web console */
     {
-        static DisplayMode  _last_log_mode   = -1;
-        static char         _last_log_detail[48] = "";
-        static int64_t      _last_log_us     = 0;
-        int64_t _now_us = esp_timer_get_time();
         bool is_variant_mode = (mode == DISPLAY_MODE_BOUNCE || mode == DISPLAY_MODE_TIMELAPSE);
-        /* Build candidate detail string for comparison */
-        char _cmp_detail[48] = "";
-        if (is_variant_mode && detail_msg && detail_msg[0]) {
-            strncpy(_cmp_detail, detail_msg, sizeof(_cmp_detail) - 1);
-            _cmp_detail[sizeof(_cmp_detail) - 1] = '\0';
-        }
-        bool same_as_last = (mode == _last_log_mode) &&
-                            (strcmp(_cmp_detail, _last_log_detail) == 0);
-        bool too_soon     = (_now_us - _last_log_us) < 400000LL; /* 400 ms */
-        if (!(same_as_last && too_soon) && (mode != previous_mode || is_variant_mode)) {
-            _last_log_mode = mode;
-            strncpy(_last_log_detail, _cmp_detail, sizeof(_last_log_detail));
-            _last_log_us = _now_us;
+        if (mode != previous_mode || is_variant_mode) {
             char _buf[80];
             if (is_variant_mode && detail_msg && detail_msg[0]) {
                 /* Collapse newlines in detail for single-line log entry */
@@ -3210,21 +3191,8 @@ static void status_uart_task(void *arg)
             }
         }
 
-        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(50));
+        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(5));
         if (len <= 0) {
-            /* Poll for commands queued by the web UI and relay them to the Mega. */
-            char web_cmd[64];
-            while (web_console_get_pending_cmd(web_cmd, sizeof(web_cmd))) {
-                /* Append newline if missing */
-                size_t clen = strlen(web_cmd);
-                if (clen > 0 && clen < sizeof(web_cmd) - 1 && web_cmd[clen - 1] != '\n') {
-                    web_cmd[clen]     = '\n';
-                    web_cmd[clen + 1] = '\0';
-                    clen++;
-                }
-                uart_write_bytes(STATUS_UART_PORT, web_cmd, clen);
-                ESP_LOGI(TAG, "Web cmd → Mega: %s", web_cmd);
-            }
             continue;
         }
 
@@ -3786,9 +3754,6 @@ void app_main(void)
     }
     load_settings_from_nvs();
 
-    /* Display brightness always starts at 100% on boot — not persisted across power cycles. */
-    settings[SETTING_BRIGHTNESS].value = 100;
-
     /* Always reset matrix brightness to 5% on boot (UI and hardware stay in sync). */
     settings[SETTING_MTX_BRIGHTNESS].value = 5;
     save_setting_to_nvs(SETTING_MTX_BRIGHTNESS);
@@ -3820,9 +3785,6 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_lcd_new_panel_sh8601(io_handle, &panel_config, &panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
-
-    /* Turn the backlight on immediately after panel init — default 100%. */
-    apply_brightness();
 
     lv_init();
 
