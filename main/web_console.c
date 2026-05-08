@@ -123,11 +123,21 @@ static void dns_task(void *arg)
  * satisfies iOS captive-portal detection so Safari opens automatically. */
 static esp_err_t root_handler(httpd_req_t *req)
 {
-    size_t len = (size_t)(landing_html_end - landing_html_start);
+    const char *data = (const char *)landing_html_start;
+    size_t      len  = (size_t)(landing_html_end - landing_html_start);
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
     httpd_resp_set_hdr(req, "Connection", "close");
-    return httpd_resp_send(req, (const char *)landing_html_start, (ssize_t)len);
+    /* Send in 1 KB chunks to avoid socket-buffer overflow on large pages */
+    const size_t CHUNK = 1024;
+    size_t sent = 0;
+    while (sent < len) {
+        size_t n = (len - sent) < CHUNK ? (len - sent) : CHUNK;
+        esp_err_t ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
+        if (ret != ESP_OK) return ret;
+        sent += n;
+    }
+    return httpd_resp_send_chunk(req, NULL, 0);
 }
 
 /* WebSocket upgrade + frame handler */
@@ -212,7 +222,6 @@ static void start_http_server(void)
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
     cfg.max_open_sockets     = 10;
-    cfg.uri_match_fn         = httpd_uri_match_wildcard;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start HTTP server");
@@ -228,9 +237,9 @@ static void start_http_server(void)
     };
     httpd_register_uri_handler(s_server, &ws_uri);
 
-    /* Catch-all: serves landing page + satisfies captive-portal probes */
+    /* Root page */
     static const httpd_uri_t root_uri = {
-        .uri     = "/*",
+        .uri     = "/",
         .method  = HTTP_GET,
         .handler = root_handler,
     };
@@ -291,7 +300,6 @@ void web_console_init(void)
     start_http_server();
 
     xTaskCreatePinnedToCore(web_event_task, "web_evt", 4096, NULL, 2, NULL, 1);
-    xTaskCreatePinnedToCore(dns_task,        "dns",     3072, NULL, 5, NULL, 0);
 }
 
 void web_console_log_event(const char *msg)

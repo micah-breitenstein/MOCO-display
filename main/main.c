@@ -3764,14 +3764,34 @@ static void show_controller_error_cb(lv_timer_t *timer)
  * ================================================================ */
 static void web_cmd_handler(const char *cmd)
 {
-    /* Forward CMD: messages to the Mega via UART verbatim, appending newline */
-    if (strncmp(cmd, "CMD:", 4) == 0) {
+    /* Display brightness — handle locally, do not forward to MEGA */
+    if (strncmp(cmd, "SET:DISP_BRT:", 13) == 0) {
+        int pct = atoi(cmd + 13);
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+        settings[SETTING_BRIGHTNESS].value = pct;
+        apply_brightness();
+        return;
+    }
+    /* Night mode is display-only — handle locally, do not forward to MEGA */
+    if (strncmp(cmd, "SET:NIGHT:", 10) == 0) {
+        settings[SETTING_NIGHT_MODE].value = (cmd[10] == '1') ? 1 : 0;
+        apply_night_mode();
+        return;
+    }
+    /* Forward CMD:/SET:/SETTINGS messages to the Mega via UART */
+    bool is_cmd      = strncmp(cmd, "CMD:", 4) == 0;
+    bool is_set      = strncmp(cmd, "SET:", 4) == 0;
+    bool is_settings = strncmp(cmd, "SETTINGS", 8) == 0;
+    if (is_cmd || is_set || is_settings) {
         char buf[80];
         snprintf(buf, sizeof(buf), "%s\n", cmd);
         uart_write_bytes(STATUS_UART_PORT, buf, strlen(buf));
-        /* Echo to event log */
         char log_buf[80];
-        snprintf(log_buf, sizeof(log_buf), "Web CMD: %s", cmd + 4);
+        if (is_cmd)
+            snprintf(log_buf, sizeof(log_buf), "Web CMD: %s", cmd + 4);
+        else
+            snprintf(log_buf, sizeof(log_buf), "Web SET: %s", cmd);
         web_console_log_event(log_buf);
     }
 }
