@@ -28,11 +28,13 @@ nav{background:#111;border-bottom:1px solid #222;flex-shrink:0;display:flex}
 .abtn{background:#1a1a1a;border:1px solid #444;border-radius:4px;color:#ccc;padding:4px 14px;font:inherit;font-size:0.78em;cursor:pointer}
 .abtn.red{border-color:#7a2020;color:#e05050}
 .sbtn{display:block;width:100%;margin-top:16px;padding:12px;background:#1a0d00;border:1px solid #e87700;border-radius:6px;color:#ff9000;font:inherit;font-size:0.82em;letter-spacing:2px;cursor:pointer}
+#tl{flex:1;overflow-y:auto;padding:8px 14px}.mc{background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:10px 8px;margin-bottom:7px;cursor:pointer;font-size:0.78em;text-align:center;color:#ccc;letter-spacing:1px}.mc.act{border-color:#e87700;color:#ff9000;background:#1a0d00}.stop{display:block;width:100%;padding:11px;background:#200000;border:1px solid #7a2020;border-radius:6px;color:#e05050;font:inherit;font-size:0.82em;letter-spacing:2px;cursor:pointer;margin-top:6px}.stop:disabled{opacity:.3;cursor:default}
 </style></head><body>
 <header><span class="brand">MOCO JIB</span><div class="conn"><div class="dot" id="dot"></div><span id="cst">Connecting…</span></div></header>
 <nav>
   <div class="tab on" id="tc" onclick="ST('c')">CONSOLE</div>
   <div class="tab" id="ts" onclick="ST('s')">SETTINGS</div>
+  <div class="tab" id="tt" onclick="ST('t')">TIMELAPSE</div>
 </nav>
 <div class="pane on" id="pc"><div id="log"></div></div>
 <div class="pane" id="ps"><div id="sp">
@@ -56,19 +58,25 @@ nav{background:#111;border-bottom:1px solid #222;flex-shrink:0;display:flex}
   <div class="sr"><span class="sl">Clear Zero</span><div class="sc"><button class="abtn red" onclick="send('SET:HOME_CLEAR:1')">CLEAR</button></div></div>
   <button class="sbtn" onclick="save()">SAVE SETTINGS</button>
 </div></div>
+<div class="pane" id="pt"><div id="tl"></div></div>
 <script>
 var log=document.getElementById('log'),dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt,rm=false,nm=false;
 function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
 function row(msg,cls){var e=document.createElement('div');e.className='ev';e.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'')+'">'+msg.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>';log.appendChild(e);if(log.children.length>500)log.removeChild(log.firstChild);log.scrollTop=log.scrollHeight}
 function send(m){if(ws&&ws.readyState===1)ws.send(m)}
-window.ST=function(t){['c','s'].forEach(function(k){document.getElementById('t'+k).className='tab'+(k===t?' on':'');document.getElementById('p'+k).className='pane'+(k===t?' on':'')})};
+window.ST=function(t){['c','s','t'].forEach(function(k){document.getElementById('t'+k).className='tab'+(k===t?' on':'');document.getElementById('p'+k).className='pane'+(k===t?' on':'')})};
 window.adj=function(id,d){var el=document.getElementById(id);el.value=Math.max(+el.min,Math.min(+el.max,+el.value+d))}
 window.adjDisp=function(d){var el=document.getElementById('dbrt');el.value=Math.max(0,Math.min(100,+el.value+d));send('SET:DISP_BRT:'+el.value)}
 function setUI(id,v){var b=document.getElementById(id);b.textContent=v?'ON':'OFF';b.className='tog'+(v?' on':'')}
 window.togNight=function(){nm=!nm;setUI('tnm',nm);send('SET:NIGHT:'+(nm?'1':'0'))}
 window.togRumble=function(){rm=!rm;setUI('trm',rm);send('SET:RUMBLE_MUTE:'+(rm?'1':'0'))}
 window.save=function(){send('SET:MTX_BRT:'+document.getElementById('mtxb').value);send('SET:TL_INT:'+document.getElementById('tli').value);send('SET:TL_STEP:'+document.getElementById('tls').value);send('SET:DRONE_ACCEL:'+document.getElementById('dac').value);send('SET:DRONE_ACTDECEL:'+document.getElementById('dad').value);send('SET:DRONE_RELDECEL:'+document.getElementById('drd').value);send('SET:DRONE_COOLDOWN:'+document.getElementById('dcd').value);send('SETTINGS_SAVED')}
-function parse(m){var o;if((o=m.match(/^TIMELAPSE_INTERVAL:(\d+)$/)))document.getElementById('tli').value=o[1];if((o=m.match(/^TIMELAPSE_STEPDIST:(\d+)$/)))document.getElementById('tls').value=o[1];if(m==='RUMBLE_MUTE:ON')setUI('trm',rm=true);if(m==='RUMBLE_MUTE:OFF')setUI('trm',rm=false);if(m==='Night Mode: ON'){setUI('tnm',nm=true);document.getElementById('mtxb').value=0;document.getElementById('dbrt').value=10}if(m==='Night Mode: OFF'){setUI('tnm',nm=false);document.getElementById('mtxb').value=5;document.getElementById('dbrt').value=100}}
+var tla=false,MN=['SWING L/BOOM D','SWING L/BOOM U','SWING R/BOOM U','SWING R/BOOM D','SWING L ONLY','BOOM UP ONLY','SWING R ONLY','BOOM DN ONLY'];
+(function(){var h='';for(var i=0;i<8;i++)h+='<div class="mc" id="m'+(i+1)+'" onclick="tlS('+(i+1)+')">'+(MN[i])+'</div>';h+='<button class="stop" id="sb" disabled onclick="tlX()">STOP TIMELAPSE</button>';document.getElementById('tl').innerHTML=h})();
+function tlReset(){tla=false;for(var i=1;i<=8;i++)document.getElementById('m'+i).className='mc';document.getElementById('sb').disabled=true}
+window.tlS=function(n){if(tla)return;tla=true;for(var i=1;i<=8;i++)document.getElementById('m'+i).className='mc'+(i===n?' act':'');document.getElementById('sb').disabled=false;send('CMD:TL_START:'+n)};
+window.tlX=function(){tlReset();send('CMD:TL_STOP')};
+function parse(m){var o;if((o=m.match(/^TIMELAPSE_INTERVAL:(\d+)$/)))document.getElementById('tli').value=o[1];if((o=m.match(/^TIMELAPSE_STEPDIST:(\d+)$/)))document.getElementById('tls').value=o[1];if(m==='RUMBLE_MUTE:ON')setUI('trm',rm=true);if(m==='RUMBLE_MUTE:OFF')setUI('trm',rm=false);if(m==='Night Mode: ON'){setUI('tnm',nm=true);document.getElementById('mtxb').value=0;document.getElementById('dbrt').value=10}if(m==='Night Mode: OFF'){setUI('tnm',nm=false);document.getElementById('mtxb').value=5;document.getElementById('dbrt').value=100}if(m==='WEB_CMD:TL_STOPPED'||m==='WEB_CMD:TL_BLOCKED')tlReset();if(m==='WEB_CMD:TL_STARTED'){tla=true;document.getElementById('sb').disabled=false}}
 function connect(){clearTimeout(rt);ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){dot.className='dot live';cst.textContent='Live';row('Console connected','sys')};ws.onmessage=function(e){row(e.data);parse(e.data)};ws.onclose=function(){dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,1000)};ws.onerror=function(){ws.close()}}
 rt=setTimeout(connect,1500);
 </script></body></html>
