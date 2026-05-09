@@ -8,8 +8,6 @@
 #include "esp_err.h"
 #include "esp_event.h"
 #include "esp_http_server.h"
-#include "lwip/sockets.h"
-#include "lwip/netdb.h"
 #include "esp_log.h"
 #include "esp_mac.h"
 #include "esp_netif.h"
@@ -29,8 +27,10 @@
 static const char *TAG = "web_console";
 
 /* Embedded landing page (added to CMakeLists EMBED_FILES) */
-extern const uint8_t landing_html_start[] asm("_binary_landing_html_start");
-extern const uint8_t landing_html_end[]   asm("_binary_landing_html_end");
+extern const uint8_t landing_html_start[]   asm("_binary_landing_html_start");
+extern const uint8_t landing_html_end[]     asm("_binary_landing_html_end");
+extern const uint8_t settings_html_start[]  asm("_binary_settings_html_start");
+extern const uint8_t settings_html_end[]    asm("_binary_settings_html_end");
 
 /* ------------------------------------------------------------------ */
 static httpd_handle_t  s_server   = NULL;
@@ -38,6 +38,52 @@ static int             s_ws_fd   = -1;   /* fd of the active WebSocket client */
 static QueueHandle_t   s_eq      = NULL;
 static SemaphoreHandle_t s_send_sem = NULL; /* serialises one in-flight WS frame */
 static web_console_cmd_handler_t s_cmd_handler = NULL;
+
+static void close_stale_ws_session(void)
+{
+    if (s_server && s_ws_fd >= 0) {
+        int old_fd = s_ws_fd;
+        s_ws_fd = -1;
+        httpd_sess_trigger_close(s_server, old_fd);
+    }
+}
+
+static esp_err_t send_html_chunks(httpd_req_t *req, const char *data, size_t len)
+{
+    const size_t chunk_size = 256;
+    size_t sent = 0;
+    int fd = httpd_req_to_sockfd(req);
+
+    ESP_LOGI(TAG, "Serving %s on fd=%d (%u bytes)", req->uri, fd, (unsigned)len);
+
+    httpd_resp_set_type(req, "text/html");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
+    httpd_resp_set_hdr(req, "Connection", "close");
+
+    while (sent < len) {
+        size_t n = (len - sent) < chunk_size ? (len - sent) : chunk_size;
+        esp_err_t ret = ESP_FAIL;
+
+        for (int attempt = 0; attempt < 5; ++attempt) {
+            ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
+            if (ret == ESP_OK) {
+                break;
+            }
+            ESP_LOGW(TAG, "Chunk send retry %d for %s fd=%d at %u/%u bytes (err=0x%x)",
+                     attempt + 1, req->uri, fd, (unsigned)sent, (unsigned)len, ret);
+            vTaskDelay(pdMS_TO_TICKS(15));
+        }
+
+        if (ret != ESP_OK) {
+            ESP_LOGE(TAG, "Failed serving %s on fd=%d at %u/%u bytes (err=0x%x)",
+                     req->uri, fd, (unsigned)sent, (unsigned)len, ret);
+            return ret;
+        }
+        sent += n;
+    }
+
+    return httpd_resp_send_chunk(req, NULL, 0);
+}
 
 /* ------------------------------------------------------------------ */
 /*  Async WebSocket send (runs inside the httpd task via queue_work)   */
@@ -59,94 +105,38 @@ static void ws_do_send(void *arg)
         .len        = strlen(w->msg),
     };
     if (httpd_ws_send_frame_async(w->hd, w->fd, &f) != ESP_OK) {
-        s_ws_fd = -1;   /* mark disconnected */
+        if (s_ws_fd == w->fd) s_ws_fd = -1;   /* only clear if still current fd */
     }
     free(w);
     xSemaphoreGive(s_send_sem);   /* allow next send */
 }
 
 /* ------------------------------------------------------------------ */
-/*  Captive-portal DNS responder — answers every query with 192.168.4.1 */
-/* ------------------------------------------------------------------ */
-static void dns_task(void *arg)
-{
-    (void)arg;
-    static const uint8_t AP_IP[4] = {192, 168, 4, 1};
-    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if (sock < 0) { vTaskDelete(NULL); return; }
-
-    struct sockaddr_in saddr = {
-        .sin_family = AF_INET,
-        .sin_port   = htons(53),
-        .sin_addr.s_addr = htonl(INADDR_ANY),
-    };
-    if (bind(sock, (struct sockaddr *)&saddr, sizeof(saddr)) < 0) {
-        close(sock); vTaskDelete(NULL); return;
-    }
-    ESP_LOGI(TAG, "DNS responder started (port 53)");
-
-    uint8_t buf[256];
-    struct sockaddr_in caddr;
-    socklen_t clen = sizeof(caddr);
-
-    for (;;) {
-        int n = recvfrom(sock, buf, sizeof(buf) - 1, 0,
-                         (struct sockaddr *)&caddr, &clen);
-        if (n < 12) continue;
-
-        uint8_t resp[512];
-        int qlen = n;
-        memcpy(resp, buf, qlen);
-        resp[2] = 0x81; resp[3] = 0x80;
-        resp[6] = 0x00; resp[7] = 0x01;
-        resp[8] = 0x00; resp[9] = 0x00;
-        resp[10]= 0x00; resp[11]= 0x00;
-        int p = qlen;
-        if (p + 16 > (int)sizeof(resp)) { continue; }
-        resp[p++] = 0xC0; resp[p++] = 0x0C;
-        resp[p++] = 0x00; resp[p++] = 0x01;
-        resp[p++] = 0x00; resp[p++] = 0x01;
-        resp[p++] = 0x00; resp[p++] = 0x00;
-        resp[p++] = 0x00; resp[p++] = 0x3C;
-        resp[p++] = 0x00; resp[p++] = 0x04;
-        resp[p++] = AP_IP[0]; resp[p++] = AP_IP[1];
-        resp[p++] = AP_IP[2]; resp[p++] = AP_IP[3];
-        sendto(sock, resp, p, 0, (struct sockaddr *)&caddr, clen);
-    }
-}
-
-/* ------------------------------------------------------------------ */
 /*  HTTP handlers                                                       */
 /* ------------------------------------------------------------------ */
 
-/* Catch-all: serves the landing page for every GET URI, which also
- * satisfies iOS captive-portal detection so Safari opens automatically. */
+/* Root page handler */
 static esp_err_t root_handler(httpd_req_t *req)
 {
     const char *data = (const char *)landing_html_start;
     size_t      len  = (size_t)(landing_html_end - landing_html_start);
-    httpd_resp_set_type(req, "text/html");
-    httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
-    httpd_resp_set_hdr(req, "Connection", "close");
-    /* Send in 1 KB chunks to avoid socket-buffer overflow on large pages */
-    const size_t CHUNK = 1024;
-    size_t sent = 0;
-    while (sent < len) {
-        size_t n = (len - sent) < CHUNK ? (len - sent) : CHUNK;
-        esp_err_t ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
-        if (ret != ESP_OK) return ret;
-        sent += n;
-    }
-    return httpd_resp_send_chunk(req, NULL, 0);
+    return send_html_chunks(req, data, len);
+}
+
+static esp_err_t settings_handler(httpd_req_t *req)
+{
+    const char *data = (const char *)settings_html_start;
+    size_t      len  = (size_t)(settings_html_end - settings_html_start);
+    return send_html_chunks(req, data, len);
 }
 
 /* WebSocket upgrade + frame handler */
 static esp_err_t ws_handler(httpd_req_t *req)
 {
     if (req->method == HTTP_GET) {
-        /* Handshake — store fd so we can push to this client */
-        s_ws_fd = httpd_req_to_sockfd(req);
-        ESP_LOGI(TAG, "WS client connected, fd=%d", s_ws_fd);
+        int new_fd = httpd_req_to_sockfd(req);
+        s_ws_fd = new_fd;
+        ESP_LOGI(TAG, "WS handshake on %s fd=%d", req->uri, new_fd);
         return ESP_OK;
     }
     /* Drain incoming frames (we only care about outbound events) */
@@ -155,6 +145,7 @@ static esp_err_t ws_handler(httpd_req_t *req)
     f.payload = buf;
     esp_err_t err = httpd_ws_recv_frame(req, &f, sizeof(buf) - 1);
     if (err != ESP_OK) {
+        ESP_LOGW(TAG, "WS recv failed on fd=%d (err=0x%x)", httpd_req_to_sockfd(req), err);
         return err;
     }
     if (f.type == HTTPD_WS_TYPE_TEXT && f.len > 0 && s_cmd_handler) {
@@ -162,7 +153,11 @@ static esp_err_t ws_handler(httpd_req_t *req)
         s_cmd_handler((const char *)buf);
     }
     if (f.type == HTTPD_WS_TYPE_CLOSE) {
-        s_ws_fd = -1;
+        int current_fd = httpd_req_to_sockfd(req);
+        ESP_LOGI(TAG, "WS close on fd=%d", current_fd);
+        if (s_ws_fd == current_fd) {
+            s_ws_fd = -1;
+        }
     }
     return ESP_OK;
 }
@@ -236,6 +231,22 @@ static void start_http_server(void)
         .is_websocket = true,
     };
     httpd_register_uri_handler(s_server, &ws_uri);
+
+    /* Settings page */
+    static const httpd_uri_t settings_uri = {
+        .uri     = "/settings",
+        .method  = HTTP_GET,
+        .handler = settings_handler,
+    };
+    httpd_register_uri_handler(s_server, &settings_uri);
+
+    /* /console — same as root, bookmarkable */
+    static const httpd_uri_t console_uri = {
+        .uri     = "/console",
+        .method  = HTTP_GET,
+        .handler = root_handler,
+    };
+    httpd_register_uri_handler(s_server, &console_uri);
 
     /* Root page */
     static const httpd_uri_t root_uri = {

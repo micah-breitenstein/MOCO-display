@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MOCO Jib — Settings</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+header{background:#111;border-bottom:2px solid #e87700;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.brand{font-size:1.1em;font-weight:700;color:#ff9000;letter-spacing:4px}
+.conn{display:flex;align-items:center;gap:6px;font-size:0.75em;color:#888}
+.dot{width:9px;height:9px;border-radius:50%;background:#333;transition:background .4s}
+.dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
+nav{background:#111;border-bottom:1px solid #222;flex-shrink:0;display:flex}
+.tab{flex:1;padding:9px 4px;text-align:center;font-size:0.72em;letter-spacing:2px;color:#555;cursor:pointer;border-bottom:3px solid transparent;text-decoration:none;display:block}
+.tab.on{color:#ff9000;border-bottom-color:#ff9000}
+#sp{flex:1;overflow-y:auto;padding:8px 14px}
+.grp{font-size:0.65em;letter-spacing:3px;color:#e87700;padding:12px 0 4px;border-bottom:1px solid #e87700;margin-bottom:2px}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #1a1a1a;font-size:0.82em}
+.sl{color:#888}
+.sc{display:flex;align-items:center;gap:7px}
+.sv{width:52px;text-align:center;color:#e0e0e0;font:inherit;background:#181818;border:1px solid #333;border-radius:4px;padding:4px 0}
+.adj{background:#1a1a1a;border:1px solid #333;border-radius:4px;color:#ccc;width:28px;height:28px;font-size:1.1em;cursor:pointer}
+.tog{background:#1a1a1a;border:1px solid #333;border-radius:4px;color:#888;padding:4px 12px;font:inherit;font-size:0.78em;cursor:pointer}
+.tog.on{background:#0d2a0d;border-color:#00e676;color:#00e676}
+.abtn{background:#1a1a1a;border:1px solid #444;border-radius:4px;color:#ccc;padding:4px 14px;font:inherit;font-size:0.78em;cursor:pointer}
+.abtn.red{border-color:#7a2020;color:#e05050}
+.sbtn{display:block;width:100%;margin-top:16px;padding:12px;background:#1a0d00;border:1px solid #e87700;border-radius:6px;color:#ff9000;font:inherit;font-size:0.82em;letter-spacing:2px;cursor:pointer}
+</style></head><body>
+<header><span class="brand">MOCO JIB</span><div class="conn"><div class="dot" id="dot"></div><span id="cst">Connecting…</span></div></header>
+<nav>
+  <a class="tab" href="/console">CONSOLE</a>
+  <div class="tab on">SETTINGS</div>
+</nav>
+<div id="sp">
+  <div class="grp">BRIGHTNESS</div>
+  <div class="sr"><span class="sl">Display Brt (%)</span><div class="sc"><button class="adj" onclick="adjDisp(-5)">-</button><input class="sv" id="dbrt" type="number" value="100" min="0" max="100" step="5"><button class="adj" onclick="adjDisp(5)">+</button></div></div>
+  <div class="sr"><span class="sl">Matrix Brt (%)</span><div class="sc"><button class="adj" onclick="adj('mtxb',-5)">-</button><input class="sv" id="mtxb" type="number" value="5" min="0" max="100" step="5"><button class="adj" onclick="adj('mtxb',5)">+</button></div></div>
+  <div class="sr"><span class="sl">Night Mode</span><div class="sc"><button class="tog" id="tnm" onclick="togNight()">OFF</button></div></div>
+  <div class="grp">SYSTEM</div>
+  <div class="sr"><span class="sl">Rumble Mute</span><div class="sc"><button class="tog" id="trm" onclick="togRumble()">OFF</button></div></div>
+  <div class="grp">DRONE MODE</div>
+  <div class="sr"><span class="sl">Accel (ms)</span><div class="sc"><button class="adj" onclick="adj('dac',-100)">-</button><input class="sv" id="dac" type="number" value="1100" min="200" max="3000" step="100"><button class="adj" onclick="adj('dac',100)">+</button></div></div>
+  <div class="sr"><span class="sl">Active Decel (ms)</span><div class="sc"><button class="adj" onclick="adj('dad',-100)">-</button><input class="sv" id="dad" type="number" value="1300" min="200" max="3000" step="100"><button class="adj" onclick="adj('dad',100)">+</button></div></div>
+  <div class="sr"><span class="sl">Release Decel (ms)</span><div class="sc"><button class="adj" onclick="adj('drd',-100)">-</button><input class="sv" id="drd" type="number" value="1100" min="200" max="3000" step="100"><button class="adj" onclick="adj('drd',100)">+</button></div></div>
+  <div class="sr"><span class="sl">Rev Cooldown (ms)</span><div class="sc"><button class="adj" onclick="adj('dcd',-100)">-</button><input class="sv" id="dcd" type="number" value="1400" min="200" max="5000" step="100"><button class="adj" onclick="adj('dcd',100)">+</button></div></div>
+  <div class="grp">ZEROING</div>
+  <div class="sr"><span class="sl">Set Zero</span><div class="sc"><button class="abtn" onclick="send('SET:HOME_SET:1')">SET</button></div></div>
+  <div class="sr"><span class="sl">Go to Zero</span><div class="sc"><button class="abtn" onclick="send('SET:HOME_GO:1')">GO</button></div></div>
+  <div class="sr"><span class="sl">Clear Zero</span><div class="sc"><button class="abtn red" onclick="send('SET:HOME_CLEAR:1')">CLEAR</button></div></div>
+  <button class="sbtn" onclick="save()">SAVE SETTINGS</button>
+</div>
+<script>
+var dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt,rm=false,nm=false;
+function send(m){if(ws&&ws.readyState===1)ws.send(m)}
+window.adj=function(id,d){var el=document.getElementById(id);el.value=Math.max(+el.min,Math.min(+el.max,+el.value+d))}
+window.adjDisp=function(d){var el=document.getElementById('dbrt');el.value=Math.max(0,Math.min(100,+el.value+d));send('SET:DISP_BRT:'+el.value)}
+function setUI(id,v){var b=document.getElementById(id);b.textContent=v?'ON':'OFF';b.className='tog'+(v?' on':'')}
+window.togNight=function(){nm=!nm;setUI('tnm',nm);send('SET:NIGHT:'+(nm?'1':'0'));if(nm){document.getElementById('mtxb').value=0;document.getElementById('dbrt').value=10;send('SET:MTX_BRT:0');send('SET:DISP_BRT:10')}else{document.getElementById('mtxb').value=5;document.getElementById('dbrt').value=100;send('SET:MTX_BRT:5');send('SET:DISP_BRT:100')}}
+window.togRumble=function(){rm=!rm;setUI('trm',rm);send('SET:RUMBLE_MUTE:'+(rm?'1':'0'))}
+window.save=function(){send('SET:MTX_BRT:'+document.getElementById('mtxb').value);send('SET:DRONE_ACCEL:'+document.getElementById('dac').value);send('SET:DRONE_ACTDECEL:'+document.getElementById('dad').value);send('SET:DRONE_RELDECEL:'+document.getElementById('drd').value);send('SET:DRONE_COOLDOWN:'+document.getElementById('dcd').value);send('SETTINGS_SAVED')}
+function parse(m){if(m==='RUMBLE_MUTE:ON')setUI('trm',rm=true);if(m==='RUMBLE_MUTE:OFF')setUI('trm',rm=false);if(m==='Night Mode: ON'){setUI('tnm',nm=true);document.getElementById('mtxb').value=0;document.getElementById('dbrt').value=10}if(m==='Night Mode: OFF'){setUI('tnm',nm=false);document.getElementById('mtxb').value=5;document.getElementById('dbrt').value=100}}
+function connect(){clearTimeout(rt);ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){dot.className='dot live';cst.textContent='Live'};ws.onmessage=function(e){parse(e.data)};ws.onclose=function(){dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)};ws.onerror=function(){try{ws.close()}catch(e){}}}
+rt=setTimeout(connect,100);
+</script></body></html>

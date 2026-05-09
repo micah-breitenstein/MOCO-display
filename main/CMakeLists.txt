@@ -12,6 +12,7 @@ idf_component_register(
         "moco_jib_logo_600x310_dark.bin"
         "moco_jib_logo_600x310_light.bin"
         "landing.html"
+        "settings.html"
 )
 
 target_compile_definitions(${COMPONENT_LIB} PRIVATE LV_LVGL_H_INCLUDE_SIMPLE)
