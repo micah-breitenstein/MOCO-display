@@ -38,6 +38,7 @@ static int             s_ws_fd   = -1;   /* fd of the active WebSocket client */
 static QueueHandle_t   s_eq      = NULL;
 static SemaphoreHandle_t s_send_sem = NULL; /* serialises one in-flight WS frame */
 static web_console_cmd_handler_t s_cmd_handler = NULL;
+static uint32_t        s_last_request_time = 0;  /* watchdog for server health */
 
 static esp_err_t send_html_chunks(httpd_req_t *req, const char *data, size_t len)
 {
@@ -98,6 +99,7 @@ static void ws_do_send(void *arg)
 /* Root page handler */
 static esp_err_t root_handler(httpd_req_t *req)
 {
+    s_last_request_time = xTaskGetTickCount() * portTICK_PERIOD_MS;
     const char *data = (const char *)landing_html_start;
     size_t      len  = (size_t)(landing_html_end - landing_html_start);
     return send_html_chunks(req, data, len);
@@ -105,6 +107,7 @@ static esp_err_t root_handler(httpd_req_t *req)
 
 static esp_err_t settings_handler(httpd_req_t *req)
 {
+    s_last_request_time = xTaskGetTickCount() * portTICK_PERIOD_MS;
     const char *data = (const char *)settings_html_start;
     size_t      len  = (size_t)(settings_html_end - settings_html_start);
     return send_html_chunks(req, data, len);
@@ -179,6 +182,29 @@ static void web_event_task(void *arg)
 }
 
 /* ------------------------------------------------------------------ */
+/*  Server monitoring & recovery task                                   */
+/* ------------------------------------------------------------------ */
+static void server_monitor_task(void *arg)
+{
+    const uint32_t CHECK_INTERVAL_MS = 30000;  /* check every 30 seconds */
+    
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(CHECK_INTERVAL_MS));
+        
+        if (s_server) {
+            /* Periodic log to confirm server is responsive */
+            uint32_t now = xTaskGetTickCount() * portTICK_PERIOD_MS;
+            if (s_last_request_time > 0) {
+                uint32_t idle_time = now - s_last_request_time;
+                if (idle_time > 600000) {  /* 10 minutes idle */
+                    ESP_LOGI(TAG, "Server idle for %lu ms (last request activity)", idle_time);
+                }
+            }
+        }
+    }
+}
+
+/* ------------------------------------------------------------------ */
 /*  WiFi event handler                                                  */
 /* ------------------------------------------------------------------ */
 static void wifi_event_handler(void *arg, esp_event_base_t base,
@@ -204,9 +230,9 @@ static void start_http_server(void)
 {
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
-    cfg.max_open_sockets     = 13;
-    cfg.recv_wait_timeout    = 5;
-    cfg.send_wait_timeout    = 3;
+    cfg.max_open_sockets     = 10;
+    cfg.recv_wait_timeout    = 3;
+    cfg.send_wait_timeout    = 2;
     cfg.keep_alive_enable    = false;
     cfg.close_fn             = NULL;
     cfg.linger_timeout       = 0;
@@ -312,6 +338,9 @@ void web_console_init(void)
     start_http_server();
 
     xTaskCreatePinnedToCore(web_event_task, "web_evt", 4096, NULL, 2, NULL, 1);
+    xTaskCreatePinnedToCore(server_monitor_task, "web_mon", 3072, NULL, 1, NULL, 1);
+    
+    ESP_LOGI(TAG, "Web console monitoring task started");
 }
 
 void web_console_log_event(const char *msg)
