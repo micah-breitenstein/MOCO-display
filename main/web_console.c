@@ -205,9 +205,11 @@ static void start_http_server(void)
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
     cfg.max_open_sockets     = 13;
-    cfg.recv_wait_timeout    = 10;
-    cfg.send_wait_timeout    = 5;
+    cfg.recv_wait_timeout    = 5;
+    cfg.send_wait_timeout    = 3;
     cfg.keep_alive_enable    = false;
+    cfg.close_fn             = NULL;
+    cfg.linger_timeout       = 0;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start HTTP server");
