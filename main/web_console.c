@@ -123,11 +123,6 @@ static esp_err_t ws_handler(httpd_req_t *req)
 {
     if (req->method == HTTP_GET) {
         int new_fd = httpd_req_to_sockfd(req);
-        /* Close stale WebSocket if a new handshake arrives */
-        if (s_ws_fd >= 0 && s_ws_fd != new_fd) {
-            ESP_LOGI(TAG, "Closing stale WS fd=%d before accepting new fd=%d", s_ws_fd, new_fd);
-            httpd_sess_trigger_close(s_server, s_ws_fd);
-        }
         s_ws_fd = new_fd;
         ESP_LOGI(TAG, "WS handshake on %s fd=%d", req->uri, new_fd);
         return ESP_OK;
@@ -209,7 +204,7 @@ static void start_http_server(void)
 {
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
-    cfg.max_open_sockets     = 10;
+    cfg.max_open_sockets     = 13;
     cfg.recv_wait_timeout    = 10;
     cfg.send_wait_timeout    = 5;
     cfg.keep_alive_enable    = false;
