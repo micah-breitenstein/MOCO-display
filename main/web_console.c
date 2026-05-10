@@ -49,6 +49,7 @@ static esp_err_t send_html_chunks(httpd_req_t *req, const char *data, size_t len
 
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
+    httpd_resp_set_hdr(req, "Connection", "close");
     while (sent < len) {
         size_t n = (len - sent) < chunk_size ? (len - sent) : chunk_size;
         esp_err_t ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
@@ -211,10 +212,7 @@ static void start_http_server(void)
     cfg.max_open_sockets     = 10;
     cfg.recv_wait_timeout    = 10;
     cfg.send_wait_timeout    = 5;
-    cfg.keep_alive_enable    = true;
-    cfg.keep_alive_idle      = 5;
-    cfg.keep_alive_interval  = 5;
-    cfg.keep_alive_count     = 3;
+    cfg.keep_alive_enable    = false;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start HTTP server");
