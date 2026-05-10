@@ -46,7 +46,7 @@ nav{background:#111;border-bottom:1px solid #222;flex-shrink:0;display:flex}
   <button class="sbtn" onclick="save()">SAVE SETTINGS</button>
 </div>
 <script>
-var dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt,rm=false,nm=false;
+var dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt,ct,rm=false,nm=false;
 function send(m){if(ws&&ws.readyState===1)ws.send(m)}
 window.adj=function(id,d){var el=document.getElementById(id);el.value=Math.max(+el.min,Math.min(+el.max,+el.value+d))}
 window.adjDisp=function(d){var el=document.getElementById('dbrt');el.value=Math.max(0,Math.min(100,+el.value+d));send('SET:DISP_BRT:'+el.value)}
@@ -55,6 +55,8 @@ window.togNight=function(){nm=!nm;setUI('tnm',nm);send('SET:NIGHT:'+(nm?'1':'0')
 window.togRumble=function(){rm=!rm;setUI('trm',rm);send('SET:RUMBLE_MUTE:'+(rm?'1':'0'))}
 window.save=function(){send('SET:MTX_BRT:'+document.getElementById('mtxb').value);send('SET:DRONE_ACCEL:'+document.getElementById('dac').value);send('SET:DRONE_ACTDECEL:'+document.getElementById('dad').value);send('SET:DRONE_RELDECEL:'+document.getElementById('drd').value);send('SET:DRONE_COOLDOWN:'+document.getElementById('dcd').value);send('SETTINGS_SAVED')}
 function parse(m){if(m==='RUMBLE_MUTE:ON')setUI('trm',rm=true);if(m==='RUMBLE_MUTE:OFF')setUI('trm',rm=false);if(m==='Night Mode: ON'){setUI('tnm',nm=true);document.getElementById('mtxb').value=0;document.getElementById('dbrt').value=10}if(m==='Night Mode: OFF'){setUI('tnm',nm=false);document.getElementById('mtxb').value=5;document.getElementById('dbrt').value=100}}
-function connect(){clearTimeout(rt);ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){dot.className='dot live';cst.textContent='Live'};ws.onmessage=function(e){parse(e.data)};ws.onclose=function(){dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)};ws.onerror=function(){try{ws.close()}catch(e){}}}
+function cleanup(){clearTimeout(rt);clearTimeout(ct);if(ws){try{ws.onopen=ws.onclose=ws.onerror=ws.onmessage=null;ws.close()}catch(e){}}ws=null}
+function connect(){cleanup();ws=new WebSocket('ws://192.168.4.1/ws');ct=setTimeout(function(){if(ws&&ws.readyState!==1){cleanup();dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)}},5000);ws.onopen=function(){clearTimeout(ct);dot.className='dot live';cst.textContent='Live'};ws.onmessage=function(e){parse(e.data)};ws.onclose=function(){cleanup();dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)};ws.onerror=function(){cleanup();rt=setTimeout(connect,300)}}
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&(!ws||ws.readyState!==1)){cleanup();connect()}});
 rt=setTimeout(connect,100);
 </script></body></html>

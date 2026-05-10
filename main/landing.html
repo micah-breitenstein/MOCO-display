@@ -23,9 +23,11 @@ nav{background:#111;border-bottom:1px solid #222;flex-shrink:0;display:flex}
 </nav>
 <div id="log"></div>
 <script>
-var log=document.getElementById('log'),dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt;
+var log=document.getElementById('log'),dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt,ct;
 function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
 function row(msg,cls){var e=document.createElement('div');e.className='ev';e.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'')+'">'+msg.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>';log.appendChild(e);if(log.children.length>500)log.removeChild(log.firstChild);log.scrollTop=log.scrollHeight}
-function connect(){clearTimeout(rt);ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){dot.className='dot live';cst.textContent='Live';row('Console connected','sys')};ws.onmessage=function(e){row(e.data)};ws.onclose=function(){dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)};ws.onerror=function(){try{ws.close()}catch(e){}}}
+function cleanup(){clearTimeout(rt);clearTimeout(ct);if(ws){try{ws.onopen=ws.onclose=ws.onerror=ws.onmessage=null;ws.close()}catch(e){}}ws=null}
+function connect(){cleanup();ws=new WebSocket('ws://192.168.4.1/ws');ct=setTimeout(function(){if(ws&&ws.readyState!==1){cleanup();dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)}},5000);ws.onopen=function(){clearTimeout(ct);dot.className='dot live';cst.textContent='Live';row('Console connected','sys')};ws.onmessage=function(e){row(e.data)};ws.onclose=function(){cleanup();dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)};ws.onerror=function(){cleanup();rt=setTimeout(connect,300)}}
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&(!ws||ws.readyState!==1)){cleanup();connect()}});
 rt=setTimeout(connect,100);
 </script></body></html>
