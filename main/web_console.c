@@ -49,6 +49,7 @@ static esp_err_t send_html_chunks(httpd_req_t *req, const char *data, size_t len
 
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
+    httpd_resp_set_hdr(req, "Connection", "close");
     while (sent < len) {
         size_t n = (len - sent) < chunk_size ? (len - sent) : chunk_size;
         esp_err_t ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
