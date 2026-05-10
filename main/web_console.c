@@ -39,18 +39,9 @@ static QueueHandle_t   s_eq      = NULL;
 static SemaphoreHandle_t s_send_sem = NULL; /* serialises one in-flight WS frame */
 static web_console_cmd_handler_t s_cmd_handler = NULL;
 
-static void close_stale_ws_session(void)
-{
-    if (s_server && s_ws_fd >= 0) {
-        int old_fd = s_ws_fd;
-        s_ws_fd = -1;
-        httpd_sess_trigger_close(s_server, old_fd);
-    }
-}
-
 static esp_err_t send_html_chunks(httpd_req_t *req, const char *data, size_t len)
 {
-    const size_t chunk_size = 256;
+    const size_t chunk_size = 1024;
     size_t sent = 0;
     int fd = httpd_req_to_sockfd(req);
 
@@ -58,21 +49,9 @@ static esp_err_t send_html_chunks(httpd_req_t *req, const char *data, size_t len
 
     httpd_resp_set_type(req, "text/html");
     httpd_resp_set_hdr(req, "Cache-Control", "no-cache");
-    httpd_resp_set_hdr(req, "Connection", "close");
-
     while (sent < len) {
         size_t n = (len - sent) < chunk_size ? (len - sent) : chunk_size;
-        esp_err_t ret = ESP_FAIL;
-
-        for (int attempt = 0; attempt < 5; ++attempt) {
-            ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
-            if (ret == ESP_OK) {
-                break;
-            }
-            ESP_LOGW(TAG, "Chunk send retry %d for %s fd=%d at %u/%u bytes (err=0x%x)",
-                     attempt + 1, req->uri, fd, (unsigned)sent, (unsigned)len, ret);
-            vTaskDelay(pdMS_TO_TICKS(15));
-        }
+        esp_err_t ret = httpd_resp_send_chunk(req, data + sent, (ssize_t)n);
 
         if (ret != ESP_OK) {
             ESP_LOGE(TAG, "Failed serving %s on fd=%d at %u/%u bytes (err=0x%x)",
@@ -128,6 +107,14 @@ static esp_err_t settings_handler(httpd_req_t *req)
     const char *data = (const char *)settings_html_start;
     size_t      len  = (size_t)(settings_html_end - settings_html_start);
     return send_html_chunks(req, data, len);
+}
+
+/* Quiet favicon requests from browsers to avoid 404 noise in DevTools */
+static esp_err_t favicon_handler(httpd_req_t *req)
+{
+    httpd_resp_set_status(req, "204 No Content");
+    httpd_resp_set_hdr(req, "Cache-Control", "max-age=86400");
+    return httpd_resp_send(req, NULL, 0);
 }
 
 /* WebSocket upgrade + frame handler */
@@ -217,6 +204,8 @@ static void start_http_server(void)
     httpd_config_t cfg       = HTTPD_DEFAULT_CONFIG();
     cfg.lru_purge_enable     = true;
     cfg.max_open_sockets     = 10;
+    cfg.recv_wait_timeout    = 30;
+    cfg.send_wait_timeout    = 5;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start HTTP server");
@@ -239,6 +228,14 @@ static void start_http_server(void)
         .handler = settings_handler,
     };
     httpd_register_uri_handler(s_server, &settings_uri);
+
+    /* Favicon endpoint to prevent browser /favicon.ico 404s */
+    static const httpd_uri_t favicon_uri = {
+        .uri     = "/favicon.ico",
+        .method  = HTTP_GET,
+        .handler = favicon_handler,
+    };
+    httpd_register_uri_handler(s_server, &favicon_uri);
 
     /* /console — same as root, bookmarkable */
     static const httpd_uri_t console_uri = {
