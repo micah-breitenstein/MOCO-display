@@ -22,6 +22,9 @@
 #include "nvs_flash.h"
 #include "web_console.h"
 
+/* Forward declaration for web command handler */
+void my_websocket_command_receiver(const char *cmd);
+
 extern const lv_font_t lv_font_montserrat_150;
 extern const lv_font_t lv_font_montserrat_120;
 extern const lv_font_t lv_font_montserrat_48;
@@ -62,9 +65,9 @@ static const char *TAG = "RIG";
 
 #define LVGL_TICK_PERIOD_MS 2
 #define LVGL_TASK_MAX_DELAY_MS 10
-#define LVGL_TASK_STACK_SIZE (10 * 1024)
+#define LVGL_TASK_STACK_SIZE (6 * 1024)
 #define LVGL_TASK_PRIORITY 2
-#define LVGL_BUF_HEIGHT (LCD_V_RES / 10)
+#define LVGL_BUF_HEIGHT (LCD_V_RES / 20)  /* Reduced from /10 to /20 for WiFi memory overhead */
 #define TEST_FORCE_CONTROLLER_ERROR 0
 #define TEST_FORCE_CONTROLLER_ERROR_DELAY_MS 3000
 
@@ -96,7 +99,6 @@ typedef enum {
     SGRP_BRIGHTNESS = 0,
     SGRP_SYSTEM,
     SGRP_TIMELAPSE,
-    SGRP_DRONE,
     SGRP_ZEROING,
     SGRP_COUNT,
 } SettingGroup;
@@ -105,22 +107,16 @@ static const char *setting_group_names[SGRP_COUNT] = {
     "BRIGHTNESS",
     "SYSTEM",
     "TIMELAPSE",
-    "DRONE MODE",
     "ZEROING",
 };
 
 typedef enum {
     SETTING_MTX_BRIGHTNESS = 0,
     SETTING_BRIGHTNESS,
-    SETTING_NIGHT_MODE,
     SETTING_RUMBLE_MUTE,
     SETTING_LOGO_THEME,
     SETTING_TL_INTERVAL,
     SETTING_TL_STEPDIST,
-    SETTING_DRONE_ACCEL,
-    SETTING_DRONE_ACTDECEL,
-    SETTING_DRONE_RELDECEL,
-    SETTING_DRONE_COOLDOWN,
     SETTING_HOME_SET,
     SETTING_HOME_GO,
     SETTING_HOME_CLEAR,
@@ -148,24 +144,19 @@ typedef struct {
 } SettingDef;
 
 static SettingDef settings[SETTING_COUNT] = {
-    [SETTING_MTX_BRIGHTNESS] = { "Matrix",            "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 5,    5,    0,    100,  1,   true,  false },
-    [SETTING_BRIGHTNESS]     = { "Display",           "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 100,  100,  0,    100,  1,   false, false },
-    [SETTING_NIGHT_MODE]     = { "Night Mode",        "",  SGRP_BRIGHTNESS, STYPE_BOOL,      0,    0,    0,    1,    1,   false, false },
-    [SETTING_RUMBLE_MUTE]    = { "Rumble Mute",      "",   SGRP_SYSTEM,    STYPE_BOOL,      0,    0,    0,    1,    1,   true,  false },
-    [SETTING_LOGO_THEME]     = { "Logo Theme",       "",   SGRP_SYSTEM,    STYPE_BOOL,      0,    0,    0,    1,    1,   false, false },
-    [SETTING_TL_INTERVAL]    = { "Interval",         "s",  SGRP_TIMELAPSE, STYPE_INT_RANGE, 15,   15,   1,    99,   1,   true,  true  },
-    [SETTING_TL_STEPDIST]    = { "Step Dist",        "ms", SGRP_TIMELAPSE, STYPE_INT_RANGE, 100,  100,  20,   150,  10,  true,  true  },
-    [SETTING_DRONE_ACCEL]    = { "Ramp Up",          "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1100, 1100, 200,  3000, 100, true,  false },
-    [SETTING_DRONE_ACTDECEL] = { "Boost Decel",      "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1300, 1300, 200,  3000, 100, true,  false },
-    [SETTING_DRONE_RELDECEL] = { "Release Decel",    "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1100, 1100, 200,  3000, 100, true,  false },
-    [SETTING_DRONE_COOLDOWN] = { "Rev Cooldown",     "ms", SGRP_DRONE,     STYPE_INT_RANGE, 1400, 1400, 200,  5000, 100, true,  false },
-    [SETTING_HOME_SET]       = { "Set Home",         "",   SGRP_ZEROING,   STYPE_ACTION,    0,    0,    0,    0,    0,   true,  false },
-    [SETTING_HOME_GO]        = { "Go Home",          "",   SGRP_ZEROING,   STYPE_ACTION,    0,    0,    0,    0,    0,   true,  false },
-    [SETTING_HOME_CLEAR]     = { "Clear Home",       "",   SGRP_ZEROING,   STYPE_ACTION,    0,    0,    0,    0,    0,   true,  false },
+    [SETTING_MTX_BRIGHTNESS] = { "Matrix",            "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 5,   5,   0,   100, 1,  true,  false },
+    [SETTING_BRIGHTNESS]     = { "Display",           "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 100, 100, 0,   100, 1,  false, false },
+    [SETTING_RUMBLE_MUTE]    = { "Rumble Mute",      "",   SGRP_SYSTEM,    STYPE_BOOL,      0,   0,   0,   1,   1,  true,  false },
+    [SETTING_LOGO_THEME]     = { "Logo Theme",       "",   SGRP_SYSTEM,    STYPE_BOOL,      0,   0,   0,   1,   1,  false, false },
+    [SETTING_TL_INTERVAL]    = { "Interval",         "s",  SGRP_TIMELAPSE, STYPE_INT_RANGE, 15,  15,  1,   99,  1,  true,  true  },
+    [SETTING_TL_STEPDIST]    = { "Step Dist",        "ms", SGRP_TIMELAPSE, STYPE_INT_RANGE, 100, 100, 20,  150, 10, true,  true  },
+    [SETTING_HOME_SET]       = { "Set Home",         "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
+    [SETTING_HOME_GO]        = { "Go Home",          "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
+    [SETTING_HOME_CLEAR]     = { "Clear Home",       "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
 };
 
 /* NVS keys for the 5 settings (short for 15-char NVS limit) */
-static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "night", "r_mute", "theme", "tl_int", "tl_step", "dr_accel", "dr_actdec", "dr_reldec", "dr_cooldown", "h_set", "h_go", "h_clr" };
+static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "tl_int", "tl_step", "h_set", "h_go", "h_clr" };
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -182,6 +173,7 @@ static int                 controller_nav_index = -1;  /* -1 = none highlighted 
 static esp_lcd_panel_io_handle_t panel_io_global = NULL;
 
 /* Touch state */
+static bool    touch_i2c_ready = false;
 static bool    touch_pressed = false;
 static int64_t touch_press_start_us = 0;
 static bool    long_press_fired = false;
@@ -462,7 +454,8 @@ static void lvgl_task(void *arg)
 
 static bool setting_is_persisted(SettingId id)
 {
-    if (id == SETTING_NIGHT_MODE) return false;
+    /* Display brightness always starts at 100% - never persist to NVS */
+    if (id == SETTING_BRIGHTNESS) return false;
     return settings[id].type != STYPE_ACTION;
 }
 
@@ -511,43 +504,8 @@ static void apply_brightness(void)
     if (pct < 0) pct = 0;
     if (pct > 100) pct = 100;
     uint8_t level = (uint8_t)((pct * 255) / 100);
-    uint32_t lcd_cmd = ((uint32_t)LCD_QSPI_WRITE_CMD << 24) | ((uint32_t)0x51 << 8);
-    esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
-    char _b[32];
-    snprintf(_b, sizeof(_b), "Brightness: %d%%", pct);
-    web_console_log_event(_b);
-}
-
-static int night_saved_mtx = -1;  /* matrix value saved before night mode activated */
-
-static void apply_night_mode(void)
-{
-    bool active = (settings[SETTING_NIGHT_MODE].value != 0);
-    if (active) {
-        /* Save originals so we can restore them */
-        night_saved_mtx = settings[SETTING_MTX_BRIGHTNESS].value;
-        /* Update stored values so UI reflects actual hardware state */
-        settings[SETTING_BRIGHTNESS].value = 10;
-        settings[SETTING_MTX_BRIGHTNESS].value = 0;
-        web_console_log_event("Night Mode: ON");
-    } else {
-        /* Restore display to 100%, matrix to 5% */
-        settings[SETTING_BRIGHTNESS].value = 100;
-        settings[SETTING_MTX_BRIGHTNESS].value = 5;
-        night_saved_mtx = -1;
-        web_console_log_event("Night Mode: OFF");
-    }
-    /* Apply display brightness */
-    if (panel_io_global) {
-        int pct = settings[SETTING_BRIGHTNESS].value;
-        uint8_t level = (uint8_t)((pct * 255) / 100);
-        uint32_t lcd_cmd = ((uint32_t)LCD_QSPI_WRITE_CMD << 24) | ((uint32_t)0x51 << 8);
-        esp_lcd_panel_io_tx_param(panel_io_global, lcd_cmd, &level, 1);
-    }
-    /* Apply matrix brightness */
-    char cmd[32];
-    snprintf(cmd, sizeof(cmd), "SET:MTX_BRT:%d\n", settings[SETTING_MTX_BRIGHTNESS].value);
-    uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
+    /* Use same function as animation for consistency */
+    sh8601_tx_param_qspi(panel_io_global, 0x51, &level, 1);
 }
 
 /* ================================================================
@@ -559,9 +517,15 @@ static void apply_theme(void)
     bool light = (settings[SETTING_LOGO_THEME].value != 0);
     lv_color_t bg  = light ? lv_color_white() : lv_color_black();
 
-    lv_obj_set_style_bg_color(lv_scr_act(), bg, LV_PART_MAIN);
-    if (logo_img_obj) {
-        lv_img_set_src(logo_img_obj, light ? &logo_img_light : &logo_img_dark);
+    /* LVGL object modifications require mutex - wait longer if needed */
+    if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(500)) == pdTRUE) {
+        lv_obj_set_style_bg_color(lv_scr_act(), bg, LV_PART_MAIN);
+        if (logo_img_obj) {
+            lv_img_set_src(logo_img_obj, light ? &logo_img_light : &logo_img_dark);
+        }
+        xSemaphoreGive(lvgl_mux);
+    } else {
+        ESP_LOGW(TAG, "apply_theme: Failed to acquire lvgl_mux");
     }
 }
 
@@ -571,9 +535,16 @@ static void apply_theme(void)
 
 static bool read_ft6336_touch(uint16_t *x, uint16_t *y)
 {
+    if (!touch_i2c_ready) {
+        return false;
+    }
+
     uint8_t data[5] = {0};
     uint8_t reg = 0x02;
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    if (!cmd) {
+        return false;
+    }
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (TOUCH_FT6336_ADDR << 1) | I2C_MASTER_WRITE, true);
     i2c_master_write_byte(cmd, reg, true);
@@ -644,18 +615,6 @@ static void send_set_command(SettingId id)
     case SETTING_TL_STEPDIST:
         snprintf(cmd, sizeof(cmd), "SET:TL_STEP:%d\n", settings[id].value);
         break;
-    case SETTING_DRONE_ACCEL:
-        snprintf(cmd, sizeof(cmd), "SET:DRONE_ACCEL:%d\n", settings[id].value);
-        break;
-    case SETTING_DRONE_ACTDECEL:
-        snprintf(cmd, sizeof(cmd), "SET:DRONE_ACTDECEL:%d\n", settings[id].value);
-        break;
-    case SETTING_DRONE_RELDECEL:
-        snprintf(cmd, sizeof(cmd), "SET:DRONE_RELDECEL:%d\n", settings[id].value);
-        break;
-    case SETTING_DRONE_COOLDOWN:
-        snprintf(cmd, sizeof(cmd), "SET:DRONE_COOLDOWN:%d\n", settings[id].value);
-        break;
     case SETTING_RUMBLE_MUTE:
         snprintf(cmd, sizeof(cmd), "SET:RUMBLE_MUTE:%d\n", settings[id].value);
         break;
@@ -664,15 +623,12 @@ static void send_set_command(SettingId id)
         break;
     case SETTING_HOME_SET:
         snprintf(cmd, sizeof(cmd), "SET:HOME_SET:1\n");
-        web_console_log_event("Home: Set");
         break;
     case SETTING_HOME_GO:
         snprintf(cmd, sizeof(cmd), "SET:HOME_GO:1\n");
-        web_console_log_event("Home: Go");
         break;
     case SETTING_HOME_CLEAR:
         snprintf(cmd, sizeof(cmd), "SET:HOME_CLEAR:1\n");
-        web_console_log_event("Home: Cleared");
         break;
     default:
         return;
@@ -680,10 +636,67 @@ static void send_set_command(SettingId id)
     uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
 }
 
+/* Web console command handler - must be non-static for cross-compilation-unit callback */
+void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiver(const char *cmd)
+{
+    /* Display brightness — handle locally, do not forward to MEGA */
+    if (strncmp(cmd, "SET:BRIGHT:", 11) == 0) {
+        int pct = atoi(cmd + 11);
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+        settings[SETTING_BRIGHTNESS].value = pct;
+        apply_brightness();
+        char msg[64];
+        snprintf(msg, sizeof(msg), "!!! Brightness set to %d%% !!!", pct);
+        web_console_log_event(msg);
+        return;
+    }
+    /* Theme (dark/light) — handle locally */
+    if (strncmp(cmd, "SET:THEME:", 10) == 0) {
+        int val = atoi(cmd + 10);
+        settings[SETTING_LOGO_THEME].value = (val == 0) ? 0 : 1;
+        apply_theme();
+        char msg[64];
+        snprintf(msg, sizeof(msg), "!!! Theme set to %s !!!", val ? "light" : "dark");
+        web_console_log_event(msg);
+        return;
+    }
+    /* Forward all other SET: commands to the MEGA via UART for motor control */
+    if (strncmp(cmd, "SET:", 4) == 0) {
+        ESP_LOGI(TAG, "!!! FORWARDING to MEGA: %s", cmd);
+        char buf[80];
+        snprintf(buf, sizeof(buf), "%s\n", cmd);
+        int written = uart_write_bytes(STATUS_UART_PORT, buf, strlen(buf));
+        ESP_LOGI(TAG, "!!! UART wrote %d bytes", written);
+        char log_buf[80];
+        snprintf(log_buf, sizeof(log_buf), "→ MEGA: %s", cmd);
+        web_console_log_event(log_buf);
+        return;
+    }
+    ESP_LOGI(TAG, "!!! Command did not match any handler: %s", cmd);
+}
+
+static void log_setting_saved_event(SettingId id)
+{
+    char msg[96];
+    const SettingDef *s = &settings[id];
+
+    if (s->type == STYPE_ACTION) {
+        snprintf(msg, sizeof(msg), "Settings saved: %s", s->name);
+    } else if (s->type == STYPE_BOOL) {
+        snprintf(msg, sizeof(msg), "Settings saved: %s=%s", s->name, s->value ? "ON" : "OFF");
+    } else {
+        snprintf(msg, sizeof(msg), "Settings saved: %s=%d%s", s->name, s->value, s->unit);
+    }
+
+    web_console_log_event(msg);
+}
+
 /* ================================================================
  *  Settings UI — forward declarations
  * ================================================================ */
 
+static void log_setting_saved_event(SettingId id);
 static void close_settings_menu(void);
 static void open_editor(SettingId id);
 static void close_editor(void);
@@ -897,17 +910,7 @@ static void handle_settings_nav(const char *nav_cmd)
             /* Notify MEGA to rumble */
             const char *saved_cmd = "SETTINGS_SAVED\n";
             uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
-            {
-                char _log[64];
-                if (s->type == STYPE_BOOL) {
-                    const char *bval = (editor_setting_id == SETTING_LOGO_THEME)
-                        ? (s->value ? "Light" : "Dark")
-                        : (s->value ? "ON" : "OFF");
-                    snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, bval);
-                } else
-                    snprintf(_log, sizeof(_log), "Saved: %s = %d%s", s->name, s->value, (s->unit && s->unit[0]) ? s->unit : "");
-                web_console_log_event(_log);
-            }
+            log_setting_saved_event(editor_setting_id);
             close_editor();
         } else if (strcmp(nav_cmd, "BACK") == 0) {
             controller_hold_start_us = 0;  /* Reset on BACK */
@@ -1121,25 +1124,9 @@ static void editor_dec_cb(lv_event_t *e)
     editor_value_pop();
     if (!s->mega_backed) {
         save_setting_to_nvs(editor_setting_id);
-        if (editor_setting_id == SETTING_BRIGHTNESS) {
-            /* Changing display brightness explicitly deactivates night mode */
-            if (settings[SETTING_NIGHT_MODE].value) {
-                settings[SETTING_NIGHT_MODE].value = 0;
-                /* Restore matrix to its pre-night-mode value */
-                if (night_saved_mtx >= 0) {
-                    settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
-                    night_saved_mtx = -1;
-                }
-                send_set_command(SETTING_MTX_BRIGHTNESS);
-            }
-            apply_brightness();
-        }
+        if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
-        if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
-        /* Changing matrix brightness explicitly deactivates night mode */
-        settings[SETTING_NIGHT_MODE].value = 0;
-        night_saved_mtx = -1;
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
@@ -1162,25 +1149,9 @@ static void editor_inc_cb(lv_event_t *e)
     editor_value_pop();
     if (!s->mega_backed) {
         save_setting_to_nvs(editor_setting_id);
-        if (editor_setting_id == SETTING_BRIGHTNESS) {
-            /* Changing display brightness explicitly deactivates night mode */
-            if (settings[SETTING_NIGHT_MODE].value) {
-                settings[SETTING_NIGHT_MODE].value = 0;
-                /* Restore matrix to its pre-night-mode value */
-                if (night_saved_mtx >= 0) {
-                    settings[SETTING_MTX_BRIGHTNESS].value = night_saved_mtx;
-                    night_saved_mtx = -1;
-                }
-                send_set_command(SETTING_MTX_BRIGHTNESS);
-            }
-            apply_brightness();
-        }
+        if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
-        if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     } else if (editor_setting_id == SETTING_MTX_BRIGHTNESS) {
-        /* Changing matrix brightness explicitly deactivates night mode */
-        settings[SETTING_NIGHT_MODE].value = 0;
-        night_saved_mtx = -1;
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
@@ -1269,17 +1240,7 @@ static void editor_save_cb(lv_event_t *e)
     /* Notify MEGA to rumble */
     const char *saved_cmd = "SETTINGS_SAVED\n";
     uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
-    {
-        char _log[64];
-        if (s->type == STYPE_BOOL) {
-            const char *bval = (editor_setting_id == SETTING_LOGO_THEME)
-                ? (s->value ? "Light" : "Dark")
-                : (s->value ? "ON" : "OFF");
-            snprintf(_log, sizeof(_log), "Saved: %s = %s", s->name, bval);
-        } else
-            snprintf(_log, sizeof(_log), "Saved: %s = %d%s", s->name, s->value, (s->unit && s->unit[0]) ? s->unit : "");
-        web_console_log_event(_log);
-    }
+    log_setting_saved_event(editor_setting_id);
     clear_confirm_dialog_state();
     close_editor();
 }
@@ -1291,7 +1252,6 @@ static void editor_exit_cb(lv_event_t *e)
     settings[editor_setting_id].value = editor_original_value;
     if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
     if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
-    if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
     if (editor_setting_id == SETTING_MTX_BRIGHTNESS) send_set_command(editor_setting_id);
     clear_confirm_dialog_state();
     close_editor();
@@ -1380,21 +1340,29 @@ static void editor_done_cb(lv_event_t *e)
 static lv_obj_t *create_obj_no_theme(lv_obj_t *parent)
 {
     lv_disp_t *d = lv_disp_get_default();
-    lv_theme_t *th = lv_disp_get_theme(d);
-    lv_disp_set_theme(d, NULL);
+    lv_theme_t *th = d ? lv_disp_get_theme(d) : NULL;
+    if (d) {
+        lv_disp_set_theme(d, NULL);
+    }
     lv_obj_t *obj = lv_obj_create(parent);
     lv_obj_remove_style_all(obj);
-    lv_disp_set_theme(d, th);
+    if (d) {
+        lv_disp_set_theme(d, th);
+    }
     return obj;
 }
 
 static lv_obj_t *create_label_no_theme(lv_obj_t *parent)
 {
     lv_disp_t *d = lv_disp_get_default();
-    lv_theme_t *th = lv_disp_get_theme(d);
-    lv_disp_set_theme(d, NULL);
+    lv_theme_t *th = d ? lv_disp_get_theme(d) : NULL;
+    if (d) {
+        lv_disp_set_theme(d, NULL);
+    }
     lv_obj_t *lbl = lv_label_create(parent);
-    lv_disp_set_theme(d, th);
+    if (d) {
+        lv_disp_set_theme(d, th);
+    }
     return lbl;
 }
 
@@ -2092,7 +2060,6 @@ static void open_settings_menu(void)
     /* Notify MEGA → matrix */
     const char *cmd = "SETTINGS:OPEN\n";
     uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
-    web_console_log_event("Settings: opened");
 }
 
 static void close_settings_menu(void)
@@ -2102,11 +2069,10 @@ static void close_settings_menu(void)
         settings[editor_setting_id].value = editor_original_value;
         if (editor_setting_id == SETTING_BRIGHTNESS) apply_brightness();
         if (editor_setting_id == SETTING_LOGO_THEME) apply_theme();
-        if (editor_setting_id == SETTING_NIGHT_MODE) apply_night_mode();
-        if (editor_setting_id == SETTING_MTX_BRIGHTNESS) send_set_command(editor_setting_id);
     }
     settings_visible = false;
     editor_visible = false;
+    touch_guard = false;
     clear_confirm_dialog_state();
     selected_row = NULL;
     if (settings_confirm_panel) {
@@ -2119,7 +2085,6 @@ static void close_settings_menu(void)
     /* Notify MEGA → matrix */
     const char *cmd = "SETTINGS:CLOSE\n";
     uart_write_bytes(STATUS_UART_PORT, cmd, strlen(cmd));
-    web_console_log_event("Settings: closed");
 
     /* restore display */
     if (current_display_mode == DISPLAY_MODE_MANUAL && !status_error_active && !mode_message_active) {
@@ -2948,6 +2913,13 @@ static void set_drone_mode_visible(bool visible)
         if (status_label) {
             lv_obj_add_flag(status_label, LV_OBJ_FLAG_HIDDEN);
         }
+    } else {
+        /* Restore logo when hiding drone mode (unless settings/error active) */
+        if (current_display_mode == DISPLAY_MODE_MANUAL && !status_error_active && !mode_message_active) {
+            if (logo_img_obj) {
+                lv_obj_clear_flag(logo_img_obj, LV_OBJ_FLAG_HIDDEN);
+            }
+        }
     }
 
     if (drone_title_label) {
@@ -3082,29 +3054,6 @@ static void switch_display_mode(DisplayMode mode, const char *detail_msg, uint64
     current_display_mode = mode;
     set_drone_mode_visible(false);
 
-    /* Log mode transitions to web console */
-    {
-        bool is_variant_mode = (mode == DISPLAY_MODE_BOUNCE || mode == DISPLAY_MODE_TIMELAPSE);
-        if (mode != previous_mode || is_variant_mode) {
-            char _buf[80];
-            if (is_variant_mode && detail_msg && detail_msg[0]) {
-                /* Collapse newlines in detail for single-line log entry */
-                char detail[48];
-                strncpy(detail, detail_msg, sizeof(detail) - 1);
-                detail[sizeof(detail) - 1] = '\0';
-                for (int _i = 0; detail[_i]; _i++) if (detail[_i] == '\n') detail[_i] = ' ';
-                snprintf(_buf, sizeof(_buf), "Mode: %s — %s",
-                    (mode == DISPLAY_MODE_BOUNCE) ? "Bounce" : "Timelapse", detail);
-            } else {
-                const char *mn = (mode == DISPLAY_MODE_DRONE)  ? "Drone Mode" :
-                                 (mode == DISPLAY_MODE_ERROR)  ? "Error"      :
-                                 (mode == DISPLAY_MODE_MANUAL) ? "Manual"     : "Unknown";
-                snprintf(_buf, sizeof(_buf), "Mode: %s", mn);
-            }
-            web_console_log_event(_buf);
-        }
-    }
-
     if (mode == DISPLAY_MODE_ERROR) {
         mode_message_active = false;
         restore_mode_after_message = false;
@@ -3216,9 +3165,11 @@ static void status_uart_task(void *arg)
             }
         }
 
+        /* Yield to IDLE task every iteration to prevent watchdog timeout */
+        vTaskDelay(pdMS_TO_TICKS(1));
+
         int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(5));
         if (len <= 0) {
-            vTaskDelay(pdMS_TO_TICKS(10));
             continue;
         }
 
@@ -3232,9 +3183,12 @@ static void status_uart_task(void *arg)
             }
 
             line[line_len] = '\0';
-            if (strncmp(line, "DRONE_STICK:", 12) != 0 &&
-                strncmp(line, "CONTROLLER_OK:", 14) != 0) {
+            if (strncmp(line, "DRONE_STICK:", 12) != 0) {
                 ESP_LOGI(TAG, "Mega status: %s", line);
+                /* Also send to web console for remote monitoring */
+                char evt[280];
+                snprintf(evt, sizeof(evt), "MEGA: %s", line);
+                web_console_log_event(evt);
             }
             last_status_rx_ms = now_ms;
 
@@ -3759,57 +3713,26 @@ static void show_controller_error_cb(lv_timer_t *timer)
 }
 #endif
 
-/* ================================================================
- *  Web console command handler — forwards browser CMD: messages to Mega
- * ================================================================ */
-static void web_cmd_handler(const char *cmd)
-{
-    /* Display brightness — handle locally, do not forward to MEGA */
-    if (strncmp(cmd, "SET:DISP_BRT:", 13) == 0) {
-        int pct = atoi(cmd + 13);
-        if (pct < 0) pct = 0;
-        if (pct > 100) pct = 100;
-        settings[SETTING_BRIGHTNESS].value = pct;
-        apply_brightness();
-        return;
-    }
-    /* Night mode is display-only — handle locally, do not forward to MEGA */
-    if (strncmp(cmd, "SET:NIGHT:", 10) == 0) {
-        settings[SETTING_NIGHT_MODE].value = (cmd[10] == '1') ? 1 : 0;
-        apply_night_mode();
-        return;
-    }
-    /* Forward CMD:/SET:/SETTINGS messages to the Mega via UART */
-    bool is_cmd      = strncmp(cmd, "CMD:", 4) == 0;
-    bool is_set      = strncmp(cmd, "SET:", 4) == 0;
-    bool is_settings = strncmp(cmd, "SETTINGS", 8) == 0;
-    if (is_cmd || is_set || is_settings) {
-        char buf[80];
-        snprintf(buf, sizeof(buf), "%s\n", cmd);
-        uart_write_bytes(STATUS_UART_PORT, buf, strlen(buf));
-        char log_buf[80];
-        if (is_cmd)
-            snprintf(log_buf, sizeof(log_buf), "Web CMD: %s", cmd + 4);
-        else
-            snprintf(log_buf, sizeof(log_buf), "Web SET: %s", cmd);
-        web_console_log_event(log_buf);
-    }
-}
-
 void app_main(void)
 {
-    /* I2C for touch - init BEFORE any tasks start */
-    const i2c_config_t i2c_conf = {
-        .mode = I2C_MODE_MASTER,
-        .sda_io_num = TOUCH_I2C_SDA,
-        .scl_io_num = TOUCH_I2C_SCL,
-        .sda_pullup_en = GPIO_PULLUP_ENABLE,
-        .scl_pullup_en = GPIO_PULLUP_ENABLE,
-        .master.clk_speed = TOUCH_I2C_FREQ_HZ,
-    };
-    ESP_ERROR_CHECK(i2c_param_config(TOUCH_I2C_PORT, &i2c_conf));
-    ESP_ERROR_CHECK(i2c_driver_install(TOUCH_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
+    /* Initialize I2C for touch FIRST - before any tasks that might poll it */
+    ESP_LOGI(TAG, "Initializing I2C for touch controller");
+    {
+        const i2c_config_t i2c_conf = {
+            .mode = I2C_MODE_MASTER,
+            .sda_io_num = TOUCH_I2C_SDA,
+            .scl_io_num = TOUCH_I2C_SCL,
+            .sda_pullup_en = GPIO_PULLUP_ENABLE,
+            .scl_pullup_en = GPIO_PULLUP_ENABLE,
+            .master.clk_speed = TOUCH_I2C_FREQ_HZ,
+        };
+        ESP_ERROR_CHECK(i2c_param_config(TOUCH_I2C_PORT, &i2c_conf));
+        ESP_ERROR_CHECK(i2c_driver_install(TOUCH_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
+        touch_i2c_ready = true;
+    }
+    ESP_LOGI(TAG, "I2C driver installed, touch_i2c_ready = true");
 
+    ESP_LOGI(TAG, "Initialize SPI bus");
     const spi_bus_config_t buscfg = SH8601_PANEL_BUS_QSPI_CONFIG(
         PIN_NUM_LCD_PCLK,
         PIN_NUM_LCD_DATA0,
@@ -3882,16 +3805,16 @@ void app_main(void)
     /* Kill the default theme so it never injects styles into our objects */
     lv_disp_set_theme(disp, NULL);
 
-    /* WiFi AP + web event console — started AFTER DMA buffers are allocated */
-    web_console_init();
-    web_console_set_cmd_handler(web_cmd_handler);
-
-    /* Touch input device */
+    /* Register touch input device */
     static lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     indev_drv.read_cb = touch_read_cb;
     lv_indev_drv_register(&indev_drv);
+
+    /* WiFi AP + web event console — started AFTER DMA buffers are allocated */
+    web_console_init();
+    web_console_set_cmd_handler(my_websocket_command_receiver);
 
     const esp_timer_create_args_t tick_timer_args = {
         .callback = lvgl_tick_cb,
@@ -3903,7 +3826,6 @@ void app_main(void)
 
     lvgl_mux = xSemaphoreCreateMutex();
     assert(lvgl_mux);
-    xTaskCreatePinnedToCore(lvgl_task, "lvgl", LVGL_TASK_STACK_SIZE, NULL, LVGL_TASK_PRIORITY, NULL, 0);
 
     const uart_config_t uart_cfg = {
         .baud_rate = STATUS_UART_BAUDRATE,
@@ -3916,18 +3838,11 @@ void app_main(void)
     ESP_ERROR_CHECK(uart_driver_install(STATUS_UART_PORT, STATUS_UART_BUF_SIZE, 0, 0, NULL, 0));
     ESP_ERROR_CHECK(uart_param_config(STATUS_UART_PORT, &uart_cfg));
     ESP_ERROR_CHECK(uart_set_pin(STATUS_UART_PORT, STATUS_UART_TX_PIN, STATUS_UART_RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
-    xTaskCreatePinnedToCore(status_uart_task, "status_uart", 6144, NULL, 3, NULL, 1);
+    xTaskCreatePinnedToCore(status_uart_task, "status_uart", 4096, NULL, 3, NULL, 1);
 
-    /* Push boot-time settings to Mega now that UART is ready. */
+    /* Push boot-time matrix brightness to hardware now that UART is ready. */
     vTaskDelay(pdMS_TO_TICKS(200));
     send_set_command(SETTING_MTX_BRIGHTNESS);
-    send_set_command(SETTING_DRONE_ACCEL);
-    send_set_command(SETTING_DRONE_ACTDECEL);
-    send_set_command(SETTING_DRONE_RELDECEL);
-    send_set_command(SETTING_DRONE_COOLDOWN);
-    web_console_log_event("MOCO Jib booted");
-
-    /* I2C for touch */
 
     xSemaphoreTake(lvgl_mux, portMAX_DELAY);
     lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_PART_MAIN);
@@ -4434,6 +4349,9 @@ void app_main(void)
 #if TEST_FORCE_CONTROLLER_ERROR
     lv_timer_create(show_controller_error_cb, TEST_FORCE_CONTROLLER_ERROR_DELAY_MS, NULL);
 #endif
+
+    /* Start LVGL task to run timer handler for animations and UI updates */
+    xTaskCreatePinnedToCore(lvgl_task, "lvgl", LVGL_TASK_STACK_SIZE, NULL, LVGL_TASK_PRIORITY, NULL, 0);
 
     xSemaphoreGive(lvgl_mux);
 

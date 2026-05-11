@@ -8,6 +8,10 @@
 body{margin:0;padding:0;background:#111;color:#fff;font-family:Arial,sans-serif;display:flex;flex-direction:column;height:100vh}
 .header{background:#1a1a1a;border-bottom:2px solid #ff9000;padding:15px 20px;display:flex;align-items:center;justify-content:space-between}
 h1{color:#ff9000;margin:0;font-size:1.5em}
+.nav{display:flex;gap:15px}
+.nav a{color:#aaa;text-decoration:none;padding:5px 10px;border-radius:4px;transition:all .3s}
+.nav a:hover{color:#fff;background:#333}
+.nav a.active{color:#ff9000;background:#222}
 .status{display:flex;align-items:center;gap:8px;font-size:0.9em}
 .dot{width:10px;height:10px;border-radius:50%;background:#333;transition:background .4s}
 .dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
@@ -22,6 +26,10 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 <body>
 <div class="header">
 <h1>MOCO JIB</h1>
+<div class="nav">
+<a href="/" class="active">Console</a>
+<a href="/settings">Settings</a>
+</div>
 <div class="status">
 <div class="dot" id="dot"></div>
 <span id="conn">Connecting...</span>
@@ -34,11 +42,8 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 var ws,cons=document.getElementById('console'),dot=document.getElementById('dot'),conn=document.getElementById('conn'),curdot=document.getElementById('cur'),curtxt=document.getElementById('curtxt'),reconnecting=false;
 function ts(){var t=new Date(),p=n=>n<10?'0'+n:n;return p(t.getHours())+':'+p(t.getMinutes())+':'+p(t.getSeconds())}
 function log(m,c){var e=document.createElement('div');e.className='event';e.innerHTML='<span class="time">'+ts()+'</span><span class="msg '+(c||'')+'">'+ m.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>';cons.appendChild(e);if(cons.children.length>200)cons.removeChild(cons.firstChild);cons.scrollTop=cons.scrollHeight}
-function connect(){if(reconnecting)return;reconnecting=true;if(ws){try{ws.close()}catch(e){}}ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){reconnecting=false;dot.className='dot live';conn.textContent='Live';log('Console connected','sys')};ws.onmessage=function(e){log(e.data)};ws.onclose=function(){dot.className='dot';conn.textContent='Reconnecting...';setTimeout(function(){reconnecting=false;connect()},2000)};ws.onerror=function(){dot.className='dot';conn.textContent='Connection error'}}
-function checkCurrent(){fetch('/status').then(r=>r.json()).then(d=>{if(d.current){curdot.className='dot current';curtxt.textContent='Current'}else{curdot.className='dot';curtxt.textContent='Buffering'}}).catch(e=>{curdot.className='dot';curtxt.textContent='---'})}
+function connect(){if(reconnecting)return;reconnecting=true;if(ws){try{ws.close()}catch(e){}}ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){reconnecting=false;dot.className='dot live';conn.textContent='Live';log('Console connected','sys')};ws.onmessage=function(e){log(e.data);curdot.className='dot current';curtxt.textContent='Current'};ws.onclose=function(){dot.className='dot';conn.textContent='Reconnecting...';curdot.className='dot';curtxt.textContent='---';setTimeout(function(){reconnecting=false;connect()},2000)};ws.onerror=function(){dot.className='dot';conn.textContent='Connection error';curdot.className='dot';curtxt.textContent='---'}}
 connect();
-setInterval(checkCurrent,500);
-checkCurrent();
 </script>
 </body>
 </html>

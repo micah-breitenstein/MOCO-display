@@ -27,6 +27,8 @@ static const char *TAG = "web_console";
 
 extern const uint8_t landing_html_start[]   asm("_binary_landing_html_start");
 extern const uint8_t landing_html_end[]     asm("_binary_landing_html_end");
+extern const uint8_t settings_html_start[]  asm("_binary_settings_html_start");
+extern const uint8_t settings_html_end[]    asm("_binary_settings_html_end");
 
 /* Ring buffer for console events */
 typedef struct {
@@ -42,6 +44,7 @@ static httpd_handle_t    s_server = NULL;
 static int               s_ws_fd  = -1;
 static ring_buf_t        s_ring   = {0};
 static SemaphoreHandle_t s_send_sem = NULL;
+static web_console_cmd_handler_t s_cmd_handler = NULL;
 
 static bool ring_buf_is_empty(void) {
     bool empty;
@@ -100,6 +103,21 @@ static esp_err_t favicon_handler(httpd_req_t *req)
     return httpd_resp_send(req, NULL, 0);
 }
 
+/* Settings page handler */
+static esp_err_t settings_handler(httpd_req_t *req)
+{
+    const char *data = (const char *)settings_html_start;
+    size_t      len  = (size_t)(settings_html_end - settings_html_start);
+    
+    ESP_LOGI(TAG, "Serving /settings (%u bytes)", (unsigned)len);
+    
+    httpd_resp_set_type(req, "text/html");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate");
+    httpd_resp_set_hdr(req, "Pragma", "no-cache");
+    httpd_resp_set_hdr(req, "Expires", "0");
+    return httpd_resp_send(req, data, len);
+}
+
 /* WebSocket async send */
 typedef struct {
     httpd_handle_t hd;
@@ -130,18 +148,40 @@ static esp_err_t ws_handler(httpd_req_t *req)
         int new_fd = httpd_req_to_sockfd(req);
         s_ws_fd = new_fd;
         ESP_LOGI(TAG, "WS handshake on fd=%d", new_fd);
+        /* Trigger event task to flush any accumulated events from ring buffer */
+        xSemaphoreGive(s_ring.notify);
         return ESP_OK;
     }
     
     httpd_ws_frame_t f = {0};
-    uint8_t buf[64] = {0};
+    uint8_t buf[128] = {0};
     f.payload = buf;
+    
+    ESP_LOGI(TAG, "WS recv attempt, fd=%d", httpd_req_to_sockfd(req));
+    
     esp_err_t err = httpd_ws_recv_frame(req, &f, sizeof(buf) - 1);
     if (err != ESP_OK) {
+        ESP_LOGE(TAG, "WS recv failed: %s", esp_err_to_name(err));
         return err;
     }
     
-    if (f.type == HTTPD_WS_TYPE_CLOSE) {
+    ESP_LOGI(TAG, "WS frame type=%d len=%d", f.type, (int)f.len);
+    
+    if (f.type == HTTPD_WS_TYPE_TEXT && f.len > 0 && f.len < sizeof(buf)) {
+        /* Null-terminate the received message */
+        buf[f.len] = '\0';
+        
+        ESP_LOGI(TAG, "WS recv: '%s' (len=%d)", (char *)buf, (int)f.len);
+        
+        /* Call the registered command handler if available */
+        if (s_cmd_handler) {
+            ESP_LOGI(TAG, "Calling cmd_handler at %p with '%s'", s_cmd_handler, (char *)buf);
+            s_cmd_handler((const char *)buf);
+            ESP_LOGI(TAG, "cmd_handler returned successfully");
+        } else {
+            ESP_LOGW(TAG, "No cmd_handler registered!");
+        }
+    } else if (f.type == HTTPD_WS_TYPE_CLOSE) {
         int current_fd = httpd_req_to_sockfd(req);
         ESP_LOGI(TAG, "WS close on fd=%d", current_fd);
         if (s_ws_fd == current_fd) {
@@ -161,6 +201,62 @@ static esp_err_t status_handler(httpd_req_t *req)
     return httpd_resp_send(req, resp, strlen(resp));
 }
 
+/* API endpoint to get current settings */
+static esp_err_t api_settings_get_handler(httpd_req_t *req)
+{
+    /* Return current default values - actual values will sync via web_cmd_handler */
+    const char *resp = "{\"mtx_brt\":5,\"bright\":100,\"r_mute\":0,\"theme\":0,\"tl_int\":15,\"tl_step\":100}";
+    httpd_resp_set_type(req, "application/json");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store");
+    return httpd_resp_send(req, resp, strlen(resp));
+}
+
+/* API endpoint to update settings */
+static esp_err_t api_settings_post_handler(httpd_req_t *req)
+{
+    char buf[128];
+    int ret = httpd_req_recv(req, buf, sizeof(buf) - 1);
+    if (ret <= 0) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "No data");
+        return ESP_FAIL;
+    }
+    buf[ret] = '\0';
+    
+    /* Parse JSON and extract key/value - simple parse for {"key":"...","value":...} */
+    char *key_start = strstr(buf, "\"key\":\"");
+    char *val_start = strstr(buf, "\"value\":");
+    if (!key_start || !val_start) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid JSON");
+        return ESP_FAIL;
+    }
+    
+    key_start += 7; /* skip "key":" */
+    char *key_end = strchr(key_start, '"');
+    if (!key_end) {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Invalid key");
+        return ESP_FAIL;
+    }
+    
+    size_t key_len = key_end - key_start;
+    char key[32];
+    if (key_len >= sizeof(key)) key_len = sizeof(key) - 1;
+    memcpy(key, key_start, key_len);
+    key[key_len] = '\0';
+    
+    val_start += 8; /* skip "value": */
+    int value = atoi(val_start);
+    
+    /* Send command to main */
+    char cmd[64];
+    snprintf(cmd, sizeof(cmd), "SET:%s:%d", key, value);
+    if (s_cmd_handler) {
+        s_cmd_handler(cmd);
+    }
+    
+    httpd_resp_set_type(req, "application/json");
+    return httpd_resp_sendstr(req, "{\"ok\":true}");
+}
+
 /* Event dispatch task */
 static void web_event_task(void *arg)
 {
@@ -170,24 +266,30 @@ static void web_event_task(void *arg)
         /* Wait for notification */
         xSemaphoreTake(s_ring.notify, portMAX_DELAY);
         
-        /* Drain all pending events */
-        while (ring_buf_pop(msg)) {
-            if (!s_server || s_ws_fd < 0) continue;
+        /* Only drain events if we have an active WebSocket connection */
+        if (s_server && s_ws_fd >= 0) {
+            /* Drain all pending events */
+            while (ring_buf_pop(msg)) {
+                ws_work_t *w = malloc(sizeof(ws_work_t));
+                if (!w) {
+                    /* Out of memory - put message back by not popping it next time */
+                    break;
+                }
+                w->hd = s_server;
+                w->fd = s_ws_fd;
+                snprintf(w->msg, sizeof(w->msg), "%s", msg);
 
-            ws_work_t *w = malloc(sizeof(ws_work_t));
-            if (!w) continue;
-            w->hd = s_server;
-            w->fd = s_ws_fd;
-            snprintf(w->msg, sizeof(w->msg), "%s", msg);
+                xSemaphoreTake(s_send_sem, pdMS_TO_TICKS(1000));
 
-            xSemaphoreTake(s_send_sem, pdMS_TO_TICKS(1000));
-
-            if (httpd_queue_work(s_server, ws_do_send, w) != ESP_OK) {
-                free(w);
-                s_ws_fd = -1;
-                xSemaphoreGive(s_send_sem);
+                if (httpd_queue_work(s_server, ws_do_send, w) != ESP_OK) {
+                    free(w);
+                    s_ws_fd = -1;
+                    xSemaphoreGive(s_send_sem);
+                    break;  /* Stop sending on error */
+                }
             }
         }
+        /* If no WebSocket connection, events stay in ring buffer */
     }
 }
 
@@ -212,8 +314,14 @@ static void wifi_event_handler(void *arg, esp_event_base_t base,
 static void start_http_server(void)
 {
     httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
-    cfg.max_open_sockets = 4;
+    cfg.max_open_sockets = 5;
     cfg.lru_purge_enable = true;
+    cfg.recv_wait_timeout = 10;
+    cfg.send_wait_timeout = 10;
+    cfg.keep_alive_enable = true;
+    cfg.keep_alive_idle = 15;
+    cfg.keep_alive_interval = 5;
+    cfg.keep_alive_count = 3;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start HTTP server");
@@ -241,6 +349,27 @@ static void start_http_server(void)
         .handler = status_handler,
     };
     httpd_register_uri_handler(s_server, &status_uri);
+
+    static const httpd_uri_t settings_uri = {
+        .uri     = "/settings",
+        .method  = HTTP_GET,
+        .handler = settings_handler,
+    };
+    httpd_register_uri_handler(s_server, &settings_uri);
+
+    static const httpd_uri_t api_settings_get_uri = {
+        .uri     = "/api/settings",
+        .method  = HTTP_GET,
+        .handler = api_settings_get_handler,
+    };
+    httpd_register_uri_handler(s_server, &api_settings_get_uri);
+
+    static const httpd_uri_t api_settings_post_uri = {
+        .uri     = "/api/settings",
+        .method  = HTTP_POST,
+        .handler = api_settings_post_handler,
+    };
+    httpd_register_uri_handler(s_server, &api_settings_post_uri);
 
     static const httpd_uri_t root_uri = {
         .uri     = "/",
@@ -319,5 +448,7 @@ void web_console_log_event(const char *msg)
 
 void web_console_set_cmd_handler(web_console_cmd_handler_t handler)
 {
-    (void)handler;
+    ESP_LOGI(TAG, "web_console_set_cmd_handler: handler=%p", handler);
+    s_cmd_handler = handler;
+    ESP_LOGI(TAG, "s_cmd_handler now set to: %p", s_cmd_handler);
 }
