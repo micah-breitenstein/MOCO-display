@@ -3798,7 +3798,18 @@ static void web_cmd_handler(const char *cmd)
 
 void app_main(void)
 {
-    ESP_LOGI(TAG, "Initialize SPI bus");
+    /* I2C for touch - init BEFORE any tasks start */
+    const i2c_config_t i2c_conf = {
+        .mode = I2C_MODE_MASTER,
+        .sda_io_num = TOUCH_I2C_SDA,
+        .scl_io_num = TOUCH_I2C_SCL,
+        .sda_pullup_en = GPIO_PULLUP_ENABLE,
+        .scl_pullup_en = GPIO_PULLUP_ENABLE,
+        .master.clk_speed = TOUCH_I2C_FREQ_HZ,
+    };
+    ESP_ERROR_CHECK(i2c_param_config(TOUCH_I2C_PORT, &i2c_conf));
+    ESP_ERROR_CHECK(i2c_driver_install(TOUCH_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
+
     const spi_bus_config_t buscfg = SH8601_PANEL_BUS_QSPI_CONFIG(
         PIN_NUM_LCD_PCLK,
         PIN_NUM_LCD_DATA0,
@@ -3917,16 +3928,6 @@ void app_main(void)
     web_console_log_event("MOCO Jib booted");
 
     /* I2C for touch */
-    const i2c_config_t i2c_conf = {
-        .mode = I2C_MODE_MASTER,
-        .sda_io_num = TOUCH_I2C_SDA,
-        .scl_io_num = TOUCH_I2C_SCL,
-        .sda_pullup_en = GPIO_PULLUP_ENABLE,
-        .scl_pullup_en = GPIO_PULLUP_ENABLE,
-        .master.clk_speed = TOUCH_I2C_FREQ_HZ,
-    };
-    ESP_ERROR_CHECK(i2c_param_config(TOUCH_I2C_PORT, &i2c_conf));
-    ESP_ERROR_CHECK(i2c_driver_install(TOUCH_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0));
 
     xSemaphoreTake(lvgl_mux, portMAX_DELAY);
     lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_PART_MAIN);

@@ -1,33 +1,44 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MOCO Jib</title><style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0d0d0d;color:#e0e0e0;font-family:'Courier New',monospace;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-header{background:#111;border-bottom:2px solid #e87700;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.brand{font-size:1.1em;font-weight:700;color:#ff9000;letter-spacing:4px}
-.conn{display:flex;align-items:center;gap:6px;font-size:0.75em;color:#888}
-.dot{width:9px;height:9px;border-radius:50%;background:#333;transition:background .4s}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MOCO Jib</title>
+<style>
+body{margin:0;padding:0;background:#111;color:#fff;font-family:Arial,sans-serif;display:flex;flex-direction:column;height:100vh}
+.header{background:#1a1a1a;border-bottom:2px solid #ff9000;padding:15px 20px;display:flex;align-items:center;justify-content:space-between}
+h1{color:#ff9000;margin:0;font-size:1.5em}
+.status{display:flex;align-items:center;gap:8px;font-size:0.9em}
+.dot{width:10px;height:10px;border-radius:50%;background:#333;transition:background .4s}
 .dot.live{background:#00e676;box-shadow:0 0 8px #00e676}
-nav{background:#111;border-bottom:1px solid #222;flex-shrink:0;display:flex}
-.tab{flex:1;padding:9px 4px;text-align:center;font-size:0.72em;letter-spacing:2px;color:#555;cursor:pointer;border-bottom:3px solid transparent;text-decoration:none;display:block}
-.tab.on{color:#ff9000;border-bottom-color:#ff9000}
-#log{flex:1;overflow-y:auto;padding:8px 14px;display:flex;flex-direction:column;gap:1px}
-.ev{display:flex;gap:10px;font-size:0.8em;padding:3px 0;border-bottom:1px solid #181818}
-.ts{color:#444;white-space:nowrap;flex-shrink:0}
-.msg{word-break:break-word}
-.sys{color:#ffa040}
-
-</style></head><body>
-<header><span class="brand">MOCO JIB</span><div class="conn"><div class="dot" id="dot"></div><span id="cst">Connecting…</span></div></header>
-<nav>
-  <div class="tab on">CONSOLE</div>
-  <a class="tab" href="/settings">SETTINGS</a>
-</nav>
-<div id="log"></div>
+.dot.current{background:#2196f3;box-shadow:0 0 8px #2196f3}
+.console{flex:1;overflow-y:auto;padding:15px 20px;display:flex;flex-direction:column;gap:2px}
+.event{display:flex;gap:10px;font-size:0.85em;padding:4px 0;border-bottom:1px solid #222;font-family:monospace}
+.time{color:#666;white-space:nowrap}
+.msg{color:#ddd;word-break:break-word}
+.sys{color:#ff9000}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>MOCO JIB</h1>
+<div class="status">
+<div class="dot" id="dot"></div>
+<span id="conn">Connecting...</span>
+<div class="dot" id="cur" style="margin-left:12px"></div>
+<span id="curtxt">---</span>
+</div>
+</div>
+<div class="console" id="console"></div>
 <script>
-var log=document.getElementById('log'),dot=document.getElementById('dot'),cst=document.getElementById('cst'),ws,rt,ct;
-function ts(){var d=new Date(),p=function(n){return n<10?'0'+n:n};return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
-function row(msg,cls){var e=document.createElement('div');e.className='ev';e.innerHTML='<span class="ts">'+ts()+'</span><span class="msg '+(cls||'')+'">'+msg.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>';log.appendChild(e);if(log.children.length>500)log.removeChild(log.firstChild);log.scrollTop=log.scrollHeight}
-function cleanup(){clearTimeout(rt);clearTimeout(ct);if(ws){try{ws.onopen=ws.onclose=ws.onerror=ws.onmessage=null;ws.close()}catch(e){}}ws=null}
-function connect(){cleanup();ws=new WebSocket('ws://192.168.4.1/ws');ct=setTimeout(function(){if(ws&&ws.readyState!==1){cleanup();dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)}},5000);ws.onopen=function(){clearTimeout(ct);dot.className='dot live';cst.textContent='Live';row('Console connected','sys')};ws.onmessage=function(e){row(e.data)};ws.onclose=function(){cleanup();dot.className='dot';cst.textContent='Reconnecting…';rt=setTimeout(connect,300)};ws.onerror=function(){cleanup();rt=setTimeout(connect,300)}}
-document.addEventListener('visibilitychange',function(){if(!document.hidden&&(!ws||ws.readyState!==1)){cleanup();connect()}});
-rt=setTimeout(connect,100);
-</script></body></html>
+var ws,cons=document.getElementById('console'),dot=document.getElementById('dot'),conn=document.getElementById('conn'),curdot=document.getElementById('cur'),curtxt=document.getElementById('curtxt'),reconnecting=false;
+function ts(){var t=new Date(),p=n=>n<10?'0'+n:n;return p(t.getHours())+':'+p(t.getMinutes())+':'+p(t.getSeconds())}
+function log(m,c){var e=document.createElement('div');e.className='event';e.innerHTML='<span class="time">'+ts()+'</span><span class="msg '+(c||'')+'">'+ m.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>';cons.appendChild(e);if(cons.children.length>200)cons.removeChild(cons.firstChild);cons.scrollTop=cons.scrollHeight}
+function connect(){if(reconnecting)return;reconnecting=true;if(ws){try{ws.close()}catch(e){}}ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){reconnecting=false;dot.className='dot live';conn.textContent='Live';log('Console connected','sys')};ws.onmessage=function(e){log(e.data)};ws.onclose=function(){dot.className='dot';conn.textContent='Reconnecting...';setTimeout(function(){reconnecting=false;connect()},2000)};ws.onerror=function(){dot.className='dot';conn.textContent='Connection error'}}
+function checkCurrent(){fetch('/status').then(r=>r.json()).then(d=>{if(d.current){curdot.className='dot current';curtxt.textContent='Current'}else{curdot.className='dot';curtxt.textContent='Buffering'}}).catch(e=>{curdot.className='dot';curtxt.textContent='---'})}
+connect();
+setInterval(checkCurrent,500);
+checkCurrent();
+</script>
+</body>
+</html>
