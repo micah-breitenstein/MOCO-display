@@ -27,22 +27,20 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 <div class="header">
 <h1>MOCO JIB</h1>
 <div class="nav">
-<a href="/" class="active">Console</a>
+<a href="/console" class="active">Console</a>
 <a href="/settings">Settings</a>
 </div>
 <div class="status">
 <div class="dot" id="dot"></div>
 <span id="conn">Connecting...</span>
-<div class="dot" id="cur" style="margin-left:12px"></div>
-<span id="curtxt">---</span>
 </div>
 </div>
 <div class="console" id="console"></div>
 <script>
-var ws,cons=document.getElementById('console'),dot=document.getElementById('dot'),conn=document.getElementById('conn'),curdot=document.getElementById('cur'),curtxt=document.getElementById('curtxt'),reconnecting=false;
+var ws,cons=document.getElementById('console'),dot=document.getElementById('dot'),conn=document.getElementById('conn'),reconnecting=false;
 function ts(){var t=new Date(),p=n=>n<10?'0'+n:n;return p(t.getHours())+':'+p(t.getMinutes())+':'+p(t.getSeconds())}
 function log(m,c){var e=document.createElement('div');e.className='event';e.innerHTML='<span class="time">'+ts()+'</span><span class="msg '+(c||'')+'">'+ m.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>';cons.appendChild(e);if(cons.children.length>200)cons.removeChild(cons.firstChild);cons.scrollTop=cons.scrollHeight}
-function connect(){if(reconnecting)return;reconnecting=true;if(ws){try{ws.close()}catch(e){}}ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){reconnecting=false;dot.className='dot live';conn.textContent='Live';log('Console connected','sys')};ws.onmessage=function(e){log(e.data);curdot.className='dot current';curtxt.textContent='Current'};ws.onclose=function(){dot.className='dot';conn.textContent='Reconnecting...';curdot.className='dot';curtxt.textContent='---';setTimeout(function(){reconnecting=false;connect()},2000)};ws.onerror=function(){dot.className='dot';conn.textContent='Connection error';curdot.className='dot';curtxt.textContent='---'}}
+function connect(){if(reconnecting)return;reconnecting=true;if(ws){try{ws.close()}catch(e){}}ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){reconnecting=false;dot.className='dot live';conn.textContent='Live';log('Console connected','sys')};ws.onmessage=function(e){log(e.data)};ws.onclose=function(){dot.className='dot';conn.textContent='Reconnecting...';setTimeout(function(){reconnecting=false;connect()},2000)};ws.onerror=function(){dot.className='dot';conn.textContent='Connection error'}}
 connect();
 </script>
 </body>

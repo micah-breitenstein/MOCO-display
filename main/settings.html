@@ -40,7 +40,7 @@ input[type="range"]::-moz-range-thumb{border:none;background:#ff9000;height:16px
 <div class="header">
 <h1>MOCO JIB</h1>
 <div class="nav">
-<a href="/">Console</a>
+<a href="/console">Console</a>
 <a href="/settings" class="active">Settings</a>
 </div>
 </div>
@@ -59,6 +59,14 @@ input[type="range"]::-moz-range-thumb{border:none;background:#ff9000;height:16px
 <div class="setting-control">
 <div class="slider"><input type="range" min="0" max="100" value="100" id="bright"></div>
 <div class="slider-value"><span id="bright_val">100</span>%</div>
+</div>
+</div>
+<div class="setting">
+<div class="setting-label">Night Mode (Matrix Off, Display 5%)</div>
+<div class="setting-control">
+<div class="toggle" id="n_mode" onclick="toggleSetting('n_mode')">
+<div class="toggle-knob"></div>
+</div>
 </div>
 </div>
 </div>

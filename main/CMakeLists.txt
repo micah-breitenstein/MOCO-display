@@ -11,6 +11,7 @@ idf_component_register(
     EMBED_FILES
         "moco_jib_logo_600x310_dark.bin"
         "moco_jib_logo_600x310_light.bin"
+        "loading.html"
         "landing.html"
         "settings.html"
 )

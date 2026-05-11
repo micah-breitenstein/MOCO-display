@@ -25,6 +25,9 @@
 /* Forward declaration for web command handler */
 void my_websocket_command_receiver(const char *cmd);
 
+/* Forward declaration for settings refresh */
+static void request_settings_refresh(void);
+
 extern const lv_font_t lv_font_montserrat_150;
 extern const lv_font_t lv_font_montserrat_120;
 extern const lv_font_t lv_font_montserrat_48;
@@ -115,6 +118,7 @@ typedef enum {
     SETTING_BRIGHTNESS,
     SETTING_RUMBLE_MUTE,
     SETTING_LOGO_THEME,
+    SETTING_NIGHT_MODE,
     SETTING_TL_INTERVAL,
     SETTING_TL_STEPDIST,
     SETTING_HOME_SET,
@@ -148,6 +152,7 @@ static SettingDef settings[SETTING_COUNT] = {
     [SETTING_BRIGHTNESS]     = { "Display",           "%", SGRP_BRIGHTNESS, STYPE_INT_RANGE, 100, 100, 0,   100, 1,  false, false },
     [SETTING_RUMBLE_MUTE]    = { "Rumble Mute",      "",   SGRP_SYSTEM,    STYPE_BOOL,      0,   0,   0,   1,   1,  true,  false },
     [SETTING_LOGO_THEME]     = { "Logo Theme",       "",   SGRP_SYSTEM,    STYPE_BOOL,      0,   0,   0,   1,   1,  false, false },
+    [SETTING_NIGHT_MODE]     = { "Night Mode",       "",   SGRP_BRIGHTNESS, STYPE_BOOL,      0,   0,   0,   1,   1,  false, false },
     [SETTING_TL_INTERVAL]    = { "Interval",         "s",  SGRP_TIMELAPSE, STYPE_INT_RANGE, 15,  15,  1,   99,  1,  true,  true  },
     [SETTING_TL_STEPDIST]    = { "Step Dist",        "ms", SGRP_TIMELAPSE, STYPE_INT_RANGE, 100, 100, 20,  150, 10, true,  true  },
     [SETTING_HOME_SET]       = { "Set Home",         "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
@@ -155,8 +160,8 @@ static SettingDef settings[SETTING_COUNT] = {
     [SETTING_HOME_CLEAR]     = { "Clear Home",       "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
 };
 
-/* NVS keys for the 5 settings (short for 15-char NVS limit) */
-static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "tl_int", "tl_step", "h_set", "h_go", "h_clr" };
+/* NVS keys for the settings (short for 15-char NVS limit) */
+static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "n_mode", "tl_int", "tl_step", "h_set", "h_go", "h_clr" };
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -165,6 +170,7 @@ static lv_obj_t           *setting_row_objs[SETTING_COUNT] = {NULL};
 static int                 settings_open_snapshot[SETTING_COUNT] = {0};
 static bool                setting_recently_changed[SETTING_COUNT] = {false};
 static volatile bool       settings_refresh_pending = false;
+static int64_t             last_settings_refresh_us = 0;
 static bool                settings_visible = false;
 static bool                editor_visible = false;
 static SettingId           editor_setting_id = SETTING_TL_INTERVAL;
@@ -517,15 +523,17 @@ static void apply_theme(void)
     bool light = (settings[SETTING_LOGO_THEME].value != 0);
     lv_color_t bg  = light ? lv_color_white() : lv_color_black();
 
-    /* LVGL object modifications require mutex - wait longer if needed */
-    if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(500)) == pdTRUE) {
+    /* LVGL object modifications require mutex - non-blocking for web commands */
+    if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(50)) == pdTRUE) {
         lv_obj_set_style_bg_color(lv_scr_act(), bg, LV_PART_MAIN);
         if (logo_img_obj) {
             lv_img_set_src(logo_img_obj, light ? &logo_img_light : &logo_img_dark);
         }
         xSemaphoreGive(lvgl_mux);
     } else {
-        ESP_LOGW(TAG, "apply_theme: Failed to acquire lvgl_mux");
+        ESP_LOGW(TAG, "apply_theme: Failed to acquire lvgl_mux, will retry on next refresh");
+        /* Request another refresh to retry theme application */
+        settings_refresh_pending = true;
     }
 }
 
@@ -639,6 +647,8 @@ static void send_set_command(SettingId id)
 /* Web console command handler - must be non-static for cross-compilation-unit callback */
 void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiver(const char *cmd)
 {
+    ESP_LOGI(TAG, "WebSocket command: %s", cmd);
+    
     /* Display brightness — handle locally, do not forward to MEGA */
     if (strncmp(cmd, "SET:BRIGHT:", 11) == 0) {
         int pct = atoi(cmd + 11);
@@ -646,6 +656,7 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         if (pct > 100) pct = 100;
         settings[SETTING_BRIGHTNESS].value = pct;
         apply_brightness();
+        request_settings_refresh();
         char msg[64];
         snprintf(msg, sizeof(msg), "!!! Brightness set to %d%% !!!", pct);
         web_console_log_event(msg);
@@ -656,8 +667,83 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         int val = atoi(cmd + 10);
         settings[SETTING_LOGO_THEME].value = (val == 0) ? 0 : 1;
         apply_theme();
+        request_settings_refresh();
         char msg[64];
         snprintf(msg, sizeof(msg), "!!! Theme set to %s !!!", val ? "light" : "dark");
+        web_console_log_event(msg);
+        return;
+    }
+    /* Night mode — handle locally, sets matrix=0 and display=5 when enabled */
+    if (strncmp(cmd, "SET:N_MODE:", 11) == 0) {
+        int val = atoi(cmd + 11);
+        settings[SETTING_NIGHT_MODE].value = (val == 0) ? 0 : 1;
+        
+        if (val) {
+            /* Enable night mode: matrix off, display dim */
+            settings[SETTING_MTX_BRIGHTNESS].value = 0;
+            settings[SETTING_BRIGHTNESS].value = 5;
+            
+            /* Forward matrix brightness to MEGA */
+            char mega_cmd[32];
+            snprintf(mega_cmd, sizeof(mega_cmd), "SET:MTX_BRT:0\n");
+            uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
+            
+            /* Set display brightness locally */
+            apply_brightness();
+            
+            request_settings_refresh();
+            web_console_log_event("Night mode enabled (matrix off, display 5%)");
+        } else {
+            /* Disable night mode: restore defaults (matrix 5%, display 100%) */
+            settings[SETTING_MTX_BRIGHTNESS].value = settings[SETTING_MTX_BRIGHTNESS].default_val;
+            settings[SETTING_BRIGHTNESS].value = settings[SETTING_BRIGHTNESS].default_val;
+            
+            /* Forward matrix brightness to MEGA */
+            char mega_cmd[32];
+            snprintf(mega_cmd, sizeof(mega_cmd), "SET:MTX_BRT:%d\n", settings[SETTING_MTX_BRIGHTNESS].default_val);
+            uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
+            
+            /* Set display brightness locally */
+            apply_brightness();
+            
+            request_settings_refresh();
+            web_console_log_event("Night mode disabled (matrix 5%, display 100%)");
+        }
+        return;
+    }
+    /* Rumble Mute — update local setting and forward to MEGA */
+    if (strncmp(cmd, "SET:R_MUTE:", 11) == 0) {
+        int val = atoi(cmd + 11);
+        settings[SETTING_RUMBLE_MUTE].value = (val == 0) ? 0 : 1;
+        save_setting_to_nvs(SETTING_RUMBLE_MUTE);
+        
+        /* Forward to MEGA to control controller rumble */
+        char mega_cmd[32];
+        snprintf(mega_cmd, sizeof(mega_cmd), "SET:R_MUTE:%d\n", settings[SETTING_RUMBLE_MUTE].value);
+        uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
+        
+        request_settings_refresh();
+        char msg[64];
+        snprintf(msg, sizeof(msg), "Rumble %s", val ? "muted" : "enabled");
+        web_console_log_event(msg);
+        return;
+    }
+    /* Matrix Brightness — update local setting and forward to MEGA */
+    if (strncmp(cmd, "SET:MTX_BRT:", 12) == 0) {
+        int val = atoi(cmd + 12);
+        if (val < 0) val = 0;
+        if (val > 100) val = 100;
+        settings[SETTING_MTX_BRIGHTNESS].value = val;
+        save_setting_to_nvs(SETTING_MTX_BRIGHTNESS);
+        
+        /* Forward to MEGA to control matrix LED brightness */
+        char mega_cmd[32];
+        snprintf(mega_cmd, sizeof(mega_cmd), "SET:MTX_BRT:%d\n", val);
+        uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
+        
+        request_settings_refresh();
+        char msg[64];
+        snprintf(msg, sizeof(msg), "Matrix brightness set to %d%%", val);
         web_console_log_event(msg);
         return;
     }
@@ -2024,9 +2110,15 @@ static void refresh_settings_list_if_visible(void)
     lv_obj_move_foreground(settings_list_panel);
 }
 
-/* Deferred refresh — safe to call from UART task with lvgl_mux held */
+/* Deferred refresh — rate-limited to prevent UI thrashing from rapid web changes */
 static void request_settings_refresh(void)
 {
+    /* Rate limit: only allow refresh every 200ms to prevent freeze from rapid changes */
+    int64_t now_us = esp_timer_get_time();
+    if ((now_us - last_settings_refresh_us) < 200000) {
+        return;  /* Too soon - skip this refresh */
+    }
+    last_settings_refresh_us = now_us;
     settings_refresh_pending = true;
 }
 
@@ -2035,6 +2127,9 @@ static void open_settings_menu(void)
     settings_visible = true;
     editor_visible = false;
     touch_guard = true;  /* block until finger lifts */
+
+    /* Log settings menu opened */
+    web_console_log_event("Settings menu opened");
 
     for (int i = 0; i < SETTING_COUNT; i++) {
         settings_open_snapshot[i] = settings[i].value;
@@ -2064,6 +2159,9 @@ static void open_settings_menu(void)
 
 static void close_settings_menu(void)
 {
+    /* Log settings menu closed */
+    web_console_log_event("Settings menu closed");
+
     /* Revert any unsaved editor changes */
     if (editor_visible) {
         settings[editor_setting_id].value = editor_original_value;
@@ -3186,9 +3284,16 @@ static void status_uart_task(void *arg)
             if (strncmp(line, "DRONE_STICK:", 12) != 0) {
                 ESP_LOGI(TAG, "Mega status: %s", line);
                 /* Also send to web console for remote monitoring */
-                char evt[280];
-                snprintf(evt, sizeof(evt), "MEGA: %s", line);
-                web_console_log_event(evt);
+                /* Use longer dedup window for controller heartbeat messages */
+                if (strncmp(line, "CONTROLLER_OK:", 14) == 0) {
+                    /* Controller heartbeat - don't log to web console, just noise */
+                    /* CONTROLLER_ERROR messages still get logged below */
+                } else {
+                    /* All other messages - normal logging */
+                    char evt[280];
+                    snprintf(evt, sizeof(evt), "MEGA: %s", line);
+                    web_console_log_event(evt);
+                }
             }
             last_status_rx_ms = now_ms;
 

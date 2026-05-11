@@ -11,10 +11,12 @@
 #include "esp_log.h"
 #include "esp_mac.h"
 #include "esp_netif.h"
+#include "esp_timer.h"
 #include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
+#include "lwip/sockets.h"
 
 #define AP_SSID        "MOCO"
 #define AP_PASS        ""
@@ -23,8 +25,13 @@
 #define RING_BUF_SIZE  64
 #define EVENT_MSG_LEN  160
 
+#define DNS_PORT       53
+#define DNS_MAX_LEN    512
+
 static const char *TAG = "web_console";
 
+extern const uint8_t loading_html_start[]  asm("_binary_loading_html_start");
+extern const uint8_t loading_html_end[]    asm("_binary_loading_html_end");
 extern const uint8_t landing_html_start[]   asm("_binary_landing_html_start");
 extern const uint8_t landing_html_end[]     asm("_binary_landing_html_end");
 extern const uint8_t settings_html_start[]  asm("_binary_settings_html_start");
@@ -54,21 +61,6 @@ static bool ring_buf_is_empty(void) {
     return empty;
 }
 
-static bool ring_buf_push(const char *msg) {
-    xSemaphoreTake(s_ring.mutex, portMAX_DELAY);
-    if (s_ring.count >= RING_BUF_SIZE) {
-        /* Buffer full - drop oldest */
-        s_ring.tail = (s_ring.tail + 1) % RING_BUF_SIZE;
-    } else {
-        s_ring.count++;
-    }
-    snprintf(s_ring.buf[s_ring.head], EVENT_MSG_LEN, "%s", msg);
-    s_ring.head = (s_ring.head + 1) % RING_BUF_SIZE;
-    xSemaphoreGive(s_ring.mutex);
-    xSemaphoreGive(s_ring.notify);  /* Wake up send task */
-    return true;
-}
-
 static bool ring_buf_pop(char *msg) {
     bool success = false;
     xSemaphoreTake(s_ring.mutex, portMAX_DELAY);
@@ -82,19 +74,40 @@ static bool ring_buf_pop(char *msg) {
     return success;
 }
 
-/* Root page handler */
+/* Root page handler - minimal loading page */
 static esp_err_t root_handler(httpd_req_t *req)
+{
+    const char *data = (const char *)loading_html_start;
+    size_t      len  = (size_t)(loading_html_end - loading_html_start);
+    
+    ESP_LOGI(TAG, "Serving / (loading page, %u bytes)", (unsigned)len);
+    
+    httpd_resp_set_type(req, "text/html; charset=utf-8");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    
+    esp_err_t ret = httpd_resp_send(req, data, len);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send loading page: %s", esp_err_to_name(ret));
+    }
+    return ret;
+}
+
+/* Console page handler - full landing page */
+static esp_err_t console_handler(httpd_req_t *req)
 {
     const char *data = (const char *)landing_html_start;
     size_t      len  = (size_t)(landing_html_end - landing_html_start);
     
-    ESP_LOGI(TAG, "Serving / (%u bytes)", (unsigned)len);
+    ESP_LOGI(TAG, "Serving /console (%u bytes)", (unsigned)len);
     
-    httpd_resp_set_type(req, "text/html");
-    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate");
-    httpd_resp_set_hdr(req, "Pragma", "no-cache");
-    httpd_resp_set_hdr(req, "Expires", "0");
-    return httpd_resp_send(req, data, len);
+    httpd_resp_set_type(req, "text/html; charset=utf-8");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    
+    esp_err_t ret = httpd_resp_send(req, data, len);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send console page: %s", esp_err_to_name(ret));
+    }
+    return ret;
 }
 
 static esp_err_t favicon_handler(httpd_req_t *req)
@@ -111,11 +124,17 @@ static esp_err_t settings_handler(httpd_req_t *req)
     
     ESP_LOGI(TAG, "Serving /settings (%u bytes)", (unsigned)len);
     
-    httpd_resp_set_type(req, "text/html");
+    httpd_resp_set_type(req, "text/html; charset=utf-8");
     httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate");
     httpd_resp_set_hdr(req, "Pragma", "no-cache");
     httpd_resp_set_hdr(req, "Expires", "0");
-    return httpd_resp_send(req, data, len);
+    httpd_resp_set_hdr(req, "Connection", "close");
+    
+    esp_err_t ret = httpd_resp_send(req, data, len);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send settings page: %s", esp_err_to_name(ret));
+    }
+    return ret;
 }
 
 /* WebSocket async send */
@@ -147,8 +166,11 @@ static esp_err_t ws_handler(httpd_req_t *req)
     if (req->method == HTTP_GET) {
         int new_fd = httpd_req_to_sockfd(req);
         s_ws_fd = new_fd;
-        ESP_LOGI(TAG, "WS handshake on fd=%d", new_fd);
-        /* Trigger event task to flush any accumulated events from ring buffer */
+        ESP_LOGI(TAG, "WS handshake on fd=%d, ring buffer has %u events", new_fd, s_ring.count);
+        /* Brief delay to allow connection to establish */
+        vTaskDelay(pdMS_TO_TICKS(100));
+        /* Trigger event task to flush buffered events */
+        ESP_LOGI(TAG, "Triggering flush of %u buffered events", s_ring.count);
         xSemaphoreGive(s_ring.notify);
         return ESP_OK;
     }
@@ -263,16 +285,17 @@ static void web_event_task(void *arg)
     (void)arg;
     char msg[EVENT_MSG_LEN];
     for (;;) {
-        /* Wait for notification */
+        /* Wait for notification that events are available */
         xSemaphoreTake(s_ring.notify, portMAX_DELAY);
         
-        /* Only drain events if we have an active WebSocket connection */
+        /* Drain all events in buffer (semaphore is binary, so drain until empty) */
         if (s_server && s_ws_fd >= 0) {
-            /* Drain all pending events */
+            int sent_count = 0;
+            
             while (ring_buf_pop(msg)) {
                 ws_work_t *w = malloc(sizeof(ws_work_t));
                 if (!w) {
-                    /* Out of memory - put message back by not popping it next time */
+                    ESP_LOGW(TAG, "Failed to allocate ws_work_t");
                     break;
                 }
                 w->hd = s_server;
@@ -282,14 +305,20 @@ static void web_event_task(void *arg)
                 xSemaphoreTake(s_send_sem, pdMS_TO_TICKS(1000));
 
                 if (httpd_queue_work(s_server, ws_do_send, w) != ESP_OK) {
+                    ESP_LOGW(TAG, "Failed to queue WebSocket send");
                     free(w);
                     s_ws_fd = -1;
                     xSemaphoreGive(s_send_sem);
-                    break;  /* Stop sending on error */
+                    break;
                 }
+                
+                sent_count++;
+            }
+            if (sent_count > 0) {
+                ESP_LOGI(TAG, "Flushed %d events to WebSocket", sent_count);
             }
         }
-        /* If no WebSocket connection, events stay in ring buffer */
+        /* If no WebSocket connection, events stay in ring buffer until reconnect */
     }
 }
 
@@ -316,17 +345,20 @@ static void start_http_server(void)
     httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
     cfg.max_open_sockets = 5;
     cfg.lru_purge_enable = true;
-    cfg.recv_wait_timeout = 10;
-    cfg.send_wait_timeout = 10;
+    cfg.recv_wait_timeout = 20;
+    cfg.send_wait_timeout = 20;
     cfg.keep_alive_enable = true;
-    cfg.keep_alive_idle = 15;
-    cfg.keep_alive_interval = 5;
+    cfg.keep_alive_idle = 30;
+    cfg.keep_alive_interval = 10;
     cfg.keep_alive_count = 3;
+    cfg.backlog_conn = 5;
+    cfg.stack_size = 8192;
 
     if (httpd_start(&s_server, &cfg) != ESP_OK) {
         ESP_LOGE(TAG, "Failed to start HTTP server");
         return;
     }
+    ESP_LOGI(TAG, "HTTP server started with recv/send timeout=20s");
 
     static const httpd_uri_t ws_uri = {
         .uri          = "/ws",
@@ -371,6 +403,13 @@ static void start_http_server(void)
     };
     httpd_register_uri_handler(s_server, &api_settings_post_uri);
 
+    static const httpd_uri_t console_uri = {
+        .uri     = "/console",
+        .method  = HTTP_GET,
+        .handler = console_handler,
+    };
+    httpd_register_uri_handler(s_server, &console_uri);
+
     static const httpd_uri_t root_uri = {
         .uri     = "/",
         .method  = HTTP_GET,
@@ -379,6 +418,89 @@ static void start_http_server(void)
     httpd_register_uri_handler(s_server, &root_uri);
 
     ESP_LOGI(TAG, "HTTP server started");
+}
+
+/* DNS server for captive portal detection */
+static void dns_server_task(void *arg)
+{
+    uint8_t rx_buf[DNS_MAX_LEN];
+    uint8_t tx_buf[DNS_MAX_LEN];
+    struct sockaddr_in server_addr;
+    struct sockaddr_in client_addr;
+    socklen_t client_addr_len = sizeof(client_addr);
+    
+    int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (sock < 0) {
+        ESP_LOGE(TAG, "Failed to create DNS socket");
+        vTaskDelete(NULL);
+        return;
+    }
+    
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_addr.sin_port = htons(DNS_PORT);
+    
+    if (bind(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        ESP_LOGE(TAG, "Failed to bind DNS socket");
+        close(sock);
+        vTaskDelete(NULL);
+        return;
+    }
+    
+    ESP_LOGI(TAG, "DNS server listening on port %d", DNS_PORT);
+    
+    for (;;) {
+        int len = recvfrom(sock, rx_buf, sizeof(rx_buf), 0,
+                          (struct sockaddr *)&client_addr, &client_addr_len);
+        
+        if (len < 12) continue;  // Too small to be valid DNS query
+        
+        // Copy query to response buffer
+        memcpy(tx_buf, rx_buf, len);
+        
+        // Set response flags: QR=1 (response), AA=1 (authoritative)
+        tx_buf[2] = 0x81;  // QR=1, Opcode=0, AA=1
+        tx_buf[3] = 0x80;  // RA=1, RCODE=0 (no error)
+        
+        // Get query type at offset 12 + domain name length
+        int offset = 12;
+        while (offset < len && rx_buf[offset] != 0) {
+            offset += rx_buf[offset] + 1;
+        }
+        offset++;  // Skip null terminator
+        
+        if (offset + 4 > len) continue;  // Invalid query
+        
+        uint16_t qtype = (rx_buf[offset] << 8) | rx_buf[offset + 1];
+        
+        // Only respond to A record queries (type 1)
+        if (qtype != 1) continue;
+        
+        // Set answer count to 1
+        tx_buf[6] = 0x00;
+        tx_buf[7] = 0x01;
+        
+        // Build answer: pointer to question name (0xC00C), type A, class IN, TTL, length 4, IP
+        int pos = len;
+        tx_buf[pos++] = 0xC0;  // Pointer to offset 12
+        tx_buf[pos++] = 0x0C;
+        tx_buf[pos++] = 0x00;  // Type A
+        tx_buf[pos++] = 0x01;
+        tx_buf[pos++] = 0x00;  // Class IN
+        tx_buf[pos++] = 0x01;
+        tx_buf[pos++] = 0x00;  // TTL (60 seconds)
+        tx_buf[pos++] = 0x00;
+        tx_buf[pos++] = 0x00;
+        tx_buf[pos++] = 0x3C;
+        tx_buf[pos++] = 0x00;  // Data length (4 bytes)
+        tx_buf[pos++] = 0x04;
+        tx_buf[pos++] = 192;   // 192.168.4.1
+        tx_buf[pos++] = 168;
+        tx_buf[pos++] = 4;
+        tx_buf[pos++] = 1;
+        
+        sendto(sock, tx_buf, pos, 0, (struct sockaddr *)&client_addr, client_addr_len);
+    }
 }
 
 /* Public API */
@@ -438,12 +560,55 @@ void web_console_init(void)
     
     xTaskCreatePinnedToCore(web_event_task, "web_evt", 4096, NULL, 2, NULL, 1);
     ESP_LOGI(TAG, "Console event task started");
+    
+    xTaskCreatePinnedToCore(dns_server_task, "dns_srv", 4096, NULL, 2, NULL, 1);
+    ESP_LOGI(TAG, "DNS server started on port 53");
 }
 
 void web_console_log_event(const char *msg)
 {
     if (!s_ring.mutex || !msg) return;
-    ring_buf_push(msg);
+    
+    /* Deduplicate repeated messages - thread-safe version
+     * Only log if different from last message or if >1 second has passed */
+    static char last_msg[EVENT_MSG_LEN] = {0};
+    static int64_t last_time_us = 0;
+    
+    /* Protect deduplication check with mutex to make it thread-safe */
+    xSemaphoreTake(s_ring.mutex, portMAX_DELAY);
+    
+    int64_t now_us = esp_timer_get_time();
+    bool should_log = false;
+    
+    if (strcmp(msg, last_msg) != 0) {
+        /* Different message - log it */
+        should_log = true;
+        snprintf(last_msg, sizeof(last_msg), "%s", msg);
+        last_time_us = now_us;
+    } else if ((now_us - last_time_us) > 1000000) {
+        /* Same message but more than 1 second - log it */
+        should_log = true;
+        last_time_us = now_us;
+    }
+    
+    if (should_log) {
+        /* Push to ring buffer (mutex already held) */
+        if (s_ring.count >= RING_BUF_SIZE) {
+            /* Buffer full - drop oldest */
+            s_ring.tail = (s_ring.tail + 1) % RING_BUF_SIZE;
+        } else {
+            s_ring.count++;
+        }
+        snprintf(s_ring.buf[s_ring.head], EVENT_MSG_LEN, "%s", msg);
+        s_ring.head = (s_ring.head + 1) % RING_BUF_SIZE;
+    }
+    
+    /* Always notify event task if buffer has content (even if this message was deduplicated) */
+    if (s_ring.count > 0) {
+        xSemaphoreGive(s_ring.notify);
+    }
+    
+    xSemaphoreGive(s_ring.mutex);
 }
 
 void web_console_set_cmd_handler(web_console_cmd_handler_t handler)
