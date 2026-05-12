@@ -30,10 +30,12 @@
 
 static const char *TAG = "web_console";
 
-extern const uint8_t loading_html_start[]  asm("_binary_loading_html_start");
-extern const uint8_t loading_html_end[]    asm("_binary_loading_html_end");
+extern const uint8_t loading_html_start[]   asm("_binary_loading_html_start");
+extern const uint8_t loading_html_end[]     asm("_binary_loading_html_end");
 extern const uint8_t landing_html_start[]   asm("_binary_landing_html_start");
 extern const uint8_t landing_html_end[]     asm("_binary_landing_html_end");
+extern const uint8_t timelapse_html_start[] asm("_binary_timelapse_html_start");
+extern const uint8_t timelapse_html_end[]   asm("_binary_timelapse_html_end");
 extern const uint8_t settings_html_start[]  asm("_binary_settings_html_start");
 extern const uint8_t settings_html_end[]    asm("_binary_settings_html_end");
 
@@ -47,8 +49,16 @@ typedef struct {
     SemaphoreHandle_t notify;
 } ring_buf_t;
 
+typedef enum {
+    PAGE_TYPE_UNKNOWN = 0,
+    PAGE_TYPE_CONSOLE = 1,
+    PAGE_TYPE_SETTINGS = 2,
+    PAGE_TYPE_TIMELAPSE = 3,
+} page_type_t;
+
 static httpd_handle_t    s_server = NULL;
 static int               s_ws_fd  = -1;
+static page_type_t       s_page_type = PAGE_TYPE_UNKNOWN;
 static ring_buf_t        s_ring   = {0};
 static SemaphoreHandle_t s_send_sem = NULL;
 static web_console_cmd_handler_t s_cmd_handler = NULL;
@@ -59,6 +69,17 @@ static bool ring_buf_is_empty(void) {
     empty = (s_ring.count == 0);
     xSemaphoreGive(s_ring.mutex);
     return empty;
+}
+
+static bool ring_buf_peek(char *msg) {
+    bool success = false;
+    xSemaphoreTake(s_ring.mutex, portMAX_DELAY);
+    if (s_ring.count > 0) {
+        snprintf(msg, EVENT_MSG_LEN, "%s", s_ring.buf[s_ring.tail]);
+        success = true;
+    }
+    xSemaphoreGive(s_ring.mutex);
+    return success;
 }
 
 static bool ring_buf_pop(char *msg) {
@@ -110,6 +131,24 @@ static esp_err_t console_handler(httpd_req_t *req)
     return ret;
 }
 
+/* Timelapse page handler */
+static esp_err_t timelapse_handler(httpd_req_t *req)
+{
+    const char *data = (const char *)timelapse_html_start;
+    size_t      len  = (size_t)(timelapse_html_end - timelapse_html_start);
+    
+    ESP_LOGI(TAG, "Serving /timelapse (%u bytes)", (unsigned)len);
+    
+    httpd_resp_set_type(req, "text/html; charset=utf-8");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    
+    esp_err_t ret = httpd_resp_send(req, data, len);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send timelapse page: %s", esp_err_to_name(ret));
+    }
+    return ret;
+}
+
 static esp_err_t favicon_handler(httpd_req_t *req)
 {
     httpd_resp_set_status(req, "204 No Content");
@@ -154,8 +193,13 @@ static void ws_do_send(void *arg)
         .payload    = (uint8_t *)w->msg,
         .len        = strlen(w->msg),
     };
-    if (httpd_ws_send_frame_async(w->hd, w->fd, &f) != ESP_OK) {
-        if (s_ws_fd == w->fd) s_ws_fd = -1;
+    esp_err_t err = httpd_ws_send_frame_async(w->hd, w->fd, &f);
+    if (err != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to send WebSocket frame to fd=%d: %s (msg: %.50s)", 
+                 w->fd, esp_err_to_name(err), w->msg);
+        if (s_ws_fd == w->fd) {
+            s_ws_fd = -1;
+        }
     }
     free(w);
     xSemaphoreGive(s_send_sem);
@@ -166,12 +210,29 @@ static esp_err_t ws_handler(httpd_req_t *req)
     if (req->method == HTTP_GET) {
         int new_fd = httpd_req_to_sockfd(req);
         s_ws_fd = new_fd;
-        ESP_LOGI(TAG, "WS handshake on fd=%d, ring buffer has %u events", new_fd, s_ring.count);
-        /* Brief delay to allow connection to establish */
-        vTaskDelay(pdMS_TO_TICKS(100));
-        /* Trigger event task to flush buffered events */
-        ESP_LOGI(TAG, "Triggering flush of %u buffered events", s_ring.count);
-        xSemaphoreGive(s_ring.notify);
+        s_page_type = PAGE_TYPE_UNKNOWN;
+        ESP_LOGI(TAG, "WS handshake on fd=%d, ring buffer has %u events, waiting for page identification", new_fd, s_ring.count);
+        
+        /* Send welcome but wait for page to identify itself before flushing events */
+        vTaskDelay(pdMS_TO_TICKS(500));
+        
+        if (s_server && s_ws_fd == new_fd) {
+            char welcome[64];
+            snprintf(welcome, sizeof(welcome), "WebSocket ready (%lu buffered events)", (unsigned long)s_ring.count);
+            httpd_ws_frame_t frame = {
+                .final = true,
+                .fragmented = false,
+                .type = HTTPD_WS_TYPE_TEXT,
+                .payload = (uint8_t *)welcome,
+                .len = strlen(welcome),
+            };
+            esp_err_t err = httpd_ws_send_frame_async(s_server, new_fd, &frame);
+            if (err != ESP_OK) {
+                ESP_LOGW(TAG, "Failed to send welcome message: %s", esp_err_to_name(err));
+            }
+        }
+        
+        /* Don't flush buffered events yet - wait for page to identify itself */
         return ESP_OK;
     }
     
@@ -195,6 +256,24 @@ static esp_err_t ws_handler(httpd_req_t *req)
         
         ESP_LOGI(TAG, "WS recv: '%s' (len=%d)", (char *)buf, (int)f.len);
         
+        /* Check for page type identification */
+        if (strncmp((char *)buf, "PAGE:CONSOLE", 12) == 0) {
+            s_page_type = PAGE_TYPE_CONSOLE;
+            ESP_LOGI(TAG, "Page identified as CONSOLE, flushing %u buffered events", s_ring.count);
+            if (s_ring.count > 0) {
+                xSemaphoreGive(s_ring.notify);
+            }
+            return ESP_OK;
+        } else if (strncmp((char *)buf, "PAGE:SETTINGS", 13) == 0) {
+            s_page_type = PAGE_TYPE_SETTINGS;
+            ESP_LOGI(TAG, "Page identified as SETTINGS, not flushing buffered events (they're preserved for console)");
+            return ESP_OK;
+        } else if (strncmp((char *)buf, "PAGE:TIMELAPSE", 14) == 0) {
+            s_page_type = PAGE_TYPE_TIMELAPSE;
+            ESP_LOGI(TAG, "Page identified as TIMELAPSE, not flushing buffered events (they're preserved for console)");
+            return ESP_OK;
+        }
+        
         /* Call the registered command handler if available */
         if (s_cmd_handler) {
             ESP_LOGI(TAG, "Calling cmd_handler at %p with '%s'", s_cmd_handler, (char *)buf);
@@ -208,6 +287,7 @@ static esp_err_t ws_handler(httpd_req_t *req)
         ESP_LOGI(TAG, "WS close on fd=%d", current_fd);
         if (s_ws_fd == current_fd) {
             s_ws_fd = -1;
+            s_page_type = PAGE_TYPE_UNKNOWN;
         }
     }
     return ESP_OK;
@@ -288,37 +368,53 @@ static void web_event_task(void *arg)
         /* Wait for notification that events are available */
         xSemaphoreTake(s_ring.notify, portMAX_DELAY);
         
-        /* Drain all events in buffer (semaphore is binary, so drain until empty) */
+        /* Drain all events to active WebSocket */
         if (s_server && s_ws_fd >= 0) {
-            int sent_count = 0;
+            int count = 0;
+            int saved_fd = s_ws_fd;
+            page_type_t saved_page_type = s_page_type;
             
-            while (ring_buf_pop(msg)) {
+            while (ring_buf_peek(msg)) {
+                /* Filter CONSOLE: messages - only send to console page */
+                if (strncmp(msg, "CONSOLE:", 8) == 0 && saved_page_type != PAGE_TYPE_CONSOLE) {
+                    /* Console events blocked by non-console page - stop processing */
+                    break;
+                }
+                
+                /* Message is appropriate for this page - pop and send it */
+                ring_buf_pop(msg);
+                
                 ws_work_t *w = malloc(sizeof(ws_work_t));
                 if (!w) {
-                    ESP_LOGW(TAG, "Failed to allocate ws_work_t");
+                    ESP_LOGW(TAG, "Failed to allocate ws_work_t for event: %s", msg);
                     break;
                 }
                 w->hd = s_server;
-                w->fd = s_ws_fd;
+                w->fd = saved_fd;
                 snprintf(w->msg, sizeof(w->msg), "%s", msg);
 
                 xSemaphoreTake(s_send_sem, pdMS_TO_TICKS(1000));
 
                 if (httpd_queue_work(s_server, ws_do_send, w) != ESP_OK) {
-                    ESP_LOGW(TAG, "Failed to queue WebSocket send");
+                    ESP_LOGW(TAG, "Failed to queue event for fd=%d: %s", saved_fd, msg);
                     free(w);
-                    s_ws_fd = -1;
+                    if (s_ws_fd == saved_fd) {
+                        s_ws_fd = -1;
+                    }
                     xSemaphoreGive(s_send_sem);
                     break;
                 }
                 
-                sent_count++;
+                count++;
+                vTaskDelay(pdMS_TO_TICKS(20));
             }
-            if (sent_count > 0) {
-                ESP_LOGI(TAG, "Flushed %d events to WebSocket", sent_count);
+            
+            if (count > 0) {
+                ESP_LOGI(TAG, "Queued %d events to WebSocket fd=%d", count, saved_fd);
             }
+        } else {
+            ESP_LOGI(TAG, "No active WebSocket (fd=%d), events remain buffered (%u)", s_ws_fd, s_ring.count);
         }
-        /* If no WebSocket connection, events stay in ring buffer until reconnect */
     }
 }
 
@@ -344,6 +440,7 @@ static void start_http_server(void)
 {
     httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
     cfg.max_open_sockets = 5;
+    cfg.max_uri_handlers = 12;
     cfg.lru_purge_enable = true;
     cfg.recv_wait_timeout = 20;
     cfg.send_wait_timeout = 20;
@@ -359,6 +456,14 @@ static void start_http_server(void)
         return;
     }
     ESP_LOGI(TAG, "HTTP server started with recv/send timeout=20s");
+
+    /* Register root route first */
+    static const httpd_uri_t root_uri = {
+        .uri     = "/",
+        .method  = HTTP_GET,
+        .handler = root_handler,
+    };
+    httpd_register_uri_handler(s_server, &root_uri);
 
     static const httpd_uri_t ws_uri = {
         .uri          = "/ws",
@@ -381,6 +486,13 @@ static void start_http_server(void)
         .handler = status_handler,
     };
     httpd_register_uri_handler(s_server, &status_uri);
+
+    static const httpd_uri_t timelapse_uri = {
+        .uri     = "/timelapse",
+        .method  = HTTP_GET,
+        .handler = timelapse_handler,
+    };
+    httpd_register_uri_handler(s_server, &timelapse_uri);
 
     static const httpd_uri_t settings_uri = {
         .uri     = "/settings",
@@ -409,13 +521,6 @@ static void start_http_server(void)
         .handler = console_handler,
     };
     httpd_register_uri_handler(s_server, &console_uri);
-
-    static const httpd_uri_t root_uri = {
-        .uri     = "/",
-        .method  = HTTP_GET,
-        .handler = root_handler,
-    };
-    httpd_register_uri_handler(s_server, &root_uri);
 
     ESP_LOGI(TAG, "HTTP server started");
 }
@@ -601,11 +706,14 @@ void web_console_log_event(const char *msg)
         }
         snprintf(s_ring.buf[s_ring.head], EVENT_MSG_LEN, "%s", msg);
         s_ring.head = (s_ring.head + 1) % RING_BUF_SIZE;
-    }
-    
-    /* Always notify event task if buffer has content (even if this message was deduplicated) */
-    if (s_ring.count > 0) {
-        xSemaphoreGive(s_ring.notify);
+        
+        /* Only notify if this event can be sent to the current page */
+        bool is_console_msg = (strncmp(msg, "CONSOLE:", 8) == 0);
+        bool can_send = !is_console_msg || (s_page_type == PAGE_TYPE_CONSOLE);
+        
+        if (can_send && s_ws_fd >= 0) {
+            xSemaphoreGive(s_ring.notify);
+        }
     }
     
     xSemaphoreGive(s_ring.mutex);

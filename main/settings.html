@@ -41,6 +41,7 @@ input[type="range"]::-moz-range-thumb{border:none;background:#ff9000;height:16px
 <h1>MOCO JIB</h1>
 <div class="nav">
 <a href="/console">Console</a>
+<a href="/timelapse">Timelapse</a>
 <a href="/settings" class="active">Settings</a>
 </div>
 </div>
@@ -160,6 +161,41 @@ document.addEventListener('DOMContentLoaded',function(){
         ws=new WebSocket('ws://192.168.4.1/ws');
         ws.onopen=function(){
             console.log('WebSocket connected');
+            ws.send('PAGE:SETTINGS');
+            send('SETTINGS_REQUEST');
+        };
+        ws.onmessage=function(e){
+            console.log('[WS RX]',e.data);
+            /* Handle SETTINGS: messages from ESP32 when display changes settings */
+            if(e.data.startsWith('SETTINGS:'))
+
+{
+                var parts=e.data.substring(9).split('=');
+                if(parts.length===2){
+                    var key=parts[0];
+                    var val=parseInt(parts[1]);
+                    console.log('Setting update:',key,'=',val);
+                    /* Update sliders */
+                    var slider=document.getElementById(key);
+                    if(slider && slider.type==='range'){
+                        slider.value=val;
+                        document.getElementById(key+'_val').textContent=val;
+                    }
+                    /* Update toggles */
+                    var toggle=document.getElementById(key);
+                    if(toggle && toggle.classList.contains('toggle')){
+                        if(val){
+                            toggle.classList.add('on');
+                        }else{
+                            toggle.classList.remove('on');
+                        }
+                    }
+                }
+            }
+            /* Log all other messages for debugging */
+            else{
+                console.log('[Other message]',e.data);
+            }
         };
         ws.onclose=function(){
             console.log('WebSocket closed, reconnecting...');
@@ -175,6 +211,8 @@ document.addEventListener('DOMContentLoaded',function(){
     document.querySelectorAll('input[type="range"]').forEach(function(s){
         s.oninput=function(){
             document.getElementById(s.id+'_val').textContent=s.value;
+        };
+        s.onchange=function(){
             sendSetting(s.id,parseInt(s.value));
         };
     });
