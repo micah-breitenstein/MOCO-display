@@ -13,6 +13,8 @@ idf_component_register(
         "moco_jib_logo_600x310_light.bin"
         "loading.html"
         "landing.html"
+        "timelapse.html"
+        "bounce.html"
         "settings.html"
 )
 

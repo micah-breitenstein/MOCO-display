@@ -6,6 +6,7 @@ if("${CONFIG}" STREQUAL "" OR "${CONFIG}" STREQUAL "")
   "bootloader/bootloader.bin"
   "bootloader/bootloader.elf"
   "bootloader/bootloader.map"
+  "bounce.html.S"
   "config/sdkconfig.cmake"
   "config/sdkconfig.h"
   "esp-idf/esptool_py/flasher_args.json.in"
@@ -17,12 +18,14 @@ if("${CONFIG}" STREQUAL "" OR "${CONFIG}" STREQUAL "")
   "landing.html.S"
   "ldgen_libraries"
   "ldgen_libraries.in"
+  "loading.html.S"
   "moco_jib_logo_600x310_dark.bin.S"
   "moco_jib_logo_600x310_light.bin.S"
   "project_elf_src_esp32s3.c"
   "rig_display.bin"
   "rig_display.map"
   "settings.html.S"
+  "timelapse.html.S"
   "x509_crt_bundle.S"
   )
 endif()

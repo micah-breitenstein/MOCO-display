@@ -1,0 +1,112 @@
+Command: /Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python /Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1301 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/rig_display.elf /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/bootloader.elf -m '/Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf.py'
+[0;33m--- esp-idf-monitor 1.9.0 on /dev/cu.usbmodem1301 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x4037b706: [0;33mesp_cpu_wait_for_intr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_hw_support/cpu.c[0m[0m:[1;31m64[0m
+[0m--- 0x403c8700: [0;33m_stext[0m[0m at [0;32m??[0m[0m:[1;31m?[0m
+[0m--- 0x403c8924: [0;33mcall_start_cpu0[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m
+[0m--- 0x4200e4b0: [0;33mmy_websocket_command_receiver[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m649[0m
+[0m--- 0x4200e4b0: [0;33mmy_websocket_command_receiver[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m649[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x400559dd: [0;33m_xtos_set_intlevel[0m[0m in [0;32mROM[0m
+[0m--- 0x4037f7c6: [0;33mvPortClearInterruptMaskFromISR[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h[0m[0m:[1;31m560[0m
+[0m--- (inlined by) [0;33mvPortExitCritical[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m514[0m
+[0m--- 0x4037f284: [0;33mxQueueSemaphoreTake[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c[0m[0m:[1;31m1777[0m
+[0m--- 0x4200b551: [0;33muart_read_bytes[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_driver_uart/src/uart.c[0m[0m:[1;31m1670[0m
+[0m--- 0x42012e0a: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3269[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x400559dd: [0;33m_xtos_set_intlevel[0m[0m in [0;32mROM[0m
+[0m--- 0x4037f7c6: [0;33mvPortClearInterruptMaskFromISR[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h[0m[0m:[1;31m560[0m
+[0m--- (inlined by) [0;33mvPortExitCritical[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m514[0m
+[0m--- 0x4037ee63: [0;33mxQueueGenericSend[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c[0m[0m:[1;31m1056[0m
+[0m--- 0x4200b601: [0;33muart_read_bytes[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_driver_uart/src/uart.c[0m[0m:[1;31m1699[0m
+[0m--- 0x42012e0a: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3269[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x40385161: [0;33msystimer_ll_is_counter_value_valid[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/hal/esp32s3/include/hal/systimer_ll.h[0m[0m:[1;31m95[0m
+[0m--- (inlined by) [0;33msystimer_hal_get_counter_value[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/hal/systimer_hal.c[0m[0m:[1;31m51[0m
+[0m--- 0x40376cf6: [0;33mesp_timer_impl_get_time[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_timer/src/esp_timer_impl_systimer.c[0m[0m:[1;31m72[0m
+[0m--- 0x42012c27: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3218[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x403817c0: [0;33mxt_utils_get_core_id[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/include/xt_utils.h[0m[0m:[1;31m37[0m
+[0m--- (inlined by) [0;33mesp_cpu_get_core_id[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_hw_support/include/esp_cpu.h[0m[0m:[1;31m132[0m
+[0m--- (inlined by) [0;33mxPortGetCoreID[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h[0m[0m:[1;31m623[0m
+[0m--- (inlined by) [0;33mvTaskDelay[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c[0m[0m:[1;31m1611[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x40385169: [0;33msystimer_ll_get_counter_value_low[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/hal/esp32s3/include/hal/systimer_ll.h[0m[0m:[1;31m106[0m
+[0m--- (inlined by) [0;33msystimer_hal_get_counter_value[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/hal/systimer_hal.c[0m[0m:[1;31m57[0m
+[0m--- 0x40376cf6: [0;33mesp_timer_impl_get_time[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_timer/src/esp_timer_impl_systimer.c[0m[0m:[1;31m72[0m
+[0m--- 0x42012c27: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3218[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x400568fe: [0;33m__udivdi3[0m[0m in [0;32mROM[0m
+[0m--- 0x42012c33: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3218[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x400559dd: [0;33m_xtos_set_intlevel[0m[0m in [0;32mROM[0m
+[0m--- 0x4037f7c6: [0;33mvPortClearInterruptMaskFromISR[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h[0m[0m:[1;31m560[0m
+[0m--- (inlined by) [0;33mvPortExitCritical[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m514[0m
+[0m--- 0x4037ee63: [0;33mxQueueGenericSend[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c[0m[0m:[1;31m1056[0m
+[0m--- 0x4200b601: [0;33muart_read_bytes[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_driver_uart/src/uart.c[0m[0m:[1;31m1699[0m
+[0m--- 0x42012e0a: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3269[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x42012dfe: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3267[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x400559dd: [0;33m_xtos_set_intlevel[0m[0m in [0;32mROM[0m
+[0m--- 0x4037f7c6: [0;33mvPortClearInterruptMaskFromISR[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h[0m[0m:[1;31m560[0m
+[0m--- (inlined by) [0;33mvPortExitCritical[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m514[0m
+[0m--- 0x4037f284: [0;33mxQueueSemaphoreTake[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c[0m[0m:[1;31m1777[0m
+[0m--- 0x4200b551: [0;33muart_read_bytes[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_driver_uart/src/uart.c[0m[0m:[1;31m1670[0m
+[0m--- 0x42012e0a: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3269[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m
+[0m--- 0x40377e6e: [0;33mesp_crosscore_isr[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_system/crosscore_int.c[0m[0m:[1;31m74[0m
+[0m--- 0x403772f1: [0;33m_xt_lowint1[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/xtensa/xtensa_vectors.S[0m[0m:[1;31m1240[0m
+[0m--- 0x400559dd: [0;33m_xtos_set_intlevel[0m[0m in [0;32mROM[0m
+[0m--- 0x4037f7c6: [0;33mvPortClearInterruptMaskFromISR[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h[0m[0m:[1;31m560[0m
+[0m--- (inlined by) [0;33mvPortExitCritical[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m514[0m
+[0m--- 0x4037ee63: [0;33mxQueueGenericSend[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/queue.c[0m[0m:[1;31m1056[0m
+[0m--- 0x4200b601: [0;33muart_read_bytes[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/esp_driver_uart/src/uart.c[0m[0m:[1;31m1699[0m
+[0m--- 0x42012e0a: [0;33mstatus_uart_task[0m[0m at [0;32m/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c[0m[0m:[1;31m3269[0m
+[0m--- 0x4037f449: [0;33mvPortTaskWrapper[0m[0m at [0;32m/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c[0m[0m:[1;31m139[0m

@@ -127,6 +127,9 @@ typedef enum {
     SETTING_COUNT,
 } SettingId;
 
+/* Forward declaration for settings broadcast (used before definition) */
+static void broadcast_setting_update(SettingId id);
+
 typedef enum {
     STYPE_INT_RANGE = 0,
     STYPE_BOOL,
@@ -657,8 +660,9 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         settings[SETTING_BRIGHTNESS].value = pct;
         apply_brightness();
         request_settings_refresh();
+        broadcast_setting_update(SETTING_BRIGHTNESS);
         char msg[64];
-        snprintf(msg, sizeof(msg), "!!! Brightness set to %d%% !!!", pct);
+        snprintf(msg, sizeof(msg), "CONSOLE:Brightness set to %d%%", pct);
         web_console_log_event(msg);
         return;
     }
@@ -668,8 +672,9 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         settings[SETTING_LOGO_THEME].value = (val == 0) ? 0 : 1;
         apply_theme();
         request_settings_refresh();
+        broadcast_setting_update(SETTING_LOGO_THEME);
         char msg[64];
-        snprintf(msg, sizeof(msg), "!!! Theme set to %s !!!", val ? "light" : "dark");
+        snprintf(msg, sizeof(msg), "CONSOLE:Theme set to %s", val ? "light" : "dark");
         web_console_log_event(msg);
         return;
     }
@@ -692,7 +697,10 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
             apply_brightness();
             
             request_settings_refresh();
-            web_console_log_event("Night mode enabled (matrix off, display 5%)");
+            broadcast_setting_update(SETTING_NIGHT_MODE);
+            broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
+            broadcast_setting_update(SETTING_BRIGHTNESS);
+            web_console_log_event("CONSOLE:Night mode enabled (matrix off, display 5%)");
         } else {
             /* Disable night mode: restore defaults (matrix 5%, display 100%) */
             settings[SETTING_MTX_BRIGHTNESS].value = settings[SETTING_MTX_BRIGHTNESS].default_val;
@@ -707,7 +715,10 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
             apply_brightness();
             
             request_settings_refresh();
-            web_console_log_event("Night mode disabled (matrix 5%, display 100%)");
+            broadcast_setting_update(SETTING_NIGHT_MODE);
+            broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
+            broadcast_setting_update(SETTING_BRIGHTNESS);
+            web_console_log_event("CONSOLE:Night mode disabled (matrix 5%, display 100%)");
         }
         return;
     }
@@ -723,8 +734,9 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
         
         request_settings_refresh();
+        broadcast_setting_update(SETTING_RUMBLE_MUTE);
         char msg[64];
-        snprintf(msg, sizeof(msg), "Rumble %s", val ? "muted" : "enabled");
+        snprintf(msg, sizeof(msg), "CONSOLE:Rumble %s", val ? "muted" : "enabled");
         web_console_log_event(msg);
         return;
     }
@@ -742,20 +754,52 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
         
         request_settings_refresh();
+        broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
         char msg[64];
-        snprintf(msg, sizeof(msg), "Matrix brightness set to %d%%", val);
+        snprintf(msg, sizeof(msg), "CONSOLE:Matrix brightness set to %d%%", val);
         web_console_log_event(msg);
+        return;
+    }
+    /* SETTINGS_REQUEST — send all current settings to web page */
+    if (strncmp(cmd, "SETTINGS_REQUEST", 16) == 0) {
+        ESP_LOGI(TAG, "Sending current settings to web");
+        broadcast_setting_update(SETTING_BRIGHTNESS);
+        broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
+        broadcast_setting_update(SETTING_NIGHT_MODE);
+        broadcast_setting_update(SETTING_LOGO_THEME);
+        broadcast_setting_update(SETTING_RUMBLE_MUTE);
+        broadcast_setting_update(SETTING_TL_INTERVAL);
+        broadcast_setting_update(SETTING_TL_STEPDIST);
+        return;
+    }
+    /* Forward STATUS_REQUEST to MEGA to get current mode/state */
+    if (strncmp(cmd, "STATUS_REQUEST", 14) == 0) {
+        ESP_LOGI(TAG, "Forwarding STATUS_REQUEST to MEGA");
+        const char *req = "STATUS_REQUEST\n";
+        uart_write_bytes(STATUS_UART_PORT, req, strlen(req));
         return;
     }
     /* Forward all other SET: commands to the MEGA via UART for motor control */
     if (strncmp(cmd, "SET:", 4) == 0) {
         ESP_LOGI(TAG, "!!! FORWARDING to MEGA: %s", cmd);
+        
+        /* Update local settings for timelapse parameters */
+        if (strncmp(cmd, "SET:TL_INT:", 11) == 0) {
+            int val = atoi(cmd + 11);
+            settings[SETTING_TL_INTERVAL].value = val;
+            broadcast_setting_update(SETTING_TL_INTERVAL);
+        } else if (strncmp(cmd, "SET:TL_STEP:", 12) == 0) {
+            int val = atoi(cmd + 12);
+            settings[SETTING_TL_STEPDIST].value = val;
+            broadcast_setting_update(SETTING_TL_STEPDIST);
+        }
+        
         char buf[80];
         snprintf(buf, sizeof(buf), "%s\n", cmd);
         int written = uart_write_bytes(STATUS_UART_PORT, buf, strlen(buf));
         ESP_LOGI(TAG, "!!! UART wrote %d bytes", written);
         char log_buf[80];
-        snprintf(log_buf, sizeof(log_buf), "→ MEGA: %s", cmd);
+        snprintf(log_buf, sizeof(log_buf), "CONSOLE:→ MEGA: %s", cmd);
         web_console_log_event(log_buf);
         return;
     }
@@ -768,13 +812,37 @@ static void log_setting_saved_event(SettingId id)
     const SettingDef *s = &settings[id];
 
     if (s->type == STYPE_ACTION) {
-        snprintf(msg, sizeof(msg), "Settings saved: %s", s->name);
+        snprintf(msg, sizeof(msg), "CONSOLE:Settings saved: %s", s->name);
     } else if (s->type == STYPE_BOOL) {
-        snprintf(msg, sizeof(msg), "Settings saved: %s=%s", s->name, s->value ? "ON" : "OFF");
+        snprintf(msg, sizeof(msg), "CONSOLE:Settings saved: %s=%s", s->name, s->value ? "ON" : "OFF");
     } else {
-        snprintf(msg, sizeof(msg), "Settings saved: %s=%d%s", s->name, s->value, s->unit);
+        snprintf(msg, sizeof(msg), "CONSOLE:Settings saved: %s=%d%s", s->name, s->value, s->unit);
     }
 
+    web_console_log_event(msg);
+}
+
+static void broadcast_setting_update(SettingId id)
+{
+    /* Broadcast setting change to web settings page */
+    char msg[96];
+    const SettingDef *s = &settings[id];
+    const char *key = "";
+    
+    /* Map setting ID to web key */
+    switch (id) {
+    case SETTING_BRIGHTNESS:      key = "bright"; break;
+    case SETTING_MTX_BRIGHTNESS:  key = "mtx_brt"; break;
+    case SETTING_NIGHT_MODE:      key = "n_mode"; break;
+    case SETTING_LOGO_THEME:      key = "theme"; break;
+    case SETTING_RUMBLE_MUTE:     key = "r_mute"; break;
+    case SETTING_TL_INTERVAL:     key = "tl_int"; break;
+    case SETTING_TL_STEPDIST:     key = "tl_step"; break;
+    default: return;
+    }
+    
+    /* Send as SETTINGS: message for web settings page to parse */
+    snprintf(msg, sizeof(msg), "SETTINGS:%s=%d", key, s->value);
     web_console_log_event(msg);
 }
 
@@ -1317,12 +1385,57 @@ static void editor_save_cb(lv_event_t *e)
 {
     (void)e;
     SettingDef *s = &settings[editor_setting_id];
+    
+    /* Save to NVS if persisted */
     if (setting_is_persisted(editor_setting_id)) {
         save_setting_to_nvs(editor_setting_id);
     }
+    
+    /* Forward to MEGA if backed */
     if (s->mega_backed) {
         send_set_command(editor_setting_id);
     }
+    
+    /* Apply local changes that need immediate effect */
+    if (editor_setting_id == SETTING_BRIGHTNESS) {
+        apply_brightness();
+    }
+    else if (editor_setting_id == SETTING_LOGO_THEME) {
+        apply_theme();
+    }
+    else if (editor_setting_id == SETTING_NIGHT_MODE) {
+        /* Night mode: update brightness settings and notify hardware */
+        if (s->value) {
+            /* Enable night mode: matrix off, display dim */
+            settings[SETTING_MTX_BRIGHTNESS].value = 0;
+            settings[SETTING_BRIGHTNESS].value = 5;
+            
+            char mega_cmd[32];
+            snprintf(mega_cmd, sizeof(mega_cmd), "SET:MTX_BRT:0\n");
+            uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
+            
+            apply_brightness();
+            broadcast_setting_update(SETTING_NIGHT_MODE);
+            broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
+            broadcast_setting_update(SETTING_BRIGHTNESS);
+            web_console_log_event("CONSOLE:Night mode enabled (matrix off, display 5%)");
+        } else {
+            /* Disable night mode: restore defaults */
+            settings[SETTING_MTX_BRIGHTNESS].value = settings[SETTING_MTX_BRIGHTNESS].default_val;
+            settings[SETTING_BRIGHTNESS].value = settings[SETTING_BRIGHTNESS].default_val;
+            
+            char mega_cmd[32];
+            snprintf(mega_cmd, sizeof(mega_cmd), "SET:MTX_BRT:%d\n", settings[SETTING_MTX_BRIGHTNESS].default_val);
+            uart_write_bytes(STATUS_UART_PORT, mega_cmd, strlen(mega_cmd));
+            
+            apply_brightness();
+            broadcast_setting_update(SETTING_NIGHT_MODE);
+            broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
+            broadcast_setting_update(SETTING_BRIGHTNESS);
+            web_console_log_event("CONSOLE:Night mode disabled (matrix 5%, display 100%)");
+        }
+    }
+    
     /* Notify MEGA to rumble */
     const char *saved_cmd = "SETTINGS_SAVED\n";
     uart_write_bytes(STATUS_UART_PORT, saved_cmd, strlen(saved_cmd));
@@ -2129,7 +2242,7 @@ static void open_settings_menu(void)
     touch_guard = true;  /* block until finger lifts */
 
     /* Log settings menu opened */
-    web_console_log_event("Settings menu opened");
+    web_console_log_event("CONSOLE:Settings menu opened");
 
     for (int i = 0; i < SETTING_COUNT; i++) {
         settings_open_snapshot[i] = settings[i].value;
@@ -2160,7 +2273,7 @@ static void open_settings_menu(void)
 static void close_settings_menu(void)
 {
     /* Log settings menu closed */
-    web_console_log_event("Settings menu closed");
+    web_console_log_event("CONSOLE:Settings menu closed");
 
     /* Revert any unsaved editor changes */
     if (editor_visible) {
@@ -3264,9 +3377,9 @@ static void status_uart_task(void *arg)
         }
 
         /* Yield to IDLE task every iteration to prevent watchdog timeout */
-        vTaskDelay(pdMS_TO_TICKS(1));
+        vTaskDelay(pdMS_TO_TICKS(20));
 
-        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(5));
+        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(20));
         if (len <= 0) {
             continue;
         }
@@ -3337,6 +3450,7 @@ static void status_uart_task(void *arg)
                     if (!emergency_stop_active && sscanf(line, "TIMELAPSE_INTERVAL:%d", &interval_seconds) == 1) {
                         settings[SETTING_TL_INTERVAL].value = interval_seconds;
                         request_settings_refresh();
+                        broadcast_setting_update(SETTING_TL_INTERVAL);
                         if (!settings_visible) show_timelapse_interval_on_display(interval_seconds, now_ms);
                     }
                     xSemaphoreGive(lvgl_mux);
@@ -3347,6 +3461,7 @@ static void status_uart_task(void *arg)
                     if (!emergency_stop_active && sscanf(line, "TIMELAPSE_STEPDIST:%d", &stepdist_ms) == 1) {
                         settings[SETTING_TL_STEPDIST].value = stepdist_ms;
                         request_settings_refresh();
+                        broadcast_setting_update(SETTING_TL_STEPDIST);
                         if (!settings_visible) show_timelapse_stepdist_on_display(stepdist_ms, now_ms);
                     }
                     xSemaphoreGive(lvgl_mux);
@@ -3355,6 +3470,7 @@ static void status_uart_task(void *arg)
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     settings[SETTING_RUMBLE_MUTE].value = 1;
                     request_settings_refresh();
+                    broadcast_setting_update(SETTING_RUMBLE_MUTE);
                     if (!emergency_stop_active && !settings_visible) {
                         mode_to_restore_after_message = current_display_mode;
                         restore_mode_after_message = true;
@@ -3366,6 +3482,7 @@ static void status_uart_task(void *arg)
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     settings[SETTING_RUMBLE_MUTE].value = 0;
                     request_settings_refresh();
+                    broadcast_setting_update(SETTING_RUMBLE_MUTE);
                     if (!emergency_stop_active && !settings_visible) {
                         mode_to_restore_after_message = current_display_mode;
                         restore_mode_after_message = true;
@@ -3943,7 +4060,7 @@ void app_main(void)
     ESP_ERROR_CHECK(uart_driver_install(STATUS_UART_PORT, STATUS_UART_BUF_SIZE, 0, 0, NULL, 0));
     ESP_ERROR_CHECK(uart_param_config(STATUS_UART_PORT, &uart_cfg));
     ESP_ERROR_CHECK(uart_set_pin(STATUS_UART_PORT, STATUS_UART_TX_PIN, STATUS_UART_RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
-    xTaskCreatePinnedToCore(status_uart_task, "status_uart", 4096, NULL, 3, NULL, 1);
+    xTaskCreatePinnedToCore(status_uart_task, "status_uart", 4096, NULL, 1, NULL, 1);
 
     /* Push boot-time matrix brightness to hardware now that UART is ready. */
     vTaskDelay(pdMS_TO_TICKS(200));

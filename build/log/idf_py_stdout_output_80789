@@ -1,0 +1,2382 @@
+Command: /Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python /Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1301 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/rig_display.elf /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/bootloader.elf -m '/Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1301'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x403cd7e4
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2-dirty 2nd stage bootloader[0m
+[0;32mI (24) boot: compile time May 11 2026 12:14:59[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 16MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00600000[0m
+[0;32mI (76) boot:  3 storage          Unknown data     01 82 00610000 00800000[0m
+[0;32mI (83) boot: End of partition table[0m
+[0;32mI (86) esp_image: segment 0: paddr=00010020 vaddr=3c0c0020 size=135e5ch (1269340) map[0m
+[0;32mI (317) esp_image: segment 1: paddr=00145e84 vaddr=3fc9e000 size=04d50h ( 19792) load[0m
+[0;32mI (322) esp_image: segment 2: paddr=0014abdc vaddr=40374000 size=0543ch ( 21564) load[0m
+[0;32mI (327) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=b96e4h (759524) map[0m
+[0;32mI (462) esp_image: segment 4: paddr=0020970c vaddr=4037943c size=14ae0h ( 84704) load[0m
+[0;32mI (481) esp_image: segment 5: paddr=0021e1f4 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (492) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (492) boot: Disabling RNG early entropy source...[0m
+[0;32mI (502) cpu_start: Multicore app[0m
+[0;32mI (511) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (511) cpu_start: Pro cpu start user code[0m
+[0;32mI (512) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (513) app_init: Application information:[0m
+[0;32mI (517) app_init: Project name:     rig_display[0m
+[0;32mI (521) app_init: App version:      baseline-2026-04-25-48-g84c943e[0m
+[0;32mI (527) app_init: Compile time:     May 11 2026 15:52:50[0m
+[0;32mI (532) app_init: ELF file SHA256:  1b6846514...[0m
+[0;32mI (536) app_init: ESP-IDF:          v5.5.2-dirty[0m
+[0;32mI (541) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (544) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (548) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (552) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (559) heap_init: At 3FCBDCD8 len 0002BA38 (174 KiB): RAM[0m
+[0;32mI (564) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (569) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (574) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (580) spi_flash: detected chip: winbond[0m
+[0;32mI (583) spi_flash: flash io: dio[0m
+[0;33mW (586) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (596) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (602) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (609) main_task: Started on CPU0[0m
+[0;32mI (619) main_task: Calling app_main()[0m
+[0;32mI (619) RIG: Initializing I2C for touch controller[0m
+[0;32mI (619) RIG: I2C driver installed, touch_i2c_ready = true[0m
+[0;32mI (629) RIG: Initialize SPI bus[0m
+[0;32mI (659) RIG: Install panel IO[0m
+[0;32mI (659) RIG: Install SH8601 panel driver[0m
+[0;33mW (819) sh8601: The 3Ah command has been used and will be overwritten by external initialization sequence[0m
+[0;33mW (929) sh8601: The 36h command has been used and will be overwritten by external initialization sequence[0m
+[0;32mI (939) pp: pp rom version: e7ae62f[0m
+[0;32mI (939) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (949) wifi:wifi driver task: 3fcd1184, prio:23, stack:6656, core=0[0m
+[0;32mI (959) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (959) wifi:wifi certification version: v7.0[0m
+[0;32mI (959) wifi:config NVS flash: enabled[0m
+[0;32mI (959) wifi:config nano formatting: disabled[0m
+[0;32mI (959) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (969) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (969) wifi:Init management short buffer num: 32[0m
+[0;32mI (969) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (979) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (979) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (989) wifi:Init static rx buffer num: 10[0m
+[0;32mI (989) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (989) wifi_init: rx ba win: 6[0m
+[0;32mI (999) wifi_init: accept mbox: 6[0m
+[0;32mI (999) wifi_init: tcpip mbox: 32[0m
+[0;32mI (999) wifi_init: udp mbox: 6[0m
+[0;32mI (1009) wifi_init: tcp mbox: 6[0m
+[0;32mI (1009) wifi_init: tcp tx win: 16384[0m
+[0;32mI (1009) wifi_init: tcp rx win: 16384[0m
+[0;32mI (1019) wifi_init: tcp mss: 1440[0m
+[0;32mI (1019) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1019) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1029) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (1079) wifi:mode : softAP (fc:01:2c:da:2a:21)[0m
+[0;32mI (1089) wifi:Total power save buffer number: 16[0m
+[0;32mI (1089) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1089) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1089) web_console: WiFi AP started — SSID: "MOCO" (open) IP: 192.168.4.1[0m
+[0;32mI (1089) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (1109) web_console: HTTP server started with recv/send timeout=20s[0m
+[0;32mI (1109) web_console: HTTP server started[0m
+[0;32mI (1119) web_console: Console event task started[0m
+[0;32mI (1119) web_console: DNS server started on port 53[0m
+[0;32mI (1119) web_console: DNS server listening on port 53[0m
+[0;32mI (1119) web_console: web_console_set_cmd_handler: handler=0x4200e55c[0m
+[0;32mI (1139) web_console: s_cmd_handler now set to: 0x4200e55c[0m
+[0;33mW (1519) RIG: apply_theme: Failed to acquire lvgl_mux, will retry on next refresh[0m
+[0;32mI (1689) RIG: LVGL task started[0m
+[0;32mI (1689) RIG: RIG rendered via LVGL[0m
+[0;32mI (1689) main_task: Returned from app_main()[0m
+[0;32mI (2419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (7419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (12419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (17419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (22419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (27399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (32399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (37399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (42399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (47399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (52399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (53139) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (53139) wifi:station: 56:72:f2:44:90:2b join, AID=1, bgn, 20[0m
+[0;32mI (53139) web_console: Station 56:72:f2:44:90:2b joined[0m
+[0;32mI (53139) web_console: No active WebSocket (fd=-1), events remain buffered (1)[0m
+[0;32mI (53339) wifi:<ba-add>idx:2 (ifx:1, 56:72:f2:44:90:2b), tid:6, ssn:0, winSize:64[0m
+[0;32mI (54379) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;33mW (56309) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (56319) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (56459) wifi:<ba-add>idx:3 (ifx:1, 56:72:f2:44:90:2b), tid:0, ssn:25, winSize:64[0m
+[0;32mI (56469) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:0, winSize:64[0m
+[0;32mI (56469) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (57399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (60349) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (60389) web_console: Serving /console (2844 bytes)[0m
+[0;32mI (61539) web_console: WS handshake on fd=53, ring buffer has 1 events, waiting for page identification[0m
+[0;32mI (62039) web_console: WS recv attempt, fd=53[0m
+[0;32mI (62039) web_console: WS frame type=1 len=12[0m
+[0;32mI (62039) web_console: WS recv: 'PAGE:CONSOLE' (len=12)[0m
+[0;32mI (62039) web_console: Page identified as CONSOLE, flushing 1 buffered events[0m
+[0;32mI (62069) web_console: Queued 1 events to WebSocket fd=53[0m
+[0;32mI (62399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (62859) web_console: Serving /settings (8057 bytes)[0m
+[0;32mI (62889) web_console: WS handshake on fd=52, ring buffer has 0 events, waiting for page identification[0m
+[0;32mI (63389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (63389) web_console: WS frame type=1 len=13[0m
+[0;32mI (63389) web_console: WS recv: 'PAGE:SETTINGS' (len=13)[0m
+[0;32mI (63389) web_console: Page identified as SETTINGS, not flushing buffered events (they're preserved for console)[0m
+[0;32mI (63409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (63409) web_console: WS frame type=1 len=16[0m
+[0;32mI (63409) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (63419) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (63419) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (63429) RIG: Sending current settings to web[0m
+[0;32mI (63429) web_console: cmd_handler returned successfully[0m
+[0;32mI (63569) web_console: Queued 7 events to WebSocket fd=52[0m
+[0;32mI (64809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (64809) web_console: WS frame type=1 len=13[0m
+[0;32mI (64809) web_console: WS recv: 'SET:MTX_BRT:4' (len=13)[0m
+[0;32mI (64809) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:4'[0m
+[0;32mI (64819) RIG: WebSocket command: SET:MTX_BRT:4[0m
+[0;32mI (64829) web_console: cmd_handler returned successfully[0m
+[0;32mI (64839) web_console: WS recv attempt, fd=52[0m
+[0;32mI (64839) web_console: WS frame type=1 len=13[0m
+[0;32mI (64839) web_console: WS recv: 'SET:MTX_BRT:5' (len=13)[0m
+[0;32mI (64839) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:5'[0m
+[0;32mI (64849) web_console: Skipping 1 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (64849) RIG: WebSocket command: SET:MTX_BRT:5[0m
+[0;32mI (64859) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (64869) web_console: cmd_handler returned successfully[0m
+[0;32mI (64869) web_console: Skipping 3 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65009) web_console: WS frame type=1 len=13[0m
+[0;32mI (65009) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (65009) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:6'[0m
+[0;32mI (65019) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (65029) web_console: cmd_handler returned successfully[0m
+[0;32mI (65029) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65029) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65149) web_console: WS frame type=1 len=13[0m
+[0;32mI (65149) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (65149) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:7'[0m
+[0;32mI (65159) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (65169) web_console: cmd_handler returned successfully[0m
+[0;32mI (65169) web_console: Skipping 7 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65169) web_console: Skipping 7 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65309) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65309) web_console: WS frame type=1 len=13[0m
+[0;32mI (65309) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (65309) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:8'[0m
+[0;32mI (65319) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (65329) web_console: cmd_handler returned successfully[0m
+[0;32mI (65329) web_console: Skipping 9 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65329) web_console: Skipping 9 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65399) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65399) web_console: WS frame type=1 len=13[0m
+[0;32mI (65399) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (65399) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:9'[0m
+[0;32mI (65409) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (65419) web_console: cmd_handler returned successfully[0m
+[0;32mI (65419) web_console: Skipping 11 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65419) web_console: Skipping 11 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65509) web_console: WS frame type=1 len=14[0m
+[0;32mI (65509) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (65509) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:10'[0m
+[0;32mI (65519) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (65529) web_console: cmd_handler returned successfully[0m
+[0;32mI (65529) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65529) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65599) web_console: WS frame type=1 len=14[0m
+[0;32mI (65599) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (65599) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:11'[0m
+[0;32mI (65609) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (65629) web_console: cmd_handler returned successfully[0m
+[0;32mI (65629) web_console: Skipping 15 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65629) web_console: Skipping 15 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65699) web_console: WS frame type=1 len=14[0m
+[0;32mI (65699) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (65699) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:12'[0m
+[0;32mI (65709) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (65719) web_console: cmd_handler returned successfully[0m
+[0;32mI (65719) web_console: Skipping 17 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65719) web_console: Skipping 17 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65779) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65779) web_console: WS frame type=1 len=14[0m
+[0;32mI (65779) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (65779) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (65789) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (65799) web_console: cmd_handler returned successfully[0m
+[0;32mI (65799) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65809) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65909) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65909) web_console: WS frame type=1 len=14[0m
+[0;32mI (65909) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (65909) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (65919) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (65929) web_console: cmd_handler returned successfully[0m
+[0;32mI (65929) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65939) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (65979) web_console: WS recv attempt, fd=52[0m
+[0;32mI (65979) web_console: WS frame type=1 len=14[0m
+[0;32mI (65979) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (65979) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (65989) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (66009) web_console: cmd_handler returned successfully[0m
+[0;32mI (66009) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66009) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66049) web_console: WS recv attempt, fd=52[0m
+[0;32mI (66059) web_console: WS frame type=1 len=14[0m
+[0;32mI (66059) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (66059) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (66069) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (66079) web_console: cmd_handler returned successfully[0m
+[0;32mI (66079) web_console: Skipping 25 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66079) web_console: Skipping 25 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66119) web_console: WS recv attempt, fd=52[0m
+[0;32mI (66119) web_console: WS frame type=1 len=14[0m
+[0;32mI (66119) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (66129) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (66129) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (66149) web_console: cmd_handler returned successfully[0m
+[0;32mI (66149) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66149) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66189) web_console: WS recv attempt, fd=52[0m
+[0;32mI (66189) web_console: WS frame type=1 len=14[0m
+[0;32mI (66189) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (66189) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (66199) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (66209) web_console: Skipping 29 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66209) web_console: cmd_handler returned successfully[0m
+[0;32mI (66219) web_console: Skipping 29 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66249) web_console: WS recv attempt, fd=52[0m
+[0;32mI (66249) web_console: WS frame type=1 len=14[0m
+[0;32mI (66249) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (66249) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (66259) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (66269) web_console: cmd_handler returned successfully[0m
+[0;32mI (66269) web_console: Skipping 31 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66269) web_console: Skipping 31 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (66289) web_console: WS frame type=1 len=14[0m
+[0;32mI (66289) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (66289) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (66299) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (66319) web_console: cmd_handler returned successfully[0m
+[0;32mI (66319) web_console: Skipping 33 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66319) web_console: Skipping 33 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (66389) web_console: WS frame type=1 len=14[0m
+[0;32mI (66389) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (66389) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (66399) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (66409) web_console: cmd_handler returned successfully[0m
+[0;32mI (66409) web_console: Skipping 35 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (66409) web_console: Skipping 35 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (67379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (67989) web_console: Serving /console (2844 bytes)[0m
+[0;32mI (68019) web_console: WS handshake on fd=52, ring buffer has 35 events, waiting for page identification[0m
+[0;32mI (68529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (68529) web_console: WS frame type=1 len=12[0m
+[0;32mI (68529) web_console: WS recv: 'PAGE:CONSOLE' (len=12)[0m
+[0;32mI (68529) web_console: Page identified as CONSOLE, flushing 35 buffered events[0m
+[0;32mI (69239) web_console: Queued 35 events to WebSocket fd=52[0m
+[0;32mI (72389) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (75059) web_console: Serving /settings (8057 bytes)[0m
+[0;32mI (75099) web_console: WS handshake on fd=53, ring buffer has 0 events, waiting for page identification[0m
+[0;32mI (75609) web_console: WS recv attempt, fd=53[0m
+[0;32mI (75609) web_console: WS frame type=1 len=13[0m
+[0;32mI (75609) web_console: WS recv: 'PAGE:SETTINGS' (len=13)[0m
+[0;32mI (75609) web_console: Page identified as SETTINGS, not flushing buffered events (they're preserved for console)[0m
+[0;32mI (75619) web_console: WS recv attempt, fd=53[0m
+[0;32mI (75619) web_console: WS frame type=1 len=16[0m
+[0;32mI (75629) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (75629) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (75639) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (75639) RIG: Sending current settings to web[0m
+[0;32mI (75649) web_console: cmd_handler returned successfully[0m
+[0;32mI (75789) web_console: Queued 7 events to WebSocket fd=53[0m
+[0;32mI (76939) web_console: WS recv attempt, fd=53[0m
+[0;32mI (76939) web_console: WS frame type=1 len=13[0m
+[0;32mI (76939) web_console: WS recv: 'SET:BRIGHT:98' (len=13)[0m
+[0;32mI (76949) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:98'[0m
+[0;32mI (76949) RIG: WebSocket command: SET:BRIGHT:98[0m
+[0;32mI (76959) web_console: cmd_handler returned successfully[0m
+[0;32mI (76979) web_console: Skipping 1 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (76979) web_console: WS recv attempt, fd=53[0m
+[0;32mI (76979) web_console: WS frame type=1 len=13[0m
+[0;32mI (76979) web_console: WS recv: 'SET:BRIGHT:97' (len=13)[0m
+[0;32mI (76989) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:97'[0m
+[0;32mI (76999) RIG: WebSocket command: SET:BRIGHT:97[0m
+[0;32mI (76999) web_console: cmd_handler returned successfully[0m
+[0;32mI (77009) web_console: Queued 1 events to WebSocket fd=53[0m
+[0;32mI (77009) web_console: Skipping 3 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77019) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77019) web_console: WS frame type=1 len=13[0m
+[0;32mI (77019) web_console: WS recv: 'SET:BRIGHT:96' (len=13)[0m
+[0;32mI (77029) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:96'[0m
+[0;32mI (77039) RIG: WebSocket command: SET:BRIGHT:96[0m
+[0;32mI (77039) web_console: cmd_handler returned successfully[0m
+[0;32mI (77039) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77049) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77059) web_console: WS frame type=1 len=13[0m
+[0;32mI (77059) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77059) web_console: WS recv: 'SET:BRIGHT:95' (len=13)[0m
+[0;32mI (77069) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:95'[0m
+[0;32mI (77079) RIG: WebSocket command: SET:BRIGHT:95[0m
+[0;32mI (77079) web_console: cmd_handler returned successfully[0m
+[0;32mI (77089) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77089) web_console: WS frame type=1 len=13[0m
+[0;32mI (77099) web_console: WS recv: 'SET:BRIGHT:94' (len=13)[0m
+[0;32mI (77099) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:94'[0m
+[0;32mI (77109) RIG: WebSocket command: SET:BRIGHT:94[0m
+[0;32mI (77109) web_console: cmd_handler returned successfully[0m
+[0;32mI (77119) web_console: Skipping 9 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77139) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77139) web_console: WS frame type=1 len=13[0m
+[0;32mI (77139) web_console: WS recv: 'SET:BRIGHT:93' (len=13)[0m
+[0;32mI (77139) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:93'[0m
+[0;32mI (77149) RIG: WebSocket command: SET:BRIGHT:93[0m
+[0;32mI (77149) web_console: cmd_handler returned successfully[0m
+[0;32mI (77159) web_console: Skipping 11 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77169) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77169) web_console: WS frame type=1 len=13[0m
+[0;32mI (77169) web_console: WS recv: 'SET:BRIGHT:92' (len=13)[0m
+[0;32mI (77179) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:92'[0m
+[0;32mI (77179) RIG: WebSocket command: SET:BRIGHT:92[0m
+[0;32mI (77189) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77189) web_console: cmd_handler returned successfully[0m
+[0;32mI (77199) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77209) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77209) web_console: WS frame type=1 len=13[0m
+[0;32mI (77209) web_console: WS recv: 'SET:BRIGHT:91' (len=13)[0m
+[0;32mI (77219) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:91'[0m
+[0;32mI (77229) RIG: WebSocket command: SET:BRIGHT:91[0m
+[0;32mI (77229) web_console: cmd_handler returned successfully[0m
+[0;32mI (77239) web_console: Skipping 15 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77269) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77269) web_console: WS frame type=1 len=13[0m
+[0;32mI (77269) web_console: WS recv: 'SET:BRIGHT:90' (len=13)[0m
+[0;32mI (77269) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:90'[0m
+[0;32mI (77279) RIG: WebSocket command: SET:BRIGHT:90[0m
+[0;32mI (77279) web_console: cmd_handler returned successfully[0m
+[0;32mI (77279) web_console: Skipping 17 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77299) web_console: Skipping 17 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77319) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77319) web_console: WS frame type=1 len=13[0m
+[0;32mI (77319) web_console: WS recv: 'SET:BRIGHT:89' (len=13)[0m
+[0;32mI (77329) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:89'[0m
+[0;32mI (77329) RIG: WebSocket command: SET:BRIGHT:89[0m
+[0;32mI (77339) web_console: cmd_handler returned successfully[0m
+[0;32mI (77339) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77349) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77369) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77369) web_console: WS frame type=1 len=13[0m
+[0;32mI (77369) web_console: WS recv: 'SET:BRIGHT:88' (len=13)[0m
+[0;32mI (77369) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:88'[0m
+[0;32mI (77379) RIG: WebSocket command: SET:BRIGHT:88[0m
+[0;32mI (77379) web_console: cmd_handler returned successfully[0m
+[0;32mI (77379) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77399) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77429) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77429) web_console: WS frame type=1 len=13[0m
+[0;32mI (77429) web_console: WS recv: 'SET:BRIGHT:87' (len=13)[0m
+[0;32mI (77429) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:87'[0m
+[0;32mI (77439) RIG: WebSocket command: SET:BRIGHT:87[0m
+[0;32mI (77439) web_console: cmd_handler returned successfully[0m
+[0;32mI (77439) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77449) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77499) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77499) web_console: WS frame type=1 len=13[0m
+[0;32mI (77499) web_console: WS recv: 'SET:BRIGHT:86' (len=13)[0m
+[0;32mI (77499) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:86'[0m
+[0;32mI (77509) RIG: WebSocket command: SET:BRIGHT:86[0m
+[0;32mI (77509) web_console: cmd_handler returned successfully[0m
+[0;32mI (77519) web_console: Skipping 25 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77559) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (77559) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77559) web_console: WS frame type=1 len=13[0m
+[0;32mI (77559) web_console: WS recv: 'SET:BRIGHT:85' (len=13)[0m
+[0;32mI (77569) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:85'[0m
+[0;32mI (77579) RIG: WebSocket command: SET:BRIGHT:85[0m
+[0;32mI (77579) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77579) web_console: cmd_handler returned successfully[0m
+[0;32mI (77589) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (77619) web_console: WS recv attempt, fd=53[0m
+[0;32mI (77619) web_console: WS frame type=1 len=13[0m
+[0;32mI (77619) web_console: WS recv: 'SET:BRIGHT:84' (len=13)[0m
+[0;32mI (77619) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:84'[0m
+[0;32mI (77629) RIG: WebSocket command: SET:BRIGHT:84[0m
+[0;32mI (77629) web_console: cmd_handler returned successfully[0m
+[0;32mI (77639) web_console: Skipping 29 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (79519) web_console: Serving /console (2844 bytes)[0m
+[0;32mI (79559) web_console: WS handshake on fd=53, ring buffer has 29 events, waiting for page identification[0m
+[0;32mI (80059) web_console: WS recv attempt, fd=53[0m
+[0;32mI (80059) web_console: WS frame type=1 len=12[0m
+[0;32mI (80059) web_console: WS recv: 'PAGE:CONSOLE' (len=12)[0m
+[0;32mI (80059) web_console: Page identified as CONSOLE, flushing 29 buffered events[0m
+[0;32mI (80649) web_console: Queued 29 events to WebSocket fd=53[0m
+[0;32mI (82369) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (84159) web_console: Serving /settings (8057 bytes)[0m
+[0;32mI (84189) web_console: WS handshake on fd=52, ring buffer has 0 events, waiting for page identification[0m
+[0;32mI (84689) web_console: WS recv attempt, fd=52[0m
+[0;32mI (84689) web_console: WS frame type=1 len=13[0m
+[0;32mI (84689) web_console: WS recv: 'PAGE:SETTINGS' (len=13)[0m
+[0;32mI (84689) web_console: Page identified as SETTINGS, not flushing buffered events (they're preserved for console)[0m
+[0;32mI (84709) web_console: WS recv attempt, fd=52[0m
+[0;32mI (84709) web_console: WS frame type=1 len=16[0m
+[0;32mI (84709) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (84719) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (84719) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (84729) RIG: Sending current settings to web[0m
+[0;32mI (84729) web_console: cmd_handler returned successfully[0m
+[0;32mI (84869) web_console: Queued 7 events to WebSocket fd=52[0m
+[0;32mI (86579) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86579) web_console: WS frame type=1 len=13[0m
+[0;32mI (86579) web_console: WS recv: 'SET:BRIGHT:80' (len=13)[0m
+[0;32mI (86579) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:80'[0m
+[0;32mI (86589) RIG: WebSocket command: SET:BRIGHT:80[0m
+[0;32mI (86589) web_console: cmd_handler returned successfully[0m
+[0;32mI (86609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86609) web_console: WS frame type=1 len=13[0m
+[0;32mI (86609) web_console: WS recv: 'SET:BRIGHT:79' (len=13)[0m
+[0;32mI (86619) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:79'[0m
+[0;32mI (86619) web_console: Skipping 1 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86619) RIG: WebSocket command: SET:BRIGHT:79[0m
+[0;32mI (86629) web_console: cmd_handler returned successfully[0m
+[0;32mI (86639) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (86639) web_console: Skipping 3 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86689) web_console: WS frame type=1 len=13[0m
+[0;32mI (86689) web_console: WS recv: 'SET:BRIGHT:78' (len=13)[0m
+[0;32mI (86689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:78'[0m
+[0;32mI (86689) RIG: WebSocket command: SET:BRIGHT:78[0m
+[0;32mI (86699) web_console: cmd_handler returned successfully[0m
+[0;32mI (86699) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86709) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86739) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86739) web_console: WS frame type=1 len=13[0m
+[0;32mI (86739) web_console: WS recv: 'SET:BRIGHT:77' (len=13)[0m
+[0;32mI (86739) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:77'[0m
+[0;32mI (86749) RIG: WebSocket command: SET:BRIGHT:77[0m
+[0;32mI (86749) web_console: cmd_handler returned successfully[0m
+[0;32mI (86759) web_console: Skipping 7 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86769) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86769) web_console: WS frame type=1 len=13[0m
+[0;32mI (86769) web_console: WS recv: 'SET:BRIGHT:76' (len=13)[0m
+[0;32mI (86779) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:76'[0m
+[0;32mI (86779) RIG: WebSocket command: SET:BRIGHT:76[0m
+[0;32mI (86789) web_console: cmd_handler returned successfully[0m
+[0;32mI (86789) web_console: Skipping 9 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86799) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86809) web_console: WS frame type=1 len=13[0m
+[0;32mI (86809) web_console: WS recv: 'SET:BRIGHT:75' (len=13)[0m
+[0;32mI (86809) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:75'[0m
+[0;32mI (86819) RIG: WebSocket command: SET:BRIGHT:75[0m
+[0;32mI (86829) web_console: cmd_handler returned successfully[0m
+[0;32mI (86829) web_console: Skipping 11 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86879) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86879) web_console: WS frame type=1 len=13[0m
+[0;32mI (86879) web_console: WS recv: 'SET:BRIGHT:74' (len=13)[0m
+[0;32mI (86879) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:74'[0m
+[0;32mI (86889) RIG: WebSocket command: SET:BRIGHT:74[0m
+[0;32mI (86889) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86889) web_console: cmd_handler returned successfully[0m
+[0;32mI (86909) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86919) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86919) web_console: WS frame type=1 len=13[0m
+[0;32mI (86919) web_console: WS recv: 'SET:BRIGHT:73' (len=13)[0m
+[0;32mI (86929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:73'[0m
+[0;32mI (86929) RIG: WebSocket command: SET:BRIGHT:73[0m
+[0;32mI (86939) web_console: cmd_handler returned successfully[0m
+[0;32mI (86939) web_console: Skipping 15 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (86949) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86949) web_console: WS frame type=1 len=13[0m
+[0;32mI (86959) web_console: WS recv: 'SET:BRIGHT:72' (len=13)[0m
+[0;32mI (86959) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:72'[0m
+[0;32mI (86969) RIG: WebSocket command: SET:BRIGHT:72[0m
+[0;32mI (86969) web_console: cmd_handler returned successfully[0m
+[0;32mI (86979) web_console: WS recv attempt, fd=52[0m
+[0;32mI (86979) web_console: WS frame type=1 len=13[0m
+[0;32mI (86989) web_console: WS recv: 'SET:BRIGHT:71' (len=13)[0m
+[0;32mI (86989) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:71'[0m
+[0;32mI (86999) RIG: WebSocket command: SET:BRIGHT:71[0m
+[0;32mI (86999) web_console: cmd_handler returned successfully[0m
+[0;32mI (86999) web_console: Skipping 17 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87019) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87139) web_console: WS recv attempt, fd=52[0m
+[0;32mI (87149) web_console: WS frame type=1 len=13[0m
+[0;32mI (87149) web_console: WS recv: 'SET:BRIGHT:70' (len=13)[0m
+[0;32mI (87149) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:70'[0m
+[0;32mI (87149) RIG: WebSocket command: SET:BRIGHT:70[0m
+[0;32mI (87159) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87159) web_console: cmd_handler returned successfully[0m
+[0;32mI (87169) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87179) web_console: WS recv attempt, fd=52[0m
+[0;32mI (87179) web_console: WS frame type=1 len=13[0m
+[0;32mI (87189) web_console: WS recv: 'SET:BRIGHT:69' (len=13)[0m
+[0;32mI (87189) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:69'[0m
+[0;32mI (87199) RIG: WebSocket command: SET:BRIGHT:69[0m
+[0;32mI (87199) web_console: cmd_handler returned successfully[0m
+[0;32mI (87209) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87209) web_console: WS recv attempt, fd=52[0m
+[0;32mI (87219) web_console: WS frame type=1 len=13[0m
+[0;32mI (87219) web_console: WS recv: 'SET:BRIGHT:68' (len=13)[0m
+[0;32mI (87229) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:68'[0m
+[0;32mI (87229) RIG: WebSocket command: SET:BRIGHT:68[0m
+[0;32mI (87239) web_console: Skipping 24 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87239) web_console: cmd_handler returned successfully[0m
+[0;32mI (87249) web_console: Skipping 25 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87339) web_console: WS recv attempt, fd=52[0m
+[0;32mI (87339) web_console: WS frame type=1 len=13[0m
+[0;32mI (87339) web_console: WS recv: 'SET:BRIGHT:67' (len=13)[0m
+[0;32mI (87339) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:67'[0m
+[0;32mI (87349) RIG: WebSocket command: SET:BRIGHT:67[0m
+[0;32mI (87349) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87349) web_console: cmd_handler returned successfully[0m
+[0;32mI (87359) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (87369) web_console: WS frame type=1 len=13[0m
+[0;32mI (87379) web_console: WS recv: 'SET:BRIGHT:66' (len=13)[0m
+[0;32mI (87379) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:66'[0m
+[0;32mI (87389) RIG: WebSocket command: SET:BRIGHT:66[0m
+[0;32mI (87389) web_console: cmd_handler returned successfully[0m
+[0;32mI (87399) web_console: Skipping 29 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87459) web_console: WS recv attempt, fd=52[0m
+[0;32mI (87459) web_console: WS frame type=1 len=13[0m
+[0;32mI (87459) web_console: WS recv: 'SET:BRIGHT:65' (len=13)[0m
+[0;32mI (87459) web_console: Calling cmd_handler at 0x4200e55c with 'SET:BRIGHT:65'[0m
+[0;32mI (87469) RIG: WebSocket command: SET:BRIGHT:65[0m
+[0;32mI (87469) web_console: cmd_handler returned successfully[0m
+[0;32mI (87469) web_console: Skipping 31 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87489) web_console: Skipping 31 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (87649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (89289) web_console: Serving /console (2844 bytes)[0m
+[0;32mI (89329) web_console: WS handshake on fd=52, ring buffer has 31 events, waiting for page identification[0m
+[0;32mI (89829) web_console: WS recv attempt, fd=52[0m
+[0;32mI (89829) web_console: WS frame type=1 len=12[0m
+[0;32mI (89829) web_console: WS recv: 'PAGE:CONSOLE' (len=12)[0m
+[0;32mI (89829) web_console: Page identified as CONSOLE, flushing 31 buffered events[0m
+[0;32mI (90459) web_console: Queued 31 events to WebSocket fd=52[0m
+[0;32mI (92369) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (95699) web_console: Serving /settings (8057 bytes)[0m
+[0;32mI (95729) web_console: WS handshake on fd=52, ring buffer has 0 events, waiting for page identification[0m
+[0;32mI (96229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (96229) web_console: WS frame type=1 len=13[0m
+[0;32mI (96229) web_console: WS recv: 'PAGE:SETTINGS' (len=13)[0m
+[0;32mI (96229) web_console: Page identified as SETTINGS, not flushing buffered events (they're preserved for console)[0m
+[0;32mI (96249) web_console: WS recv attempt, fd=52[0m
+[0;32mI (96249) web_console: WS frame type=1 len=16[0m
+[0;32mI (96249) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (96259) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (96259) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (96269) RIG: Sending current settings to web[0m
+[0;32mI (96269) web_console: cmd_handler returned successfully[0m
+[0;32mI (96409) web_console: Queued 7 events to WebSocket fd=52[0m
+[0;32mI (97089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (97089) web_console: WS frame type=1 len=12[0m
+[0;32mI (97089) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (97089) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (97099) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (97099) web_console: cmd_handler returned successfully[0m
+[0;32mI (97169) web_console: Skipping 1 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (97169) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (97169) web_console: Skipping 1 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (97379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (99929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (99929) web_console: WS frame type=1 len=12[0m
+[0;32mI (99929) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (99929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:0'[0m
+[0;32mI (99939) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (99939) web_console: Skipping 3 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (99939) web_console: cmd_handler returned successfully[0m
+[0;32mI (99959) web_console: Skipping 5 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (102379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (103659) web_console: WS recv attempt, fd=52[0m
+[0;32mI (103659) web_console: WS frame type=1 len=12[0m
+[0;32mI (103659) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (103659) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (103669) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (103669) web_console: Skipping 7 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (103669) web_console: cmd_handler returned successfully[0m
+[0;32mI (103689) web_console: Skipping 9 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (104889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (104889) web_console: WS frame type=1 len=12[0m
+[0;32mI (104889) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (104889) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:0'[0m
+[0;32mI (104899) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (104899) web_console: cmd_handler returned successfully[0m
+[0;32mI (104909) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (104919) web_console: Skipping 13 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107019) web_console: WS recv attempt, fd=52[0m
+[0;32mI (107019) web_console: WS frame type=1 len=13[0m
+[0;32mI (107019) web_console: WS recv: 'SET:MTX_BRT:3' (len=13)[0m
+[0;32mI (107019) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:3'[0m
+[0;32mI (107029) RIG: WebSocket command: SET:MTX_BRT:3[0m
+[0;32mI (107039) web_console: cmd_handler returned successfully[0m
+[0;32mI (107039) web_console: WS recv attempt, fd=52[0m
+[0;32mI (107039) web_console: WS frame type=1 len=13[0m
+[0;32mI (107049) web_console: WS recv: 'SET:MTX_BRT:4' (len=13)[0m
+[0;32mI (107049) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:4'[0m
+[0;32mI (107059) RIG: WebSocket command: SET:MTX_BRT:4[0m
+[0;32mI (107059) web_console: Skipping 15 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107069) web_console: cmd_handler returned successfully[0m
+[0;32mI (107079) web_console: Skipping 17 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107079) web_console: WS recv attempt, fd=52[0m
+[0;32mI (107089) web_console: WS frame type=1 len=13[0m
+[0;32mI (107089) web_console: WS recv: 'SET:MTX_BRT:5' (len=13)[0m
+[0;32mI (107099) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:5'[0m
+[0;32mI (107099) RIG: WebSocket command: SET:MTX_BRT:5[0m
+[0;32mI (107119) web_console: cmd_handler returned successfully[0m
+[0;32mI (107119) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107119) web_console: Skipping 19 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (107149) web_console: WS frame type=1 len=13[0m
+[0;32mI (107149) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (107149) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:6'[0m
+[0;32mI (107159) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (107169) web_console: cmd_handler returned successfully[0m
+[0;32mI (107169) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107169) web_console: Skipping 21 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107349) web_console: WS recv attempt, fd=52[0m
+[0;32mI (107349) web_console: WS frame type=1 len=13[0m
+[0;32mI (107349) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (107349) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:7'[0m
+[0;32mI (107359) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (107369) web_console: cmd_handler returned successfully[0m
+[0;32mI (107369) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107369) web_console: Skipping 23 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (107379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (108119) web_console: WS recv attempt, fd=52[0m
+[0;32mI (108119) web_console: WS frame type=1 len=13[0m
+[0;32mI (108119) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (108119) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:6'[0m
+[0;32mI (108129) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (108139) web_console: cmd_handler returned successfully[0m
+[0;32mI (108139) web_console: Skipping 25 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (108139) web_console: Skipping 25 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (108579) web_console: WS recv attempt, fd=52[0m
+[0;32mI (108579) web_console: WS frame type=1 len=13[0m
+[0;32mI (108579) web_console: WS recv: 'SET:MTX_BRT:5' (len=13)[0m
+[0;32mI (108589) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:5'[0m
+[0;32mI (108589) RIG: WebSocket command: SET:MTX_BRT:5[0m
+[0;32mI (108609) web_console: cmd_handler returned successfully[0m
+[0;32mI (108609) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (108609) web_console: Skipping 27 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (110829) web_console: WS recv attempt, fd=52[0m
+[0;32mI (110829) web_console: WS frame type=1 len=12[0m
+[0;32mI (110829) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (110829) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (110839) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (110839) web_console: cmd_handler returned successfully[0m
+[0;32mI (110849) web_console: Skipping 31 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (110849) web_console: Skipping 31 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (112139) web_console: WS recv attempt, fd=52[0m
+[0;32mI (112139) web_console: WS frame type=1 len=12[0m
+[0;32mI (112139) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (112149) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:0'[0m
+[0;32mI (112149) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (112159) web_console: cmd_handler returned successfully[0m
+[0;32mI (112159) web_console: Skipping 35 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (112169) web_console: Skipping 35 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (112379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (113149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (113149) web_console: WS frame type=1 len=12[0m
+[0;32mI (113149) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (113149) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (113159) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (113169) web_console: Skipping 37 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (113169) web_console: cmd_handler returned successfully[0m
+[0;32mI (113179) web_console: Skipping 39 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (113999) web_console: WS recv attempt, fd=52[0m
+[0;32mI (113999) web_console: WS frame type=1 len=14[0m
+[0;32mI (113999) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (113999) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:10'[0m
+[0;32mI (114009) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (114029) web_console: cmd_handler returned successfully[0m
+[0;32mI (114029) web_console: Skipping 41 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114029) web_console: Skipping 41 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114169) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114169) web_console: WS frame type=1 len=14[0m
+[0;32mI (114169) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (114169) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:11'[0m
+[0;32mI (114179) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (114189) web_console: cmd_handler returned successfully[0m
+[0;32mI (114189) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114189) web_console: WS frame type=1 len=14[0m
+[0;32mI (114199) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (114189) web_console: Skipping 43 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114199) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (114219) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (114219) web_console: Skipping 43 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114229) web_console: cmd_handler returned successfully[0m
+[0;32mI (114229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114229) web_console: Skipping 45 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114239) web_console: WS frame type=1 len=14[0m
+[0;32mI (114249) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (114249) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (114259) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (114279) web_console: cmd_handler returned successfully[0m
+[0;32mI (114279) web_console: Skipping 47 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114279) web_console: WS frame type=1 len=14[0m
+[0;32mI (114289) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (114289) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (114279) web_console: Skipping 47 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114299) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (114319) web_console: cmd_handler returned successfully[0m
+[0;32mI (114319) web_console: Skipping 49 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114319) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114329) web_console: WS frame type=1 len=14[0m
+[0;32mI (114329) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (114339) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (114339) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (114359) web_console: cmd_handler returned successfully[0m
+[0;32mI (114359) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114359) web_console: Skipping 51 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114359) web_console: WS frame type=1 len=14[0m
+[0;32mI (114369) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (114369) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (114379) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (114389) web_console: Skipping 51 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114399) web_console: cmd_handler returned successfully[0m
+[0;32mI (114399) web_console: Skipping 52 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114399) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114409) web_console: Skipping 53 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114409) web_console: WS frame type=1 len=14[0m
+[0;32mI (114419) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (114419) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (114429) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (114449) web_console: cmd_handler returned successfully[0m
+[0;32mI (114449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114449) web_console: WS frame type=1 len=14[0m
+[0;32mI (114449) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (114449) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (114459) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (114449) web_console: Skipping 55 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114469) web_console: Skipping 55 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114479) web_console: cmd_handler returned successfully[0m
+[0;32mI (114489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114489) web_console: Skipping 57 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114489) web_console: WS frame type=1 len=14[0m
+[0;32mI (114499) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (114509) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (114509) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (114529) web_console: cmd_handler returned successfully[0m
+[0;32mI (114529) web_console: Skipping 59 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114529) web_console: Skipping 59 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114529) web_console: WS frame type=1 len=14[0m
+[0;32mI (114549) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (114549) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (114559) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (114569) web_console: cmd_handler returned successfully[0m
+[0;32mI (114569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114569) web_console: WS frame type=1 len=14[0m
+[0;32mI (114579) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (114579) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (114589) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (114569) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114599) web_console: cmd_handler returned successfully[0m
+[0;32mI (114609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114609) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114609) web_console: WS frame type=1 len=14[0m
+[0;32mI (114619) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (114629) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (114629) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (114649) web_console: cmd_handler returned successfully[0m
+[0;32mI (114649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114649) web_console: WS frame type=1 len=14[0m
+[0;32mI (114649) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (114659) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (114659) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (114649) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114679) web_console: cmd_handler returned successfully[0m
+[0;32mI (114679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114679) web_console: WS frame type=1 len=14[0m
+[0;32mI (114689) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (114689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (114699) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (114709) web_console: cmd_handler returned successfully[0m
+[0;32mI (114779) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114779) web_console: Queued 5 events to WebSocket fd=52[0m
+[0;32mI (114779) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114939) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114939) web_console: WS frame type=1 len=14[0m
+[0;32mI (114939) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (114939) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (114949) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (114959) web_console: cmd_handler returned successfully[0m
+[0;32mI (114959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114959) web_console: WS frame type=1 len=14[0m
+[0;32mI (114969) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (114969) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (114979) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (114979) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (114989) web_console: cmd_handler returned successfully[0m
+[0;32mI (114999) web_console: WS recv attempt, fd=52[0m
+[0;32mI (114999) web_console: WS frame type=1 len=14[0m
+[0;32mI (114999) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (115009) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:32'[0m
+[0;32mI (115019) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (115029) web_console: cmd_handler returned successfully[0m
+[0;32mI (115029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (115029) web_console: WS frame type=1 len=14[0m
+[0;32mI (115029) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (115039) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:33'[0m
+[0;32mI (115049) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (115059) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (115059) web_console: cmd_handler returned successfully[0m
+[0;32mI (115059) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (115069) web_console: WS recv attempt, fd=52[0m
+[0;32mI (115069) web_console: WS frame type=1 len=14[0m
+[0;32mI (115079) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (115079) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:34'[0m
+[0;32mI (115089) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (115099) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (115099) web_console: cmd_handler returned successfully[0m
+[0;32mI (115099) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (115109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (115109) web_console: WS frame type=1 len=14[0m
+[0;32mI (115119) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (115119) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (115129) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (115139) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (115139) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (115149) web_console: cmd_handler returned successfully[0m
+[0;32mI (115159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (115159) web_console: WS frame type=1 len=14[0m
+[0;32mI (115159) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (115169) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:36'[0m
+[0;32mI (115169) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (115179) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (115179) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (115189) web_console: cmd_handler returned successfully[0m
+[0;32mI (115219) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (115219) web_console: WS recv attempt, fd=52[0m
+[0;32mI (115219) web_console: WS frame type=1 len=12[0m
+[0;32mI (115219) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (115229) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (115229) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (115239) web_console: cmd_handler returned successfully[0m
+[0;32mI (115239) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (115269) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (115269) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (117369) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (119629) web_console: WS recv attempt, fd=52[0m
+[0;32mI (119629) web_console: WS frame type=1 len=12[0m
+[0;32mI (119629) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (119629) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:0'[0m
+[0;32mI (119639) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (119639) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (119639) web_console: cmd_handler returned successfully[0m
+[0;32mI (119719) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (119719) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (122349) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (124719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (124719) web_console: WS frame type=1 len=12[0m
+[0;32mI (124719) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (124719) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:0'[0m
+[0;32mI (124729) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (124729) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (124729) web_console: cmd_handler returned successfully[0m
+[0;32mI (124799) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (124799) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (126759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (126759) web_console: WS frame type=1 len=12[0m
+[0;32mI (126759) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (126759) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (126769) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (126769) web_console: cmd_handler returned successfully[0m
+[0;32mI (126829) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (126829) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (126829) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (127359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (129009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (129009) web_console: WS frame type=1 len=12[0m
+[0;32mI (129009) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (129009) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:0'[0m
+[0;32mI (129019) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (129029) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (129029) web_console: cmd_handler returned successfully[0m
+[0;32mI (129059) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (129059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (132359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (132909) web_console: WS recv attempt, fd=52[0m
+[0;32mI (132919) web_console: WS frame type=1 len=14[0m
+[0;32mI (132919) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (132919) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:12'[0m
+[0;32mI (132919) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (132939) web_console: cmd_handler returned successfully[0m
+[0;32mI (132939) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (132939) web_console: WS recv attempt, fd=52[0m
+[0;32mI (132949) web_console: WS frame type=1 len=14[0m
+[0;32mI (132949) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (132949) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (132959) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (132969) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (132969) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (132979) web_console: cmd_handler returned successfully[0m
+[0;32mI (132989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (132989) web_console: WS frame type=1 len=14[0m
+[0;32mI (132989) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (132999) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (132999) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (133009) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133019) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133019) web_console: cmd_handler returned successfully[0m
+[0;32mI (133029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133029) web_console: WS frame type=1 len=14[0m
+[0;32mI (133029) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (133039) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (133049) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (133049) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133059) web_console: cmd_handler returned successfully[0m
+[0;32mI (133059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133069) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133069) web_console: WS frame type=1 len=14[0m
+[0;32mI (133079) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (133079) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (133089) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (133089) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133099) web_console: cmd_handler returned successfully[0m
+[0;32mI (133109) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133119) web_console: WS frame type=1 len=14[0m
+[0;32mI (133119) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (133119) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (133129) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (133139) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133139) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133149) web_console: cmd_handler returned successfully[0m
+[0;32mI (133159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133159) web_console: WS frame type=1 len=14[0m
+[0;32mI (133159) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (133169) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (133169) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (133179) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133189) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133189) web_console: cmd_handler returned successfully[0m
+[0;32mI (133199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133199) web_console: WS frame type=1 len=14[0m
+[0;32mI (133199) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (133209) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (133219) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (133219) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133229) web_console: cmd_handler returned successfully[0m
+[0;32mI (133239) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133239) web_console: WS frame type=1 len=14[0m
+[0;32mI (133249) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (133249) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (133259) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (133259) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133269) web_console: cmd_handler returned successfully[0m
+[0;32mI (133279) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133289) web_console: WS frame type=1 len=14[0m
+[0;32mI (133289) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (133289) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (133299) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (133309) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133309) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133319) web_console: cmd_handler returned successfully[0m
+[0;32mI (133329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133329) web_console: WS frame type=1 len=14[0m
+[0;32mI (133329) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (133339) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (133339) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (133349) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133359) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133359) web_console: cmd_handler returned successfully[0m
+[0;32mI (133369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133369) web_console: WS frame type=1 len=14[0m
+[0;32mI (133369) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (133379) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (133389) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (133389) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133399) web_console: cmd_handler returned successfully[0m
+[0;32mI (133409) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133419) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133419) web_console: WS frame type=1 len=14[0m
+[0;32mI (133419) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (133429) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (133429) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133429) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (133449) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133459) web_console: cmd_handler returned successfully[0m
+[0;32mI (133459) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133459) web_console: WS frame type=1 len=14[0m
+[0;32mI (133459) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (133469) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (133479) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (133459) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133489) web_console: cmd_handler returned successfully[0m
+[0;32mI (133489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133499) web_console: WS frame type=1 len=14[0m
+[0;32mI (133499) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (133509) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (133509) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (133519) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133519) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133529) web_console: cmd_handler returned successfully[0m
+[0;32mI (133539) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133539) web_console: WS frame type=1 len=14[0m
+[0;32mI (133539) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (133549) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (133559) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (133559) web_console: cmd_handler returned successfully[0m
+[0;32mI (133569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133569) web_console: WS frame type=1 len=14[0m
+[0;32mI (133569) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (133579) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (133589) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (133599) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133599) web_console: cmd_handler returned successfully[0m
+[0;32mI (133599) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (133609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133609) web_console: WS frame type=1 len=14[0m
+[0;32mI (133619) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (133619) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (133629) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (133629) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133639) web_console: cmd_handler returned successfully[0m
+[0;32mI (133649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133649) web_console: WS frame type=1 len=14[0m
+[0;32mI (133649) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (133649) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133659) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (133669) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (133679) web_console: cmd_handler returned successfully[0m
+[0;32mI (133679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133679) web_console: WS frame type=1 len=14[0m
+[0;32mI (133689) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (133689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (133699) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (133709) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133709) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133719) web_console: cmd_handler returned successfully[0m
+[0;32mI (133729) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133729) web_console: WS frame type=1 len=14[0m
+[0;32mI (133729) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (133739) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (133739) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (133749) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133749) web_console: cmd_handler returned successfully[0m
+[0;32mI (133759) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (133769) web_console: WS frame type=1 len=14[0m
+[0;32mI (133769) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (133779) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (133789) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (133789) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133799) web_console: cmd_handler returned successfully[0m
+[0;32mI (133799) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (133869) web_console: Skipping 61 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (133869) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (136289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136289) web_console: WS frame type=1 len=13[0m
+[0;32mI (136289) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (136289) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:7'[0m
+[0;32mI (136299) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (136309) web_console: cmd_handler returned successfully[0m
+[0;32mI (136309) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (136319) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (136469) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136469) web_console: WS frame type=1 len=13[0m
+[0;32mI (136469) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (136479) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:8'[0m
+[0;32mI (136479) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (136499) web_console: cmd_handler returned successfully[0m
+[0;32mI (136499) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136499) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (136499) web_console: WS frame type=1 len=13[0m
+[0;32mI (136509) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (136509) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:9'[0m
+[0;32mI (136519) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (136529) web_console: cmd_handler returned successfully[0m
+[0;32mI (136529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136539) web_console: WS frame type=1 len=14[0m
+[0;32mI (136539) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (136539) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:10'[0m
+[0;32mI (136549) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (136559) web_console: cmd_handler returned successfully[0m
+[0;32mI (136559) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136559) web_console: WS frame type=1 len=14[0m
+[0;32mI (136569) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (136569) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:11'[0m
+[0;32mI (136579) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (136589) web_console: cmd_handler returned successfully[0m
+[0;32mI (136589) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136589) web_console: WS frame type=1 len=14[0m
+[0;32mI (136599) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (136599) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:12'[0m
+[0;32mI (136609) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (136619) web_console: cmd_handler returned successfully[0m
+[0;32mI (136619) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136629) web_console: WS frame type=1 len=14[0m
+[0;32mI (136629) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (136629) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (136639) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (136649) web_console: cmd_handler returned successfully[0m
+[0;32mI (136649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136659) web_console: WS frame type=1 len=14[0m
+[0;32mI (136659) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (136659) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (136669) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (136679) web_console: cmd_handler returned successfully[0m
+[0;32mI (136679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136689) web_console: WS frame type=1 len=14[0m
+[0;32mI (136689) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (136689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (136699) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (136709) web_console: cmd_handler returned successfully[0m
+[0;32mI (136709) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136719) web_console: WS frame type=1 len=14[0m
+[0;32mI (136719) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (136719) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (136729) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (136739) web_console: cmd_handler returned successfully[0m
+[0;32mI (136739) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136749) web_console: WS frame type=1 len=14[0m
+[0;32mI (136749) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (136749) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (136759) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (136779) web_console: cmd_handler returned successfully[0m
+[0;32mI (136779) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136779) web_console: WS frame type=1 len=14[0m
+[0;32mI (136779) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (136779) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (136789) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (136809) web_console: cmd_handler returned successfully[0m
+[0;32mI (136809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136809) web_console: WS frame type=1 len=14[0m
+[0;32mI (136809) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (136809) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (136819) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (136839) web_console: cmd_handler returned successfully[0m
+[0;32mI (136839) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136839) web_console: WS frame type=1 len=14[0m
+[0;32mI (136839) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (136839) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (136849) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (136869) web_console: cmd_handler returned successfully[0m
+[0;32mI (136869) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136869) web_console: WS frame type=1 len=14[0m
+[0;32mI (136869) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (136869) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (136879) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (136899) web_console: cmd_handler returned successfully[0m
+[0;32mI (136899) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136899) web_console: WS frame type=1 len=14[0m
+[0;32mI (136899) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (136899) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (136909) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (136929) web_console: cmd_handler returned successfully[0m
+[0;32mI (136929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136929) web_console: WS frame type=1 len=14[0m
+[0;32mI (136929) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (136929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (136939) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (136959) web_console: cmd_handler returned successfully[0m
+[0;32mI (136959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136959) web_console: WS frame type=1 len=14[0m
+[0;32mI (136959) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (136959) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (136969) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (136989) web_console: cmd_handler returned successfully[0m
+[0;32mI (136989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (136989) web_console: WS frame type=1 len=14[0m
+[0;32mI (136989) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (136999) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (136999) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (137019) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137019) web_console: cmd_handler returned successfully[0m
+[0;32mI (137019) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137019) web_console: WS frame type=1 len=14[0m
+[0;32mI (137029) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (137029) web_console: Queued 17 events to WebSocket fd=52[0m
+[0;32mI (137029) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (137039) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (137099) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137099) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137109) web_console: cmd_handler returned successfully[0m
+[0;32mI (137109) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137119) web_console: WS frame type=1 len=14[0m
+[0;32mI (137119) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (137129) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (137139) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (137139) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137149) web_console: cmd_handler returned successfully[0m
+[0;32mI (137159) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137159) web_console: WS frame type=1 len=14[0m
+[0;32mI (137169) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (137169) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (137179) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (137179) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137189) web_console: cmd_handler returned successfully[0m
+[0;32mI (137199) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137209) web_console: WS frame type=1 len=14[0m
+[0;32mI (137209) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (137209) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (137219) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (137229) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137229) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137239) web_console: cmd_handler returned successfully[0m
+[0;32mI (137249) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137249) web_console: WS frame type=1 len=14[0m
+[0;32mI (137249) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (137259) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (137259) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (137269) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137279) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137279) web_console: cmd_handler returned successfully[0m
+[0;32mI (137289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137289) web_console: WS frame type=1 len=14[0m
+[0;32mI (137289) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (137299) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (137309) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (137309) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137319) web_console: cmd_handler returned successfully[0m
+[0;32mI (137329) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137329) web_console: WS frame type=1 len=14[0m
+[0;32mI (137339) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (137339) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:32'[0m
+[0;32mI (137349) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (137349) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137359) web_console: cmd_handler returned successfully[0m
+[0;32mI (137369) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137379) web_console: WS frame type=1 len=14[0m
+[0;32mI (137379) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (137379) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:33'[0m
+[0;32mI (137389) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (137399) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137399) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137409) web_console: cmd_handler returned successfully[0m
+[0;32mI (137419) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137419) web_console: WS frame type=1 len=14[0m
+[0;32mI (137419) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (137429) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:33'[0m
+[0;32mI (137429) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (137439) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137439) web_console: cmd_handler returned successfully[0m
+[0;32mI (137449) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137479) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (137479) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (137559) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (138019) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138019) web_console: WS frame type=1 len=14[0m
+[0;32mI (138019) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (138019) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:34'[0m
+[0;32mI (138029) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (138039) web_console: cmd_handler returned successfully[0m
+[0;32mI (138039) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138059) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138059) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (138059) web_console: WS frame type=1 len=14[0m
+[0;32mI (138069) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (138069) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (138079) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (138089) web_console: cmd_handler returned successfully[0m
+[0;32mI (138089) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138099) web_console: WS frame type=1 len=14[0m
+[0;32mI (138099) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (138109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:36'[0m
+[0;32mI (138119) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (138129) web_console: cmd_handler returned successfully[0m
+[0;32mI (138159) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138159) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (138159) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138479) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138479) web_console: WS frame type=1 len=14[0m
+[0;32mI (138479) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (138479) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:36'[0m
+[0;32mI (138489) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (138489) web_console: cmd_handler returned successfully[0m
+[0;32mI (138489) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138529) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138529) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (138699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138699) web_console: WS frame type=1 len=14[0m
+[0;32mI (138699) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (138699) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:36'[0m
+[0;32mI (138709) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (138709) web_console: cmd_handler returned successfully[0m
+[0;32mI (138719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138719) web_console: WS frame type=1 len=14[0m
+[0;32mI (138729) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (138729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:37'[0m
+[0;32mI (138739) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (138749) web_console: cmd_handler returned successfully[0m
+[0;32mI (138769) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138769) web_console: WS frame type=1 len=14[0m
+[0;32mI (138769) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (138769) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:37'[0m
+[0;32mI (138779) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (138779) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138779) web_console: cmd_handler returned successfully[0m
+[0;32mI (138789) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (138799) web_console: WS recv attempt, fd=52[0m
+[0;32mI (138799) web_console: WS frame type=1 len=14[0m
+[0;32mI (138809) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (138809) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:37'[0m
+[0;32mI (138819) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (138819) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138819) web_console: cmd_handler returned successfully[0m
+[0;32mI (138839) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (138859) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (138859) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (141879) web_console: WS recv attempt, fd=52[0m
+[0;32mI (141879) web_console: WS frame type=1 len=14[0m
+[0;32mI (141879) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (141879) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (141889) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (141899) web_console: cmd_handler returned successfully[0m
+[0;32mI (141899) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (141919) web_console: WS recv attempt, fd=52[0m
+[0;32mI (141919) web_console: WS frame type=1 len=14[0m
+[0;32mI (141919) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (141919) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (141929) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (141929) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (141939) web_console: cmd_handler returned successfully[0m
+[0;32mI (141949) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (141969) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (141969) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (141969) web_console: WS recv attempt, fd=52[0m
+[0;32mI (141979) web_console: WS frame type=1 len=14[0m
+[0;32mI (141979) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (141989) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (141989) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (141999) web_console: cmd_handler returned successfully[0m
+[0;32mI (141999) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142029) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142029) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142029) web_console: WS frame type=1 len=14[0m
+[0;32mI (142039) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (142039) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (142049) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (142059) web_console: cmd_handler returned successfully[0m
+[0;32mI (142059) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142089) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142089) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142109) web_console: WS frame type=1 len=14[0m
+[0;32mI (142109) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (142109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (142119) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (142139) web_console: cmd_handler returned successfully[0m
+[0;32mI (142139) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142159) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142159) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142369) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (142459) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142459) web_console: WS frame type=1 len=14[0m
+[0;32mI (142459) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (142459) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (142469) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (142489) web_console: cmd_handler returned successfully[0m
+[0;32mI (142489) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142509) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142509) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142619) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142619) web_console: WS frame type=1 len=14[0m
+[0;32mI (142619) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (142619) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (142629) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (142639) web_console: cmd_handler returned successfully[0m
+[0;32mI (142639) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142659) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142659) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142819) web_console: WS frame type=1 len=14[0m
+[0;32mI (142819) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (142819) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (142819) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (142839) web_console: cmd_handler returned successfully[0m
+[0;32mI (142839) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142859) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142859) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142889) web_console: WS frame type=1 len=14[0m
+[0;32mI (142889) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (142899) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (142899) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (142919) web_console: cmd_handler returned successfully[0m
+[0;32mI (142939) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (142939) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (142989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (142989) web_console: WS frame type=1 len=14[0m
+[0;32mI (142989) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (142989) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (142999) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (143009) web_console: cmd_handler returned successfully[0m
+[0;32mI (143029) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143029) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143029) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143159) web_console: WS frame type=1 len=14[0m
+[0;32mI (143159) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (143159) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (143169) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (143179) web_console: cmd_handler returned successfully[0m
+[0;32mI (143199) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143199) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143199) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143309) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143309) web_console: WS frame type=1 len=14[0m
+[0;32mI (143319) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (143319) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (143319) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (143339) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143339) web_console: cmd_handler returned successfully[0m
+[0;32mI (143359) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143359) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143439) web_console: WS frame type=1 len=14[0m
+[0;32mI (143439) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (143439) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (143439) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (143459) web_console: cmd_handler returned successfully[0m
+[0;32mI (143459) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143479) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143479) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143569) web_console: WS frame type=1 len=14[0m
+[0;32mI (143569) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (143569) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (143579) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (143589) web_console: cmd_handler returned successfully[0m
+[0;32mI (143609) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143609) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143609) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143649) web_console: WS frame type=1 len=14[0m
+[0;32mI (143649) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (143649) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (143659) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (143679) web_console: cmd_handler returned successfully[0m
+[0;32mI (143679) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143699) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143699) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143759) web_console: WS frame type=1 len=14[0m
+[0;32mI (143759) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (143759) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (143769) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (143779) web_console: cmd_handler returned successfully[0m
+[0;32mI (143779) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143809) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143809) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (143929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (143929) web_console: WS frame type=1 len=14[0m
+[0;32mI (143929) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (143929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (143939) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (143959) web_console: cmd_handler returned successfully[0m
+[0;32mI (143959) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143979) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (143979) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144089) web_console: WS frame type=1 len=14[0m
+[0;32mI (144089) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (144089) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (144099) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (144109) web_console: cmd_handler returned successfully[0m
+[0;32mI (144109) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144139) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144139) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144209) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144209) web_console: WS frame type=1 len=14[0m
+[0;32mI (144209) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (144209) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (144219) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (144229) web_console: cmd_handler returned successfully[0m
+[0;32mI (144229) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144249) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144249) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144299) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144299) web_console: WS frame type=1 len=14[0m
+[0;32mI (144299) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (144299) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (144309) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (144329) web_console: cmd_handler returned successfully[0m
+[0;32mI (144349) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144349) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144349) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144389) web_console: WS frame type=1 len=14[0m
+[0;32mI (144389) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (144389) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:32'[0m
+[0;32mI (144399) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (144409) web_console: cmd_handler returned successfully[0m
+[0;32mI (144409) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144429) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144429) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144469) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144469) web_console: WS frame type=1 len=14[0m
+[0;32mI (144469) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (144469) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:33'[0m
+[0;32mI (144479) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (144489) web_console: cmd_handler returned successfully[0m
+[0;32mI (144489) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144519) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144519) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144569) web_console: WS frame type=1 len=14[0m
+[0;32mI (144569) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (144569) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:34'[0m
+[0;32mI (144579) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (144589) web_console: cmd_handler returned successfully[0m
+[0;32mI (144589) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144619) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144619) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144659) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144659) web_console: WS frame type=1 len=14[0m
+[0;32mI (144659) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (144659) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:34'[0m
+[0;32mI (144669) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (144669) web_console: cmd_handler returned successfully[0m
+[0;32mI (144689) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144689) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144689) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144729) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144729) web_console: WS frame type=1 len=14[0m
+[0;32mI (144729) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (144729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (144739) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (144759) web_console: cmd_handler returned successfully[0m
+[0;32mI (144759) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144779) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144779) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144819) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144819) web_console: WS frame type=1 len=14[0m
+[0;32mI (144819) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (144819) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:36'[0m
+[0;32mI (144829) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (144839) web_console: cmd_handler returned successfully[0m
+[0;32mI (144839) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144869) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144869) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144909) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144909) web_console: WS frame type=1 len=14[0m
+[0;32mI (144909) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (144909) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:37'[0m
+[0;32mI (144919) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (144939) web_console: cmd_handler returned successfully[0m
+[0;32mI (144939) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144959) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (144959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (144959) web_console: WS frame type=1 len=14[0m
+[0;32mI (144959) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (144969) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:38'[0m
+[0;32mI (144979) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (144979) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (144989) web_console: cmd_handler returned successfully[0m
+[0;32mI (145009) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145009) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (145019) web_console: WS recv attempt, fd=52[0m
+[0;32mI (145019) web_console: WS frame type=1 len=14[0m
+[0;32mI (145019) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (145029) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:38'[0m
+[0;32mI (145029) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (145039) web_console: cmd_handler returned successfully[0m
+[0;32mI (145059) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (145109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (145109) web_console: WS frame type=1 len=14[0m
+[0;32mI (145109) web_console: WS recv: 'SET:MTX_BRT:39' (len=14)[0m
+[0;32mI (145109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:39'[0m
+[0;32mI (145119) RIG: WebSocket command: SET:MTX_BRT:39[0m
+[0;32mI (145129) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145129) web_console: cmd_handler returned successfully[0m
+[0;32mI (145159) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145159) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (145159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (145169) web_console: WS frame type=1 len=14[0m
+[0;32mI (145169) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (145179) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:40'[0m
+[0;32mI (145179) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (145199) web_console: cmd_handler returned successfully[0m
+[0;32mI (145199) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145219) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145219) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (145239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (145239) web_console: WS frame type=1 len=14[0m
+[0;32mI (145239) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (145239) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:40'[0m
+[0;32mI (145249) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (145249) web_console: cmd_handler returned successfully[0m
+[0;32mI (145249) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145279) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (145279) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (146719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (146719) web_console: WS frame type=1 len=14[0m
+[0;32mI (146719) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (146729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (146729) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (146749) web_console: cmd_handler returned successfully[0m
+[0;32mI (146749) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (146769) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (146769) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (146929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (146929) web_console: WS frame type=1 len=14[0m
+[0;32mI (146929) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (146929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (146939) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (146949) web_console: cmd_handler returned successfully[0m
+[0;32mI (146959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (146959) web_console: WS frame type=1 len=14[0m
+[0;32mI (146959) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (146959) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (146969) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (146969) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (146979) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (146989) web_console: cmd_handler returned successfully[0m
+[0;32mI (146989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (146999) web_console: WS frame type=1 len=14[0m
+[0;32mI (146999) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (147009) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (147009) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (147019) web_console: cmd_handler returned successfully[0m
+[0;32mI (147029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147029) web_console: WS frame type=1 len=14[0m
+[0;32mI (147029) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (147039) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (147039) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (147049) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147059) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (147059) web_console: cmd_handler returned successfully[0m
+[0;32mI (147069) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147069) web_console: WS frame type=1 len=14[0m
+[0;32mI (147069) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (147079) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (147089) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (147089) web_console: cmd_handler returned successfully[0m
+[0;32mI (147099) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147099) web_console: WS frame type=1 len=14[0m
+[0;32mI (147099) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (147109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (147119) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (147119) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147129) web_console: cmd_handler returned successfully[0m
+[0;32mI (147139) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (147139) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147139) web_console: WS frame type=1 len=14[0m
+[0;32mI (147149) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (147149) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (147159) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (147159) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147159) web_console: cmd_handler returned successfully[0m
+[0;32mI (147179) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147179) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147189) web_console: WS frame type=1 len=14[0m
+[0;32mI (147189) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (147189) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (147199) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (147209) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147209) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147219) web_console: cmd_handler returned successfully[0m
+[0;32mI (147229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147229) web_console: WS frame type=1 len=14[0m
+[0;32mI (147229) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (147239) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (147239) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (147249) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147249) web_console: cmd_handler returned successfully[0m
+[0;32mI (147259) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147269) web_console: WS frame type=1 len=14[0m
+[0;32mI (147269) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (147269) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147269) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (147289) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (147299) web_console: cmd_handler returned successfully[0m
+[0;32mI (147299) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147299) web_console: WS frame type=1 len=14[0m
+[0;32mI (147299) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (147309) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (147319) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (147319) web_console: cmd_handler returned successfully[0m
+[0;32mI (147329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147329) web_console: WS frame type=1 len=14[0m
+[0;32mI (147329) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (147339) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (147349) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (147349) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147359) web_console: cmd_handler returned successfully[0m
+[0;32mI (147369) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (147369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147369) web_console: WS frame type=1 len=14[0m
+[0;32mI (147379) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (147379) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (147389) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (147389) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147399) web_console: cmd_handler returned successfully[0m
+[0;32mI (147409) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147419) web_console: WS frame type=1 len=14[0m
+[0;32mI (147419) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (147419) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (147429) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147429) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (147439) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147449) web_console: cmd_handler returned successfully[0m
+[0;32mI (147459) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147459) web_console: WS frame type=1 len=14[0m
+[0;32mI (147459) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (147459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (147469) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (147479) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147479) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (147489) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147499) web_console: cmd_handler returned successfully[0m
+[0;32mI (147509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147509) web_console: WS frame type=1 len=14[0m
+[0;32mI (147509) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (147519) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (147519) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (147529) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147529) web_console: cmd_handler returned successfully[0m
+[0;32mI (147539) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147539) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147549) web_console: WS frame type=1 len=14[0m
+[0;32mI (147549) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (147559) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (147559) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (147569) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147579) web_console: cmd_handler returned successfully[0m
+[0;32mI (147579) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147579) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147589) web_console: WS frame type=1 len=14[0m
+[0;32mI (147589) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (147599) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (147609) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (147609) web_console: cmd_handler returned successfully[0m
+[0;32mI (147609) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147619) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147629) web_console: WS frame type=1 len=14[0m
+[0;32mI (147629) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (147639) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (147639) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (147629) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147659) web_console: cmd_handler returned successfully[0m
+[0;32mI (147659) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147659) web_console: WS frame type=1 len=14[0m
+[0;32mI (147669) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (147669) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (147679) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (147679) web_console: cmd_handler returned successfully[0m
+[0;32mI (147689) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147689) web_console: WS frame type=1 len=14[0m
+[0;32mI (147699) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (147699) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (147709) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147709) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (147719) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (147729) web_console: cmd_handler returned successfully[0m
+[0;32mI (147729) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147739) web_console: WS frame type=1 len=14[0m
+[0;32mI (147739) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (147749) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (147749) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (147759) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147759) web_console: cmd_handler returned successfully[0m
+[0;32mI (147769) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147769) web_console: WS frame type=1 len=14[0m
+[0;32mI (147779) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (147779) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147779) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (147789) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (147809) web_console: cmd_handler returned successfully[0m
+[0;32mI (147809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147809) web_console: WS frame type=1 len=14[0m
+[0;32mI (147809) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (147819) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (147819) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (147829) web_console: cmd_handler returned successfully[0m
+[0;32mI (147839) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147839) web_console: WS frame type=1 len=14[0m
+[0;32mI (147839) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (147849) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (147849) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (147859) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147859) web_console: cmd_handler returned successfully[0m
+[0;32mI (147869) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (147869) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147879) web_console: WS frame type=1 len=14[0m
+[0;32mI (147889) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (147889) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (147899) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (147899) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147909) web_console: cmd_handler returned successfully[0m
+[0;32mI (147919) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (147919) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147919) web_console: WS frame type=1 len=14[0m
+[0;32mI (147929) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (147929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (147939) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (147949) web_console: cmd_handler returned successfully[0m
+[0;32mI (147949) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147959) web_console: WS frame type=1 len=14[0m
+[0;32mI (147959) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (147959) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (147969) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (147969) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (147979) web_console: cmd_handler returned successfully[0m
+[0;32mI (147989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (147989) web_console: WS frame type=1 len=14[0m
+[0;32mI (147989) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (147999) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (147999) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (148009) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (148029) web_console: cmd_handler returned successfully[0m
+[0;32mI (148029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (148029) web_console: WS frame type=1 len=14[0m
+[0;32mI (148029) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (148039) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (148039) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (148049) web_console: cmd_handler returned successfully[0m
+[0;32mI (148059) web_console: WS recv attempt, fd=52[0m
+[0;32mI (148059) web_console: WS frame type=1 len=14[0m
+[0;32mI (148059) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (148069) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (148069) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (148079) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (148079) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (148089) web_console: cmd_handler returned successfully[0m
+[0;32mI (148099) web_console: WS recv attempt, fd=52[0m
+[0;32mI (148099) web_console: WS frame type=1 len=14[0m
+[0;32mI (148099) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (148109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (148119) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (148119) web_console: cmd_handler returned successfully[0m
+[0;32mI (148129) web_console: WS recv attempt, fd=52[0m
+[0;32mI (148129) web_console: WS frame type=1 len=14[0m
+[0;32mI (148129) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (148139) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:32'[0m
+[0;32mI (148149) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (148149) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (148159) web_console: cmd_handler returned successfully[0m
+[0;32mI (148159) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (148159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (148169) web_console: WS frame type=1 len=14[0m
+[0;32mI (148179) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (148179) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:32'[0m
+[0;32mI (148189) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (148189) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (148189) web_console: cmd_handler returned successfully[0m
+[0;32mI (148209) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (148229) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (148229) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (149179) web_console: WS recv attempt, fd=52[0m
+[0;32mI (149179) web_console: WS frame type=1 len=14[0m
+[0;32mI (149179) web_console: WS recv: 'SET:MTX_BRT:79' (len=14)[0m
+[0;32mI (149179) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:79'[0m
+[0;32mI (149189) RIG: WebSocket command: SET:MTX_BRT:79[0m
+[0;32mI (149199) web_console: cmd_handler returned successfully[0m
+[0;32mI (149199) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (149229) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (149229) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (149919) web_console: WS recv attempt, fd=52[0m
+[0;32mI (149919) web_console: WS frame type=1 len=14[0m
+[0;32mI (149919) web_console: WS recv: 'SET:MTX_BRT:84' (len=14)[0m
+[0;32mI (149919) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:84'[0m
+[0;32mI (149929) RIG: WebSocket command: SET:MTX_BRT:84[0m
+[0;32mI (149939) web_console: cmd_handler returned successfully[0m
+[0;32mI (149939) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (149969) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (149969) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (150459) web_console: WS recv attempt, fd=52[0m
+[0;32mI (150459) web_console: WS frame type=1 len=14[0m
+[0;32mI (150459) web_console: WS recv: 'SET:MTX_BRT:84' (len=14)[0m
+[0;32mI (150459) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:84'[0m
+[0;32mI (150469) RIG: WebSocket command: SET:MTX_BRT:84[0m
+[0;32mI (150469) web_console: cmd_handler returned successfully[0m
+[0;32mI (150489) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (150489) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (150489) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (151689) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151689) web_console: WS frame type=1 len=14[0m
+[0;32mI (151689) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (151689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (151699) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (151709) web_console: cmd_handler returned successfully[0m
+[0;32mI (151709) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (151709) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151719) web_console: WS frame type=1 len=14[0m
+[0;32mI (151719) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (151729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (151729) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (151739) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (151749) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (151749) web_console: cmd_handler returned successfully[0m
+[0;32mI (151759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151759) web_console: WS frame type=1 len=14[0m
+[0;32mI (151759) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (151769) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (151779) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (151779) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (151789) web_console: cmd_handler returned successfully[0m
+[0;32mI (151799) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151799) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (151799) web_console: WS frame type=1 len=14[0m
+[0;32mI (151809) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (151809) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (151819) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (151829) web_console: cmd_handler returned successfully[0m
+[0;32mI (151829) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151829) web_console: WS frame type=1 len=14[0m
+[0;32mI (151839) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (151839) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (151849) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (151849) web_console: cmd_handler returned successfully[0m
+[0;32mI (151859) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151859) web_console: WS frame type=1 len=14[0m
+[0;32mI (151869) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (151869) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (151879) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (151889) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (151889) web_console: cmd_handler returned successfully[0m
+[0;32mI (151899) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (151899) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151909) web_console: WS frame type=1 len=14[0m
+[0;32mI (151909) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (151909) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (151919) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (151929) web_console: cmd_handler returned successfully[0m
+[0;32mI (151929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151939) web_console: WS frame type=1 len=14[0m
+[0;32mI (151939) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (151939) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (151949) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (151959) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (151959) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (151969) web_console: cmd_handler returned successfully[0m
+[0;32mI (151979) web_console: WS recv attempt, fd=52[0m
+[0;32mI (151979) web_console: WS frame type=1 len=14[0m
+[0;32mI (151979) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (151989) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (151989) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (151999) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152009) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152009) web_console: cmd_handler returned successfully[0m
+[0;32mI (152019) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152019) web_console: WS frame type=1 len=14[0m
+[0;32mI (152019) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (152029) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (152039) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (152049) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152049) web_console: cmd_handler returned successfully[0m
+[0;32mI (152059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152059) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152059) web_console: WS frame type=1 len=14[0m
+[0;32mI (152069) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (152069) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (152079) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (152079) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152079) web_console: cmd_handler returned successfully[0m
+[0;32mI (152099) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152099) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152109) web_console: WS frame type=1 len=14[0m
+[0;32mI (152109) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (152109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (152119) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152119) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (152129) web_console: cmd_handler returned successfully[0m
+[0;32mI (152139) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152159) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152159) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152219) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152219) web_console: WS frame type=1 len=14[0m
+[0;32mI (152219) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (152219) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (152229) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (152239) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152239) web_console: cmd_handler returned successfully[0m
+[0;32mI (152249) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152249) web_console: WS frame type=1 len=14[0m
+[0;32mI (152249) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (152259) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:28'[0m
+[0;32mI (152269) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (152279) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152279) web_console: cmd_handler returned successfully[0m
+[0;32mI (152289) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152289) web_console: WS frame type=1 len=14[0m
+[0;32mI (152299) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (152299) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:29'[0m
+[0;32mI (152309) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (152309) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152319) web_console: cmd_handler returned successfully[0m
+[0;32mI (152329) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152339) web_console: WS frame type=1 len=14[0m
+[0;32mI (152339) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (152349) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (152349) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (152359) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152359) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152369) web_console: cmd_handler returned successfully[0m
+[0;32mI (152379) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152379) web_console: WS frame type=1 len=14[0m
+[0;32mI (152379) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (152389) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:30'[0m
+[0;32mI (152389) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (152399) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152399) web_console: cmd_handler returned successfully[0m
+[0;32mI (152409) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152419) web_console: WS frame type=1 len=14[0m
+[0;32mI (152419) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (152429) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:31'[0m
+[0;32mI (152439) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (152449) web_console: cmd_handler returned successfully[0m
+[0;32mI (152449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152449) web_console: WS frame type=1 len=14[0m
+[0;32mI (152449) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (152459) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:32'[0m
+[0;32mI (152469) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (152479) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152479) web_console: cmd_handler returned successfully[0m
+[0;32mI (152489) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (152489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152489) web_console: WS frame type=1 len=14[0m
+[0;32mI (152499) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (152499) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:33'[0m
+[0;32mI (152509) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (152519) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152519) web_console: cmd_handler returned successfully[0m
+[0;32mI (152529) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152539) web_console: WS frame type=1 len=14[0m
+[0;32mI (152539) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (152539) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:33'[0m
+[0;32mI (152549) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (152559) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152559) web_console: cmd_handler returned successfully[0m
+[0;32mI (152559) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (152569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152579) web_console: WS frame type=1 len=14[0m
+[0;32mI (152579) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (152589) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:34'[0m
+[0;32mI (152599) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (152609) web_console: cmd_handler returned successfully[0m
+[0;32mI (152609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152609) web_console: WS frame type=1 len=14[0m
+[0;32mI (152609) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (152619) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (152619) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (152639) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152639) web_console: cmd_handler returned successfully[0m
+[0;32mI (152639) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (152639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (152649) web_console: WS frame type=1 len=14[0m
+[0;32mI (152649) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (152659) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (152669) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (152669) web_console: cmd_handler returned successfully[0m
+[0;32mI (152649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (152699) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (152699) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (152699) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (153869) web_console: WS recv attempt, fd=52[0m
+[0;32mI (153879) web_console: WS frame type=1 len=12[0m
+[0;32mI (153879) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (153879) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (153879) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (153889) web_console: cmd_handler returned successfully[0m
+[0;32mI (153939) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (153939) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (153939) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156689) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156689) web_console: WS frame type=1 len=14[0m
+[0;32mI (156689) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (156689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:34'[0m
+[0;32mI (156699) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (156719) web_console: cmd_handler returned successfully[0m
+[0;32mI (156719) web_console: Skipping 64 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156719) web_console: WS frame type=1 len=14[0m
+[0;32mI (156729) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (156729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (156739) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (156739) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156749) web_console: cmd_handler returned successfully[0m
+[0;32mI (156759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156759) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (156759) web_console: WS frame type=1 len=14[0m
+[0;32mI (156769) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (156769) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:35'[0m
+[0;32mI (156779) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (156789) web_console: cmd_handler returned successfully[0m
+[0;32mI (156789) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156789) web_console: WS frame type=1 len=14[0m
+[0;32mI (156799) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (156799) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:36'[0m
+[0;32mI (156809) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (156829) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156829) web_console: cmd_handler returned successfully[0m
+[0;32mI (156829) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (156829) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156839) web_console: WS frame type=1 len=14[0m
+[0;32mI (156839) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (156849) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:37'[0m
+[0;32mI (156849) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (156859) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156859) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (156869) web_console: cmd_handler returned successfully[0m
+[0;32mI (156879) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156879) web_console: WS frame type=1 len=14[0m
+[0;32mI (156879) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (156889) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:38'[0m
+[0;32mI (156899) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (156899) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156909) web_console: cmd_handler returned successfully[0m
+[0;32mI (156909) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (156919) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156919) web_console: WS frame type=1 len=14[0m
+[0;32mI (156929) web_console: WS recv: 'SET:MTX_BRT:39' (len=14)[0m
+[0;32mI (156929) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:39'[0m
+[0;32mI (156939) RIG: WebSocket command: SET:MTX_BRT:39[0m
+[0;32mI (156939) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156949) web_console: cmd_handler returned successfully[0m
+[0;32mI (156959) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (156959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (156959) web_console: WS frame type=1 len=14[0m
+[0;32mI (156969) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (156969) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:40'[0m
+[0;32mI (156979) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (156989) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (156989) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (156999) web_console: cmd_handler returned successfully[0m
+[0;32mI (157009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157009) web_console: WS frame type=1 len=14[0m
+[0;32mI (157009) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (157019) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:40'[0m
+[0;32mI (157019) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (157029) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157029) web_console: cmd_handler returned successfully[0m
+[0;32mI (157039) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157039) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157049) web_console: WS frame type=1 len=14[0m
+[0;32mI (157049) web_console: WS recv: 'SET:MTX_BRT:41' (len=14)[0m
+[0;32mI (157059) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:41'[0m
+[0;32mI (157069) RIG: WebSocket command: SET:MTX_BRT:41[0m
+[0;32mI (157079) web_console: cmd_handler returned successfully[0m
+[0;32mI (157079) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157079) web_console: WS frame type=1 len=14[0m
+[0;32mI (157079) web_console: WS recv: 'SET:MTX_BRT:42' (len=14)[0m
+[0;32mI (157089) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:42'[0m
+[0;32mI (157099) RIG: WebSocket command: SET:MTX_BRT:42[0m
+[0;32mI (157109) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157109) web_console: cmd_handler returned successfully[0m
+[0;32mI (157109) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (157119) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157119) web_console: WS frame type=1 len=14[0m
+[0;32mI (157129) web_console: WS recv: 'SET:MTX_BRT:42' (len=14)[0m
+[0;32mI (157129) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:42'[0m
+[0;32mI (157139) RIG: WebSocket command: SET:MTX_BRT:42[0m
+[0;32mI (157139) web_console: cmd_handler returned successfully[0m
+[0;32mI (157149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157149) web_console: WS frame type=1 len=14[0m
+[0;32mI (157159) web_console: WS recv: 'SET:MTX_BRT:43' (len=14)[0m
+[0;32mI (157159) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:43'[0m
+[0;32mI (157169) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157169) RIG: WebSocket command: SET:MTX_BRT:43[0m
+[0;32mI (157179) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (157179) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157189) web_console: cmd_handler returned successfully[0m
+[0;32mI (157199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157199) web_console: WS frame type=1 len=14[0m
+[0;32mI (157209) web_console: WS recv: 'SET:MTX_BRT:44' (len=14)[0m
+[0;32mI (157209) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:44'[0m
+[0;32mI (157219) RIG: WebSocket command: SET:MTX_BRT:44[0m
+[0;32mI (157219) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157229) web_console: cmd_handler returned successfully[0m
+[0;32mI (157239) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157239) web_console: WS frame type=1 len=14[0m
+[0;32mI (157249) web_console: WS recv: 'SET:MTX_BRT:45' (len=14)[0m
+[0;32mI (157249) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:45'[0m
+[0;32mI (157259) RIG: WebSocket command: SET:MTX_BRT:45[0m
+[0;32mI (157269) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157269) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157279) web_console: cmd_handler returned successfully[0m
+[0;32mI (157289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157289) web_console: WS frame type=1 len=14[0m
+[0;32mI (157289) web_console: WS recv: 'SET:MTX_BRT:46' (len=14)[0m
+[0;32mI (157299) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:46'[0m
+[0;32mI (157299) RIG: WebSocket command: SET:MTX_BRT:46[0m
+[0;32mI (157309) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157309) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157319) web_console: cmd_handler returned successfully[0m
+[0;32mI (157329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157329) web_console: WS frame type=1 len=14[0m
+[0;32mI (157329) web_console: WS recv: 'SET:MTX_BRT:47' (len=14)[0m
+[0;32mI (157339) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:47'[0m
+[0;32mI (157349) RIG: WebSocket command: SET:MTX_BRT:47[0m
+[0;32mI (157349) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157359) web_console: cmd_handler returned successfully[0m
+[0;32mI (157359) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157359) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157369) web_console: WS frame type=1 len=14[0m
+[0;32mI (157379) web_console: WS recv: 'SET:MTX_BRT:48' (len=14)[0m
+[0;32mI (157379) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:48'[0m
+[0;32mI (157389) RIG: WebSocket command: SET:MTX_BRT:48[0m
+[0;32mI (157389) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157399) web_console: cmd_handler returned successfully[0m
+[0;32mI (157409) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157409) web_console: WS frame type=1 len=14[0m
+[0;32mI (157419) web_console: WS recv: 'SET:MTX_BRT:49' (len=14)[0m
+[0;32mI (157419) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:49'[0m
+[0;32mI (157429) RIG: WebSocket command: SET:MTX_BRT:49[0m
+[0;32mI (157439) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157439) web_console: cmd_handler returned successfully[0m
+[0;32mI (157449) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157459) web_console: WS frame type=1 len=14[0m
+[0;32mI (157459) web_console: WS recv: 'SET:MTX_BRT:49' (len=14)[0m
+[0;32mI (157469) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:49'[0m
+[0;32mI (157469) RIG: WebSocket command: SET:MTX_BRT:49[0m
+[0;32mI (157479) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157479) web_console: cmd_handler returned successfully[0m
+[0;32mI (157489) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157499) web_console: WS frame type=1 len=14[0m
+[0;32mI (157499) web_console: WS recv: 'SET:MTX_BRT:50' (len=14)[0m
+[0;32mI (157509) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:50'[0m
+[0;32mI (157509) RIG: WebSocket command: SET:MTX_BRT:50[0m
+[0;32mI (157519) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157529) web_console: cmd_handler returned successfully[0m
+[0;32mI (157529) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157539) web_console: WS frame type=1 len=14[0m
+[0;32mI (157539) web_console: WS recv: 'SET:MTX_BRT:50' (len=14)[0m
+[0;32mI (157549) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:50'[0m
+[0;32mI (157559) RIG: WebSocket command: SET:MTX_BRT:50[0m
+[0;32mI (157559) web_console: cmd_handler returned successfully[0m
+[0;32mI (157569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157569) web_console: WS frame type=1 len=14[0m
+[0;32mI (157579) web_console: WS recv: 'SET:MTX_BRT:51' (len=14)[0m
+[0;32mI (157579) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:51'[0m
+[0;32mI (157589) RIG: WebSocket command: SET:MTX_BRT:51[0m
+[0;32mI (157599) web_console: cmd_handler returned successfully[0m
+[0;32mI (157599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157599) web_console: WS frame type=1 len=14[0m
+[0;32mI (157609) web_console: WS recv: 'SET:MTX_BRT:51' (len=14)[0m
+[0;32mI (157609) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:51'[0m
+[0;32mI (157619) RIG: WebSocket command: SET:MTX_BRT:51[0m
+[0;32mI (157619) web_console: cmd_handler returned successfully[0m
+[0;32mI (157629) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157629) web_console: WS frame type=1 len=14[0m
+[0;32mI (157639) web_console: WS recv: 'SET:MTX_BRT:52' (len=14)[0m
+[0;32mI (157639) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:52'[0m
+[0;32mI (157649) RIG: WebSocket command: SET:MTX_BRT:52[0m
+[0;32mI (157649) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157659) web_console: cmd_handler returned successfully[0m
+[0;32mI (157669) web_console: Queued 4 events to WebSocket fd=52[0m
+[0;32mI (157669) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157669) web_console: WS frame type=1 len=14[0m
+[0;32mI (157679) web_console: WS recv: 'SET:MTX_BRT:52' (len=14)[0m
+[0;32mI (157679) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:52'[0m
+[0;32mI (157689) RIG: WebSocket command: SET:MTX_BRT:52[0m
+[0;32mI (157699) web_console: cmd_handler returned successfully[0m
+[0;32mI (157699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157709) web_console: WS frame type=1 len=14[0m
+[0;32mI (157709) web_console: WS recv: 'SET:MTX_BRT:53' (len=14)[0m
+[0;32mI (157709) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:53'[0m
+[0;32mI (157719) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157719) RIG: WebSocket command: SET:MTX_BRT:53[0m
+[0;32mI (157729) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (157739) web_console: cmd_handler returned successfully[0m
+[0;32mI (157749) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157749) web_console: WS frame type=1 len=14[0m
+[0;32mI (157749) web_console: WS recv: 'SET:MTX_BRT:53' (len=14)[0m
+[0;32mI (157759) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:53'[0m
+[0;32mI (157759) RIG: WebSocket command: SET:MTX_BRT:53[0m
+[0;32mI (157769) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157769) web_console: cmd_handler returned successfully[0m
+[0;32mI (157779) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157779) web_console: WS recv attempt, fd=52[0m
+[0;32mI (157789) web_console: WS frame type=1 len=14[0m
+[0;32mI (157789) web_console: WS recv: 'SET:MTX_BRT:54' (len=14)[0m
+[0;32mI (157799) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:54'[0m
+[0;32mI (157809) RIG: WebSocket command: SET:MTX_BRT:54[0m
+[0;32mI (157809) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157819) web_console: cmd_handler returned successfully[0m
+[0;32mI (157819) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (157789) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (157849) web_console: Skipping 63 CONSOLE events (page type is 2, not CONSOLE)[0m
+[0;32mI (157849) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (160449) web_console: Serving /console (2844 bytes)[0m
+[0;32mI (160479) web_console: WS handshake on fd=52, ring buffer has 63 events, waiting for page identification[0m
+[0;32mI (160979) web_console: WS recv attempt, fd=52[0m
+[0;32mI (160979) web_console: WS frame type=1 len=12[0m
+[0;32mI (160979) web_console: WS recv: 'PAGE:CONSOLE' (len=12)[0m
+[0;32mI (160979) web_console: Page identified as CONSOLE, flushing 63 buffered events[0m
+[0;32mI (162249) web_console: Queued 63 events to WebSocket fd=52[0m
+[0;32mI (162329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (167329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (172329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (177329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (177869) wifi:station: 56:72:f2:44:90:2b leave, AID = 1, reason = 8, bss_flags is 33721459, bss:0x3fcc0654[0m
+[0;32mI (177869) wifi:new:<1,0>, old:<1,0>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (177879) wifi:<ba-del>idx:3, tid:0[0m
+[0;32mI (177879) wifi:<ba-del>idx:4, tid:1[0m
+[0;32mI (177879) wifi:<ba-del>idx:2, tid:6[0m
+[0;32mI (177889) web_console: Station 56:72:f2:44:90:2b left[0m
+[0;32mI (177899) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (182329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (187329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (192329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (197329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (202329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (207329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (212329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (217309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (220599) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (222309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (222599) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (222599) web_console: WS recv attempt, fd=52[0m
+[0;33mW (222599) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (222599) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (222609) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (227309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (232309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (237309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (242309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (247309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (252309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m

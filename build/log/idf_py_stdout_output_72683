@@ -1,0 +1,811 @@
+Command: /Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python /Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1301 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/rig_display.elf /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/bootloader.elf -m '/Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1301'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4037b706
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2-dirty 2nd stage bootloader[0m
+[0;32mI (24) boot: compile time May 11 2026 12:14:59[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 16MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00600000[0m
+[0;32mI (76) boot:  3 storage          Unknown data     01 82 00610000 00800000[0m
+[0;32mI (83) boot: End of partition table[0m
+[0;32mI (86) esp_image: segment 0: paddr=00010020 vaddr=3c0c0020 size=135c8ch (1268876) map[0m
+[0;32mI (317) esp_image: segment 1: paddr=00145cb4 vaddr=3fc9e000 size=04d50h ( 19792) load[0m
+[0;32mI (321) esp_image: segment 2: paddr=0014aa0c vaddr=40374000 size=0560ch ( 22028) load[0m
+[0;32mI (327) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=b95d4h (759252) map[0m
+[0;32mI (462) esp_image: segment 4: paddr=002095fc vaddr=4037960c size=14910h ( 84240) load[0m
+[0;32mI (481) esp_image: segment 5: paddr=0021df14 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (491) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (492) boot: Disabling RNG early entropy source...[0m
+[0;32mI (502) cpu_start: Multicore app[0m
+[0;32mI (510) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (511) cpu_start: Pro cpu start user code[0m
+[0;32mI (511) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (513) app_init: Application information:[0m
+[0;32mI (517) app_init: Project name:     rig_display[0m
+[0;32mI (521) app_init: App version:      baseline-2026-04-25-48-g84c943e[0m
+[0;32mI (527) app_init: Compile time:     May 11 2026 15:52:50[0m
+[0;32mI (532) app_init: ELF file SHA256:  5065e3aac...[0m
+[0;32mI (536) app_init: ESP-IDF:          v5.5.2-dirty[0m
+[0;32mI (540) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (544) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (548) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (552) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (558) heap_init: At 3FCBDCD0 len 0002BA40 (174 KiB): RAM[0m
+[0;32mI (564) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (569) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (574) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (580) spi_flash: detected chip: winbond[0m
+[0;32mI (583) spi_flash: flash io: dio[0m
+[0;33mW (586) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (596) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (602) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (609) main_task: Started on CPU0[0m
+[0;32mI (619) main_task: Calling app_main()[0m
+[0;32mI (619) RIG: Initializing I2C for touch controller[0m
+[0;32mI (619) RIG: I2C driver installed, touch_i2c_ready = true[0m
+[0;32mI (629) RIG: Initialize SPI bus[0m
+[0;32mI (659) RIG: Install panel IO[0m
+[0;32mI (659) RIG: Install SH8601 panel driver[0m
+[0;33mW (819) sh8601: The 3Ah command has been used and will be overwritten by external initialization sequence[0m
+[0;33mW (929) sh8601: The 36h command has been used and will be overwritten by external initialization sequence[0m
+[0;32mI (939) pp: pp rom version: e7ae62f[0m
+[0;32mI (939) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (949) wifi:wifi driver task: 3fcd117c, prio:23, stack:6656, core=0[0m
+[0;32mI (949) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (949) wifi:wifi certification version: v7.0[0m
+[0;32mI (949) wifi:config NVS flash: enabled[0m
+[0;32mI (949) wifi:config nano formatting: disabled[0m
+[0;32mI (959) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (959) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (969) wifi:Init management short buffer num: 32[0m
+[0;32mI (969) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (979) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (979) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (979) wifi:Init static rx buffer num: 10[0m
+[0;32mI (989) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (989) wifi_init: rx ba win: 6[0m
+[0;32mI (989) wifi_init: accept mbox: 6[0m
+[0;32mI (999) wifi_init: tcpip mbox: 32[0m
+[0;32mI (999) wifi_init: udp mbox: 6[0m
+[0;32mI (999) wifi_init: tcp mbox: 6[0m
+[0;32mI (1009) wifi_init: tcp tx win: 16384[0m
+[0;32mI (1009) wifi_init: tcp rx win: 16384[0m
+[0;32mI (1009) wifi_init: tcp mss: 1440[0m
+[0;32mI (1019) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1019) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1029) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (1089) wifi:mode : softAP (fc:01:2c:da:2a:21)[0m
+[0;32mI (1089) wifi:Total power save buffer number: 16[0m
+[0;32mI (1089) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1089) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1099) web_console: WiFi AP started — SSID: "MOCO" (open) IP: 192.168.4.1[0m
+[0;32mI (1099) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (1109) web_console: HTTP server started with recv/send timeout=20s[0m
+[0;32mI (1119) web_console: HTTP server started[0m
+[0;32mI (1119) web_console: Console event task started[0m
+[0;32mI (1129) web_console: DNS server started on port 53[0m
+[0;32mI (1129) web_console: DNS server listening on port 53[0m
+[0;32mI (1129) web_console: web_console_set_cmd_handler: handler=0x4200e55c[0m
+[0;32mI (1139) web_console: s_cmd_handler now set to: 0x4200e55c[0m
+[0;33mW (1539) RIG: apply_theme: Failed to acquire lvgl_mux, will retry on next refresh[0m
+[0;32mI (1699) RIG: LVGL task started[0m
+[0;32mI (1699) RIG: RIG rendered via LVGL[0m
+[0;32mI (1699) main_task: Returned from app_main()[0m
+[0;32mI (5669) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (10669) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (15669) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (20669) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (25669) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (30669) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (30729) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (30729) wifi:station: 56:72:f2:44:90:2b join, AID=1, bgn, 20[0m
+[0;32mI (30729) web_console: Station 56:72:f2:44:90:2b joined[0m
+[0;32mI (30729) web_console: No active WebSocket (fd=-1), events remain buffered (1)[0m
+[0;32mI (30879) wifi:<ba-add>idx:2 (ifx:1, 56:72:f2:44:90:2b), tid:6, ssn:0, winSize:64[0m
+[0;32mI (30879) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (31029) wifi:<ba-add>idx:3 (ifx:1, 56:72:f2:44:90:2b), tid:0, ssn:0, winSize:64[0m
+[0;33mW (31059) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (31059) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (31089) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (35659) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36129) web_console: WS handshake on fd=52, ring buffer has 1 events[0m
+[0;32mI (37179) web_console: Triggering flush of 1 buffered events[0m
+[0;32mI (37199) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (37399) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (37419) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (37449) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (38499) web_console: No buffered events to flush[0m
+[0;32mI (40069) web_console: Serving /settings (8019 bytes)[0m
+[0;32mI (40089) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:0, winSize:64[0m
+[0;32mI (40099) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (40659) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41149) web_console: No buffered events to flush[0m
+[0;32mI (41149) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41149) web_console: WS frame type=1 len=16[0m
+[0;32mI (41149) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (41149) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (41159) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (41159) RIG: Sending current settings to web[0m
+[0;32mI (41169) web_console: cmd_handler returned successfully[0m
+[0;32mI (41319) web_console: Queued 7 events to WebSocket fd=53[0m
+[0;32mI (41669) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41669) web_console: WS frame type=1 len=13[0m
+[0;32mI (41669) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (41669) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:6'[0m
+[0;32mI (41679) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (41689) web_console: cmd_handler returned successfully[0m
+[0;32mI (41689) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41689) web_console: WS frame type=1 len=13[0m
+[0;32mI (41699) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (41699) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:7'[0m
+[0;32mI (41709) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (41719) web_console: cmd_handler returned successfully[0m
+[0;32mI (41719) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41719) web_console: WS frame type=1 len=13[0m
+[0;32mI (41719) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (41729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:8'[0m
+[0;32mI (41739) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (41749) web_console: cmd_handler returned successfully[0m
+[0;32mI (41749) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41749) web_console: WS frame type=1 len=13[0m
+[0;32mI (41749) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (41759) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:9'[0m
+[0;32mI (41769) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (41779) web_console: cmd_handler returned successfully[0m
+[0;32mI (41779) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41779) web_console: WS frame type=1 len=14[0m
+[0;32mI (41779) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (41789) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:10'[0m
+[0;32mI (41799) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (41809) web_console: cmd_handler returned successfully[0m
+[0;32mI (41809) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41809) web_console: WS frame type=1 len=14[0m
+[0;32mI (41809) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (41819) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:11'[0m
+[0;32mI (41829) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (41839) web_console: cmd_handler returned successfully[0m
+[0;32mI (41839) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41839) web_console: WS frame type=1 len=14[0m
+[0;32mI (41839) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (41849) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:12'[0m
+[0;32mI (41849) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (41869) web_console: cmd_handler returned successfully[0m
+[0;32mI (41869) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41869) web_console: WS frame type=1 len=14[0m
+[0;32mI (41869) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (41879) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (41879) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (41899) web_console: cmd_handler returned successfully[0m
+[0;32mI (41899) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41899) web_console: WS frame type=1 len=14[0m
+[0;32mI (41899) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (41909) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (41909) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (41929) web_console: cmd_handler returned successfully[0m
+[0;32mI (41929) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41929) web_console: WS frame type=1 len=14[0m
+[0;32mI (41929) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (41939) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (41939) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (41959) web_console: cmd_handler returned successfully[0m
+[0;32mI (41959) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41959) web_console: WS frame type=1 len=14[0m
+[0;32mI (41959) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (41969) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (41969) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (41989) web_console: cmd_handler returned successfully[0m
+[0;32mI (41989) web_console: WS recv attempt, fd=53[0m
+[0;32mI (41989) web_console: WS frame type=1 len=14[0m
+[0;32mI (41989) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (41999) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:17'[0m
+[0;32mI (41999) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (42019) web_console: cmd_handler returned successfully[0m
+[0;32mI (42019) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42019) web_console: WS frame type=1 len=14[0m
+[0;32mI (42019) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (42029) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (42029) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (42049) web_console: cmd_handler returned successfully[0m
+[0;32mI (42049) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42049) web_console: WS frame type=1 len=14[0m
+[0;32mI (42049) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (42059) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (42059) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (42069) web_console: cmd_handler returned successfully[0m
+[0;32mI (42069) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42079) web_console: WS frame type=1 len=14[0m
+[0;32mI (42079) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (42079) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (42089) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (42109) web_console: cmd_handler returned successfully[0m
+[0;32mI (42109) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42109) web_console: WS frame type=1 len=14[0m
+[0;32mI (42109) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (42109) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (42119) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (42129) web_console: cmd_handler returned successfully[0m
+[0;32mI (42129) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42139) web_console: WS frame type=1 len=14[0m
+[0;32mI (42139) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (42139) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (42149) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (42169) web_console: cmd_handler returned successfully[0m
+[0;32mI (42169) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42169) web_console: WS frame type=1 len=14[0m
+[0;32mI (42169) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (42169) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (42179) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (42199) web_console: cmd_handler returned successfully[0m
+[0;32mI (42199) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42199) web_console: WS frame type=1 len=14[0m
+[0;32mI (42199) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (42199) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (42209) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (42229) web_console: cmd_handler returned successfully[0m
+[0;32mI (42229) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42229) web_console: WS frame type=1 len=14[0m
+[0;32mI (42229) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (42229) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (42239) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (42249) web_console: cmd_handler returned successfully[0m
+[0;32mI (42249) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42249) web_console: WS frame type=1 len=14[0m
+[0;32mI (42259) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (42259) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (42269) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (42289) web_console: cmd_handler returned successfully[0m
+[0;32mI (42289) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42289) web_console: WS frame type=1 len=14[0m
+[0;32mI (42289) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (42289) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (42299) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (42319) web_console: cmd_handler returned successfully[0m
+[0;32mI (42319) web_console: WS recv attempt, fd=53[0m
+[0;32mI (42319) web_console: WS frame type=1 len=14[0m
+[0;32mI (42319) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (42319) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (42329) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (42339) web_console: cmd_handler returned successfully[0m
+[0;32mI (42819) web_console: Queued 46 events to WebSocket fd=53[0m
+[0;32mI (43189) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (43209) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (44269) web_console: No buffered events to flush[0m
+[0;32mI (45649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (50649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (52219) wifi:station: 56:72:f2:44:90:2b leave, AID = 1, reason = 8, bss_flags is 33721459, bss:0x3fcc064c[0m
+[0;32mI (52219) wifi:new:<1,0>, old:<1,0>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (52229) wifi:<ba-del>idx:3, tid:0[0m
+[0;32mI (52229) wifi:<ba-del>idx:4, tid:1[0m
+[0;32mI (52229) wifi:<ba-del>idx:2, tid:6[0m
+[0;32mI (52239) web_console: Station 56:72:f2:44:90:2b left[0m
+[0;32mI (52249) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (55649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (60649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (65649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (70649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (75649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (80649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (85649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (90649) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (95629) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (97289) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (97289) web_console: WS recv attempt, fd=52[0m
+[0;33mW (97289) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (97289) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (97299) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (100639) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (103289) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (104289) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (104289) web_console: WS recv attempt, fd=53[0m
+[0;33mW (104289) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (104289) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (104299) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (105639) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (110639) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (115639) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (120619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (125619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (130619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (135619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (140619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (145619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (150619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (155619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (160599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (162569) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (162569) wifi:station: 56:72:f2:44:90:2b join, AID=1, bgn, 20[0m
+[0;32mI (162569) web_console: Station 56:72:f2:44:90:2b joined[0m
+[0;32mI (162569) web_console: No active WebSocket (fd=-1), events remain buffered (1)[0m
+[0;32mI (162689) wifi:<ba-add>idx:2 (ifx:1, 56:72:f2:44:90:2b), tid:6, ssn:0, winSize:64[0m
+[0;32mI (162699) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (162819) wifi:<ba-add>idx:3 (ifx:1, 56:72:f2:44:90:2b), tid:0, ssn:0, winSize:64[0m
+[0;33mW (162839) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (162839) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (162889) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (165599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (170599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (173359) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (173379) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (173419) web_console: WS handshake on fd=53, ring buffer has 1 events[0m
+[0;32mI (174479) web_console: Triggering flush of 1 buffered events[0m
+[0;32mI (174499) web_console: Queued 1 events to WebSocket fd=53[0m
+[0;32mI (175599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (176479) web_console: Serving /settings (8019 bytes)[0m
+[0;32mI (176499) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:0, winSize:64[0m
+[0;32mI (176509) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (177559) web_console: No buffered events to flush[0m
+[0;32mI (177559) web_console: WS recv attempt, fd=52[0m
+[0;32mI (177559) web_console: WS frame type=1 len=16[0m
+[0;32mI (177559) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (177559) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (177569) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (177569) RIG: Sending current settings to web[0m
+[0;32mI (177579) web_console: cmd_handler returned successfully[0m
+[0;32mI (177729) web_console: Queued 7 events to WebSocket fd=52[0m
+[0;32mI (177749) web_console: WS recv attempt, fd=52[0m
+[0;32mI (177749) web_console: WS frame type=1 len=13[0m
+[0;32mI (177749) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (177759) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:7'[0m
+[0;32mI (177759) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (177779) web_console: cmd_handler returned successfully[0m
+[0;32mI (177819) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (177949) web_console: WS recv attempt, fd=52[0m
+[0;32mI (177949) web_console: WS frame type=1 len=13[0m
+[0;32mI (177949) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (177949) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:8'[0m
+[0;32mI (177959) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (177969) web_console: cmd_handler returned successfully[0m
+[0;32mI (177999) web_console: WS recv attempt, fd=52[0m
+[0;32mI (177999) web_console: WS frame type=1 len=13[0m
+[0;32mI (177999) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (178009) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:9'[0m
+[0;32mI (178009) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (178009) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (178029) web_console: cmd_handler returned successfully[0m
+[0;32mI (178069) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (178329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (178329) web_console: WS frame type=1 len=14[0m
+[0;32mI (178329) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (178329) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:10'[0m
+[0;32mI (178339) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (178359) web_console: cmd_handler returned successfully[0m
+[0;32mI (178359) web_console: WS recv attempt, fd=52[0m
+[0;32mI (178359) web_console: WS frame type=1 len=14[0m
+[0;32mI (178369) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (178369) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:11'[0m
+[0;32mI (178369) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (178389) web_console: cmd_handler returned successfully[0m
+[0;32mI (178389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (178389) web_console: WS frame type=1 len=14[0m
+[0;32mI (178389) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (178399) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:11'[0m
+[0;32mI (178399) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (178409) web_console: cmd_handler returned successfully[0m
+[0;32mI (178449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (178449) web_console: WS frame type=1 len=14[0m
+[0;32mI (178449) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (178449) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:12'[0m
+[0;32mI (178459) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (178479) web_console: Queued 6 events to WebSocket fd=52[0m
+[0;32mI (178479) web_console: cmd_handler returned successfully[0m
+[0;32mI (178519) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (178559) web_console: WS recv attempt, fd=52[0m
+[0;32mI (178559) web_console: WS frame type=1 len=14[0m
+[0;32mI (178559) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (178559) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (178569) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (178579) web_console: cmd_handler returned successfully[0m
+[0;32mI (178619) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (180589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (182319) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (183369) web_console: No buffered events to flush[0m
+[0;32mI (185589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (189709) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (189749) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (190589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (190799) web_console: No buffered events to flush[0m
+[0;32mI (195589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (195879) web_console: Serving /settings (8019 bytes)[0m
+[0;32mI (195909) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (196959) web_console: No buffered events to flush[0m
+[0;32mI (196959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (196959) web_console: WS frame type=1 len=16[0m
+[0;32mI (196959) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (196959) web_console: Calling cmd_handler at 0x4200e55c with 'SETTINGS_REQUEST'[0m
+[0;32mI (196969) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (196969) RIG: Sending current settings to web[0m
+[0;32mI (196979) web_console: cmd_handler returned successfully[0m
+[0;32mI (197119) web_console: Queued 7 events to WebSocket fd=52[0m
+[0;32mI (198159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198159) web_console: WS frame type=1 len=14[0m
+[0;32mI (198159) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (198169) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:12'[0m
+[0;32mI (198169) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (198189) web_console: cmd_handler returned successfully[0m
+[0;32mI (198189) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198189) web_console: WS frame type=1 len=14[0m
+[0;32mI (198189) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (198199) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:13'[0m
+[0;32mI (198199) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (198219) web_console: cmd_handler returned successfully[0m
+[0;32mI (198229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198229) web_console: WS frame type=1 len=14[0m
+[0;32mI (198229) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (198239) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:14'[0m
+[0;32mI (198239) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (198259) web_console: cmd_handler returned successfully[0m
+[0;32mI (198279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198289) web_console: WS frame type=1 len=14[0m
+[0;32mI (198289) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (198289) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (198289) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (198309) web_console: cmd_handler returned successfully[0m
+[0;32mI (198309) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198309) web_console: WS frame type=1 len=14[0m
+[0;32mI (198309) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (198319) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:15'[0m
+[0;32mI (198329) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (198329) web_console: cmd_handler returned successfully[0m
+[0;32mI (198369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198369) web_console: WS frame type=1 len=14[0m
+[0;32mI (198369) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (198369) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (198379) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (198399) web_console: Queued 10 events to WebSocket fd=52[0m
+[0;32mI (198399) web_console: cmd_handler returned successfully[0m
+[0;32mI (198399) web_console: WS recv attempt, fd=52[0m
+[0;32mI (198399) web_console: WS frame type=1 len=14[0m
+[0;32mI (198399) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (198409) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:16'[0m
+[0;32mI (198419) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (198419) web_console: cmd_handler returned successfully[0m
+[0;32mI (198489) web_console: Queued 4 events to WebSocket fd=52[0m
+[0;32mI (200589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (203369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203369) web_console: WS frame type=1 len=14[0m
+[0;32mI (203369) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (203369) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:18'[0m
+[0;32mI (203379) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (203389) web_console: cmd_handler returned successfully[0m
+[0;32mI (203389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203389) web_console: WS frame type=1 len=14[0m
+[0;32mI (203389) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (203399) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:19'[0m
+[0;32mI (203409) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (203419) web_console: cmd_handler returned successfully[0m
+[0;32mI (203419) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203419) web_console: WS frame type=1 len=14[0m
+[0;32mI (203429) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (203429) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:20'[0m
+[0;32mI (203439) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (203449) web_console: cmd_handler returned successfully[0m
+[0;32mI (203449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203449) web_console: WS frame type=1 len=14[0m
+[0;32mI (203459) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (203459) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:21'[0m
+[0;32mI (203469) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (203479) web_console: cmd_handler returned successfully[0m
+[0;32mI (203479) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203479) web_console: WS frame type=1 len=14[0m
+[0;32mI (203489) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (203489) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:22'[0m
+[0;32mI (203499) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (203509) web_console: cmd_handler returned successfully[0m
+[0;32mI (203509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203509) web_console: WS frame type=1 len=14[0m
+[0;32mI (203519) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (203519) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:23'[0m
+[0;32mI (203529) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (203539) web_console: cmd_handler returned successfully[0m
+[0;32mI (203539) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203539) web_console: WS frame type=1 len=14[0m
+[0;32mI (203549) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (203549) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (203559) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (203569) web_console: cmd_handler returned successfully[0m
+[0;32mI (203569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203569) web_console: WS frame type=1 len=14[0m
+[0;32mI (203579) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (203579) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:24'[0m
+[0;32mI (203589) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (203589) web_console: cmd_handler returned successfully[0m
+[0;32mI (203599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203599) web_console: WS frame type=1 len=14[0m
+[0;32mI (203609) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (203609) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (203619) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (203629) web_console: cmd_handler returned successfully[0m
+[0;32mI (203629) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203629) web_console: WS frame type=1 len=14[0m
+[0;32mI (203639) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (203639) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:25'[0m
+[0;32mI (203649) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (203649) web_console: cmd_handler returned successfully[0m
+[0;32mI (203669) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203669) web_console: WS frame type=1 len=14[0m
+[0;32mI (203669) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (203669) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (203679) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (203699) web_console: cmd_handler returned successfully[0m
+[0;32mI (203699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203699) web_console: WS frame type=1 len=14[0m
+[0;32mI (203699) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (203699) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (203709) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (203719) web_console: cmd_handler returned successfully[0m
+[0;32mI (203749) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203759) web_console: WS frame type=1 len=14[0m
+[0;32mI (203759) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (203759) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:26'[0m
+[0;32mI (203769) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (203769) web_console: cmd_handler returned successfully[0m
+[0;32mI (203779) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203779) web_console: WS frame type=1 len=14[0m
+[0;32mI (203779) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (203789) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (203799) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (203809) web_console: cmd_handler returned successfully[0m
+[0;32mI (203809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (203809) web_console: WS frame type=1 len=14[0m
+[0;32mI (203809) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (203819) web_console: Calling cmd_handler at 0x4200e55c with 'SET:MTX_BRT:27'[0m
+[0;32mI (203829) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (203829) web_console: cmd_handler returned successfully[0m
+[0;32mI (204099) web_console: Queued 30 events to WebSocket fd=52[0m
+[0;32mI (205579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (210579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (215579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (220579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (221269) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221269) web_console: WS frame type=1 len=13[0m
+[0;32mI (221269) web_console: WS recv: 'SET:TL_INT:30' (len=13)[0m
+[0;32mI (221269) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:30'[0m
+[0;32mI (221279) RIG: WebSocket command: SET:TL_INT:30[0m
+[0;32mI (221279) RIG: !!! FORWARDING to MEGA: SET:TL_INT:30[0m
+[0;32mI (221289) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221289) web_console: cmd_handler returned successfully[0m
+[0;32mI (221289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221299) web_console: WS frame type=1 len=13[0m
+[0;32mI (221299) web_console: WS recv: 'SET:TL_INT:31' (len=13)[0m
+[0;32mI (221309) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:31'[0m
+[0;32mI (221309) RIG: WebSocket command: SET:TL_INT:31[0m
+[0;32mI (221319) RIG: !!! FORWARDING to MEGA: SET:TL_INT:31[0m
+[0;32mI (221319) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221329) web_console: cmd_handler returned successfully[0m
+[0;32mI (221339) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221339) web_console: WS frame type=1 len=13[0m
+[0;32mI (221339) web_console: WS recv: 'SET:TL_INT:32' (len=13)[0m
+[0;32mI (221349) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:32'[0m
+[0;32mI (221349) RIG: WebSocket command: SET:TL_INT:32[0m
+[0;32mI (221359) RIG: !!! FORWARDING to MEGA: SET:TL_INT:32[0m
+[0;32mI (221359) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221359) web_console: cmd_handler returned successfully[0m
+[0;32mI (221369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221379) web_console: WS frame type=1 len=13[0m
+[0;32mI (221379) web_console: WS recv: 'SET:TL_INT:33' (len=13)[0m
+[0;32mI (221379) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:33'[0m
+[0;32mI (221389) RIG: WebSocket command: SET:TL_INT:33[0m
+[0;32mI (221389) RIG: !!! FORWARDING to MEGA: SET:TL_INT:33[0m
+[0;32mI (221399) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221399) web_console: cmd_handler returned successfully[0m
+[0;32mI (221409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221409) web_console: WS frame type=1 len=13[0m
+[0;32mI (221419) web_console: WS recv: 'SET:TL_INT:34' (len=13)[0m
+[0;32mI (221419) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:34'[0m
+[0;32mI (221429) RIG: WebSocket command: SET:TL_INT:34[0m
+[0;32mI (221429) RIG: !!! FORWARDING to MEGA: SET:TL_INT:34[0m
+[0;32mI (221439) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221439) web_console: cmd_handler returned successfully[0m
+[0;32mI (221449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221449) web_console: WS frame type=1 len=13[0m
+[0;32mI (221449) web_console: WS recv: 'SET:TL_INT:35' (len=13)[0m
+[0;32mI (221459) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:35'[0m
+[0;32mI (221469) RIG: WebSocket command: SET:TL_INT:35[0m
+[0;32mI (221469) RIG: !!! FORWARDING to MEGA: SET:TL_INT:35[0m
+[0;32mI (221479) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221479) web_console: cmd_handler returned successfully[0m
+[0;32mI (221489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221489) web_console: WS frame type=1 len=13[0m
+[0;32mI (221489) web_console: WS recv: 'SET:TL_INT:35' (len=13)[0m
+[0;32mI (221499) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:35'[0m
+[0;32mI (221509) RIG: WebSocket command: SET:TL_INT:35[0m
+[0;32mI (221509) RIG: !!! FORWARDING to MEGA: SET:TL_INT:35[0m
+[0;32mI (221509) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221519) web_console: cmd_handler returned successfully[0m
+[0;32mI (221529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221529) web_console: WS frame type=1 len=13[0m
+[0;32mI (221529) web_console: WS recv: 'SET:TL_INT:36' (len=13)[0m
+[0;32mI (221539) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:36'[0m
+[0;32mI (221539) RIG: WebSocket command: SET:TL_INT:36[0m
+[0;32mI (221549) RIG: !!! FORWARDING to MEGA: SET:TL_INT:36[0m
+[0;32mI (221549) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221559) web_console: cmd_handler returned successfully[0m
+[0;32mI (221559) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221569) web_console: WS frame type=1 len=13[0m
+[0;32mI (221569) web_console: WS recv: 'SET:TL_INT:37' (len=13)[0m
+[0;32mI (221569) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:37'[0m
+[0;32mI (221579) RIG: WebSocket command: SET:TL_INT:37[0m
+[0;32mI (221589) RIG: !!! FORWARDING to MEGA: SET:TL_INT:37[0m
+[0;32mI (221589) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221589) web_console: cmd_handler returned successfully[0m
+[0;32mI (221599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221599) web_console: WS frame type=1 len=13[0m
+[0;32mI (221609) web_console: WS recv: 'SET:TL_INT:38' (len=13)[0m
+[0;32mI (221609) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:38'[0m
+[0;32mI (221619) RIG: WebSocket command: SET:TL_INT:38[0m
+[0;32mI (221619) RIG: !!! FORWARDING to MEGA: SET:TL_INT:38[0m
+[0;32mI (221629) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221629) web_console: cmd_handler returned successfully[0m
+[0;32mI (221639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221639) web_console: WS frame type=1 len=13[0m
+[0;32mI (221649) web_console: WS recv: 'SET:TL_INT:39' (len=13)[0m
+[0;32mI (221649) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:39'[0m
+[0;32mI (221659) RIG: WebSocket command: SET:TL_INT:39[0m
+[0;32mI (221659) RIG: !!! FORWARDING to MEGA: SET:TL_INT:39[0m
+[0;32mI (221669) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221669) web_console: cmd_handler returned successfully[0m
+[0;32mI (221679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221679) web_console: WS frame type=1 len=13[0m
+[0;32mI (221679) web_console: WS recv: 'SET:TL_INT:40' (len=13)[0m
+[0;32mI (221689) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:40'[0m
+[0;32mI (221699) RIG: WebSocket command: SET:TL_INT:40[0m
+[0;32mI (221699) RIG: !!! FORWARDING to MEGA: SET:TL_INT:40[0m
+[0;32mI (221699) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221709) web_console: cmd_handler returned successfully[0m
+[0;32mI (221719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221719) web_console: WS frame type=1 len=13[0m
+[0;32mI (221719) web_console: WS recv: 'SET:TL_INT:41' (len=13)[0m
+[0;32mI (221729) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:41'[0m
+[0;32mI (221729) RIG: WebSocket command: SET:TL_INT:41[0m
+[0;32mI (221739) RIG: !!! FORWARDING to MEGA: SET:TL_INT:41[0m
+[0;32mI (221739) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221749) web_console: cmd_handler returned successfully[0m
+[0;32mI (221759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221759) web_console: WS frame type=1 len=13[0m
+[0;32mI (221759) web_console: WS recv: 'SET:TL_INT:42' (len=13)[0m
+[0;32mI (221769) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:42'[0m
+[0;32mI (221769) RIG: Mega status: TIMELAPSE_INTERVAL:30[0m
+[0;32mI (221769) RIG: WebSocket command: SET:TL_INT:42[0m
+[0;32mI (221779) RIG: !!! FORWARDING to MEGA: SET:TL_INT:42[0m
+[0;32mI (221789) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221789) web_console: cmd_handler returned successfully[0m
+[0;32mI (221799) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221799) web_console: WS frame type=1 len=13[0m
+[0;32mI (221799) web_console: WS recv: 'SET:TL_INT:43' (len=13)[0m
+[0;32mI (221809) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:43'[0m
+[0;32mI (221809) RIG: WebSocket command: SET:TL_INT:43[0m
+[0;32mI (221819) RIG: !!! FORWARDING to MEGA: SET:TL_INT:43[0m
+[0;32mI (221819) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221829) web_console: cmd_handler returned successfully[0m
+[0;32mI (221839) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221839) web_console: WS frame type=1 len=13[0m
+[0;32mI (221839) web_console: WS recv: 'SET:TL_INT:44' (len=13)[0m
+[0;32mI (221849) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:44'[0m
+[0;32mI (221849) RIG: WebSocket command: SET:TL_INT:44[0m
+[0;32mI (221859) RIG: !!! FORWARDING to MEGA: SET:TL_INT:44[0m
+[0;32mI (221859) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221869) web_console: cmd_handler returned successfully[0m
+[0;32mI (221869) web_console: WS recv attempt, fd=52[0m
+[0;32mI (221879) web_console: WS frame type=1 len=13[0m
+[0;32mI (221879) web_console: WS recv: 'SET:TL_INT:44' (len=13)[0m
+[0;32mI (221879) web_console: Calling cmd_handler at 0x4200e55c with 'SET:TL_INT:44'[0m
+[0;32mI (221889) RIG: WebSocket command: SET:TL_INT:44[0m
+[0;32mI (221899) RIG: !!! FORWARDING to MEGA: SET:TL_INT:44[0m
+[0;32mI (221899) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (221899) web_console: cmd_handler returned successfully[0m
+[0;32mI (222259) RIG: Mega status: TIMELAPSE_INTERVAL:31[0m
+[0;32mI (222349) web_console: Queued 38 events to WebSocket fd=52[0m
+[0;32mI (222719) RIG: Mega status: TIMELAPSE_INTERVAL:32[0m
+[0;32mI (222759) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (223179) RIG: Mega status: TIMELAPSE_INTERVAL:33[0m
+[0;32mI (223219) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (223639) RIG: Mega status: TIMELAPSE_INTERVAL:34[0m
+[0;32mI (223679) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (224099) RIG: Mega status: TIMELAPSE_INTERVAL:35[0m
+[0;32mI (224139) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (224559) RIG: Mega status: TIMELAPSE_INTERVAL:36[0m
+[0;32mI (224599) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (225019) RIG: Mega status: TIMELAPSE_INTERVAL:37[0m
+[0;32mI (225059) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (225479) RIG: Mega status: TIMELAPSE_INTERVAL:38[0m
+[0;32mI (225519) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (225939) RIG: Mega status: TIMELAPSE_INTERVAL:39[0m
+[0;32mI (225979) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (226279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (226279) web_console: WS frame type=1 len=12[0m
+[0;32mI (226279) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (226279) web_console: Calling cmd_handler at 0x4200e55c with 'SET:N_MODE:1'[0m
+[0;32mI (226289) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (226289) web_console: cmd_handler returned successfully[0m
+[0;32mI (226369) web_console: Queued 4 events to WebSocket fd=52[0m
+[0;32mI (226399) RIG: Mega status: TIMELAPSE_INTERVAL:40[0m
+[0;32mI (226439) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (226859) RIG: Mega status: TIMELAPSE_INTERVAL:41[0m
+[0;32mI (226899) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (227319) RIG: Mega status: TIMELAPSE_INTERVAL:42[0m
+[0;32mI (227359) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (227779) RIG: Mega status: TIMELAPSE_INTERVAL:43[0m
+[0;32mI (227819) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (228239) RIG: Mega status: TIMELAPSE_INTERVAL:44[0m
+[0;32mI (228279) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (228959) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (229619) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (229649) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (230569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (230699) web_console: No buffered events to flush[0m
+[0;32mI (235569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (238839) wifi:station: 56:72:f2:44:90:2b leave, AID = 1, reason = 8, bss_flags is 33721443, bss:0x3fcc064c[0m
+[0;32mI (238839) wifi:new:<1,0>, old:<1,0>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (238849) wifi:<ba-del>idx:3, tid:0[0m
+[0;32mI (238849) wifi:<ba-del>idx:4, tid:1[0m
+[0;32mI (238849) wifi:<ba-del>idx:2, tid:6[0m
+[0;32mI (238859) web_console: Station 56:72:f2:44:90:2b left[0m
+[0;32mI (238869) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (240569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (245569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (250569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (255569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (260569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (265569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (270549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (274339) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (274339) web_console: WS recv attempt, fd=54[0m
+[0;33mW (274339) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (274339) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (274349) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (275549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (280549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (285549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (289839) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (290549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (290839) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (290839) web_console: WS recv attempt, fd=52[0m
+[0;33mW (290839) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (290839) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (290849) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (295549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (300549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (305549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (310549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (315529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (320529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (325529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (330529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (335529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (340529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (345529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (350529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (355529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (360529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (365509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (370509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (375509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (380509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (385509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (390509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (395509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (400509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (405489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (410489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (415489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (420489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (425489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (430489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (435489) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m

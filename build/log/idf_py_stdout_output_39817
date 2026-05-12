@@ -1,0 +1,1295 @@
+Command: /Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python /Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1301 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/rig_display.elf /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/bootloader.elf -m '/Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf.py'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40056f64
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2-dirty 2nd stage bootloader[0m
+[0;32mI (24) boot: compile time May 11 2026 12:14:59[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 16MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00600000[0m
+[0;32mI (76) boot:  3 storage          Unknown data     01 82 00610000 00800000[0m
+[0;32mI (83) boot: End of partition table[0m
+[0;32mI (86) esp_image: segment 0: paddr=00010020 vaddr=3c0c0020 size=13548ch (1266828) map[0m
+[0;32mI (317) esp_image: segment 1: paddr=001454b4 vaddr=3fc9e000 size=04d50h ( 19792) load[0m
+[0;32mI (321) esp_image: segment 2: paddr=0014a20c vaddr=40374000 size=05e0ch ( 24076) load[0m
+[0;32mI (327) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=b9238h (758328) map[0m
+[0;32mI (462) esp_image: segment 4: paddr=00209260 vaddr=40379e0c size=14110h ( 82192) load[0m
+[0;32mI (480) esp_image: segment 5: paddr=0021d378 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (490) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (491) boot: Disabling RNG early entropy source...[0m
+[0;32mI (501) cpu_start: Multicore app[0m
+[0;32mI (509) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (510) cpu_start: Pro cpu start user code[0m
+[0;32mI (510) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (512) app_init: Application information:[0m
+[0;32mI (515) app_init: Project name:     rig_display[0m
+[0;32mI (520) app_init: App version:      baseline-2026-04-25-48-g84c943e[0m
+[0;32mI (526) app_init: Compile time:     May 11 2026 15:52:50[0m
+[0;32mI (531) app_init: ELF file SHA256:  c3ae4851e...[0m
+[0;32mI (535) app_init: ESP-IDF:          v5.5.2-dirty[0m
+[0;32mI (539) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (543) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (547) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (551) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (557) heap_init: At 3FCBDCD0 len 0002BA40 (174 KiB): RAM[0m
+[0;32mI (563) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (568) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (573) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (579) spi_flash: detected chip: winbond[0m
+[0;32mI (582) spi_flash: flash io: dio[0m
+[0;33mW (585) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (595) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (601) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (608) main_task: Started on CPU0[0m
+[0;32mI (618) main_task: Calling app_main()[0m
+[0;32mI (618) RIG: Initializing I2C for touch controller[0m
+[0;32mI (618) RIG: I2C driver installed, touch_i2c_ready = true[0m
+[0;32mI (628) RIG: Initialize SPI bus[0m
+[0;32mI (648) RIG: Install panel IO[0m
+[0;32mI (648) RIG: Install SH8601 panel driver[0m
+[0;33mW (808) sh8601: The 3Ah command has been used and will be overwritten by external initialization sequence[0m
+[0;33mW (918) sh8601: The 36h command has been used and will be overwritten by external initialization sequence[0m
+[0;32mI (928) pp: pp rom version: e7ae62f[0m
+[0;32mI (928) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (938) wifi:wifi driver task: 3fceeb78, prio:23, stack:6656, core=0[0m
+[0;32mI (938) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (938) wifi:wifi certification version: v7.0[0m
+[0;32mI (938) wifi:config NVS flash: enabled[0m
+[0;32mI (938) wifi:config nano formatting: disabled[0m
+[0;32mI (948) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (948) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (958) wifi:Init management short buffer num: 32[0m
+[0;32mI (958) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (968) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (968) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (968) wifi:Init static rx buffer num: 10[0m
+[0;32mI (978) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (978) wifi_init: rx ba win: 6[0m
+[0;32mI (978) wifi_init: accept mbox: 6[0m
+[0;32mI (988) wifi_init: tcpip mbox: 32[0m
+[0;32mI (988) wifi_init: udp mbox: 6[0m
+[0;32mI (988) wifi_init: tcp mbox: 6[0m
+[0;32mI (998) wifi_init: tcp tx win: 16384[0m
+[0;32mI (998) wifi_init: tcp rx win: 16384[0m
+[0;32mI (998) wifi_init: tcp mss: 1440[0m
+[0;32mI (1008) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1008) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1018) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (1068) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (1088) wifi:mode : softAP (fc:01:2c:da:2a:21)[0m
+[0;32mI (1088) wifi:Total power save buffer number: 16[0m
+[0;32mI (1088) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1088) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1088) web_console: WiFi AP started — SSID: "MOCO" (open) IP: 192.168.4.1[0m
+[0;32mI (1088) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (1108) web_console: HTTP server started with recv/send timeout=20s[0m
+[0;32mI (1108) web_console: HTTP server started[0m
+[0;32mI (1118) web_console: Console event task started[0m
+[0;32mI (1118) web_console: DNS server started on port 53[0m
+[0;32mI (1118) web_console: DNS server listening on port 53[0m
+[0;32mI (1128) web_console: web_console_set_cmd_handler: handler=0x4200e4b0[0m
+[0;32mI (1138) web_console: s_cmd_handler now set to: 0x4200e4b0[0m
+[0;33mW (1518) RIG: apply_theme: Failed to acquire lvgl_mux, will retry on next refresh[0m
+[0;32mI (1678) RIG: LVGL task started[0m
+[0;32mI (1688) RIG: RIG rendered via LVGL[0m
+[0;32mI (1688) main_task: Returned from app_main()[0m
+[0;32mI (3838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (5638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (7438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (9238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (11038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (12838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (14638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (16438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (18238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (20038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (21838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (23638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (25228) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (25228) wifi:station: 56:72:f2:44:90:2b join, AID=1, bgn, 20[0m
+[0;32mI (25228) web_console: Station 56:72:f2:44:90:2b joined[0m
+[0;32mI (25438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (25448) wifi:<ba-add>idx:2 (ifx:1, 56:72:f2:44:90:2b), tid:6, ssn:0, winSize:64[0m
+[0;32mI (25448) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (25608) wifi:<ba-add>idx:3 (ifx:1, 56:72:f2:44:90:2b), tid:0, ssn:0, winSize:64[0m
+[0;33mW (25648) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (25648) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (25668) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:0, winSize:64[0m
+[0;32mI (25688) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (26498) web_console: WS handshake on fd=52, ring buffer has 1 events[0m
+[0;32mI (26598) web_console: Triggering flush of 1 buffered events[0m
+[0;32mI (26598) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (26668) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (26768) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (26768) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (26868) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (26868) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (26968) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (26968) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (27068) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27078) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (27178) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27188) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (27238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (27288) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27318) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (27418) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27428) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (27528) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27538) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (27638) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27648) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (27748) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27758) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (27858) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27868) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (27968) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (27978) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (28078) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28088) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (28188) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28198) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (28298) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28308) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (28408) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28418) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (28518) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28528) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (28628) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28638) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (28738) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28748) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (28848) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28858) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (28958) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (28968) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (29038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (29068) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29078) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (29178) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29188) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (29288) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29298) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (29398) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29408) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (29508) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29518) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (29618) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29628) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (29728) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29738) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (29838) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29848) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (29948) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (29958) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (30058) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30068) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (30168) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30178) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (30278) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30288) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (30388) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30398) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (30498) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30508) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (30608) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30618) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (30718) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30728) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (30828) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (30838) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (30938) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (30948) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (31048) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31058) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (31158) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31168) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (31268) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31278) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (31378) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31388) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (31488) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31498) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (31598) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31608) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (31708) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31718) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (31818) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31828) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (31928) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (31938) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (32038) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32038) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (32148) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32268) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (32368) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32378) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (32478) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32488) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (32588) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (32648) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (32748) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32828) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (32938) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (32948) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (33048) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33058) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (33158) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33168) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (33268) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33278) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (33378) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33388) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (33488) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33498) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (33598) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33608) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (33708) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33718) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (33818) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33828) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (33928) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (33938) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (34038) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34048) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (34148) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34158) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (34258) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34268) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (34368) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34378) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (34438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (34478) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34488) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (34588) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34598) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (34698) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34708) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (34808) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34818) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (34918) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (34928) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (35028) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35038) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (35138) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35148) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (35248) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35258) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (35358) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35368) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (35378) wifi:<ba-add>idx:5 (ifx:1, 56:72:f2:44:90:2b), tid:5, ssn:0, winSize:64[0m
+[0;32mI (35468) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35478) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (35578) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35588) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (35688) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35698) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (35798) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35808) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (35908) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (35918) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (36018) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36028) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (36128) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36138) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (36238) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36248) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (36348) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36358) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (36458) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36468) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (36568) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36578) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (36678) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36688) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (36788) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36798) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (36898) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (36908) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (37008) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37018) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (37118) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37128) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (37228) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37238) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (37338) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37348) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (37448) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37458) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (37558) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37568) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (37668) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37678) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (37778) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37788) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (37888) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (37898) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (37998) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38008) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (38038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (38108) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38118) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (38218) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38228) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (38328) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38338) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (38438) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38448) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (38548) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38558) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (38658) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38668) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (38768) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38778) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (38878) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38888) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (38988) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (38998) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (39098) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39108) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (39208) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39218) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (39318) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39328) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (39428) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39438) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (39538) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39548) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (39648) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39658) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (39758) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39768) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (39838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (39868) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39878) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (39978) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (39988) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (40088) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40098) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (40198) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40208) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (40308) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40318) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (40418) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40428) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (40528) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40538) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (40638) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40648) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (40748) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40758) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (40858) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40868) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (40968) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (40978) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (41078) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41088) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (41188) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41198) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (41298) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41308) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (41408) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41418) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (41518) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41528) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (41628) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41638) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (41638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41738) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41738) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (41848) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41858) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (41958) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (41978) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (42078) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42078) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (42188) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42258) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (42358) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42418) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (42518) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42528) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (42628) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42638) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (42738) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42748) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (42848) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42858) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (42958) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (42968) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (43068) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43078) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (43178) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43188) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (43288) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43298) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (43398) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43408) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (43438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (43508) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43518) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (43618) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43628) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (43728) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43738) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (43838) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43848) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (43948) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (43958) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (44058) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44068) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (44168) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44178) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (44278) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44288) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (44388) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44398) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (44498) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44508) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (44608) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44618) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (44718) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44728) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (44828) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44838) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (44938) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (44948) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (45048) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45058) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (45158) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45168) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (45238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (45268) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45278) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (45378) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45388) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (45488) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45498) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (45598) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45598) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (45708) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45708) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (45818) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (45828) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (45928) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46048) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (46148) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46228) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (46328) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46338) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (46438) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46448) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (46548) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46558) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (46658) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46668) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (46768) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46778) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (46878) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46888) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (46988) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (46998) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (47038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (47098) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47108) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (47208) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47218) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (47318) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47328) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (47428) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47438) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (47538) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47538) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (47648) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47658) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (47758) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47768) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (47868) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47878) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (47978) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (47988) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (48088) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48098) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (48198) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48208) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (48308) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48318) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (48418) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48428) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (48528) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48538) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (48638) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48648) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (48748) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48758) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (48838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (48858) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48868) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (48968) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (48978) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (49078) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49088) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (49188) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49198) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (49298) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49308) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (49408) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49418) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (49518) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49528) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (49628) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49638) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (49738) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49748) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (49848) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49858) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (49958) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (49968) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (50068) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50078) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (50178) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50188) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (50288) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50298) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (50398) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50408) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (50508) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50518) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (50618) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50628) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (50638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (50728) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50738) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (50838) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50848) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (50948) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (50958) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (51058) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51068) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (51168) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51178) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (51278) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51288) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (51388) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51408) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (51518) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51578) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (51678) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51708) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (51808) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (51908) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (52008) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52008) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (52118) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52128) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (52228) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52238) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (52338) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52348) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (52438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (52448) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52458) web_console: WS handshake on fd=56, ring buffer has 0 events[0m
+[0;32mI (52558) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52568) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (52668) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52678) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (52778) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52788) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (52888) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (52918) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (53018) web_console: Triggering flush of 0 buffered events[0m
+[0;33mW (53018) httpd_txrx: httpd_sock_err: error in recv : 104[0m
+[0;32mI (53018) web_console: WS recv attempt, fd=52[0m
+[0;33mW (53018) httpd_txrx: httpd_sock_err: error in recv : 104[0m
+[0;33mW (53018) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (53028) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (54238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (56038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (57688) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (57718) web_console: Serving /console (2731 bytes)[0m
+[0;32mI (57838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (58548) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (58648) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (59638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (61438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (63238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (63388) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (65038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (65468) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (66838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (68638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (69268) web_console: Serving /timelapse (6436 bytes)[0m
+[0;32mI (69298) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (69398) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (69398) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69398) web_console: WS frame type=1 len=14[0m
+[0;32mI (69398) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (69398) web_console: Calling cmd_handler at 0x4200e4b0 with 'STATUS_REQUEST'[0m
+[0;32mI (69408) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (69408) RIG: !!! Command did not match any handler: STATUS_REQUEST[0m
+[0;32mI (69418) web_console: cmd_handler returned successfully[0m
+[0;32mI (70438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (71628) web_console: WS recv attempt, fd=53[0m
+[0;32mI (71628) web_console: WS frame type=1 len=14[0m
+[0;32mI (71628) web_console: WS recv: 'SET:TL_START:1' (len=14)[0m
+[0;32mI (71628) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_START:1'[0m
+[0;32mI (71638) RIG: WebSocket command: SET:TL_START:1[0m
+[0;32mI (71638) RIG: !!! FORWARDING to MEGA: SET:TL_START:1[0m
+[0;32mI (71648) RIG: !!! UART wrote 15 bytes[0m
+[0;32mI (71648) web_console: cmd_handler returned successfully[0m
+[0;32mI (71648) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (72238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (74038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (75838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (77638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (78668) web_console: WS recv attempt, fd=53[0m
+[0;32mI (78668) web_console: WS frame type=1 len=13[0m
+[0;32mI (78668) web_console: WS recv: 'SET:TL_STOP:1' (len=13)[0m
+[0;32mI (78668) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_STOP:1'[0m
+[0;32mI (78678) RIG: WebSocket command: SET:TL_STOP:1[0m
+[0;32mI (78678) RIG: !!! FORWARDING to MEGA: SET:TL_STOP:1[0m
+[0;32mI (78688) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (78688) web_console: cmd_handler returned successfully[0m
+[0;32mI (78688) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (79438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (81238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (83038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (83908) web_console: WS recv attempt, fd=53[0m
+[0;32mI (83908) web_console: WS frame type=1 len=14[0m
+[0;32mI (83908) web_console: WS recv: 'SET:TL_START:2' (len=14)[0m
+[0;32mI (83908) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_START:2'[0m
+[0;32mI (83918) RIG: WebSocket command: SET:TL_START:2[0m
+[0;32mI (83918) RIG: !!! FORWARDING to MEGA: SET:TL_START:2[0m
+[0;32mI (83928) RIG: !!! UART wrote 15 bytes[0m
+[0;32mI (83928) web_console: cmd_handler returned successfully[0m
+[0;32mI (83928) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (84838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (86638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (87538) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (87538) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (89348) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (91148) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (92948) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (94748) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (96548) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (97198) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (97198) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (99008) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (100808) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (102608) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (103508) RIG: Mega status: MODE:TIMELAPSE 2[0m
+[0;32mI (103508) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (105318) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (107118) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (108918) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (110718) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (111508) web_console: WS recv attempt, fd=53[0m
+[0;32mI (111508) web_console: WS frame type=1 len=13[0m
+[0;32mI (111508) web_console: WS recv: 'SET:TL_STOP:1' (len=13)[0m
+[0;32mI (111508) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_STOP:1'[0m
+[0;32mI (111518) RIG: WebSocket command: SET:TL_STOP:1[0m
+[0;32mI (111528) RIG: !!! FORWARDING to MEGA: SET:TL_STOP:1[0m
+[0;32mI (111528) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (111528) web_console: cmd_handler returned successfully[0m
+[0;32mI (111528) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (112518) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (114318) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (116118) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (117918) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (119718) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (121518) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (123318) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (125118) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (126918) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (128718) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (130518) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (132318) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (134118) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (135918) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (136568) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (136568) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (138378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (140178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (141978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (143778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (145578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (147378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (149178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (150978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (152778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (154578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (156378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (158178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (159978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (161778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (163578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (165378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (167138) web_console: WS recv attempt, fd=53[0m
+[0;32mI (167138) web_console: WS frame type=1 len=14[0m
+[0;32mI (167138) web_console: WS recv: 'SET:TL_START:1' (len=14)[0m
+[0;32mI (167138) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_START:1'[0m
+[0;32mI (167148) RIG: WebSocket command: SET:TL_START:1[0m
+[0;32mI (167148) RIG: !!! FORWARDING to MEGA: SET:TL_START:1[0m
+[0;32mI (167158) RIG: !!! UART wrote 15 bytes[0m
+[0;32mI (167158) web_console: cmd_handler returned successfully[0m
+[0;32mI (167158) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (167178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (168978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (170778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (172578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (174378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (176178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (177978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (179778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (181578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (183378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (185178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (186978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (188778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (190578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (192378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (194178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (195978) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (197778) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (199578) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (201378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (203178) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (204078) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (204078) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (205888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (207688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (209488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (211288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (213088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (214888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (216688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (218488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (220288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (222088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (223888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (225688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (227488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (229288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (231088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (232888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (234688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (236488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (238288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (240088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (241888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (243688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (245488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (247288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (249088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (250888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (252688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (254488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (256288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (258088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (259888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (261688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (263488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (265288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (267088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (268888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (270688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (272488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (274288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (276088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (277888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (279688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (281488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (283288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (285088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (286888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (288688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (290488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (291298) wifi:station: 56:72:f2:44:90:2b leave, AID = 1, reason = 8, bss_flags is 33721443, bss:0x3fcc064c[0m
+[0;32mI (291298) wifi:new:<1,0>, old:<1,0>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (291298) wifi:<ba-del>idx:3, tid:0[0m
+[0;32mI (291308) wifi:<ba-del>idx:4, tid:1[0m
+[0;32mI (291308) wifi:<ba-del>idx:5, tid:5[0m
+[0;32mI (291308) wifi:<ba-del>idx:2, tid:6[0m
+[0;32mI (291318) web_console: Station 56:72:f2:44:90:2b left[0m
+[0;32mI (291328) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (292288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (294088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (295888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (297688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (299488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (301288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (303088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (304888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (306688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (308488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (310288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (312088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (313888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (315688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (317488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (319288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (321088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (322888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (324688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (326488) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (328288) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (330088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (331878) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (331878) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (331878) web_console: WS recv attempt, fd=53[0m
+[0;33mW (331878) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (331888) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[0;32mI (331888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[1;31mE (331888) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (333698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (335498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (337298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (339098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (340898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (342698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (344498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (346298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (348098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (349898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (351698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (353498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (355298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (357098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (358898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (360698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (362498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (364298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (366098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (367898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (369698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (371498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (373298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (375098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (376898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (378698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (380498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (382298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (384098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (385898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (387698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (389498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (391298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (393098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (394898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (396698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (398498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (400298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (402098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (403898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (405698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (407498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (409298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (411098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (412898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (414698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (416498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (418298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (420098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (421898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (423698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (425498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (427298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (429098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (430898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (432698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (434498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (436298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (438098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (439898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (441698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (443498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (445298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (447098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (447108) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (447108) wifi:station: de:fe:71:9f:d0:b1 join, AID=1, bgn, 20[0m
+[0;32mI (447108) web_console: Station de:fe:71:9f:d0:b1 joined[0m
+[0;32mI (447728) wifi:<ba-add>idx:2 (ifx:1, de:fe:71:9f:d0:b1), tid:0, ssn:0, winSize:64[0m
+[0;33mW (447748) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (447748) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (447778) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (448898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (450088) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.5[0m
+[0;32mI (450698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (451788) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (451788) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (451818) wifi:<ba-add>idx:3 (ifx:1, de:fe:71:9f:d0:b1), tid:1, ssn:0, winSize:64[0m
+[0;32mI (451838) web_console: WS handshake on fd=52, ring buffer has 1 events[0m
+[0;32mI (451938) web_console: Triggering flush of 1 buffered events[0m
+[0;32mI (451938) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (451938) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (452498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (453908) web_console: Serving /console (2731 bytes)[0m
+[0;32mI (454298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (454978) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (455078) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (456098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (456378) wifi:<ba-add>idx:4 (ifx:1, de:fe:71:9f:d0:b1), tid:5, ssn:0, winSize:64[0m
+[0;32mI (457898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (459698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (460548) web_console: Serving /timelapse (6436 bytes)[0m
+[0;32mI (461498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (463018) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (463118) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (463118) web_console: WS recv attempt, fd=52[0m
+[0;32mI (463118) web_console: WS frame type=1 len=14[0m
+[0;32mI (463118) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (463118) web_console: Calling cmd_handler at 0x4200e4b0 with 'STATUS_REQUEST'[0m
+[0;32mI (463128) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (463128) RIG: !!! Command did not match any handler: STATUS_REQUEST[0m
+[0;32mI (463138) web_console: cmd_handler returned successfully[0m
+[0;32mI (463298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (465098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (466898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (466928) web_console: WS recv attempt, fd=52[0m
+[0;32mI (466928) web_console: WS frame type=1 len=14[0m
+[0;32mI (466928) web_console: WS recv: 'SET:TL_START:2' (len=14)[0m
+[0;32mI (466928) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_START:2'[0m
+[0;32mI (466938) RIG: WebSocket command: SET:TL_START:2[0m
+[0;32mI (466938) RIG: !!! FORWARDING to MEGA: SET:TL_START:2[0m
+[0;32mI (466948) RIG: !!! UART wrote 15 bytes[0m
+[0;32mI (466948) web_console: cmd_handler returned successfully[0m
+[0;32mI (466948) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (468698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (469438) web_console: WS recv attempt, fd=52[0m
+[0;32mI (469438) web_console: WS frame type=1 len=13[0m
+[0;32mI (469438) web_console: WS recv: 'SET:TL_STOP:1' (len=13)[0m
+[0;32mI (469438) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:TL_STOP:1'[0m
+[0;32mI (469448) RIG: WebSocket command: SET:TL_STOP:1[0m
+[0;32mI (469448) RIG: !!! FORWARDING to MEGA: SET:TL_STOP:1[0m
+[0;32mI (469458) RIG: !!! UART wrote 14 bytes[0m
+[0;32mI (469458) web_console: cmd_handler returned successfully[0m
+[0;32mI (469468) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (470518) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (472318) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (474118) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (475918) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (477718) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (479518) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (481318) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (483118) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (484918) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (486718) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (488518) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (488918) web_console: Serving /settings (6638 bytes)[0m
+[0;32mI (488958) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (488978) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (489378) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (489478) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (490328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (490878) web_console: WS recv attempt, fd=52[0m
+[0;32mI (490878) web_console: WS frame type=1 len=12[0m
+[0;32mI (490878) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (490878) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:N_MODE:1'[0m
+[0;32mI (490888) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (490888) web_console: cmd_handler returned successfully[0m
+[0;32mI (490888) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (492128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (493568) web_console: Serving /timelapse (6436 bytes)[0m
+[0;32mI (493608) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (493708) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (493708) web_console: WS recv attempt, fd=52[0m
+[0;32mI (493708) web_console: WS frame type=1 len=14[0m
+[0;32mI (493708) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (493708) web_console: Calling cmd_handler at 0x4200e4b0 with 'STATUS_REQUEST'[0m
+[0;32mI (493718) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (493718) RIG: !!! Command did not match any handler: STATUS_REQUEST[0m
+[0;32mI (493728) web_console: cmd_handler returned successfully[0m
+[0;32mI (493928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (494788) web_console: Serving /console (2731 bytes)[0m
+[0;32mI (494818) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (494918) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (495728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (497528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (499328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (500918) web_console: Serving /settings (6638 bytes)[0m
+[0;32mI (501128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (501988) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (501998) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (502928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (504728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (506528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (508328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (510128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (511928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (512038) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (513048) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (513728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (515528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (516108) web_console: Serving /settings (6638 bytes)[0m
+[0;32mI (516118) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (516218) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (516228) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (516328) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (517328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (518718) web_console: WS recv attempt, fd=53[0m
+[0;32mI (518718) web_console: WS frame type=1 len=12[0m
+[0;32mI (518718) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (518718) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:N_MODE:1'[0m
+[0;32mI (518728) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (518738) web_console: cmd_handler returned successfully[0m
+[0;32mI (518738) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (519128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (520628) web_console: WS recv attempt, fd=53[0m
+[0;32mI (520628) web_console: WS frame type=1 len=12[0m
+[0;32mI (520628) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (520628) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:N_MODE:0'[0m
+[0;32mI (520638) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (520638) web_console: cmd_handler returned successfully[0m
+[0;32mI (520638) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (520928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (522428) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (522438) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (522728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (522988) web_console: WS recv attempt, fd=53[0m
+[0;32mI (522998) web_console: WS frame type=1 len=12[0m
+[0;32mI (522998) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (522998) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:N_MODE:1'[0m
+[0;32mI (522998) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (523008) web_console: cmd_handler returned successfully[0m
+[0;32mI (523008) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (523588) web_console: WS recv attempt, fd=53[0m
+[0;32mI (523588) web_console: WS frame type=1 len=12[0m
+[0;32mI (523588) web_console: WS recv: 'SET:N_MODE:0' (len=12)[0m
+[0;32mI (523588) web_console: Calling cmd_handler at 0x4200e4b0 with 'SET:N_MODE:0'[0m
+[0;32mI (523598) RIG: WebSocket command: SET:N_MODE:0[0m
+[0;32mI (523598) web_console: cmd_handler returned successfully[0m
+[0;32mI (523608) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (524528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (525498) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (525508) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (526328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (527138) web_console: Serving /timelapse (6436 bytes)[0m
+[0;32mI (527178) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (527278) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (527278) web_console: WS recv attempt, fd=53[0m
+[0;32mI (527278) web_console: WS frame type=1 len=14[0m
+[0;32mI (527278) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (527278) web_console: Calling cmd_handler at 0x4200e4b0 with 'STATUS_REQUEST'[0m
+[0;32mI (527288) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (527288) RIG: !!! Command did not match any handler: STATUS_REQUEST[0m
+[0;32mI (527298) web_console: cmd_handler returned successfully[0m
+[0;32mI (528128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (529928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (531138) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (531138) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (531728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (533528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (534228) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (534228) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (534858) web_console: Serving /console (2731 bytes)[0m
+[0;32mI (534888) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (534988) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (535328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (537128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (538308) web_console: Serving /console (2731 bytes)[0m
+[0;32mI (538338) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (538438) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (538928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (540068) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (540078) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (540728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (542528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (543138) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (543138) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (544328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (546128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (547928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (549728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (551528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (553328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (555128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (556928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (558728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (560528) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (562328) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (563888) httpd_txrx: httpd_sock_err: error in recv : 104[0m
+[0;32mI (564128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (565928) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (567358) httpd_txrx: httpd_sock_err: error in recv : 104[0m
+[0;32mI (567728) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (568378) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (568378) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (570188) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (571988) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (573788) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (575588) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (576738) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (577388) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (579188) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (580988) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (581058) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (582788) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (583138) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (584588) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (586388) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (588218) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (590128) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (590198) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (592138) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (593938) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (595748) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (597568) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (599368) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (601188) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (601498) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (602418) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (602428) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (603028) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (604828) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (605438) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (605448) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (606638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (608448) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (609898) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (610498) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (612298) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (614098) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (615898) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (617698) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (619298) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (619738) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (621538) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (623378) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (625268) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (627158) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (628768) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (628988) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (630788) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (631538) RIG: Mega status: ck connected.[0m
+[0;32mI (631538) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (633348) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (634658) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (635388) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (637188) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (638988) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (639998) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (641048) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (642848) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (644648) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (646448) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (648268) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (649098) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (650148) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (651948) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (653748) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (655548) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (657428) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (658648) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (658658) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (659248) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (659638) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (661058) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (661778) httpd_txrx: httpd_sock_err: error in recv : 104[0m
+[0;32mI (661778) web_console: WS recv attempt, fd=53[0m
+[0;33mW (661778) httpd_txrx: httpd_sock_err: error in recv : 104[0m
+[0;33mW (661778) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (661788) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (662068) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (662078) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (662858) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (663608) RIG: Mega status: ck connected.[0m
+[0;32mI (663608) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (665408) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (667208) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (668518) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (668518) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (668628) web_console: Triggering flush of 0 buffered events[0m
+[0;32mI (668628) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (669008) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (670748) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (671088) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (671588) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (671598) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (672888) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (674688) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (674888) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (676678) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (678478) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (680278) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (682078) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (683878) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (685678) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (687478) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (689278) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (691078) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (692878) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (693628) RIG: Mega status: ck connected.[0m
+[0;32mI (693628) web_console: Flushed 1 events to WebSocket[0m
+[0;32mI (695428) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (697228) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (699028) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (700828) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (702628) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (3568) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (4218) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (4728) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (4738) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (6018) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (7818) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (9618) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (11118) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (11128) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (11418) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (13218) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (14168) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (14268) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (15018) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (16598) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (16598) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (16818) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (18618) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (20418) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (21498) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (21508) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (22218) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (24018) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (24608) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (24618) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (25818) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (27618) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (29418) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (31218) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (33018) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (34818) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36618) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (38418) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (40218) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (42018) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (43818) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (45708) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (47538) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (49338) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (51138) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (52998) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (54838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (56638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (58438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (60238) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (62038) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (63838) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (65638) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (67438) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m

@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "rig_display",
-    "project_version":    "baseline-2026-04-25-35-g2fb21f7-dirty",
+    "project_version":    "baseline-2026-04-25-49-g2b2b9b8-dirty",
     "project_path":       "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display",
     "idf_path":           "/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf",
     "build_dir":          "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build",
@@ -1240,7 +1240,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [ "lvgl__lvgl" ],
             "file": "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/esp-idf/main/libmain.a",
-            "sources": [ "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/esp_lcd_sh8601.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/lv_font_montserrat_120.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/lv_font_montserrat_150.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/lv_font_montserrat_40_limited.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/web_console.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/moco_jib_logo_600x310_dark.bin.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/moco_jib_logo_600x310_light.bin.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/landing.html.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/settings.html.S" ],
+            "sources": [ "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/main.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/esp_lcd_sh8601.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/lv_font_montserrat_120.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/lv_font_montserrat_150.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/lv_font_montserrat_40_limited.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/main/web_console.c", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/moco_jib_logo_600x310_dark.bin.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/moco_jib_logo_600x310_light.bin.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/loading.html.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/landing.html.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/timelapse.html.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bounce.html.S", "/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/settings.html.S" ],
             "include_dirs": [ "." ]
         },
         "mbedtls": {

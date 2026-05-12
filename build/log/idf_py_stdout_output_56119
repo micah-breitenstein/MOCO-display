@@ -1,0 +1,2424 @@
+Command: /Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python /Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1301 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/rig_display.elf /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/bootloader.elf -m '/Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1301'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x403cd7e6
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2-dirty 2nd stage bootloader[0m
+[0;32mI (24) boot: compile time May 11 2026 12:14:59[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 16MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00600000[0m
+[0;32mI (76) boot:  3 storage          Unknown data     01 82 00610000 00800000[0m
+[0;32mI (83) boot: End of partition table[0m
+[0;32mI (86) esp_image: segment 0: paddr=00010020 vaddr=3c0c0020 size=135b4ch (1268556) map[0m
+[0;32mI (317) esp_image: segment 1: paddr=00145b74 vaddr=3fc9e000 size=04d50h ( 19792) load[0m
+[0;32mI (321) esp_image: segment 2: paddr=0014a8cc vaddr=40374000 size=0574ch ( 22348) load[0m
+[0;32mI (327) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=b9480h (758912) map[0m
+[0;32mI (462) esp_image: segment 4: paddr=002094a8 vaddr=4037974c size=147d0h ( 83920) load[0m
+[0;32mI (481) esp_image: segment 5: paddr=0021dc80 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (491) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (491) boot: Disabling RNG early entropy source...[0m
+[0;32mI (502) cpu_start: Multicore app[0m
+[0;32mI (510) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (511) cpu_start: Pro cpu start user code[0m
+[0;32mI (511) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (513) app_init: Application information:[0m
+[0;32mI (516) app_init: Project name:     rig_display[0m
+[0;32mI (521) app_init: App version:      baseline-2026-04-25-48-g84c943e[0m
+[0;32mI (527) app_init: Compile time:     May 11 2026 15:52:50[0m
+[0;32mI (532) app_init: ELF file SHA256:  a7c3a27e1...[0m
+[0;32mI (536) app_init: ESP-IDF:          v5.5.2-dirty[0m
+[0;32mI (540) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (544) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (548) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (552) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (558) heap_init: At 3FCBDCD0 len 0002BA40 (174 KiB): RAM[0m
+[0;32mI (563) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (568) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (574) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (580) spi_flash: detected chip: winbond[0m
+[0;32mI (583) spi_flash: flash io: dio[0m
+[0;33mW (586) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (596) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (602) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (609) main_task: Started on CPU0[0m
+[0;32mI (619) main_task: Calling app_main()[0m
+[0;32mI (619) RIG: Initializing I2C for touch controller[0m
+[0;32mI (619) RIG: I2C driver installed, touch_i2c_ready = true[0m
+[0;32mI (629) RIG: Initialize SPI bus[0m
+[0;32mI (649) RIG: Install panel IO[0m
+[0;32mI (649) RIG: Install SH8601 panel driver[0m
+[0;33mW (809) sh8601: The 3Ah command has been used and will be overwritten by external initialization sequence[0m
+[0;33mW (919) sh8601: The 36h command has been used and will be overwritten by external initialization sequence[0m
+[0;32mI (929) pp: pp rom version: e7ae62f[0m
+[0;32mI (929) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (939) wifi:wifi driver task: 3fceec80, prio:23, stack:6656, core=0[0m
+[0;32mI (939) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (939) wifi:wifi certification version: v7.0[0m
+[0;32mI (939) wifi:config NVS flash: enabled[0m
+[0;32mI (939) wifi:config nano formatting: disabled[0m
+[0;32mI (949) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (949) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (959) wifi:Init management short buffer num: 32[0m
+[0;32mI (959) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (969) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (969) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (969) wifi:Init static rx buffer num: 10[0m
+[0;32mI (979) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (979) wifi_init: rx ba win: 6[0m
+[0;32mI (979) wifi_init: accept mbox: 6[0m
+[0;32mI (989) wifi_init: tcpip mbox: 32[0m
+[0;32mI (989) wifi_init: udp mbox: 6[0m
+[0;32mI (989) wifi_init: tcp mbox: 6[0m
+[0;32mI (999) wifi_init: tcp tx win: 16384[0m
+[0;32mI (999) wifi_init: tcp rx win: 16384[0m
+[0;32mI (999) wifi_init: tcp mss: 1440[0m
+[0;32mI (1009) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1009) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1019) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (1069) wifi:mode : softAP (fc:01:2c:da:2a:21)[0m
+[0;32mI (1079) wifi:Total power save buffer number: 16[0m
+[0;32mI (1079) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1079) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1079) web_console: WiFi AP started — SSID: "MOCO" (open) IP: 192.168.4.1[0m
+[0;32mI (1079) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (1099) web_console: HTTP server started with recv/send timeout=20s[0m
+[0;32mI (1099) web_console: HTTP server started[0m
+[0;32mI (1109) web_console: Console event task started[0m
+[0;32mI (1109) web_console: DNS server started on port 53[0m
+[0;32mI (1109) web_console: DNS server listening on port 53[0m
+[0;32mI (1119) web_console: web_console_set_cmd_handler: handler=0x4200e4c0[0m
+[0;32mI (1129) web_console: s_cmd_handler now set to: 0x4200e4c0[0m
+[0;33mW (1509) RIG: apply_theme: Failed to acquire lvgl_mux, will retry on next refresh[0m
+[0;32mI (1679) RIG: LVGL task started[0m
+[0;32mI (1679) RIG: RIG rendered via LVGL[0m
+[0;32mI (1679) main_task: Returned from app_main()[0m
+[0;32mI (6329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (11329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (16329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (21329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (26329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (31329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (46329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (51329) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (56309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (61309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (66309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (71309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (76309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (81309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (86309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (91309) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (96289) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (101289) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (2539) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (2799) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (2799) web_console: No active WebSocket (fd=-1), events remain buffered (1)[0m
+[0;32mI (6599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (11599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (16599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (21599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (26599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (31599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (46599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (51599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (2539) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (2799) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (2799) web_console: No active WebSocket (fd=-1), events remain buffered (1)[0m
+[0;32mI (6599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (8829) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (8829) wifi:station: 56:72:f2:44:90:2b join, AID=1, bgn, 20[0m
+[0;32mI (8829) web_console: Station 56:72:f2:44:90:2b joined[0m
+[0;32mI (8829) web_console: No active WebSocket (fd=-1), events remain buffered (2)[0m
+[0;32mI (9019) wifi:<ba-add>idx:2 (ifx:1, 56:72:f2:44:90:2b), tid:6, ssn:0, winSize:64[0m
+[0;32mI (9049) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (9169) wifi:<ba-add>idx:3 (ifx:1, 56:72:f2:44:90:2b), tid:0, ssn:0, winSize:64[0m
+[0;33mW (9189) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (9189) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (9239) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (11609) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (14319) web_console: WS handshake on fd=52, ring buffer has 2 events[0m
+[0;32mI (15369) web_console: Triggering flush of 2 buffered events[0m
+[0;32mI (15369) web_console: Starting event flush to fd=52[0m
+[0;32mI (15369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (15369) web_console: WS frame type=1 len=14[0m
+[0;32mI (15369) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (15379) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (15379) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (15389) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (15389) web_console: cmd_handler returned successfully[0m
+[0;32mI (15419) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (15639) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (15639) web_console: Starting event flush to fd=52[0m
+[0;32mI (15659) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (16599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (17129) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (17149) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (17809) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:0, winSize:64[0m
+[0;32mI (17819) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (18869) web_console: No buffered events to flush[0m
+[0;32mI (21569) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (21599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (21609) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (22659) web_console: No buffered events to flush[0m
+[0;32mI (23239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23239) web_console: WS frame type=1 len=13[0m
+[0;32mI (23239) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (23239) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:6'[0m
+[0;32mI (23249) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (23269) web_console: cmd_handler returned successfully[0m
+[0;32mI (23269) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23269) web_console: WS frame type=1 len=13[0m
+[0;32mI (23269) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (23269) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:8'[0m
+[0;32mI (23279) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (23279) web_console: Starting event flush to fd=52[0m
+[0;32mI (23299) web_console: cmd_handler returned successfully[0m
+[0;32mI (23299) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23299) web_console: WS frame type=1 len=13[0m
+[0;32mI (23299) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (23309) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:9'[0m
+[0;32mI (23319) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (23329) web_console: cmd_handler returned successfully[0m
+[0;32mI (23329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23329) web_console: WS frame type=1 len=14[0m
+[0;32mI (23329) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (23339) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:10'[0m
+[0;32mI (23349) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (23359) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (23359) web_console: Starting event flush to fd=52[0m
+[0;32mI (23359) web_console: cmd_handler returned successfully[0m
+[0;32mI (23369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23369) web_console: WS frame type=1 len=14[0m
+[0;32mI (23369) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (23379) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (23379) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (23389) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23389) web_console: Starting event flush to fd=52[0m
+[0;32mI (23399) web_console: cmd_handler returned successfully[0m
+[0;32mI (23409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23409) web_console: WS frame type=1 len=14[0m
+[0;32mI (23409) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (23419) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:12'[0m
+[0;32mI (23419) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (23429) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23429) web_console: Starting event flush to fd=52[0m
+[0;32mI (23439) web_console: cmd_handler returned successfully[0m
+[0;32mI (23449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23449) web_console: WS frame type=1 len=14[0m
+[0;32mI (23449) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (23459) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:13'[0m
+[0;32mI (23459) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (23469) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23469) web_console: Starting event flush to fd=52[0m
+[0;32mI (23479) web_console: cmd_handler returned successfully[0m
+[0;32mI (23489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23489) web_console: WS frame type=1 len=14[0m
+[0;32mI (23489) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (23499) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:14'[0m
+[0;32mI (23499) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (23509) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23509) web_console: Starting event flush to fd=52[0m
+[0;32mI (23519) web_console: cmd_handler returned successfully[0m
+[0;32mI (23529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23529) web_console: WS frame type=1 len=14[0m
+[0;32mI (23529) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (23539) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (23539) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (23549) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23549) web_console: Starting event flush to fd=52[0m
+[0;32mI (23559) web_console: cmd_handler returned successfully[0m
+[0;32mI (23559) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23569) web_console: WS frame type=1 len=14[0m
+[0;32mI (23569) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (23569) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (23579) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (23589) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23589) web_console: Starting event flush to fd=52[0m
+[0;32mI (23599) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (23599) web_console: cmd_handler returned successfully[0m
+[0;32mI (23609) web_console: Starting event flush to fd=52[0m
+[0;32mI (23609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23619) web_console: WS frame type=1 len=14[0m
+[0;32mI (23619) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (23619) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (23629) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (23639) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23649) web_console: Starting event flush to fd=52[0m
+[0;32mI (23649) web_console: cmd_handler returned successfully[0m
+[0;32mI (23649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23649) web_console: WS frame type=1 len=14[0m
+[0;32mI (23659) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (23659) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:19'[0m
+[0;32mI (23669) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (23689) web_console: cmd_handler returned successfully[0m
+[0;32mI (23689) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23689) web_console: WS frame type=1 len=14[0m
+[0;32mI (23689) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (23689) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:20'[0m
+[0;32mI (23699) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (23719) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (23719) web_console: Starting event flush to fd=52[0m
+[0;32mI (23719) web_console: cmd_handler returned successfully[0m
+[0;32mI (23719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23719) web_console: WS frame type=1 len=14[0m
+[0;32mI (23729) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (23729) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (23739) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (23749) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23749) web_console: Starting event flush to fd=52[0m
+[0;32mI (23749) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (23809) web_console: cmd_handler returned successfully[0m
+[0;32mI (23809) web_console: Starting event flush to fd=52[0m
+[0;32mI (23809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23809) web_console: WS frame type=1 len=14[0m
+[0;32mI (23809) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (23819) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (23829) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (23839) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23839) web_console: Starting event flush to fd=52[0m
+[0;32mI (23839) web_console: cmd_handler returned successfully[0m
+[0;32mI (23849) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23849) web_console: WS frame type=1 len=14[0m
+[0;32mI (23849) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (23859) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (23869) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (23869) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23879) web_console: cmd_handler returned successfully[0m
+[0;32mI (23879) web_console: Starting event flush to fd=52[0m
+[0;32mI (23889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23889) web_console: WS frame type=1 len=14[0m
+[0;32mI (23889) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (23899) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:24'[0m
+[0;32mI (23909) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (23909) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23919) web_console: Starting event flush to fd=52[0m
+[0;32mI (23919) web_console: cmd_handler returned successfully[0m
+[0;32mI (23929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23929) web_console: WS frame type=1 len=14[0m
+[0;32mI (23929) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (23939) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (23939) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (23959) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23959) web_console: cmd_handler returned successfully[0m
+[0;32mI (23959) web_console: Starting event flush to fd=52[0m
+[0;32mI (23959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (23969) web_console: WS frame type=1 len=14[0m
+[0;32mI (23969) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (23979) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:26'[0m
+[0;32mI (23979) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (23999) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (23999) web_console: cmd_handler returned successfully[0m
+[0;32mI (23999) web_console: Starting event flush to fd=52[0m
+[0;32mI (23999) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24009) web_console: WS frame type=1 len=14[0m
+[0;32mI (24009) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (24019) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:27'[0m
+[0;32mI (24019) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (24029) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24039) web_console: cmd_handler returned successfully[0m
+[0;32mI (24039) web_console: Starting event flush to fd=52[0m
+[0;32mI (24039) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24049) web_console: WS frame type=1 len=14[0m
+[0;32mI (24049) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (24059) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:28'[0m
+[0;32mI (24059) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (24069) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24079) web_console: cmd_handler returned successfully[0m
+[0;32mI (24079) web_console: Starting event flush to fd=52[0m
+[0;32mI (24079) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24089) web_console: WS frame type=1 len=14[0m
+[0;32mI (24089) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (24099) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:29'[0m
+[0;32mI (24099) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (24109) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24119) web_console: cmd_handler returned successfully[0m
+[0;32mI (24119) web_console: Starting event flush to fd=52[0m
+[0;32mI (24119) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24129) web_console: WS frame type=1 len=14[0m
+[0;32mI (24129) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (24129) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:30'[0m
+[0;32mI (24139) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (24149) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24159) web_console: cmd_handler returned successfully[0m
+[0;32mI (24159) web_console: Starting event flush to fd=52[0m
+[0;32mI (24159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24169) web_console: WS frame type=1 len=14[0m
+[0;32mI (24169) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (24169) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:31'[0m
+[0;32mI (24179) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24179) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (24199) web_console: cmd_handler returned successfully[0m
+[0;32mI (24199) web_console: Starting event flush to fd=52[0m
+[0;32mI (24199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24199) web_console: WS frame type=1 len=14[0m
+[0;32mI (24209) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (24209) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:32'[0m
+[0;32mI (24219) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24219) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (24239) web_console: cmd_handler returned successfully[0m
+[0;32mI (24239) web_console: Starting event flush to fd=52[0m
+[0;32mI (24239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24239) web_console: WS frame type=1 len=14[0m
+[0;32mI (24249) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (24249) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:33'[0m
+[0;32mI (24259) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24259) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (24279) web_console: cmd_handler returned successfully[0m
+[0;32mI (24279) web_console: Starting event flush to fd=52[0m
+[0;32mI (24279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24279) web_console: WS frame type=1 len=14[0m
+[0;32mI (24289) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (24289) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:34'[0m
+[0;32mI (24299) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (24309) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24309) web_console: cmd_handler returned successfully[0m
+[0;32mI (24319) web_console: Starting event flush to fd=52[0m
+[0;32mI (24319) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24319) web_console: WS frame type=1 len=14[0m
+[0;32mI (24329) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (24329) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:35'[0m
+[0;32mI (24339) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (24349) web_console: cmd_handler returned successfully[0m
+[0;32mI (24349) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24349) web_console: WS frame type=1 len=14[0m
+[0;32mI (24359) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (24359) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:36'[0m
+[0;32mI (24369) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (24379) web_console: cmd_handler returned successfully[0m
+[0;32mI (24379) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24379) web_console: WS frame type=1 len=14[0m
+[0;32mI (24389) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (24389) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:37'[0m
+[0;32mI (24399) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (24409) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (24409) web_console: cmd_handler returned successfully[0m
+[0;32mI (24409) web_console: Starting event flush to fd=52[0m
+[0;32mI (24419) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24419) web_console: WS frame type=1 len=14[0m
+[0;32mI (24429) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (24429) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:38'[0m
+[0;32mI (24439) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (24439) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24449) web_console: cmd_handler returned successfully[0m
+[0;32mI (24449) web_console: Starting event flush to fd=52[0m
+[0;32mI (24449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24459) web_console: WS frame type=1 len=14[0m
+[0;32mI (24459) web_console: WS recv: 'SET:MTX_BRT:39' (len=14)[0m
+[0;32mI (24469) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:39'[0m
+[0;32mI (24479) RIG: WebSocket command: SET:MTX_BRT:39[0m
+[0;32mI (24479) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24489) web_console: cmd_handler returned successfully[0m
+[0;32mI (24489) web_console: Starting event flush to fd=52[0m
+[0;32mI (24489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24499) web_console: WS frame type=1 len=14[0m
+[0;32mI (24499) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (24509) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:40'[0m
+[0;32mI (24519) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (24519) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24529) web_console: cmd_handler returned successfully[0m
+[0;32mI (24529) web_console: Starting event flush to fd=52[0m
+[0;32mI (24529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24539) web_console: WS frame type=1 len=14[0m
+[0;32mI (24539) web_console: WS recv: 'SET:MTX_BRT:41' (len=14)[0m
+[0;32mI (24549) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:41'[0m
+[0;32mI (24559) RIG: WebSocket command: SET:MTX_BRT:41[0m
+[0;32mI (24569) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24569) web_console: Starting event flush to fd=52[0m
+[0;32mI (24569) web_console: cmd_handler returned successfully[0m
+[0;32mI (24579) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24579) web_console: WS frame type=1 len=14[0m
+[0;32mI (24579) web_console: WS recv: 'SET:MTX_BRT:42' (len=14)[0m
+[0;32mI (24589) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:42'[0m
+[0;32mI (24589) RIG: WebSocket command: SET:MTX_BRT:42[0m
+[0;32mI (24609) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24609) web_console: cmd_handler returned successfully[0m
+[0;32mI (24609) web_console: Starting event flush to fd=52[0m
+[0;32mI (24609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24619) web_console: WS frame type=1 len=14[0m
+[0;32mI (24619) web_console: WS recv: 'SET:MTX_BRT:43' (len=14)[0m
+[0;32mI (24629) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:43'[0m
+[0;32mI (24629) RIG: WebSocket command: SET:MTX_BRT:43[0m
+[0;32mI (24639) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24649) web_console: cmd_handler returned successfully[0m
+[0;32mI (24649) web_console: Starting event flush to fd=52[0m
+[0;32mI (24649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24659) web_console: WS frame type=1 len=14[0m
+[0;32mI (24659) web_console: WS recv: 'SET:MTX_BRT:44' (len=14)[0m
+[0;32mI (24669) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:44'[0m
+[0;32mI (24669) RIG: WebSocket command: SET:MTX_BRT:44[0m
+[0;32mI (24679) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24689) web_console: Starting event flush to fd=52[0m
+[0;32mI (24689) web_console: cmd_handler returned successfully[0m
+[0;32mI (24699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24699) web_console: WS frame type=1 len=14[0m
+[0;32mI (24699) web_console: WS recv: 'SET:MTX_BRT:45' (len=14)[0m
+[0;32mI (24709) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:45'[0m
+[0;32mI (24709) RIG: WebSocket command: SET:MTX_BRT:45[0m
+[0;32mI (24719) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24729) web_console: Starting event flush to fd=52[0m
+[0;32mI (24729) web_console: cmd_handler returned successfully[0m
+[0;32mI (24739) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24739) web_console: WS frame type=1 len=14[0m
+[0;32mI (24739) web_console: WS recv: 'SET:MTX_BRT:47' (len=14)[0m
+[0;32mI (24749) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:47'[0m
+[0;32mI (24749) RIG: WebSocket command: SET:MTX_BRT:47[0m
+[0;32mI (24759) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24769) web_console: cmd_handler returned successfully[0m
+[0;32mI (24769) web_console: Starting event flush to fd=52[0m
+[0;32mI (24769) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24779) web_console: WS frame type=1 len=14[0m
+[0;32mI (24779) web_console: WS recv: 'SET:MTX_BRT:48' (len=14)[0m
+[0;32mI (24779) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:48'[0m
+[0;32mI (24789) RIG: WebSocket command: SET:MTX_BRT:48[0m
+[0;32mI (24799) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24809) web_console: Starting event flush to fd=52[0m
+[0;32mI (24809) web_console: cmd_handler returned successfully[0m
+[0;32mI (24809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24819) web_console: WS frame type=1 len=14[0m
+[0;32mI (24819) web_console: WS recv: 'SET:MTX_BRT:49' (len=14)[0m
+[0;32mI (24819) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:49'[0m
+[0;32mI (24829) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24829) RIG: WebSocket command: SET:MTX_BRT:49[0m
+[0;32mI (24849) web_console: Starting event flush to fd=52[0m
+[0;32mI (24849) web_console: cmd_handler returned successfully[0m
+[0;32mI (24849) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24859) web_console: WS frame type=1 len=14[0m
+[0;32mI (24859) web_console: WS recv: 'SET:MTX_BRT:50' (len=14)[0m
+[0;32mI (24859) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:50'[0m
+[0;32mI (24869) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24869) RIG: WebSocket command: SET:MTX_BRT:50[0m
+[0;32mI (24889) web_console: cmd_handler returned successfully[0m
+[0;32mI (24889) web_console: Starting event flush to fd=52[0m
+[0;32mI (24889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24889) web_console: WS frame type=1 len=14[0m
+[0;32mI (24899) web_console: WS recv: 'SET:MTX_BRT:52' (len=14)[0m
+[0;32mI (24899) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:52'[0m
+[0;32mI (24909) RIG: WebSocket command: SET:MTX_BRT:52[0m
+[0;32mI (24919) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24929) web_console: Starting event flush to fd=52[0m
+[0;32mI (24929) web_console: cmd_handler returned successfully[0m
+[0;32mI (24929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24929) web_console: WS frame type=1 len=14[0m
+[0;32mI (24939) web_console: WS recv: 'SET:MTX_BRT:53' (len=14)[0m
+[0;32mI (24939) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:53'[0m
+[0;32mI (24949) RIG: WebSocket command: SET:MTX_BRT:53[0m
+[0;32mI (24949) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24959) web_console: cmd_handler returned successfully[0m
+[0;32mI (24969) web_console: Starting event flush to fd=52[0m
+[0;32mI (24969) web_console: WS recv attempt, fd=52[0m
+[0;32mI (24969) web_console: WS frame type=1 len=14[0m
+[0;32mI (24979) web_console: WS recv: 'SET:MTX_BRT:55' (len=14)[0m
+[0;32mI (24979) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:55'[0m
+[0;32mI (24989) RIG: WebSocket command: SET:MTX_BRT:55[0m
+[0;32mI (24989) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (24999) web_console: cmd_handler returned successfully[0m
+[0;32mI (25009) web_console: Starting event flush to fd=52[0m
+[0;32mI (25009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25009) web_console: WS frame type=1 len=14[0m
+[0;32mI (25019) web_console: WS recv: 'SET:MTX_BRT:56' (len=14)[0m
+[0;32mI (25019) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:56'[0m
+[0;32mI (25029) RIG: WebSocket command: SET:MTX_BRT:56[0m
+[0;32mI (25029) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25039) web_console: cmd_handler returned successfully[0m
+[0;32mI (25049) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25049) web_console: Starting event flush to fd=52[0m
+[0;32mI (25049) web_console: WS frame type=1 len=14[0m
+[0;32mI (25059) web_console: WS recv: 'SET:MTX_BRT:58' (len=14)[0m
+[0;32mI (25059) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:58'[0m
+[0;32mI (25069) RIG: WebSocket command: SET:MTX_BRT:58[0m
+[0;32mI (25079) web_console: cmd_handler returned successfully[0m
+[0;32mI (25079) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25079) web_console: WS frame type=1 len=14[0m
+[0;32mI (25089) web_console: WS recv: 'SET:MTX_BRT:59' (len=14)[0m
+[0;32mI (25089) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:59'[0m
+[0;32mI (25099) RIG: WebSocket command: SET:MTX_BRT:59[0m
+[0;32mI (25109) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (25109) web_console: cmd_handler returned successfully[0m
+[0;32mI (25109) web_console: Starting event flush to fd=52[0m
+[0;32mI (25109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25119) web_console: WS frame type=1 len=14[0m
+[0;32mI (25119) web_console: WS recv: 'SET:MTX_BRT:60' (len=14)[0m
+[0;32mI (25129) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:60'[0m
+[0;32mI (25139) RIG: WebSocket command: SET:MTX_BRT:60[0m
+[0;32mI (25149) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25149) web_console: cmd_handler returned successfully[0m
+[0;32mI (25149) web_console: Starting event flush to fd=52[0m
+[0;32mI (25149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25159) web_console: WS frame type=1 len=14[0m
+[0;32mI (25159) web_console: WS recv: 'SET:MTX_BRT:61' (len=14)[0m
+[0;32mI (25169) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:61'[0m
+[0;32mI (25179) RIG: WebSocket command: SET:MTX_BRT:61[0m
+[0;32mI (25189) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25189) web_console: cmd_handler returned successfully[0m
+[0;32mI (25189) web_console: Starting event flush to fd=52[0m
+[0;32mI (25189) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25199) web_console: WS frame type=1 len=14[0m
+[0;32mI (25199) web_console: WS recv: 'SET:MTX_BRT:62' (len=14)[0m
+[0;32mI (25209) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:62'[0m
+[0;32mI (25219) RIG: WebSocket command: SET:MTX_BRT:62[0m
+[0;32mI (25219) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25229) web_console: cmd_handler returned successfully[0m
+[0;32mI (25229) web_console: Starting event flush to fd=52[0m
+[0;32mI (25229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25239) web_console: WS frame type=1 len=14[0m
+[0;32mI (25239) web_console: WS recv: 'SET:MTX_BRT:63' (len=14)[0m
+[0;32mI (25249) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:63'[0m
+[0;32mI (25249) RIG: WebSocket command: SET:MTX_BRT:63[0m
+[0;32mI (25259) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25269) web_console: cmd_handler returned successfully[0m
+[0;32mI (25269) web_console: Starting event flush to fd=52[0m
+[0;32mI (25269) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25279) web_console: WS frame type=1 len=14[0m
+[0;32mI (25279) web_console: WS recv: 'SET:MTX_BRT:64' (len=14)[0m
+[0;32mI (25289) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:64'[0m
+[0;32mI (25289) RIG: WebSocket command: SET:MTX_BRT:64[0m
+[0;32mI (25299) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25309) web_console: Starting event flush to fd=52[0m
+[0;32mI (25309) web_console: cmd_handler returned successfully[0m
+[0;32mI (25319) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25319) web_console: WS frame type=1 len=14[0m
+[0;32mI (25319) web_console: WS recv: 'SET:MTX_BRT:65' (len=14)[0m
+[0;32mI (25329) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:65'[0m
+[0;32mI (25329) RIG: WebSocket command: SET:MTX_BRT:65[0m
+[0;32mI (25339) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25349) web_console: Starting event flush to fd=52[0m
+[0;32mI (25349) web_console: cmd_handler returned successfully[0m
+[0;32mI (25359) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25359) web_console: WS frame type=1 len=14[0m
+[0;32mI (25359) web_console: WS recv: 'SET:MTX_BRT:66' (len=14)[0m
+[0;32mI (25369) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:66'[0m
+[0;32mI (25369) RIG: WebSocket command: SET:MTX_BRT:66[0m
+[0;32mI (25379) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25389) web_console: cmd_handler returned successfully[0m
+[0;32mI (25389) web_console: Starting event flush to fd=52[0m
+[0;32mI (25389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25399) web_console: WS frame type=1 len=14[0m
+[0;32mI (25399) web_console: WS recv: 'SET:MTX_BRT:67' (len=14)[0m
+[0;32mI (25409) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:67'[0m
+[0;32mI (25409) RIG: WebSocket command: SET:MTX_BRT:67[0m
+[0;32mI (25419) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25429) web_console: cmd_handler returned successfully[0m
+[0;32mI (25429) web_console: Starting event flush to fd=52[0m
+[0;32mI (25429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25439) web_console: WS frame type=1 len=14[0m
+[0;32mI (25439) web_console: WS recv: 'SET:MTX_BRT:68' (len=14)[0m
+[0;32mI (25439) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:68'[0m
+[0;32mI (25449) RIG: WebSocket command: SET:MTX_BRT:68[0m
+[0;32mI (25459) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25469) web_console: cmd_handler returned successfully[0m
+[0;32mI (25469) web_console: Starting event flush to fd=52[0m
+[0;32mI (25469) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25479) web_console: WS frame type=1 len=14[0m
+[0;32mI (25479) web_console: WS recv: 'SET:MTX_BRT:69' (len=14)[0m
+[0;32mI (25479) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:69'[0m
+[0;32mI (25489) RIG: WebSocket command: SET:MTX_BRT:69[0m
+[0;32mI (25499) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25509) web_console: cmd_handler returned successfully[0m
+[0;32mI (25509) web_console: Starting event flush to fd=52[0m
+[0;32mI (25509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (25519) web_console: WS frame type=1 len=14[0m
+[0;32mI (25519) web_console: WS recv: 'SET:MTX_BRT:70' (len=14)[0m
+[0;32mI (25519) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:70'[0m
+[0;32mI (25529) RIG: WebSocket command: SET:MTX_BRT:70[0m
+[0;32mI (25539) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (25549) web_console: cmd_handler returned successfully[0m
+[0;32mI (25549) web_console: Starting event flush to fd=52[0m
+[0;32mI (25569) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (26599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (26779) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (26819) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (27869) web_console: No buffered events to flush[0m
+[0;32mI (31599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (34349) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (34389) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (35439) web_console: No buffered events to flush[0m
+[0;32mI (35439) web_console: WS recv attempt, fd=52[0m
+[0;32mI (35439) web_console: WS frame type=1 len=14[0m
+[0;32mI (35439) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (35439) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (35449) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (35449) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (35459) web_console: cmd_handler returned successfully[0m
+[0;32mI (35699) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (35699) web_console: Starting event flush to fd=52[0m
+[0;32mI (35719) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (35919) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (35949) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (36589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (37009) web_console: No buffered events to flush[0m
+[0;32mI (37009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (37009) web_console: WS frame type=1 len=14[0m
+[0;32mI (37009) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (37009) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (37019) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (37019) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (37029) web_console: cmd_handler returned successfully[0m
+[0;32mI (37269) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (37269) web_console: Starting event flush to fd=52[0m
+[0;32mI (37289) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (41599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41689) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (41749) web_console: WS handshake on fd=55, ring buffer has 0 events[0m
+[0;32mI (42799) web_console: No buffered events to flush[0m
+[0;32mI (42799) web_console: WS recv attempt, fd=55[0m
+[0;32mI (42799) web_console: WS frame type=1 len=14[0m
+[0;32mI (42799) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (42799) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (42809) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (42809) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (42819) web_console: cmd_handler returned successfully[0m
+[0;32mI (43059) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (43059) web_console: Starting event flush to fd=55[0m
+[0;32mI (43079) web_console: Queued 1 events to WebSocket fd=55[0m
+[0;32mI (46579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (47089) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (47119) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (48169) web_console: No buffered events to flush[0m
+[0;32mI (48169) web_console: WS recv attempt, fd=52[0m
+[0;32mI (48169) web_console: WS frame type=1 len=14[0m
+[0;32mI (48169) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (48169) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (48179) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (48179) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (48189) web_console: cmd_handler returned successfully[0m
+[0;32mI (48439) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (48439) web_console: Starting event flush to fd=52[0m
+[0;32mI (48459) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (48909) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (48939) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (49989) web_console: No buffered events to flush[0m
+[0;32mI (49989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (49989) web_console: WS frame type=1 len=14[0m
+[0;32mI (49989) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (49989) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (49999) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (49999) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (50009) web_console: cmd_handler returned successfully[0m
+[0;32mI (50259) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (50259) web_console: Starting event flush to fd=52[0m
+[0;32mI (50279) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (51589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (53509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (53509) web_console: WS frame type=1 len=14[0m
+[0;32mI (53509) web_console: WS recv: 'SET:TL_START:1' (len=14)[0m
+[0;32mI (53509) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:TL_START:1'[0m
+[0;32mI (53519) RIG: WebSocket command: SET:TL_START:1[0m
+[0;32mI (53519) RIG: !!! FORWARDING to MEGA: SET:TL_START:1[0m
+[0;32mI (53529) RIG: !!! UART wrote 15 bytes[0m
+[0;32mI (53529) web_console: cmd_handler returned successfully[0m
+[0;32mI (53539) web_console: Starting event flush to fd=52[0m
+[0;32mI (53559) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (54639) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (54639) web_console: Starting event flush to fd=52[0m
+[0;32mI (54659) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (56579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (57089) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (57129) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (58179) web_console: No buffered events to flush[0m
+[0;32mI (58179) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (58239) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (59289) web_console: No buffered events to flush[0m
+[0;32mI (59289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (59289) web_console: WS frame type=1 len=14[0m
+[0;32mI (59289) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (59289) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (59299) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (59299) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (59309) web_console: cmd_handler returned successfully[0m
+[0;32mI (59669) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (59669) web_console: Starting event flush to fd=52[0m
+[0;32mI (59689) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (61589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (63249) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (63279) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (64329) web_console: No buffered events to flush[0m
+[0;32mI (66589) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (66819) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (66859) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (67909) web_console: No buffered events to flush[0m
+[0;32mI (69979) web_console: WS recv attempt, fd=52[0m
+[0;32mI (69979) web_console: WS frame type=1 len=13[0m
+[0;32mI (69979) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (69979) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:6'[0m
+[0;32mI (69989) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (69999) web_console: cmd_handler returned successfully[0m
+[0;32mI (69999) web_console: Starting event flush to fd=52[0m
+[0;32mI (70019) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70029) web_console: WS frame type=1 len=13[0m
+[0;32mI (70029) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (70029) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:7'[0m
+[0;32mI (70039) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (70049) web_console: cmd_handler returned successfully[0m
+[0;32mI (70049) web_console: Starting event flush to fd=52[0m
+[0;32mI (70049) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70059) web_console: WS frame type=1 len=13[0m
+[0;32mI (70059) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (70069) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:8'[0m
+[0;32mI (70069) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (70079) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70089) web_console: cmd_handler returned successfully[0m
+[0;32mI (70089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70089) web_console: WS frame type=1 len=13[0m
+[0;32mI (70099) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (70099) web_console: Starting event flush to fd=52[0m
+[0;32mI (70099) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:9'[0m
+[0;32mI (70109) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (70129) web_console: cmd_handler returned successfully[0m
+[0;32mI (70129) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70129) web_console: WS frame type=1 len=14[0m
+[0;32mI (70129) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (70139) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:10'[0m
+[0;32mI (70139) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (70159) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (70159) web_console: Starting event flush to fd=52[0m
+[0;32mI (70159) web_console: cmd_handler returned successfully[0m
+[0;32mI (70169) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70169) web_console: WS frame type=1 len=14[0m
+[0;32mI (70169) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (70179) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (70179) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (70189) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70199) web_console: cmd_handler returned successfully[0m
+[0;32mI (70199) web_console: Starting event flush to fd=52[0m
+[0;32mI (70199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70209) web_console: WS frame type=1 len=14[0m
+[0;32mI (70209) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (70209) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:12'[0m
+[0;32mI (70219) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (70229) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70239) web_console: Starting event flush to fd=52[0m
+[0;32mI (70239) web_console: cmd_handler returned successfully[0m
+[0;32mI (70239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70249) web_console: WS frame type=1 len=14[0m
+[0;32mI (70249) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (70249) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:13'[0m
+[0;32mI (70259) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (70269) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70279) web_console: cmd_handler returned successfully[0m
+[0;32mI (70279) web_console: Starting event flush to fd=52[0m
+[0;32mI (70279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70289) web_console: WS frame type=1 len=14[0m
+[0;32mI (70289) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (70289) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:14'[0m
+[0;32mI (70299) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70299) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (70319) web_console: cmd_handler returned successfully[0m
+[0;32mI (70319) web_console: Starting event flush to fd=52[0m
+[0;32mI (70339) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70379) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70389) web_console: WS frame type=1 len=14[0m
+[0;32mI (70389) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (70389) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (70389) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (70409) web_console: cmd_handler returned successfully[0m
+[0;32mI (70409) web_console: Starting event flush to fd=52[0m
+[0;32mI (70429) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70589) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70589) web_console: WS frame type=1 len=14[0m
+[0;32mI (70589) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (70589) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:16'[0m
+[0;32mI (70599) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (70619) web_console: cmd_handler returned successfully[0m
+[0;32mI (70619) web_console: Starting event flush to fd=52[0m
+[0;32mI (70629) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70629) web_console: WS frame type=1 len=14[0m
+[0;32mI (70629) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (70629) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (70639) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (70639) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70649) web_console: cmd_handler returned successfully[0m
+[0;32mI (70649) web_console: Starting event flush to fd=52[0m
+[0;32mI (70669) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70669) web_console: WS frame type=1 len=14[0m
+[0;32mI (70669) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (70679) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (70679) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70679) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (70699) web_console: cmd_handler returned successfully[0m
+[0;32mI (70699) web_console: Starting event flush to fd=52[0m
+[0;32mI (70719) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70729) web_console: WS frame type=1 len=14[0m
+[0;32mI (70729) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (70729) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:19'[0m
+[0;32mI (70729) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (70749) web_console: cmd_handler returned successfully[0m
+[0;32mI (70749) web_console: Starting event flush to fd=52[0m
+[0;32mI (70749) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70749) web_console: WS frame type=1 len=14[0m
+[0;32mI (70759) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (70759) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:20'[0m
+[0;32mI (70769) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (70779) web_console: cmd_handler returned successfully[0m
+[0;32mI (70779) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70779) web_console: WS frame type=1 len=14[0m
+[0;32mI (70789) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (70789) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (70799) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (70809) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (70809) web_console: cmd_handler returned successfully[0m
+[0;32mI (70819) web_console: Starting event flush to fd=52[0m
+[0;32mI (70819) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70819) web_console: WS frame type=1 len=14[0m
+[0;32mI (70829) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (70829) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (70839) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (70839) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70849) web_console: cmd_handler returned successfully[0m
+[0;32mI (70849) web_console: Starting event flush to fd=52[0m
+[0;32mI (70859) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70869) web_console: WS frame type=1 len=14[0m
+[0;32mI (70869) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (70869) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (70879) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (70879) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70889) web_console: cmd_handler returned successfully[0m
+[0;32mI (70889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70889) web_console: Starting event flush to fd=52[0m
+[0;32mI (70899) web_console: WS frame type=1 len=14[0m
+[0;32mI (70899) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (70909) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:24'[0m
+[0;32mI (70919) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (70929) web_console: cmd_handler returned successfully[0m
+[0;32mI (70929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70929) web_console: WS frame type=1 len=14[0m
+[0;32mI (70929) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (70939) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (70949) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (70959) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (70959) web_console: Starting event flush to fd=52[0m
+[0;32mI (70959) web_console: cmd_handler returned successfully[0m
+[0;32mI (70969) web_console: WS recv attempt, fd=52[0m
+[0;32mI (70969) web_console: WS frame type=1 len=14[0m
+[0;32mI (70969) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (70979) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:26'[0m
+[0;32mI (70989) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (70989) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (70999) web_console: Starting event flush to fd=52[0m
+[0;32mI (70999) web_console: cmd_handler returned successfully[0m
+[0;32mI (71009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71009) web_console: WS frame type=1 len=14[0m
+[0;32mI (71009) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (71019) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:27'[0m
+[0;32mI (71029) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (71039) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71039) web_console: Starting event flush to fd=52[0m
+[0;32mI (71039) web_console: cmd_handler returned successfully[0m
+[0;32mI (71069) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71069) web_console: Starting event flush to fd=52[0m
+[0;32mI (71069) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (71169) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71169) web_console: WS frame type=1 len=14[0m
+[0;32mI (71169) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (71169) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:26'[0m
+[0;32mI (71179) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (71189) web_console: cmd_handler returned successfully[0m
+[0;32mI (71189) web_console: Starting event flush to fd=52[0m
+[0;32mI (71189) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71199) web_console: WS frame type=1 len=14[0m
+[0;32mI (71199) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (71199) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (71209) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (71219) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71229) web_console: cmd_handler returned successfully[0m
+[0;32mI (71229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71229) web_console: WS frame type=1 len=14[0m
+[0;32mI (71229) web_console: Starting event flush to fd=52[0m
+[0;32mI (71229) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (71239) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:24'[0m
+[0;32mI (71249) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (71269) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71269) web_console: cmd_handler returned successfully[0m
+[0;32mI (71269) web_console: Starting event flush to fd=52[0m
+[0;32mI (71269) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71279) web_console: WS frame type=1 len=14[0m
+[0;32mI (71279) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (71279) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (71289) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (71299) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71309) web_console: cmd_handler returned successfully[0m
+[0;32mI (71309) web_console: Starting event flush to fd=52[0m
+[0;32mI (71309) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71309) web_console: WS frame type=1 len=14[0m
+[0;32mI (71319) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (71319) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (71329) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (71339) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71349) web_console: cmd_handler returned successfully[0m
+[0;32mI (71349) web_console: Starting event flush to fd=52[0m
+[0;32mI (71349) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71349) web_console: WS frame type=1 len=14[0m
+[0;32mI (71359) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (71359) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (71369) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (71379) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71379) web_console: cmd_handler returned successfully[0m
+[0;32mI (71389) web_console: Starting event flush to fd=52[0m
+[0;32mI (71389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71389) web_console: WS frame type=1 len=14[0m
+[0;32mI (71399) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (71399) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:19'[0m
+[0;32mI (71409) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (71409) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71419) web_console: cmd_handler returned successfully[0m
+[0;32mI (71429) web_console: Starting event flush to fd=52[0m
+[0;32mI (71429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71429) web_console: WS frame type=1 len=14[0m
+[0;32mI (71439) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (71439) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (71449) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (71449) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71459) web_console: cmd_handler returned successfully[0m
+[0;32mI (71469) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71469) web_console: WS frame type=1 len=14[0m
+[0;32mI (71469) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (71469) web_console: Starting event flush to fd=52[0m
+[0;32mI (71479) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (71489) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (71499) web_console: cmd_handler returned successfully[0m
+[0;32mI (71499) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71499) web_console: WS frame type=1 len=14[0m
+[0;32mI (71509) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (71509) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:16'[0m
+[0;32mI (71519) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (71529) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (71529) web_console: cmd_handler returned successfully[0m
+[0;32mI (71529) web_console: Starting event flush to fd=52[0m
+[0;32mI (71529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71539) web_console: WS frame type=1 len=14[0m
+[0;32mI (71539) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (71549) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (71559) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (71569) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71569) web_console: Starting event flush to fd=52[0m
+[0;32mI (71569) web_console: cmd_handler returned successfully[0m
+[0;32mI (71579) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71579) web_console: WS frame type=1 len=14[0m
+[0;32mI (71579) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (71589) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:14'[0m
+[0;32mI (71599) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (71599) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71609) web_console: cmd_handler returned successfully[0m
+[0;32mI (71609) web_console: Starting event flush to fd=52[0m
+[0;32mI (71609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71619) web_console: WS frame type=1 len=14[0m
+[0;32mI (71619) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (71629) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:12'[0m
+[0;32mI (71639) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (71639) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71649) web_console: cmd_handler returned successfully[0m
+[0;32mI (71649) web_console: Starting event flush to fd=52[0m
+[0;32mI (71649) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71659) web_console: WS frame type=1 len=14[0m
+[0;32mI (71659) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (71669) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (71669) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (71679) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71689) web_console: cmd_handler returned successfully[0m
+[0;32mI (71689) web_console: Starting event flush to fd=52[0m
+[0;32mI (71689) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71699) web_console: WS frame type=1 len=14[0m
+[0;32mI (71699) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (71709) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:10'[0m
+[0;32mI (71709) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (71719) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71729) web_console: cmd_handler returned successfully[0m
+[0;32mI (71729) web_console: Starting event flush to fd=52[0m
+[0;32mI (71729) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71739) web_console: WS frame type=1 len=13[0m
+[0;32mI (71739) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (71749) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:8'[0m
+[0;32mI (71749) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (71769) web_console: cmd_handler returned successfully[0m
+[0;32mI (71769) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71769) web_console: WS frame type=1 len=13[0m
+[0;32mI (71769) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (71779) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:7'[0m
+[0;32mI (71779) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (71799) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (71799) web_console: Starting event flush to fd=52[0m
+[0;32mI (71799) web_console: cmd_handler returned successfully[0m
+[0;32mI (71809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71809) web_console: WS frame type=1 len=13[0m
+[0;32mI (71809) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (71819) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:6'[0m
+[0;32mI (71819) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (71829) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71829) web_console: Starting event flush to fd=52[0m
+[0;32mI (71839) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (71839) web_console: cmd_handler returned successfully[0m
+[0;32mI (71849) web_console: Starting event flush to fd=52[0m
+[0;32mI (71849) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71859) web_console: WS frame type=1 len=13[0m
+[0;32mI (71859) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (71859) web_console: WS recv: 'SET:MTX_BRT:5' (len=13)[0m
+[0;32mI (71869) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:5'[0m
+[0;32mI (71879) RIG: WebSocket command: SET:MTX_BRT:5[0m
+[0;32mI (71879) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71889) web_console: Starting event flush to fd=52[0m
+[0;32mI (71889) web_console: cmd_handler returned successfully[0m
+[0;32mI (71899) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71899) web_console: WS frame type=1 len=13[0m
+[0;32mI (71899) web_console: WS recv: 'SET:MTX_BRT:4' (len=13)[0m
+[0;32mI (71909) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:4'[0m
+[0;32mI (71919) RIG: WebSocket command: SET:MTX_BRT:4[0m
+[0;32mI (71919) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71929) web_console: cmd_handler returned successfully[0m
+[0;32mI (71929) web_console: Starting event flush to fd=52[0m
+[0;32mI (71929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71939) web_console: WS frame type=1 len=13[0m
+[0;32mI (71939) web_console: WS recv: 'SET:MTX_BRT:3' (len=13)[0m
+[0;32mI (71949) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:3'[0m
+[0;32mI (71949) RIG: WebSocket command: SET:MTX_BRT:3[0m
+[0;32mI (71969) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71969) web_console: cmd_handler returned successfully[0m
+[0;32mI (71969) web_console: Starting event flush to fd=52[0m
+[0;32mI (71969) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71979) web_console: WS frame type=1 len=13[0m
+[0;32mI (71979) web_console: WS recv: 'SET:MTX_BRT:2' (len=13)[0m
+[0;32mI (71989) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:2'[0m
+[0;32mI (71989) RIG: WebSocket command: SET:MTX_BRT:2[0m
+[0;32mI (71999) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72009) web_console: cmd_handler returned successfully[0m
+[0;32mI (72009) web_console: Starting event flush to fd=52[0m
+[0;32mI (72009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72019) web_console: WS frame type=1 len=13[0m
+[0;32mI (72019) web_console: WS recv: 'SET:MTX_BRT:1' (len=13)[0m
+[0;32mI (72029) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:1'[0m
+[0;32mI (72029) RIG: WebSocket command: SET:MTX_BRT:1[0m
+[0;32mI (72049) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72049) web_console: Starting event flush to fd=52[0m
+[0;32mI (72049) web_console: cmd_handler returned successfully[0m
+[0;32mI (72059) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72059) web_console: WS frame type=1 len=13[0m
+[0;32mI (72059) web_console: WS recv: 'SET:MTX_BRT:0' (len=13)[0m
+[0;32mI (72069) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:0'[0m
+[0;32mI (72069) RIG: WebSocket command: SET:MTX_BRT:0[0m
+[0;32mI (72079) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72089) web_console: cmd_handler returned successfully[0m
+[0;32mI (72089) web_console: Starting event flush to fd=52[0m
+[0;32mI (72109) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (73049) web_console: WS recv attempt, fd=52[0m
+[0;32mI (73049) web_console: WS frame type=1 len=13[0m
+[0;32mI (73059) web_console: WS recv: 'SET:MTX_BRT:1' (len=13)[0m
+[0;32mI (73059) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:1'[0m
+[0;32mI (73059) RIG: WebSocket command: SET:MTX_BRT:1[0m
+[0;32mI (73079) web_console: cmd_handler returned successfully[0m
+[0;32mI (73079) web_console: Starting event flush to fd=52[0m
+[0;32mI (73089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (73089) web_console: WS frame type=1 len=13[0m
+[0;32mI (73089) web_console: WS recv: 'SET:MTX_BRT:2' (len=13)[0m
+[0;32mI (73089) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:2'[0m
+[0;32mI (73099) RIG: WebSocket command: SET:MTX_BRT:2[0m
+[0;32mI (73099) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (73109) web_console: cmd_handler returned successfully[0m
+[0;32mI (73109) web_console: Starting event flush to fd=52[0m
+[0;32mI (73129) web_console: WS recv attempt, fd=52[0m
+[0;32mI (73129) web_console: WS frame type=1 len=13[0m
+[0;32mI (73129) web_console: WS recv: 'SET:MTX_BRT:3' (len=13)[0m
+[0;32mI (73129) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:3'[0m
+[0;32mI (73139) RIG: WebSocket command: SET:MTX_BRT:3[0m
+[0;32mI (73139) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (73149) web_console: cmd_handler returned successfully[0m
+[0;32mI (73149) web_console: Starting event flush to fd=52[0m
+[0;32mI (73179) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (73219) web_console: WS recv attempt, fd=52[0m
+[0;32mI (73219) web_console: WS frame type=1 len=13[0m
+[0;32mI (73219) web_console: WS recv: 'SET:MTX_BRT:4' (len=13)[0m
+[0;32mI (73219) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:4'[0m
+[0;32mI (73229) RIG: WebSocket command: SET:MTX_BRT:4[0m
+[0;32mI (73239) web_console: cmd_handler returned successfully[0m
+[0;32mI (73239) web_console: Starting event flush to fd=52[0m
+[0;32mI (73259) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (74149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (74149) web_console: WS frame type=1 len=12[0m
+[0;32mI (74149) web_console: WS recv: 'SET:N_MODE:1' (len=12)[0m
+[0;32mI (74149) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:N_MODE:1'[0m
+[0;32mI (74159) RIG: WebSocket command: SET:N_MODE:1[0m
+[0;32mI (74159) web_console: cmd_handler returned successfully[0m
+[0;32mI (74159) web_console: Starting event flush to fd=52[0m
+[0;32mI (74199) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (76579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (76999) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (77029) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (78079) web_console: No buffered events to flush[0m
+[0;32mI (81579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (86579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (2519) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (2779) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (2779) web_console: No active WebSocket (fd=-1), events remain buffered (2)[0m
+[0;32mI (6619) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (8199) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (8229) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (9059) web_console: WS handshake on fd=53, ring buffer has 2 events[0m
+[0;32mI (10109) web_console: Triggering flush of 2 buffered events[0m
+[0;32mI (10109) web_console: Starting event flush to fd=53[0m
+[0;32mI (10149) web_console: Queued 2 events to WebSocket fd=53[0m
+[0;32mI (11599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (11969) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (11989) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:14, winSize:64[0m
+[0;32mI (11999) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (13049) web_console: No buffered events to flush[0m
+[0;32mI (14169) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (14209) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (15259) web_console: No buffered events to flush[0m
+[0;32mI (16239) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (16279) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (16599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (17329) web_console: No buffered events to flush[0m
+[0;32mI (17639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17639) web_console: WS frame type=1 len=14[0m
+[0;32mI (17639) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (17639) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (17649) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (17669) web_console: cmd_handler returned successfully[0m
+[0;32mI (17669) web_console: Starting event flush to fd=52[0m
+[0;32mI (17679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17679) web_console: WS frame type=1 len=14[0m
+[0;32mI (17679) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (17679) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:13'[0m
+[0;32mI (17689) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (17689) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (17699) web_console: cmd_handler returned successfully[0m
+[0;32mI (17699) web_console: Starting event flush to fd=52[0m
+[0;32mI (17699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17709) web_console: WS frame type=1 len=14[0m
+[0;32mI (17709) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (17719) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (17719) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (17739) web_console: cmd_handler returned successfully[0m
+[0;32mI (17739) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17739) web_console: WS frame type=1 len=14[0m
+[0;32mI (17739) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (17749) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:16'[0m
+[0;32mI (17749) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (17769) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (17769) web_console: Starting event flush to fd=52[0m
+[0;32mI (17769) web_console: cmd_handler returned successfully[0m
+[0;32mI (17779) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17779) web_console: WS frame type=1 len=14[0m
+[0;32mI (17779) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (17789) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (17789) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (17799) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (17799) web_console: Starting event flush to fd=52[0m
+[0;32mI (17809) web_console: cmd_handler returned successfully[0m
+[0;32mI (17819) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17819) web_console: WS frame type=1 len=14[0m
+[0;32mI (17819) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (17829) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (17829) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (17839) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (17839) web_console: Starting event flush to fd=52[0m
+[0;32mI (17849) web_console: cmd_handler returned successfully[0m
+[0;32mI (17859) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17859) web_console: WS frame type=1 len=14[0m
+[0;32mI (17859) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (17869) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:19'[0m
+[0;32mI (17869) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (17879) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (17879) web_console: Starting event flush to fd=52[0m
+[0;32mI (17889) web_console: cmd_handler returned successfully[0m
+[0;32mI (17889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17899) web_console: WS frame type=1 len=14[0m
+[0;32mI (17899) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (17899) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:20'[0m
+[0;32mI (17909) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (17919) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (17919) web_console: Starting event flush to fd=52[0m
+[0;32mI (17929) web_console: cmd_handler returned successfully[0m
+[0;32mI (17929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17939) web_console: WS frame type=1 len=14[0m
+[0;32mI (17939) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (17939) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (17949) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (17949) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (17959) web_console: Starting event flush to fd=52[0m
+[0;32mI (17969) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (17969) web_console: cmd_handler returned successfully[0m
+[0;32mI (17979) web_console: Starting event flush to fd=52[0m
+[0;32mI (17979) web_console: WS recv attempt, fd=52[0m
+[0;32mI (17989) web_console: WS frame type=1 len=14[0m
+[0;32mI (17989) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (17989) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (17999) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (18009) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18019) web_console: cmd_handler returned successfully[0m
+[0;32mI (18019) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18019) web_console: WS frame type=1 len=14[0m
+[0;32mI (18019) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (18019) web_console: Starting event flush to fd=52[0m
+[0;32mI (18029) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (18039) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (18059) web_console: cmd_handler returned successfully[0m
+[0;32mI (18059) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18059) web_console: WS frame type=1 len=14[0m
+[0;32mI (18059) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (18059) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:24'[0m
+[0;32mI (18069) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (18089) web_console: cmd_handler returned successfully[0m
+[0;32mI (18089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18089) web_console: WS frame type=1 len=14[0m
+[0;32mI (18089) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (18089) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (18099) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (18119) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (18119) web_console: cmd_handler returned successfully[0m
+[0;32mI (18119) web_console: Starting event flush to fd=52[0m
+[0;32mI (18119) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18129) web_console: WS frame type=1 len=14[0m
+[0;32mI (18129) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (18129) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:26'[0m
+[0;32mI (18139) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (18149) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18159) web_console: cmd_handler returned successfully[0m
+[0;32mI (18159) web_console: Starting event flush to fd=52[0m
+[0;32mI (18159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18169) web_console: WS frame type=1 len=14[0m
+[0;32mI (18169) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (18169) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:27'[0m
+[0;32mI (18179) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (18189) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18199) web_console: cmd_handler returned successfully[0m
+[0;32mI (18199) web_console: Starting event flush to fd=52[0m
+[0;32mI (18199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18199) web_console: WS frame type=1 len=14[0m
+[0;32mI (18209) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (18209) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:28'[0m
+[0;32mI (18219) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (18219) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18229) web_console: cmd_handler returned successfully[0m
+[0;32mI (18239) web_console: Starting event flush to fd=52[0m
+[0;32mI (18239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18239) web_console: WS frame type=1 len=14[0m
+[0;32mI (18249) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (18249) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:29'[0m
+[0;32mI (18259) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18259) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (18279) web_console: cmd_handler returned successfully[0m
+[0;32mI (18279) web_console: Starting event flush to fd=52[0m
+[0;32mI (18279) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18279) web_console: WS frame type=1 len=14[0m
+[0;32mI (18289) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (18289) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:30'[0m
+[0;32mI (18299) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (18299) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18309) web_console: cmd_handler returned successfully[0m
+[0;32mI (18319) web_console: Starting event flush to fd=52[0m
+[0;32mI (18319) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18319) web_console: WS frame type=1 len=14[0m
+[0;32mI (18329) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (18329) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:31'[0m
+[0;32mI (18339) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (18339) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18349) web_console: cmd_handler returned successfully[0m
+[0;32mI (18349) web_console: Starting event flush to fd=52[0m
+[0;32mI (18359) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18359) web_console: WS frame type=1 len=14[0m
+[0;32mI (18369) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (18369) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:32'[0m
+[0;32mI (18379) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (18379) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18389) web_console: cmd_handler returned successfully[0m
+[0;32mI (18389) web_console: Starting event flush to fd=52[0m
+[0;32mI (18389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18399) web_console: WS frame type=1 len=14[0m
+[0;32mI (18399) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (18409) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:33'[0m
+[0;32mI (18419) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (18419) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18429) web_console: cmd_handler returned successfully[0m
+[0;32mI (18429) web_console: Starting event flush to fd=52[0m
+[0;32mI (18429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (18439) web_console: WS frame type=1 len=14[0m
+[0;32mI (18439) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (18449) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:34'[0m
+[0;32mI (18459) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (18469) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (18469) web_console: cmd_handler returned successfully[0m
+[0;32mI (18469) web_console: Starting event flush to fd=52[0m
+[0;32mI (18499) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (19359) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (19409) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (20459) web_console: No buffered events to flush[0m
+[0;32mI (21599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (26599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (31599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (46599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (51599) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (56579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (59829) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (59859) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (60909) web_console: No buffered events to flush[0m
+[0;32mI (61579) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (61779) web_console: Starting event flush to fd=52[0m
+[0;32mI (61799) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (66229) web_console: Starting event flush to fd=52[0m
+[0;32mI (66249) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (66799) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (71569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (71569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71569) web_console: WS frame type=1 len=13[0m
+[0;32mI (71569) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (71579) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:8'[0m
+[0;32mI (71589) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (71599) web_console: cmd_handler returned successfully[0m
+[0;32mI (71599) web_console: Starting event flush to fd=52[0m
+[0;32mI (71599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71599) web_console: WS frame type=1 len=13[0m
+[0;32mI (71609) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (71609) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:9'[0m
+[0;32mI (71619) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (71629) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71629) web_console: cmd_handler returned successfully[0m
+[0;32mI (71639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71639) web_console: WS frame type=1 len=14[0m
+[0;32mI (71639) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (71649) web_console: Starting event flush to fd=52[0m
+[0;32mI (71649) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:10'[0m
+[0;32mI (71659) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (71669) web_console: cmd_handler returned successfully[0m
+[0;32mI (71669) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71669) web_console: WS frame type=1 len=14[0m
+[0;32mI (71679) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (71679) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (71689) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (71699) web_console: cmd_handler returned successfully[0m
+[0;32mI (71699) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71699) web_console: WS frame type=1 len=14[0m
+[0;32mI (71709) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (71709) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:12'[0m
+[0;32mI (71719) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (71769) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (71769) web_console: Starting event flush to fd=52[0m
+[0;32mI (71769) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (71779) web_console: cmd_handler returned successfully[0m
+[0;32mI (71789) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71789) web_console: WS frame type=1 len=14[0m
+[0;32mI (71789) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (71789) web_console: Starting event flush to fd=52[0m
+[0;32mI (71799) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:13'[0m
+[0;32mI (71809) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (71819) web_console: cmd_handler returned successfully[0m
+[0;32mI (71819) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71819) web_console: WS frame type=1 len=14[0m
+[0;32mI (71829) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (71829) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:14'[0m
+[0;32mI (71839) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (71849) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (71849) web_console: cmd_handler returned successfully[0m
+[0;32mI (71859) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71859) web_console: WS frame type=1 len=14[0m
+[0;32mI (71859) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (71859) web_console: Starting event flush to fd=52[0m
+[0;32mI (71869) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (71879) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (71889) web_console: cmd_handler returned successfully[0m
+[0;32mI (71889) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71889) web_console: WS frame type=1 len=14[0m
+[0;32mI (71889) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (71899) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:16'[0m
+[0;32mI (71909) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (71919) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (71919) web_console: Starting event flush to fd=52[0m
+[0;32mI (71919) web_console: cmd_handler returned successfully[0m
+[0;32mI (71929) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71929) web_console: WS frame type=1 len=14[0m
+[0;32mI (71929) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (71939) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (71949) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (71949) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71959) web_console: Starting event flush to fd=52[0m
+[0;32mI (71959) web_console: cmd_handler returned successfully[0m
+[0;32mI (71969) web_console: WS recv attempt, fd=52[0m
+[0;32mI (71969) web_console: WS frame type=1 len=14[0m
+[0;32mI (71969) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (71979) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (71989) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (71999) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (71999) web_console: Starting event flush to fd=52[0m
+[0;32mI (71999) web_console: cmd_handler returned successfully[0m
+[0;32mI (72009) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72009) web_console: WS frame type=1 len=14[0m
+[0;32mI (72009) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (72019) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:19'[0m
+[0;32mI (72019) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (72029) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72029) web_console: Starting event flush to fd=52[0m
+[0;32mI (72039) web_console: cmd_handler returned successfully[0m
+[0;32mI (72049) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72049) web_console: WS frame type=1 len=14[0m
+[0;32mI (72049) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (72059) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:20'[0m
+[0;32mI (72059) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (72069) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72069) web_console: Starting event flush to fd=52[0m
+[0;32mI (72079) web_console: cmd_handler returned successfully[0m
+[0;32mI (72089) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72089) web_console: WS frame type=1 len=14[0m
+[0;32mI (72089) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (72099) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (72099) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (72109) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72109) web_console: Starting event flush to fd=52[0m
+[0;32mI (72119) web_console: cmd_handler returned successfully[0m
+[0;32mI (72129) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72129) web_console: WS frame type=1 len=14[0m
+[0;32mI (72129) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (72139) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (72139) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (72159) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72159) web_console: Starting event flush to fd=52[0m
+[0;32mI (72159) web_console: cmd_handler returned successfully[0m
+[0;32mI (72169) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72169) web_console: WS frame type=1 len=14[0m
+[0;32mI (72169) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (72179) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (72179) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (72199) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72199) web_console: Starting event flush to fd=52[0m
+[0;32mI (72199) web_console: cmd_handler returned successfully[0m
+[0;32mI (72209) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72209) web_console: WS frame type=1 len=14[0m
+[0;32mI (72209) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (72209) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:24'[0m
+[0;32mI (72219) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (72229) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72229) web_console: Starting event flush to fd=52[0m
+[0;32mI (72239) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (72239) web_console: cmd_handler returned successfully[0m
+[0;32mI (72249) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72249) web_console: WS frame type=1 len=14[0m
+[0;32mI (72249) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (72259) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (72259) web_console: Starting event flush to fd=52[0m
+[0;32mI (72269) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (72289) web_console: cmd_handler returned successfully[0m
+[0;32mI (72289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72289) web_console: WS frame type=1 len=14[0m
+[0;32mI (72289) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (72289) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:26'[0m
+[0;32mI (72299) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (72319) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (72319) web_console: Starting event flush to fd=52[0m
+[0;32mI (72319) web_console: cmd_handler returned successfully[0m
+[0;32mI (72319) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72329) web_console: WS frame type=1 len=14[0m
+[0;32mI (72329) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (72329) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:27'[0m
+[0;32mI (72339) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (72349) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72349) web_console: Starting event flush to fd=52[0m
+[0;32mI (72349) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (72359) web_console: cmd_handler returned successfully[0m
+[0;32mI (72369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72369) web_console: WS frame type=1 len=14[0m
+[0;32mI (72369) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (72379) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:28'[0m
+[0;32mI (72369) web_console: Starting event flush to fd=52[0m
+[0;32mI (72379) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (72399) web_console: cmd_handler returned successfully[0m
+[0;32mI (72399) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72399) web_console: WS frame type=1 len=14[0m
+[0;32mI (72409) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (72409) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:29'[0m
+[0;32mI (72419) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (72429) web_console: cmd_handler returned successfully[0m
+[0;32mI (72429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72429) web_console: WS frame type=1 len=14[0m
+[0;32mI (72439) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (72439) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:30'[0m
+[0;32mI (72449) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (72459) web_console: cmd_handler returned successfully[0m
+[0;32mI (72459) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72469) web_console: WS frame type=1 len=14[0m
+[0;32mI (72469) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (72469) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:31'[0m
+[0;32mI (72479) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (72489) web_console: Queued 4 events to WebSocket fd=52[0m
+[0;32mI (72489) web_console: cmd_handler returned successfully[0m
+[0;32mI (72499) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72499) web_console: WS frame type=1 len=14[0m
+[0;32mI (72499) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (72499) web_console: Starting event flush to fd=52[0m
+[0;32mI (72509) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:32'[0m
+[0;32mI (72519) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (72529) web_console: cmd_handler returned successfully[0m
+[0;32mI (72529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72529) web_console: WS frame type=1 len=14[0m
+[0;32mI (72539) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (72539) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:33'[0m
+[0;32mI (72549) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (72559) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (72559) web_console: cmd_handler returned successfully[0m
+[0;32mI (72569) web_console: Starting event flush to fd=52[0m
+[0;32mI (72569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72569) web_console: WS frame type=1 len=14[0m
+[0;32mI (72579) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (72579) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:34'[0m
+[0;32mI (72589) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (72589) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72599) web_console: cmd_handler returned successfully[0m
+[0;32mI (72599) web_console: Starting event flush to fd=52[0m
+[0;32mI (72599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72609) web_console: WS frame type=1 len=14[0m
+[0;32mI (72609) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (72619) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:35'[0m
+[0;32mI (72629) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (72639) web_console: cmd_handler returned successfully[0m
+[0;32mI (72639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72639) web_console: WS frame type=1 len=14[0m
+[0;32mI (72639) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (72649) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:36'[0m
+[0;32mI (72659) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (72669) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (72669) web_console: Starting event flush to fd=52[0m
+[0;32mI (72669) web_console: cmd_handler returned successfully[0m
+[0;32mI (72679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72679) web_console: WS frame type=1 len=14[0m
+[0;32mI (72679) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (72689) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:37'[0m
+[0;32mI (72699) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (72709) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72709) web_console: Starting event flush to fd=52[0m
+[0;32mI (72709) web_console: cmd_handler returned successfully[0m
+[0;32mI (72719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72719) web_console: WS frame type=1 len=14[0m
+[0;32mI (72719) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (72729) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:38'[0m
+[0;32mI (72729) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (72749) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72749) web_console: Starting event flush to fd=52[0m
+[0;32mI (72749) web_console: cmd_handler returned successfully[0m
+[0;32mI (72759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72759) web_console: WS frame type=1 len=14[0m
+[0;32mI (72759) web_console: WS recv: 'SET:MTX_BRT:39' (len=14)[0m
+[0;32mI (72769) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:39'[0m
+[0;32mI (72769) RIG: WebSocket command: SET:MTX_BRT:39[0m
+[0;32mI (72789) web_console: cmd_handler returned successfully[0m
+[0;32mI (72789) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72789) web_console: WS frame type=1 len=14[0m
+[0;32mI (72789) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (72799) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:40'[0m
+[0;32mI (72799) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (72819) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (72819) web_console: Starting event flush to fd=52[0m
+[0;32mI (72819) web_console: cmd_handler returned successfully[0m
+[0;32mI (72829) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72829) web_console: WS frame type=1 len=14[0m
+[0;32mI (72829) web_console: WS recv: 'SET:MTX_BRT:41' (len=14)[0m
+[0;32mI (72839) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:41'[0m
+[0;32mI (72839) RIG: WebSocket command: SET:MTX_BRT:41[0m
+[0;32mI (72859) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72859) web_console: Starting event flush to fd=52[0m
+[0;32mI (72859) web_console: cmd_handler returned successfully[0m
+[0;32mI (72869) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72869) web_console: WS frame type=1 len=14[0m
+[0;32mI (72869) web_console: WS recv: 'SET:MTX_BRT:42' (len=14)[0m
+[0;32mI (72879) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:42'[0m
+[0;32mI (72879) RIG: WebSocket command: SET:MTX_BRT:42[0m
+[0;32mI (72889) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72889) web_console: Starting event flush to fd=52[0m
+[0;32mI (72899) web_console: cmd_handler returned successfully[0m
+[0;32mI (72909) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72909) web_console: WS frame type=1 len=14[0m
+[0;32mI (72909) web_console: WS recv: 'SET:MTX_BRT:43' (len=14)[0m
+[0;32mI (72909) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:43'[0m
+[0;32mI (72919) RIG: WebSocket command: SET:MTX_BRT:43[0m
+[0;32mI (72929) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (72929) web_console: Starting event flush to fd=52[0m
+[0;32mI (72939) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (72939) web_console: cmd_handler returned successfully[0m
+[0;32mI (72949) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72949) web_console: WS frame type=1 len=14[0m
+[0;32mI (72949) web_console: WS recv: 'SET:MTX_BRT:44' (len=14)[0m
+[0;32mI (72959) web_console: Starting event flush to fd=52[0m
+[0;32mI (72959) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:44'[0m
+[0;32mI (72969) RIG: WebSocket command: SET:MTX_BRT:44[0m
+[0;32mI (72989) web_console: cmd_handler returned successfully[0m
+[0;32mI (72989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (72989) web_console: WS frame type=1 len=14[0m
+[0;32mI (72989) web_console: WS recv: 'SET:MTX_BRT:45' (len=14)[0m
+[0;32mI (72989) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:45'[0m
+[0;32mI (72999) RIG: WebSocket command: SET:MTX_BRT:45[0m
+[0;32mI (73019) web_console: cmd_handler returned successfully[0m
+[0;32mI (73049) web_console: Queued 3 events to WebSocket fd=52[0m
+[0;32mI (73049) web_console: Starting event flush to fd=52[0m
+[0;32mI (73049) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (76569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (81569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (86569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (91569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (96569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (98889) web_console: Starting event flush to fd=52[0m
+[0;32mI (98909) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (101569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (103889) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (103939) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (104989) web_console: No buffered events to flush[0m
+[0;32mI (104989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (104989) web_console: WS frame type=1 len=14[0m
+[0;32mI (104989) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (104989) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (104999) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (104999) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (105009) web_console: cmd_handler returned successfully[0m
+[0;32mI (105269) RIG: Mega status: MODE:MANUAL[0m
+[0;32mI (105269) web_console: Starting event flush to fd=52[0m
+[0;32mI (105289) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (106369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (106369) web_console: WS frame type=1 len=14[0m
+[0;32mI (106369) web_console: WS recv: 'SET:TL_START:1' (len=14)[0m
+[0;32mI (106369) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:TL_START:1'[0m
+[0;32mI (106379) RIG: WebSocket command: SET:TL_START:1[0m
+[0;32mI (106379) RIG: !!! FORWARDING to MEGA: SET:TL_START:1[0m
+[0;32mI (106389) RIG: !!! UART wrote 15 bytes[0m
+[0;32mI (106389) web_console: cmd_handler returned successfully[0m
+[0;32mI (106389) web_console: Starting event flush to fd=52[0m
+[0;32mI (106419) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (106549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (107479) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (107479) web_console: Starting event flush to fd=52[0m
+[0;32mI (107499) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (111569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (116569) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (117769) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (117809) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (118859) web_console: No buffered events to flush[0m
+[0;32mI (119519) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (119559) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (120609) web_console: No buffered events to flush[0m
+[0;32mI (120609) web_console: WS recv attempt, fd=52[0m
+[0;32mI (120609) web_console: WS frame type=1 len=14[0m
+[0;32mI (120609) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (120609) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (120619) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (120619) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (120629) web_console: cmd_handler returned successfully[0m
+[0;32mI (120969) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (120969) web_console: Starting event flush to fd=52[0m
+[0;32mI (120989) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (121689) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (126549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (131549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (135009) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (135039) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (136089) web_console: No buffered events to flush[0m
+[0;32mI (136349) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (136379) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (136549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (137429) web_console: No buffered events to flush[0m
+[0;32mI (137429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (137429) web_console: WS frame type=1 len=14[0m
+[0;32mI (137429) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (137429) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (137439) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (137439) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (137449) web_console: cmd_handler returned successfully[0m
+[0;32mI (137789) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (137789) web_console: Starting event flush to fd=52[0m
+[0;32mI (137809) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (141549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (146549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (151549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (156549) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (161529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (166529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (171529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (173789) web_console: Serving /console (2790 bytes)[0m
+[0;32mI (173829) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (174879) web_console: No buffered events to flush[0m
+[0;32mI (176529) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (178419) web_console: Serving /timelapse (6471 bytes)[0m
+[0;32mI (178459) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (179509) web_console: No buffered events to flush[0m
+[0;32mI (179509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (179509) web_console: WS frame type=1 len=14[0m
+[0;32mI (179509) web_console: WS recv: 'STATUS_REQUEST' (len=14)[0m
+[0;32mI (179509) web_console: Calling cmd_handler at 0x4200e4c0 with 'STATUS_REQUEST'[0m
+[0;32mI (179519) RIG: WebSocket command: STATUS_REQUEST[0m
+[0;32mI (179519) RIG: Forwarding STATUS_REQUEST to MEGA[0m
+[0;32mI (179529) web_console: cmd_handler returned successfully[0m
+[0;32mI (179889) RIG: Mega status: MODE:TIMELAPSE 1[0m
+[0;32mI (179889) web_console: Starting event flush to fd=52[0m
+[0;32mI (179919) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (181199) web_console: Serving /settings (7794 bytes)[0m
+[0;32mI (181259) web_console: WS handshake on fd=52, ring buffer has 0 events[0m
+[0;32mI (181509) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (182309) web_console: No buffered events to flush[0m
+[0;32mI (184969) web_console: WS recv attempt, fd=52[0m
+[0;32mI (184969) web_console: WS frame type=1 len=13[0m
+[0;32mI (184969) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (184969) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:9'[0m
+[0;32mI (184979) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (184999) web_console: cmd_handler returned successfully[0m
+[0;32mI (184999) web_console: Starting event flush to fd=52[0m
+[0;32mI (184999) web_console: WS recv attempt, fd=52[0m
+[0;32mI (184999) web_console: WS frame type=1 len=14[0m
+[0;32mI (184999) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (185009) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:10'[0m
+[0;32mI (185019) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (185029) web_console: cmd_handler returned successfully[0m
+[0;32mI (185059) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (185059) web_console: Starting event flush to fd=52[0m
+[0;32mI (185059) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (185099) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185099) web_console: WS frame type=1 len=14[0m
+[0;32mI (185099) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (185099) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (185109) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (185119) web_console: cmd_handler returned successfully[0m
+[0;32mI (185119) web_console: Starting event flush to fd=52[0m
+[0;32mI (185119) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185129) web_console: WS frame type=1 len=14[0m
+[0;32mI (185129) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (185129) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:12'[0m
+[0;32mI (185139) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (185149) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185159) web_console: cmd_handler returned successfully[0m
+[0;32mI (185159) web_console: Starting event flush to fd=52[0m
+[0;32mI (185159) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185169) web_console: WS frame type=1 len=14[0m
+[0;32mI (185169) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (185169) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:13'[0m
+[0;32mI (185179) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (185189) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185199) web_console: cmd_handler returned successfully[0m
+[0;32mI (185199) web_console: Starting event flush to fd=52[0m
+[0;32mI (185199) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185209) web_console: WS frame type=1 len=14[0m
+[0;32mI (185209) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (185209) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:14'[0m
+[0;32mI (185219) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (185229) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185239) web_console: cmd_handler returned successfully[0m
+[0;32mI (185239) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185239) web_console: WS frame type=1 len=14[0m
+[0;32mI (185239) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (185249) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (185259) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (185239) web_console: Starting event flush to fd=52[0m
+[0;32mI (185269) web_console: cmd_handler returned successfully[0m
+[0;32mI (185269) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185279) web_console: WS frame type=1 len=14[0m
+[0;32mI (185279) web_console: WS recv: 'SET:MTX_BRT:16' (len=14)[0m
+[0;32mI (185279) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:16'[0m
+[0;32mI (185289) RIG: WebSocket command: SET:MTX_BRT:16[0m
+[0;32mI (185309) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (185309) web_console: Starting event flush to fd=52[0m
+[0;32mI (185309) web_console: cmd_handler returned successfully[0m
+[0;32mI (185309) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185319) web_console: WS frame type=1 len=14[0m
+[0;32mI (185319) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (185319) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (185329) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (185339) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185339) web_console: Starting event flush to fd=52[0m
+[0;32mI (185349) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (185349) web_console: cmd_handler returned successfully[0m
+[0;32mI (185359) web_console: Starting event flush to fd=52[0m
+[0;32mI (185359) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185369) web_console: WS frame type=1 len=14[0m
+[0;32mI (185369) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (185369) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (185379) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (185389) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185399) web_console: cmd_handler returned successfully[0m
+[0;32mI (185399) web_console: Starting event flush to fd=52[0m
+[0;32mI (185399) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185409) web_console: WS frame type=1 len=14[0m
+[0;32mI (185409) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (185409) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:19'[0m
+[0;32mI (185419) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (185429) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185439) web_console: cmd_handler returned successfully[0m
+[0;32mI (185439) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185439) web_console: WS frame type=1 len=14[0m
+[0;32mI (185449) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (185439) web_console: Starting event flush to fd=52[0m
+[0;32mI (185449) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:20'[0m
+[0;32mI (185459) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (185479) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185479) web_console: cmd_handler returned successfully[0m
+[0;32mI (185479) web_console: Starting event flush to fd=52[0m
+[0;32mI (185479) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185489) web_console: WS frame type=1 len=14[0m
+[0;32mI (185489) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (185499) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (185499) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (185509) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185519) web_console: cmd_handler returned successfully[0m
+[0;32mI (185519) web_console: Starting event flush to fd=52[0m
+[0;32mI (185519) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185529) web_console: WS frame type=1 len=14[0m
+[0;32mI (185529) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (185539) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (185539) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (185549) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185559) web_console: cmd_handler returned successfully[0m
+[0;32mI (185559) web_console: Starting event flush to fd=52[0m
+[0;32mI (185559) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185569) web_console: WS frame type=1 len=14[0m
+[0;32mI (185569) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (185579) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (185579) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (185589) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185599) web_console: cmd_handler returned successfully[0m
+[0;32mI (185599) web_console: Starting event flush to fd=52[0m
+[0;32mI (185599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185609) web_console: WS frame type=1 len=14[0m
+[0;32mI (185609) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (185619) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:24'[0m
+[0;32mI (185619) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (185629) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185639) web_console: cmd_handler returned successfully[0m
+[0;32mI (185639) web_console: Starting event flush to fd=52[0m
+[0;32mI (185639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185649) web_console: WS frame type=1 len=14[0m
+[0;32mI (185649) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (185659) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (185659) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (185669) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185679) web_console: cmd_handler returned successfully[0m
+[0;32mI (185679) web_console: Starting event flush to fd=52[0m
+[0;32mI (185679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185689) web_console: WS frame type=1 len=14[0m
+[0;32mI (185689) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (185699) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:26'[0m
+[0;32mI (185699) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (185709) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185719) web_console: cmd_handler returned successfully[0m
+[0;32mI (185719) web_console: Starting event flush to fd=52[0m
+[0;32mI (185719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185729) web_console: WS frame type=1 len=14[0m
+[0;32mI (185729) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (185739) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:27'[0m
+[0;32mI (185739) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (185749) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185759) web_console: cmd_handler returned successfully[0m
+[0;32mI (185759) web_console: Starting event flush to fd=52[0m
+[0;32mI (185759) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185769) web_console: WS frame type=1 len=14[0m
+[0;32mI (185769) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (185779) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:28'[0m
+[0;32mI (185779) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (185789) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185799) web_console: cmd_handler returned successfully[0m
+[0;32mI (185799) web_console: Starting event flush to fd=52[0m
+[0;32mI (185799) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185809) web_console: WS frame type=1 len=14[0m
+[0;32mI (185809) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (185819) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:29'[0m
+[0;32mI (185819) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (185829) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185839) web_console: cmd_handler returned successfully[0m
+[0;32mI (185839) web_console: Starting event flush to fd=52[0m
+[0;32mI (185839) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185849) web_console: WS frame type=1 len=14[0m
+[0;32mI (185849) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (185859) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:30'[0m
+[0;32mI (185859) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (185869) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185879) web_console: cmd_handler returned successfully[0m
+[0;32mI (185879) web_console: Starting event flush to fd=52[0m
+[0;32mI (185879) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185889) web_console: WS frame type=1 len=14[0m
+[0;32mI (185889) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (185899) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:31'[0m
+[0;32mI (185899) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (185909) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (185919) web_console: cmd_handler returned successfully[0m
+[0;32mI (185919) web_console: Starting event flush to fd=52[0m
+[0;32mI (185919) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185929) web_console: WS frame type=1 len=14[0m
+[0;32mI (185929) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (185939) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:32'[0m
+[0;32mI (185939) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (185959) web_console: cmd_handler returned successfully[0m
+[0;32mI (185959) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185959) web_console: WS frame type=1 len=14[0m
+[0;32mI (185959) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (185969) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:33'[0m
+[0;32mI (185969) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (185989) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (185989) web_console: Starting event flush to fd=52[0m
+[0;32mI (185989) web_console: cmd_handler returned successfully[0m
+[0;32mI (185999) web_console: WS recv attempt, fd=52[0m
+[0;32mI (185999) web_console: WS frame type=1 len=14[0m
+[0;32mI (185999) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (186009) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:34'[0m
+[0;32mI (186009) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (186019) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186019) web_console: Starting event flush to fd=52[0m
+[0;32mI (186029) web_console: cmd_handler returned successfully[0m
+[0;32mI (186039) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186039) web_console: WS frame type=1 len=14[0m
+[0;32mI (186039) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (186049) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:35'[0m
+[0;32mI (186049) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (186059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186059) web_console: Starting event flush to fd=52[0m
+[0;32mI (186069) web_console: cmd_handler returned successfully[0m
+[0;32mI (186069) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186079) web_console: WS frame type=1 len=14[0m
+[0;32mI (186079) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (186089) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:36'[0m
+[0;32mI (186089) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (186109) web_console: cmd_handler returned successfully[0m
+[0;32mI (186109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186109) web_console: WS frame type=1 len=14[0m
+[0;32mI (186109) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (186119) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:37'[0m
+[0;32mI (186119) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (186139) web_console: Queued 2 events to WebSocket fd=52[0m
+[0;32mI (186139) web_console: Starting event flush to fd=52[0m
+[0;32mI (186139) web_console: cmd_handler returned successfully[0m
+[0;32mI (186149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186149) web_console: WS frame type=1 len=14[0m
+[0;32mI (186149) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (186159) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:38'[0m
+[0;32mI (186159) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (186169) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186169) web_console: Starting event flush to fd=52[0m
+[0;32mI (186179) web_console: cmd_handler returned successfully[0m
+[0;32mI (186189) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186189) web_console: WS frame type=1 len=14[0m
+[0;32mI (186189) web_console: WS recv: 'SET:MTX_BRT:39' (len=14)[0m
+[0;32mI (186199) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:39'[0m
+[0;32mI (186199) RIG: WebSocket command: SET:MTX_BRT:39[0m
+[0;32mI (186209) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186209) web_console: Starting event flush to fd=52[0m
+[0;32mI (186219) web_console: cmd_handler returned successfully[0m
+[0;32mI (186229) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186229) web_console: WS frame type=1 len=14[0m
+[0;32mI (186229) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (186239) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:40'[0m
+[0;32mI (186239) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (186249) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186249) web_console: Starting event flush to fd=52[0m
+[0;32mI (186259) web_console: cmd_handler returned successfully[0m
+[0;32mI (186269) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186269) web_console: WS frame type=1 len=14[0m
+[0;32mI (186269) web_console: WS recv: 'SET:MTX_BRT:41' (len=14)[0m
+[0;32mI (186279) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:41'[0m
+[0;32mI (186279) RIG: WebSocket command: SET:MTX_BRT:41[0m
+[0;32mI (186289) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186289) web_console: Starting event flush to fd=52[0m
+[0;32mI (186299) web_console: cmd_handler returned successfully[0m
+[0;32mI (186309) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186309) web_console: WS frame type=1 len=14[0m
+[0;32mI (186309) web_console: WS recv: 'SET:MTX_BRT:42' (len=14)[0m
+[0;32mI (186319) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:42'[0m
+[0;32mI (186319) RIG: WebSocket command: SET:MTX_BRT:42[0m
+[0;32mI (186329) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186329) web_console: Starting event flush to fd=52[0m
+[0;32mI (186339) web_console: cmd_handler returned successfully[0m
+[0;32mI (186349) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186349) web_console: WS frame type=1 len=14[0m
+[0;32mI (186349) web_console: WS recv: 'SET:MTX_BRT:43' (len=14)[0m
+[0;32mI (186359) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:43'[0m
+[0;32mI (186359) RIG: WebSocket command: SET:MTX_BRT:43[0m
+[0;32mI (186369) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186369) web_console: Starting event flush to fd=52[0m
+[0;32mI (186379) web_console: cmd_handler returned successfully[0m
+[0;32mI (186389) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186389) web_console: WS frame type=1 len=14[0m
+[0;32mI (186389) web_console: WS recv: 'SET:MTX_BRT:44' (len=14)[0m
+[0;32mI (186399) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:44'[0m
+[0;32mI (186399) RIG: WebSocket command: SET:MTX_BRT:44[0m
+[0;32mI (186409) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186409) web_console: Starting event flush to fd=52[0m
+[0;32mI (186419) web_console: cmd_handler returned successfully[0m
+[0;32mI (186429) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186429) web_console: WS frame type=1 len=14[0m
+[0;32mI (186429) web_console: WS recv: 'SET:MTX_BRT:45' (len=14)[0m
+[0;32mI (186439) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:45'[0m
+[0;32mI (186439) RIG: WebSocket command: SET:MTX_BRT:45[0m
+[0;32mI (186449) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186449) web_console: Starting event flush to fd=52[0m
+[0;32mI (186459) web_console: cmd_handler returned successfully[0m
+[0;32mI (186469) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186469) web_console: WS frame type=1 len=14[0m
+[0;32mI (186469) web_console: WS recv: 'SET:MTX_BRT:46' (len=14)[0m
+[0;32mI (186479) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:46'[0m
+[0;32mI (186479) RIG: WebSocket command: SET:MTX_BRT:46[0m
+[0;32mI (186499) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186499) web_console: Starting event flush to fd=52[0m
+[0;32mI (186499) web_console: cmd_handler returned successfully[0m
+[0;32mI (186509) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186509) web_console: WS frame type=1 len=14[0m
+[0;32mI (186509) web_console: WS recv: 'SET:MTX_BRT:45' (len=14)[0m
+[0;32mI (186519) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:45'[0m
+[0;32mI (186519) RIG: WebSocket command: SET:MTX_BRT:45[0m
+[0;32mI (186529) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186529) web_console: Starting event flush to fd=52[0m
+[0;32mI (186539) web_console: cmd_handler returned successfully[0m
+[0;32mI (186549) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186549) web_console: WS frame type=1 len=14[0m
+[0;32mI (186549) web_console: WS recv: 'SET:MTX_BRT:44' (len=14)[0m
+[0;32mI (186559) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:44'[0m
+[0;32mI (186559) RIG: WebSocket command: SET:MTX_BRT:44[0m
+[0;32mI (186579) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186579) web_console: Starting event flush to fd=52[0m
+[0;32mI (186579) web_console: cmd_handler returned successfully[0m
+[0;32mI (186589) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186589) web_console: WS frame type=1 len=14[0m
+[0;32mI (186589) web_console: WS recv: 'SET:MTX_BRT:43' (len=14)[0m
+[0;32mI (186599) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:43'[0m
+[0;32mI (186609) RIG: WebSocket command: SET:MTX_BRT:43[0m
+[0;32mI (186609) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186609) web_console: Starting event flush to fd=52[0m
+[0;32mI (186619) web_console: cmd_handler returned successfully[0m
+[0;32mI (186629) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186629) web_console: WS frame type=1 len=14[0m
+[0;32mI (186629) web_console: WS recv: 'SET:MTX_BRT:41' (len=14)[0m
+[0;32mI (186639) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:41'[0m
+[0;32mI (186649) RIG: WebSocket command: SET:MTX_BRT:41[0m
+[0;32mI (186649) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186649) web_console: Starting event flush to fd=52[0m
+[0;32mI (186659) web_console: cmd_handler returned successfully[0m
+[0;32mI (186669) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186669) web_console: WS frame type=1 len=14[0m
+[0;32mI (186669) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (186679) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:40'[0m
+[0;32mI (186689) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (186689) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186689) web_console: Starting event flush to fd=52[0m
+[0;32mI (186699) web_console: cmd_handler returned successfully[0m
+[0;32mI (186709) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186709) web_console: WS frame type=1 len=14[0m
+[0;32mI (186709) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (186719) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:38'[0m
+[0;32mI (186729) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (186729) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186729) web_console: Starting event flush to fd=52[0m
+[0;32mI (186739) web_console: cmd_handler returned successfully[0m
+[0;32mI (186749) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186749) web_console: WS frame type=1 len=14[0m
+[0;32mI (186749) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (186759) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:36'[0m
+[0;32mI (186769) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (186769) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186769) web_console: Starting event flush to fd=52[0m
+[0;32mI (186779) web_console: cmd_handler returned successfully[0m
+[0;32mI (186789) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186789) web_console: WS frame type=1 len=14[0m
+[0;32mI (186789) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (186799) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:34'[0m
+[0;32mI (186809) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (186819) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186819) web_console: Starting event flush to fd=52[0m
+[0;32mI (186819) web_console: cmd_handler returned successfully[0m
+[0;32mI (186829) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186829) web_console: WS frame type=1 len=14[0m
+[0;32mI (186829) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (186839) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:32'[0m
+[0;32mI (186849) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (186849) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186859) web_console: cmd_handler returned successfully[0m
+[0;32mI (186859) web_console: Starting event flush to fd=52[0m
+[0;32mI (186859) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186869) web_console: WS frame type=1 len=14[0m
+[0;32mI (186869) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (186879) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:31'[0m
+[0;32mI (186889) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (186889) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186899) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (186899) web_console: cmd_handler returned successfully[0m
+[0;32mI (186899) web_console: Starting event flush to fd=52[0m
+[0;32mI (186909) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186919) web_console: WS frame type=1 len=14[0m
+[0;32mI (186919) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (186919) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:29'[0m
+[0;32mI (186929) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (186939) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186949) web_console: cmd_handler returned successfully[0m
+[0;32mI (186949) web_console: Starting event flush to fd=52[0m
+[0;32mI (186949) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186959) web_console: WS frame type=1 len=14[0m
+[0;32mI (186959) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (186959) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:27'[0m
+[0;32mI (186969) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (186979) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (186989) web_console: Starting event flush to fd=52[0m
+[0;32mI (186989) web_console: cmd_handler returned successfully[0m
+[0;32mI (186989) web_console: WS recv attempt, fd=52[0m
+[0;32mI (186999) web_console: WS frame type=1 len=14[0m
+[0;32mI (186999) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (186999) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:25'[0m
+[0;32mI (187009) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (187019) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187029) web_console: cmd_handler returned successfully[0m
+[0;32mI (187029) web_console: Starting event flush to fd=52[0m
+[0;32mI (187029) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187039) web_console: WS frame type=1 len=14[0m
+[0;32mI (187039) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (187039) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:23'[0m
+[0;32mI (187049) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (187059) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187069) web_console: cmd_handler returned successfully[0m
+[0;32mI (187069) web_console: Starting event flush to fd=52[0m
+[0;32mI (187069) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187079) web_console: WS frame type=1 len=14[0m
+[0;32mI (187079) web_console: WS recv: 'SET:MTX_BRT:22' (len=14)[0m
+[0;32mI (187079) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:22'[0m
+[0;32mI (187089) RIG: WebSocket command: SET:MTX_BRT:22[0m
+[0;32mI (187099) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187109) web_console: cmd_handler returned successfully[0m
+[0;32mI (187109) web_console: Starting event flush to fd=52[0m
+[0;32mI (187109) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187119) web_console: WS frame type=1 len=14[0m
+[0;32mI (187119) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (187119) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:21'[0m
+[0;32mI (187129) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (187149) web_console: cmd_handler returned successfully[0m
+[0;32mI (187149) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187149) web_console: WS frame type=1 len=14[0m
+[0;32mI (187149) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (187149) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:18'[0m
+[0;32mI (187159) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (187179) web_console: cmd_handler returned successfully[0m
+[0;32mI (187179) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187179) web_console: WS frame type=1 len=14[0m
+[0;32mI (187179) web_console: WS recv: 'SET:MTX_BRT:17' (len=14)[0m
+[0;32mI (187189) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:17'[0m
+[0;32mI (187189) RIG: WebSocket command: SET:MTX_BRT:17[0m
+[0;32mI (187209) web_console: cmd_handler returned successfully[0m
+[0;32mI (187209) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187209) web_console: WS frame type=1 len=14[0m
+[0;32mI (187209) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (187219) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:15'[0m
+[0;32mI (187219) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (187239) web_console: Queued 4 events to WebSocket fd=52[0m
+[0;32mI (187239) web_console: Starting event flush to fd=52[0m
+[0;32mI (187239) web_console: cmd_handler returned successfully[0m
+[0;32mI (187249) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187249) web_console: WS frame type=1 len=14[0m
+[0;32mI (187249) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (187259) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:14'[0m
+[0;32mI (187259) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (187269) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187269) web_console: Starting event flush to fd=52[0m
+[0;32mI (187279) web_console: cmd_handler returned successfully[0m
+[0;32mI (187289) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187289) web_console: WS frame type=1 len=14[0m
+[0;32mI (187289) web_console: WS recv: 'SET:MTX_BRT:13' (len=14)[0m
+[0;32mI (187299) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:13'[0m
+[0;32mI (187299) RIG: WebSocket command: SET:MTX_BRT:13[0m
+[0;32mI (187309) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187309) web_console: Starting event flush to fd=52[0m
+[0;32mI (187319) web_console: cmd_handler returned successfully[0m
+[0;32mI (187329) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187329) web_console: WS frame type=1 len=14[0m
+[0;32mI (187329) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (187339) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:12'[0m
+[0;32mI (187339) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (187349) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187349) web_console: Starting event flush to fd=52[0m
+[0;32mI (187359) web_console: cmd_handler returned successfully[0m
+[0;32mI (187369) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187369) web_console: WS frame type=1 len=14[0m
+[0;32mI (187369) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (187379) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:11'[0m
+[0;32mI (187379) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (187389) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187389) web_console: Starting event flush to fd=52[0m
+[0;32mI (187399) web_console: cmd_handler returned successfully[0m
+[0;32mI (187409) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187409) web_console: WS frame type=1 len=14[0m
+[0;32mI (187409) web_console: WS recv: 'SET:MTX_BRT:10' (len=14)[0m
+[0;32mI (187419) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:10'[0m
+[0;32mI (187419) RIG: WebSocket command: SET:MTX_BRT:10[0m
+[0;32mI (187429) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187429) web_console: Starting event flush to fd=52[0m
+[0;32mI (187439) web_console: cmd_handler returned successfully[0m
+[0;32mI (187449) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187449) web_console: WS frame type=1 len=13[0m
+[0;32mI (187449) web_console: WS recv: 'SET:MTX_BRT:9' (len=13)[0m
+[0;32mI (187459) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:9'[0m
+[0;32mI (187459) RIG: WebSocket command: SET:MTX_BRT:9[0m
+[0;32mI (187469) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187469) web_console: Starting event flush to fd=52[0m
+[0;32mI (187479) web_console: cmd_handler returned successfully[0m
+[0;32mI (187489) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187489) web_console: WS frame type=1 len=13[0m
+[0;32mI (187489) web_console: WS recv: 'SET:MTX_BRT:8' (len=13)[0m
+[0;32mI (187499) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:8'[0m
+[0;32mI (187499) RIG: WebSocket command: SET:MTX_BRT:8[0m
+[0;32mI (187509) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187509) web_console: Starting event flush to fd=52[0m
+[0;32mI (187519) web_console: cmd_handler returned successfully[0m
+[0;32mI (187529) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187529) web_console: WS frame type=1 len=13[0m
+[0;32mI (187529) web_console: WS recv: 'SET:MTX_BRT:7' (len=13)[0m
+[0;32mI (187539) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:7'[0m
+[0;32mI (187539) RIG: WebSocket command: SET:MTX_BRT:7[0m
+[0;32mI (187549) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187549) web_console: Starting event flush to fd=52[0m
+[0;32mI (187559) web_console: cmd_handler returned successfully[0m
+[0;32mI (187569) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187569) web_console: WS frame type=1 len=13[0m
+[0;32mI (187569) web_console: WS recv: 'SET:MTX_BRT:6' (len=13)[0m
+[0;32mI (187579) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:6'[0m
+[0;32mI (187579) RIG: WebSocket command: SET:MTX_BRT:6[0m
+[0;32mI (187589) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187589) web_console: Starting event flush to fd=52[0m
+[0;32mI (187599) web_console: cmd_handler returned successfully[0m
+[0;32mI (187599) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187609) web_console: WS frame type=1 len=13[0m
+[0;32mI (187609) web_console: WS recv: 'SET:MTX_BRT:5' (len=13)[0m
+[0;32mI (187619) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:5'[0m
+[0;32mI (187619) RIG: WebSocket command: SET:MTX_BRT:5[0m
+[0;32mI (187629) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187629) web_console: Starting event flush to fd=52[0m
+[0;32mI (187639) web_console: cmd_handler returned successfully[0m
+[0;32mI (187639) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187649) web_console: WS frame type=1 len=13[0m
+[0;32mI (187649) web_console: WS recv: 'SET:MTX_BRT:4' (len=13)[0m
+[0;32mI (187649) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:4'[0m
+[0;32mI (187659) RIG: WebSocket command: SET:MTX_BRT:4[0m
+[0;32mI (187669) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187669) web_console: Starting event flush to fd=52[0m
+[0;32mI (187679) web_console: cmd_handler returned successfully[0m
+[0;32mI (187679) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187689) web_console: WS frame type=1 len=13[0m
+[0;32mI (187689) web_console: WS recv: 'SET:MTX_BRT:3' (len=13)[0m
+[0;32mI (187689) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:3'[0m
+[0;32mI (187699) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187699) RIG: WebSocket command: SET:MTX_BRT:3[0m
+[0;32mI (187709) web_console: Starting event flush to fd=52[0m
+[0;32mI (187719) web_console: cmd_handler returned successfully[0m
+[0;32mI (187719) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187729) web_console: WS frame type=1 len=13[0m
+[0;32mI (187729) web_console: WS recv: 'SET:MTX_BRT:2' (len=13)[0m
+[0;32mI (187729) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:2'[0m
+[0;32mI (187739) RIG: WebSocket command: SET:MTX_BRT:2[0m
+[0;32mI (187749) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187749) web_console: Starting event flush to fd=52[0m
+[0;32mI (187759) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (187759) web_console: cmd_handler returned successfully[0m
+[0;32mI (187769) web_console: Starting event flush to fd=52[0m
+[0;32mI (187769) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187779) web_console: WS frame type=1 len=13[0m
+[0;32mI (187779) web_console: WS recv: 'SET:MTX_BRT:1' (len=13)[0m
+[0;32mI (187779) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:1'[0m
+[0;32mI (187789) RIG: WebSocket command: SET:MTX_BRT:1[0m
+[0;32mI (187799) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187809) web_console: cmd_handler returned successfully[0m
+[0;32mI (187809) web_console: Starting event flush to fd=52[0m
+[0;32mI (187809) web_console: WS recv attempt, fd=52[0m
+[0;32mI (187819) web_console: WS frame type=1 len=13[0m
+[0;32mI (187819) web_console: WS recv: 'SET:MTX_BRT:0' (len=13)[0m
+[0;32mI (187819) web_console: Calling cmd_handler at 0x4200e4c0 with 'SET:MTX_BRT:0'[0m
+[0;32mI (187829) RIG: WebSocket command: SET:MTX_BRT:0[0m
+[0;32mI (187839) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (187849) web_console: cmd_handler returned successfully[0m
+[0;32mI (187849) web_console: Starting event flush to fd=52[0m
+[0;32mI (187869) web_console: Queued 1 events to WebSocket fd=52[0m
+[0;32mI (191519) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (196519) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (201519) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (206519) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (211519) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (216499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (221499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (226499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (231499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (236499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (241499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (246499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (251499) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (251899) wifi:station: 56:72:f2:44:90:2b leave, AID = 1, reason = 8, bss_flags is 33721459, bss:0x3fcdfe00[0m
+[0;32mI (251899) wifi:new:<1,0>, old:<1,0>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (251909) wifi:<ba-del>idx:2, tid:0[0m
+[0;32mI (251909) wifi:<ba-del>idx:4, tid:1[0m
+[0;32mI (251909) wifi:<ba-del>idx:3, tid:6[0m
+[0;32mI (251919) web_console: Station 56:72:f2:44:90:2b left[0m
+[0;32mI (251929) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (256479) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (261479) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (266479) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (271479) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (276479) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (281479) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (286459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (291459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (296459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (301459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (306459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (311449) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (311449) web_console: WS recv attempt, fd=52[0m
+[0;33mW (311449) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (311449) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (311459) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (311459) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (311459) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (316439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (321439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (326439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (331439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (336439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (341439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (346439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (351439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (356439) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (361419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (366419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (371419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (376419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (381419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (386419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (391419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (396419) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (401399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (406399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (411399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (416399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (421399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (426399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (431399) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (436379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (441379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (446379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (451379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (456379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (461379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (466379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (471379) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (476359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (481359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (486359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (491359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (496359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (501359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (506359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (511359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (516359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (521339) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (526339) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (531339) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (536339) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (541339) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m

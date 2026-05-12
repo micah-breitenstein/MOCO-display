@@ -1,0 +1,886 @@
+Command: /Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python /Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf_monitor.py -p /dev/cu.usbmodem1301 -b 115200 --toolchain-prefix xtensa-esp32s3-elf- --target esp32s3 --revision 0 /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/rig_display.elf /Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/bootloader.elf -m '/Users/micahbreitenstein/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/Users/micahbreitenstein/.espressif/v5.5.2/esp-idf/tools/idf.py' '-p' '/dev/cu.usbmodem1301'
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x403cd7e2
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x158c
+load:0x403c8700,len:0xd24
+load:0x403cb700,len:0x2f34
+entry 0x403c8924
+[0;32mI (24) boot: ESP-IDF v5.5.2-dirty 2nd stage bootloader[0m
+[0;32mI (24) boot: compile time May 11 2026 12:14:59[0m
+[0;32mI (25) boot: Multicore bootloader[0m
+[0;32mI (25) boot: chip revision: v0.2[0m
+[0;32mI (28) boot: efuse block revision: v1.3[0m
+[0;32mI (32) boot.esp32s3: Boot SPI Speed : 80MHz[0m
+[0;32mI (36) boot.esp32s3: SPI Mode       : DIO[0m
+[0;32mI (39) boot.esp32s3: SPI Flash Size : 16MB[0m
+[0;32mI (43) boot: Enabling RNG early entropy source...[0m
+[0;32mI (48) boot: Partition Table:[0m
+[0;32mI (50) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (70) boot:  2 factory          factory app      00 00 00010000 00600000[0m
+[0;32mI (76) boot:  3 storage          Unknown data     01 82 00610000 00800000[0m
+[0;32mI (83) boot: End of partition table[0m
+[0;32mI (86) esp_image: segment 0: paddr=00010020 vaddr=3c0c0020 size=135e4ch (1269324) map[0m
+[0;32mI (317) esp_image: segment 1: paddr=00145e74 vaddr=3fc9e000 size=04d50h ( 19792) load[0m
+[0;32mI (322) esp_image: segment 2: paddr=0014abcc vaddr=40374000 size=0544ch ( 21580) load[0m
+[0;32mI (327) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=b9744h (759620) map[0m
+[0;32mI (462) esp_image: segment 4: paddr=0020976c vaddr=4037944c size=14ad0h ( 84688) load[0m
+[0;32mI (481) esp_image: segment 5: paddr=0021e244 vaddr=50000000 size=00020h (    32) load[0m
+[0;32mI (492) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (492) boot: Disabling RNG early entropy source...[0m
+[0;32mI (502) cpu_start: Multicore app[0m
+[0;32mI (511) cpu_start: GPIO 44 and 43 are used as console UART I/O pins[0m
+[0;32mI (511) cpu_start: Pro cpu start user code[0m
+[0;32mI (512) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (513) app_init: Application information:[0m
+[0;32mI (517) app_init: Project name:     rig_display[0m
+[0;32mI (521) app_init: App version:      baseline-2026-04-25-48-g84c943e[0m
+[0;32mI (527) app_init: Compile time:     May 11 2026 15:52:50[0m
+[0;32mI (532) app_init: ELF file SHA256:  3565185c8...[0m
+[0;32mI (536) app_init: ESP-IDF:          v5.5.2-dirty[0m
+[0;32mI (541) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (545) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (549) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (552) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (559) heap_init: At 3FCBDCD8 len 0002BA38 (174 KiB): RAM[0m
+[0;32mI (564) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (569) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (574) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM[0m
+[0;32mI (580) spi_flash: detected chip: winbond[0m
+[0;32mI (583) spi_flash: flash io: dio[0m
+[0;33mW (586) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (596) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (602) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (609) main_task: Started on CPU0[0m
+[0;32mI (619) main_task: Calling app_main()[0m
+[0;32mI (619) RIG: Initializing I2C for touch controller[0m
+[0;32mI (619) RIG: I2C driver installed, touch_i2c_ready = true[0m
+[0;32mI (629) RIG: Initialize SPI bus[0m
+[0;32mI (659) RIG: Install panel IO[0m
+[0;32mI (659) RIG: Install SH8601 panel driver[0m
+[0;33mW (819) sh8601: The 3Ah command has been used and will be overwritten by external initialization sequence[0m
+[0;33mW (929) sh8601: The 36h command has been used and will be overwritten by external initialization sequence[0m
+[0;32mI (939) pp: pp rom version: e7ae62f[0m
+[0;32mI (939) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (949) wifi:wifi driver task: 3fceec80, prio:23, stack:6656, core=0[0m
+[0;32mI (949) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (949) wifi:wifi certification version: v7.0[0m
+[0;32mI (949) wifi:config NVS flash: enabled[0m
+[0;32mI (949) wifi:config nano formatting: disabled[0m
+[0;32mI (959) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (959) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (969) wifi:Init management short buffer num: 32[0m
+[0;32mI (969) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (979) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (979) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (979) wifi:Init static rx buffer num: 10[0m
+[0;32mI (989) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (989) wifi_init: rx ba win: 6[0m
+[0;32mI (989) wifi_init: accept mbox: 6[0m
+[0;32mI (999) wifi_init: tcpip mbox: 32[0m
+[0;32mI (999) wifi_init: udp mbox: 6[0m
+[0;32mI (999) wifi_init: tcp mbox: 6[0m
+[0;32mI (1009) wifi_init: tcp tx win: 16384[0m
+[0;32mI (1009) wifi_init: tcp rx win: 16384[0m
+[0;32mI (1009) wifi_init: tcp mss: 1440[0m
+[0;32mI (1019) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (1019) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (1029) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10[0m
+[0;32mI (1089) wifi:mode : softAP (fc:01:2c:da:2a:21)[0m
+[0;32mI (1089) wifi:Total power save buffer number: 16[0m
+[0;32mI (1089) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1089) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (1089) web_console: WiFi AP started — SSID: "MOCO" (open) IP: 192.168.4.1[0m
+[0;32mI (1089) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (1109) web_console: HTTP server started with recv/send timeout=20s[0m
+[0;32mI (1109) web_console: HTTP server started[0m
+[0;32mI (1119) web_console: Console event task started[0m
+[0;32mI (1119) web_console: DNS server started on port 53[0m
+[0;32mI (1119) web_console: DNS server listening on port 53[0m
+[0;32mI (1129) web_console: web_console_set_cmd_handler: handler=0x4200e570[0m
+[0;32mI (1139) web_console: s_cmd_handler now set to: 0x4200e570[0m
+[0;33mW (1519) RIG: apply_theme: Failed to acquire lvgl_mux, will retry on next refresh[0m
+[0;32mI (1689) RIG: LVGL task started[0m
+[0;32mI (1689) RIG: RIG rendered via LVGL[0m
+[0;32mI (1689) main_task: Returned from app_main()[0m
+[0;32mI (6139) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (11119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (16119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (21119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (26119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (31119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (36119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (41119) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (46099) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (51099) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (56099) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (57879) wifi:new:<1,0>, old:<1,1>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (57879) wifi:station: 56:72:f2:44:90:2b join, AID=1, bgn, 20[0m
+[0;32mI (57879) web_console: Station 56:72:f2:44:90:2b joined[0m
+[0;32mI (57879) web_console: No active WebSocket (fd=-1), events remain buffered (1)[0m
+[0;32mI (57999) wifi:<ba-add>idx:2 (ifx:1, 56:72:f2:44:90:2b), tid:6, ssn:0, winSize:64[0m
+[0;32mI (57999) esp_netif_lwip: DHCP server assigned IP to a client, IP is: 192.168.4.2[0m
+[0;32mI (58169) wifi:<ba-add>idx:3 (ifx:1, 56:72:f2:44:90:2b), tid:0, ssn:0, winSize:64[0m
+[0;33mW (58189) httpd_uri: httpd_uri: URI '/hotspot-detect.html' not found[0m
+[0;33mW (58189) httpd_txrx: httpd_resp_send_err: 404 Not Found - Nothing matches the given URI[0m
+[0;32mI (58219) wifi:<ba-add>idx:4 (ifx:1, 56:72:f2:44:90:2b), tid:1, ssn:0, winSize:64[0m
+[0;32mI (58229) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (61099) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (61559) web_console: WS handshake on fd=52, ring buffer has 1 events[0m
+[0;32mI (62619) web_console: WS recv attempt, fd=52[0m
+[0;32mI (62619) web_console: WS frame type=1 len=16[0m
+[0;32mI (62619) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (62619) web_console: Calling cmd_handler at 0x4200e570 with 'SETTINGS_REQUEST'[0m
+[0;32mI (62629) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (62629) RIG: Sending current settings to web[0m
+[0;32mI (62629) web_console: Starting event flush to fd=52, page_type=0[0m
+[0;32mI (62639) web_console: cmd_handler returned successfully[0m
+[0;32mI (62809) web_console: Sent 8 events, discarded 0 events for page_type=0[0m
+[0;32mI (62809) web_console: Starting event flush to fd=52, page_type=0[0m
+[0;32mI (62809) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (65199) web_console: Serving / (loading page, 768 bytes)[0m
+[0;32mI (65209) web_console: Serving /console (2819 bytes)[0m
+[0;32mI (66049) web_console: WS handshake on fd=54, ring buffer has 0 events[0m
+[0;32mI (66089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (67099) web_console: WS recv attempt, fd=54[0m
+[0;32mI (67099) web_console: WS frame type=1 len=17[0m
+[0;32mI (67099) web_console: WS recv: 'PAGE_TYPE:console' (len=17)[0m
+[0;32mI (67099) web_console: Page type set to CONSOLE[0m
+[0;32mI (67589) web_console: Serving /settings (8057 bytes)[0m
+[0;32mI (67619) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (68669) web_console: WS recv attempt, fd=53[0m
+[0;32mI (68669) web_console: WS frame type=1 len=18[0m
+[0;32mI (68669) web_console: WS recv: 'PAGE_TYPE:settings' (len=18)[0m
+[0;32mI (68669) web_console: Page type set to SETTINGS[0m
+[0;32mI (68679) web_console: WS recv attempt, fd=53[0m
+[0;32mI (68679) web_console: WS frame type=1 len=16[0m
+[0;32mI (68679) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (68689) web_console: Calling cmd_handler at 0x4200e570 with 'SETTINGS_REQUEST'[0m
+[0;32mI (68699) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (68699) RIG: Sending current settings to web[0m
+[0;32mI (68699) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (68699) web_console: cmd_handler returned successfully[0m
+[0;32mI (68859) web_console: Sent 7 events, discarded 0 events for page_type=2[0m
+[0;32mI (68859) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (68859) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (69039) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69039) web_console: WS frame type=1 len=14[0m
+[0;32mI (69039) web_console: WS recv: 'SET:MTX_BRT:11' (len=14)[0m
+[0;32mI (69039) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:11'[0m
+[0;32mI (69049) RIG: WebSocket command: SET:MTX_BRT:11[0m
+[0;32mI (69059) web_console: cmd_handler returned successfully[0m
+[0;32mI (69059) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69079) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 11%[0m
+[0;32mI (69079) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (69079) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69089) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (69189) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69189) web_console: WS frame type=1 len=14[0m
+[0;32mI (69189) web_console: WS recv: 'SET:MTX_BRT:12' (len=14)[0m
+[0;32mI (69189) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:12'[0m
+[0;32mI (69199) RIG: WebSocket command: SET:MTX_BRT:12[0m
+[0;32mI (69209) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69209) web_console: cmd_handler returned successfully[0m
+[0;32mI (69219) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69219) web_console: WS frame type=1 len=14[0m
+[0;32mI (69219) web_console: WS recv: 'SET:MTX_BRT:14' (len=14)[0m
+[0;32mI (69229) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:14'[0m
+[0;32mI (69229) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 12%[0m
+[0;32mI (69229) RIG: WebSocket command: SET:MTX_BRT:14[0m
+[0;32mI (69249) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (69249) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69259) web_console: cmd_handler returned successfully[0m
+[0;32mI (69269) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69269) web_console: WS frame type=1 len=14[0m
+[0;32mI (69269) web_console: WS recv: 'SET:MTX_BRT:15' (len=14)[0m
+[0;32mI (69279) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:15'[0m
+[0;32mI (69279) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 14%[0m
+[0;32mI (69279) RIG: WebSocket command: SET:MTX_BRT:15[0m
+[0;32mI (69289) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (69299) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69309) web_console: cmd_handler returned successfully[0m
+[0;32mI (69319) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69319) web_console: WS frame type=1 len=14[0m
+[0;32mI (69319) web_console: WS recv: 'SET:MTX_BRT:18' (len=14)[0m
+[0;32mI (69329) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 15%[0m
+[0;32mI (69329) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:18'[0m
+[0;32mI (69339) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (69339) RIG: WebSocket command: SET:MTX_BRT:18[0m
+[0;32mI (69349) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69359) web_console: cmd_handler returned successfully[0m
+[0;32mI (69369) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69369) web_console: WS frame type=1 len=14[0m
+[0;32mI (69369) web_console: WS recv: 'SET:MTX_BRT:19' (len=14)[0m
+[0;32mI (69379) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:19'[0m
+[0;32mI (69379) RIG: WebSocket command: SET:MTX_BRT:19[0m
+[0;32mI (69389) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 18%[0m
+[0;32mI (69399) web_console: cmd_handler returned successfully[0m
+[0;32mI (69409) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69409) web_console: WS frame type=1 len=14[0m
+[0;32mI (69409) web_console: WS recv: 'SET:MTX_BRT:20' (len=14)[0m
+[0;32mI (69419) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:20'[0m
+[0;32mI (69419) RIG: WebSocket command: SET:MTX_BRT:20[0m
+[0;32mI (69429) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 19%[0m
+[0;32mI (69439) web_console: Sent 2 events, discarded 2 events for page_type=2[0m
+[0;32mI (69439) web_console: cmd_handler returned successfully[0m
+[0;32mI (69449) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69449) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69459) web_console: WS frame type=1 len=14[0m
+[0;32mI (69459) web_console: WS recv: 'SET:MTX_BRT:21' (len=14)[0m
+[0;32mI (69469) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:21'[0m
+[0;32mI (69469) RIG: WebSocket command: SET:MTX_BRT:21[0m
+[0;32mI (69479) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 20%[0m
+[0;32mI (69489) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (69489) web_console: cmd_handler returned successfully[0m
+[0;32mI (69499) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69499) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (69499) web_console: WS frame type=1 len=14[0m
+[0;32mI (69509) web_console: WS recv: 'SET:MTX_BRT:23' (len=14)[0m
+[0;32mI (69519) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:23'[0m
+[0;32mI (69519) RIG: WebSocket command: SET:MTX_BRT:23[0m
+[0;32mI (69539) web_console: cmd_handler returned successfully[0m
+[0;32mI (69539) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69539) web_console: WS frame type=1 len=14[0m
+[0;32mI (69539) web_console: WS recv: 'SET:MTX_BRT:24' (len=14)[0m
+[0;32mI (69549) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:24'[0m
+[0;32mI (69549) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 21%[0m
+[0;32mI (69549) RIG: WebSocket command: SET:MTX_BRT:24[0m
+[0;32mI (69579) web_console: cmd_handler returned successfully[0m
+[0;32mI (69579) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69579) web_console: WS frame type=1 len=14[0m
+[0;32mI (69579) web_console: WS recv: 'SET:MTX_BRT:25' (len=14)[0m
+[0;32mI (69589) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:25'[0m
+[0;32mI (69589) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 23%[0m
+[0;32mI (69589) RIG: WebSocket command: SET:MTX_BRT:25[0m
+[0;32mI (69619) web_console: cmd_handler returned successfully[0m
+[0;32mI (69619) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69619) web_console: WS frame type=1 len=14[0m
+[0;32mI (69619) web_console: WS recv: 'SET:MTX_BRT:26' (len=14)[0m
+[0;32mI (69619) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:26'[0m
+[0;32mI (69629) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 24%[0m
+[0;32mI (69629) RIG: WebSocket command: SET:MTX_BRT:26[0m
+[0;32mI (69649) web_console: cmd_handler returned successfully[0m
+[0;32mI (69649) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69649) web_console: WS frame type=1 len=14[0m
+[0;32mI (69659) web_console: WS recv: 'SET:MTX_BRT:27' (len=14)[0m
+[0;32mI (69659) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:27'[0m
+[0;32mI (69669) RIG: WebSocket command: SET:MTX_BRT:27[0m
+[0;32mI (69669) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 25%[0m
+[0;32mI (69679) web_console: cmd_handler returned successfully[0m
+[0;32mI (69689) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69689) web_console: WS frame type=1 len=14[0m
+[0;32mI (69689) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (69699) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:28'[0m
+[0;32mI (69709) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (69719) web_console: cmd_handler returned successfully[0m
+[0;32mI (69719) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69719) web_console: WS frame type=1 len=14[0m
+[0;32mI (69719) web_console: WS recv: 'SET:MTX_BRT:28' (len=14)[0m
+[0;32mI (69729) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 26%[0m
+[0;32mI (69729) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:28'[0m
+[0;32mI (69739) RIG: WebSocket command: SET:MTX_BRT:28[0m
+[0;32mI (69749) web_console: cmd_handler returned successfully[0m
+[0;32mI (69749) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69759) web_console: WS frame type=1 len=14[0m
+[0;32mI (69759) web_console: WS recv: 'SET:MTX_BRT:29' (len=14)[0m
+[0;32mI (69769) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:29'[0m
+[0;32mI (69769) RIG: WebSocket command: SET:MTX_BRT:29[0m
+[0;32mI (69789) web_console: cmd_handler returned successfully[0m
+[0;32mI (69789) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69789) web_console: WS frame type=1 len=14[0m
+[0;32mI (69789) web_console: WS recv: 'SET:MTX_BRT:30' (len=14)[0m
+[0;32mI (69799) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:30'[0m
+[0;32mI (69799) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 27%[0m
+[0;32mI (69799) RIG: WebSocket command: SET:MTX_BRT:30[0m
+[0;32mI (69829) web_console: cmd_handler returned successfully[0m
+[0;32mI (69829) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69829) web_console: WS frame type=1 len=14[0m
+[0;32mI (69829) web_console: WS recv: 'SET:MTX_BRT:31' (len=14)[0m
+[0;32mI (69829) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:31'[0m
+[0;32mI (69839) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 28%[0m
+[0;32mI (69839) RIG: WebSocket command: SET:MTX_BRT:31[0m
+[0;32mI (69859) web_console: cmd_handler returned successfully[0m
+[0;32mI (69859) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69859) web_console: WS frame type=1 len=14[0m
+[0;32mI (69869) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (69869) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:32'[0m
+[0;32mI (69879) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 28%[0m
+[0;32mI (69879) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (69899) web_console: cmd_handler returned successfully[0m
+[0;32mI (69899) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69899) web_console: WS frame type=1 len=14[0m
+[0;32mI (69909) web_console: WS recv: 'SET:MTX_BRT:32' (len=14)[0m
+[0;32mI (69909) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:32'[0m
+[0;32mI (69919) RIG: WebSocket command: SET:MTX_BRT:32[0m
+[0;32mI (69919) web_console: cmd_handler returned successfully[0m
+[0;32mI (69929) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69929) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 29%[0m
+[0;32mI (69929) web_console: WS frame type=1 len=14[0m
+[0;32mI (69939) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (69949) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:33'[0m
+[0;32mI (69959) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (69969) web_console: cmd_handler returned successfully[0m
+[0;32mI (69969) web_console: WS recv attempt, fd=53[0m
+[0;32mI (69969) web_console: WS frame type=1 len=14[0m
+[0;32mI (69969) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (69979) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 30%[0m
+[0;32mI (69979) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:33'[0m
+[0;32mI (69989) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (69999) web_console: cmd_handler returned successfully[0m
+[0;32mI (69999) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70009) web_console: WS frame type=1 len=14[0m
+[0;32mI (70009) web_console: WS recv: 'SET:MTX_BRT:33' (len=14)[0m
+[0;32mI (70019) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:33'[0m
+[0;32mI (70019) RIG: WebSocket command: SET:MTX_BRT:33[0m
+[0;32mI (70029) web_console: cmd_handler returned successfully[0m
+[0;32mI (70029) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70039) web_console: WS frame type=1 len=14[0m
+[0;32mI (70039) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (70049) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:34'[0m
+[0;32mI (70049) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (70069) web_console: cmd_handler returned successfully[0m
+[0;32mI (70069) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70069) web_console: WS frame type=1 len=14[0m
+[0;32mI (70069) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (70079) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:34'[0m
+[0;32mI (70079) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 31%[0m
+[0;32mI (70079) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (70099) web_console: cmd_handler returned successfully[0m
+[0;32mI (70099) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70099) web_console: WS frame type=1 len=14[0m
+[0;32mI (70109) web_console: WS recv: 'SET:MTX_BRT:34' (len=14)[0m
+[0;32mI (70109) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:34'[0m
+[0;32mI (70119) RIG: WebSocket command: SET:MTX_BRT:34[0m
+[0;32mI (70129) web_console: cmd_handler returned successfully[0m
+[0;32mI (70129) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70129) web_console: WS frame type=1 len=14[0m
+[0;32mI (70139) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (70139) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:35'[0m
+[0;32mI (70149) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (70149) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 32%[0m
+[0;32mI (70159) web_console: cmd_handler returned successfully[0m
+[0;32mI (70169) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70169) web_console: WS frame type=1 len=14[0m
+[0;32mI (70179) web_console: WS recv: 'SET:MTX_BRT:35' (len=14)[0m
+[0;32mI (70179) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:35'[0m
+[0;32mI (70189) RIG: WebSocket command: SET:MTX_BRT:35[0m
+[0;32mI (70189) web_console: cmd_handler returned successfully[0m
+[0;32mI (70199) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 32%[0m
+[0;32mI (70199) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70209) web_console: WS frame type=1 len=14[0m
+[0;32mI (70209) web_console: WS recv: 'SET:MTX_BRT:36' (len=14)[0m
+[0;32mI (70219) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:36'[0m
+[0;32mI (70229) RIG: WebSocket command: SET:MTX_BRT:36[0m
+[0;32mI (70229) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 33%[0m
+[0;32mI (70239) web_console: cmd_handler returned successfully[0m
+[0;32mI (70249) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70249) web_console: WS frame type=1 len=14[0m
+[0;32mI (70249) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (70259) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:37'[0m
+[0;32mI (70259) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (70269) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 33%[0m
+[0;32mI (70279) web_console: cmd_handler returned successfully[0m
+[0;32mI (70279) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70289) web_console: WS frame type=1 len=14[0m
+[0;32mI (70289) web_console: WS recv: 'SET:MTX_BRT:37' (len=14)[0m
+[0;32mI (70289) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:37'[0m
+[0;32mI (70299) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 33%[0m
+[0;32mI (70299) RIG: WebSocket command: SET:MTX_BRT:37[0m
+[0;32mI (70309) web_console: cmd_handler returned successfully[0m
+[0;32mI (70319) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70319) web_console: WS frame type=1 len=14[0m
+[0;32mI (70329) web_console: WS recv: 'SET:MTX_BRT:38' (len=14)[0m
+[0;32mI (70329) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:38'[0m
+[0;32mI (70339) RIG: WebSocket command: SET:MTX_BRT:38[0m
+[0;32mI (70349) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 34%[0m
+[0;32mI (70349) web_console: cmd_handler returned successfully[0m
+[0;32mI (70359) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70359) web_console: WS frame type=1 len=14[0m
+[0;32mI (70369) web_console: WS recv: 'SET:MTX_BRT:39' (len=14)[0m
+[0;32mI (70369) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:39'[0m
+[0;32mI (70379) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 34%[0m
+[0;32mI (70379) RIG: WebSocket command: SET:MTX_BRT:39[0m
+[0;32mI (70399) web_console: cmd_handler returned successfully[0m
+[0;32mI (70399) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70399) web_console: WS frame type=1 len=14[0m
+[0;32mI (70399) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (70409) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:40'[0m
+[0;32mI (70419) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (70419) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 34%[0m
+[0;32mI (70429) web_console: cmd_handler returned successfully[0m
+[0;32mI (70439) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70439) web_console: WS frame type=1 len=14[0m
+[0;32mI (70439) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (70449) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:40'[0m
+[0;32mI (70449) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (70459) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 35%[0m
+[0;32mI (70459) web_console: cmd_handler returned successfully[0m
+[0;32mI (70469) web_console: WS recv attempt, fd=53[0m
+[0;32mI (70479) web_console: WS frame type=1 len=14[0m
+[0;32mI (70479) web_console: WS recv: 'SET:MTX_BRT:40' (len=14)[0m
+[0;32mI (70479) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:40'[0m
+[0;32mI (70489) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 35%[0m
+[0;32mI (70489) RIG: WebSocket command: SET:MTX_BRT:40[0m
+[0;32mI (70499) web_console: cmd_handler returned successfully[0m
+[0;32mI (70529) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 36%[0m
+[0;32mI (70549) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 37%[0m
+[0;32mI (70569) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 37%[0m
+[0;32mI (70589) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 38%[0m
+[0;32mI (70609) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 39%[0m
+[0;32mI (70629) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 40%[0m
+[0;32mI (70649) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 40%[0m
+[0;32mI (70669) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 40%[0m
+[0;32mI (70669) web_console: Sent 29 events, discarded 29 events for page_type=2[0m
+[0;32mI (70669) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (70679) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (71129) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (71519) web_console: Serving /console (2819 bytes)[0m
+[0;32mI (71549) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (72279) wifi:<ba-add>idx:5 (ifx:1, 56:72:f2:44:90:2b), tid:5, ssn:0, winSize:64[0m
+[0;32mI (72599) web_console: WS recv attempt, fd=53[0m
+[0;32mI (72599) web_console: WS frame type=1 len=17[0m
+[0;32mI (72599) web_console: WS recv: 'PAGE_TYPE:console' (len=17)[0m
+[0;32mI (72599) web_console: Page type set to CONSOLE[0m
+[0;32mI (76089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (81089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (81259) web_console: Serving /console (2819 bytes)[0m
+[0;32mI (81289) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (82339) web_console: WS recv attempt, fd=53[0m
+[0;32mI (82339) web_console: WS frame type=1 len=17[0m
+[0;32mI (82339) web_console: WS recv: 'PAGE_TYPE:console' (len=17)[0m
+[0;32mI (82339) web_console: Page type set to CONSOLE[0m
+[0;32mI (82419) web_console: Serving /settings (8057 bytes)[0m
+[0;32mI (82449) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (83499) web_console: WS recv attempt, fd=53[0m
+[0;32mI (83499) web_console: WS frame type=1 len=18[0m
+[0;32mI (83499) web_console: WS recv: 'PAGE_TYPE:settings' (len=18)[0m
+[0;32mI (83499) web_console: Page type set to SETTINGS[0m
+[0;32mI (83509) web_console: WS recv attempt, fd=53[0m
+[0;32mI (83509) web_console: WS frame type=1 len=16[0m
+[0;32mI (83509) web_console: WS recv: 'SETTINGS_REQUEST' (len=16)[0m
+[0;32mI (83519) web_console: Calling cmd_handler at 0x4200e570 with 'SETTINGS_REQUEST'[0m
+[0;32mI (83529) RIG: WebSocket command: SETTINGS_REQUEST[0m
+[0;32mI (83529) RIG: Sending current settings to web[0m
+[0;32mI (83529) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (83529) web_console: cmd_handler returned successfully[0m
+[0;32mI (83679) web_console: Sent 7 events, discarded 0 events for page_type=2[0m
+[0;32mI (83679) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (83679) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (84529) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84529) web_console: WS frame type=1 len=14[0m
+[0;32mI (84529) web_console: WS recv: 'SET:MTX_BRT:41' (len=14)[0m
+[0;32mI (84529) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:41'[0m
+[0;32mI (84539) RIG: WebSocket command: SET:MTX_BRT:41[0m
+[0;32mI (84549) web_console: cmd_handler returned successfully[0m
+[0;32mI (84549) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84569) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 41%[0m
+[0;32mI (84569) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (84569) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84579) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (84639) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84639) web_console: WS frame type=1 len=14[0m
+[0;32mI (84639) web_console: WS recv: 'SET:MTX_BRT:42' (len=14)[0m
+[0;32mI (84639) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:42'[0m
+[0;32mI (84649) RIG: WebSocket command: SET:MTX_BRT:42[0m
+[0;32mI (84659) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84659) web_console: cmd_handler returned successfully[0m
+[0;32mI (84659) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84669) web_console: WS frame type=1 len=14[0m
+[0;32mI (84669) web_console: WS recv: 'SET:MTX_BRT:43' (len=14)[0m
+[0;32mI (84679) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:43'[0m
+[0;32mI (84679) RIG: WebSocket command: SET:MTX_BRT:43[0m
+[0;32mI (84689) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 42%[0m
+[0;32mI (84699) web_console: cmd_handler returned successfully[0m
+[0;32mI (84699) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84709) web_console: WS frame type=1 len=14[0m
+[0;32mI (84709) web_console: WS recv: 'SET:MTX_BRT:44' (len=14)[0m
+[0;32mI (84709) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:44'[0m
+[0;32mI (84719) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 43%[0m
+[0;32mI (84719) RIG: WebSocket command: SET:MTX_BRT:44[0m
+[0;32mI (84729) web_console: Sent 2 events, discarded 2 events for page_type=2[0m
+[0;32mI (84739) web_console: cmd_handler returned successfully[0m
+[0;32mI (84749) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84749) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84759) web_console: WS frame type=1 len=14[0m
+[0;32mI (84759) web_console: WS recv: 'SET:MTX_BRT:45' (len=14)[0m
+[0;32mI (84759) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:45'[0m
+[0;32mI (84769) RIG: WebSocket command: SET:MTX_BRT:45[0m
+[0;32mI (84779) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 44%[0m
+[0;32mI (84779) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (84789) web_console: cmd_handler returned successfully[0m
+[0;32mI (84799) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84799) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84809) web_console: WS frame type=1 len=14[0m
+[0;32mI (84809) web_console: WS recv: 'SET:MTX_BRT:46' (len=14)[0m
+[0;32mI (84809) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:46'[0m
+[0;32mI (84819) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 45%[0m
+[0;32mI (84819) RIG: WebSocket command: SET:MTX_BRT:46[0m
+[0;32mI (84829) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (84839) web_console: cmd_handler returned successfully[0m
+[0;32mI (84849) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84849) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84859) web_console: WS frame type=1 len=14[0m
+[0;32mI (84859) web_console: WS recv: 'SET:MTX_BRT:47' (len=14)[0m
+[0;32mI (84859) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:47'[0m
+[0;32mI (84869) RIG: WebSocket command: SET:MTX_BRT:47[0m
+[0;32mI (84879) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 46%[0m
+[0;32mI (84879) web_console: Sent 1 events, discarded 1 events for page_type=2[0m
+[0;32mI (84889) web_console: cmd_handler returned successfully[0m
+[0;32mI (84899) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (84899) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84909) web_console: WS frame type=1 len=14[0m
+[0;32mI (84909) web_console: WS recv: 'SET:MTX_BRT:47' (len=14)[0m
+[0;32mI (84909) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:47'[0m
+[0;32mI (84919) RIG: WebSocket command: SET:MTX_BRT:47[0m
+[0;32mI (84929) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 47%[0m
+[0;32mI (84929) web_console: cmd_handler returned successfully[0m
+[0;32mI (84939) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84949) web_console: WS frame type=1 len=14[0m
+[0;32mI (84949) web_console: WS recv: 'SET:MTX_BRT:48' (len=14)[0m
+[0;32mI (84949) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:48'[0m
+[0;32mI (84959) RIG: WebSocket command: SET:MTX_BRT:48[0m
+[0;32mI (84959) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 47%[0m
+[0;32mI (84969) web_console: cmd_handler returned successfully[0m
+[0;32mI (84979) web_console: WS recv attempt, fd=53[0m
+[0;32mI (84979) web_console: WS frame type=1 len=14[0m
+[0;32mI (84989) web_console: WS recv: 'SET:MTX_BRT:48' (len=14)[0m
+[0;32mI (84989) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:48'[0m
+[0;32mI (84999) RIG: WebSocket command: SET:MTX_BRT:48[0m
+[0;32mI (84999) web_console: cmd_handler returned successfully[0m
+[0;32mI (85009) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85009) web_console: WS frame type=1 len=14[0m
+[0;32mI (85019) web_console: WS recv: 'SET:MTX_BRT:49' (len=14)[0m
+[0;32mI (85019) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:49'[0m
+[0;32mI (85029) RIG: WebSocket command: SET:MTX_BRT:49[0m
+[0;32mI (85009) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 48%[0m
+[0;32mI (85039) web_console: cmd_handler returned successfully[0m
+[0;32mI (85049) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85049) web_console: WS frame type=1 len=14[0m
+[0;32mI (85049) web_console: WS recv: 'SET:MTX_BRT:49' (len=14)[0m
+[0;32mI (85059) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:49'[0m
+[0;32mI (85069) RIG: WebSocket command: SET:MTX_BRT:49[0m
+[0;32mI (85069) web_console: cmd_handler returned successfully[0m
+[0;32mI (85079) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85079) web_console: WS frame type=1 len=14[0m
+[0;32mI (85079) web_console: WS recv: 'SET:MTX_BRT:50' (len=14)[0m
+[0;32mI (85089) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:50'[0m
+[0;32mI (85089) RIG: WebSocket command: SET:MTX_BRT:50[0m
+[0;32mI (85109) web_console: cmd_handler returned successfully[0m
+[0;32mI (85109) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85109) web_console: WS frame type=1 len=14[0m
+[0;32mI (85109) web_console: WS recv: 'SET:MTX_BRT:51' (len=14)[0m
+[0;32mI (85119) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:51'[0m
+[0;32mI (85119) RIG: WebSocket command: SET:MTX_BRT:51[0m
+[0;32mI (85119) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 48%[0m
+[0;32mI (85139) web_console: cmd_handler returned successfully[0m
+[0;32mI (85139) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85149) web_console: WS frame type=1 len=14[0m
+[0;32mI (85149) web_console: WS recv: 'SET:MTX_BRT:51' (len=14)[0m
+[0;32mI (85159) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:51'[0m
+[0;32mI (85159) RIG: WebSocket command: SET:MTX_BRT:51[0m
+[0;32mI (85169) web_console: cmd_handler returned successfully[0m
+[0;32mI (85169) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85179) web_console: WS frame type=1 len=14[0m
+[0;32mI (85179) web_console: WS recv: 'SET:MTX_BRT:52' (len=14)[0m
+[0;32mI (85189) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:52'[0m
+[0;32mI (85189) RIG: WebSocket command: SET:MTX_BRT:52[0m
+[0;32mI (85199) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 49%[0m
+[0;32mI (85209) web_console: cmd_handler returned successfully[0m
+[0;32mI (85209) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85219) web_console: WS frame type=1 len=14[0m
+[0;32mI (85219) web_console: WS recv: 'SET:MTX_BRT:53' (len=14)[0m
+[0;32mI (85219) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:53'[0m
+[0;32mI (85229) RIG: WebSocket command: SET:MTX_BRT:53[0m
+[0;32mI (85229) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 49%[0m
+[0;32mI (85239) web_console: cmd_handler returned successfully[0m
+[0;32mI (85259) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85259) web_console: WS frame type=1 len=14[0m
+[0;32mI (85259) web_console: WS recv: 'SET:MTX_BRT:53' (len=14)[0m
+[0;32mI (85259) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:53'[0m
+[0;32mI (85269) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 50%[0m
+[0;32mI (85269) RIG: WebSocket command: SET:MTX_BRT:53[0m
+[0;32mI (85279) web_console: cmd_handler returned successfully[0m
+[0;32mI (85289) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85289) web_console: WS frame type=1 len=14[0m
+[0;32mI (85289) web_console: WS recv: 'SET:MTX_BRT:54' (len=14)[0m
+[0;32mI (85299) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:54'[0m
+[0;32mI (85309) RIG: WebSocket command: SET:MTX_BRT:54[0m
+[0;32mI (85319) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 51%[0m
+[0;32mI (85319) web_console: cmd_handler returned successfully[0m
+[0;32mI (85329) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85329) web_console: WS frame type=1 len=14[0m
+[0;32mI (85329) web_console: WS recv: 'SET:MTX_BRT:54' (len=14)[0m
+[0;32mI (85339) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:54'[0m
+[0;32mI (85339) RIG: WebSocket command: SET:MTX_BRT:54[0m
+[0;32mI (85349) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 51%[0m
+[0;32mI (85349) web_console: cmd_handler returned successfully[0m
+[0;32mI (85359) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85369) web_console: WS frame type=1 len=14[0m
+[0;32mI (85369) web_console: WS recv: 'SET:MTX_BRT:55' (len=14)[0m
+[0;32mI (85369) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:55'[0m
+[0;32mI (85379) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 52%[0m
+[0;32mI (85379) RIG: WebSocket command: SET:MTX_BRT:55[0m
+[0;32mI (85399) web_console: cmd_handler returned successfully[0m
+[0;32mI (85399) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85409) web_console: WS frame type=1 len=14[0m
+[0;32mI (85409) web_console: WS recv: 'SET:MTX_BRT:56' (len=14)[0m
+[0;32mI (85409) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:56'[0m
+[0;32mI (85419) RIG: WebSocket command: SET:MTX_BRT:56[0m
+[0;32mI (85429) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 53%[0m
+[0;32mI (85429) web_console: cmd_handler returned successfully[0m
+[0;32mI (85439) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85439) web_console: WS frame type=1 len=14[0m
+[0;32mI (85449) web_console: WS recv: 'SET:MTX_BRT:57' (len=14)[0m
+[0;32mI (85449) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:57'[0m
+[0;32mI (85459) RIG: WebSocket command: SET:MTX_BRT:57[0m
+[0;32mI (85469) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 53%[0m
+[0;32mI (85469) web_console: cmd_handler returned successfully[0m
+[0;32mI (85479) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85479) web_console: WS frame type=1 len=14[0m
+[0;32mI (85479) web_console: WS recv: 'SET:MTX_BRT:58' (len=14)[0m
+[0;32mI (85489) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:58'[0m
+[0;32mI (85499) RIG: WebSocket command: SET:MTX_BRT:58[0m
+[0;32mI (85499) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 54%[0m
+[0;32mI (85509) web_console: cmd_handler returned successfully[0m
+[0;32mI (85519) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85519) web_console: WS frame type=1 len=14[0m
+[0;32mI (85519) web_console: WS recv: 'SET:MTX_BRT:58' (len=14)[0m
+[0;32mI (85529) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:58'[0m
+[0;32mI (85529) RIG: WebSocket command: SET:MTX_BRT:58[0m
+[0;32mI (85539) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 54%[0m
+[0;32mI (85539) web_console: cmd_handler returned successfully[0m
+[0;32mI (85549) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85559) web_console: WS frame type=1 len=14[0m
+[0;32mI (85559) web_console: WS recv: 'SET:MTX_BRT:59' (len=14)[0m
+[0;32mI (85559) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:59'[0m
+[0;32mI (85569) RIG: WebSocket command: SET:MTX_BRT:59[0m
+[0;32mI (85579) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 55%[0m
+[0;32mI (85589) web_console: cmd_handler returned successfully[0m
+[0;32mI (85589) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85589) web_console: WS frame type=1 len=14[0m
+[0;32mI (85599) web_console: WS recv: 'SET:MTX_BRT:59' (len=14)[0m
+[0;32mI (85599) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:59'[0m
+[0;32mI (85609) RIG: WebSocket command: SET:MTX_BRT:59[0m
+[0;32mI (85609) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 56%[0m
+[0;32mI (85609) web_console: cmd_handler returned successfully[0m
+[0;32mI (85629) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85629) web_console: WS frame type=1 len=14[0m
+[0;32mI (85629) web_console: WS recv: 'SET:MTX_BRT:60' (len=14)[0m
+[0;32mI (85639) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:60'[0m
+[0;32mI (85649) RIG: WebSocket command: SET:MTX_BRT:60[0m
+[0;32mI (85659) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 57%[0m
+[0;32mI (85659) web_console: cmd_handler returned successfully[0m
+[0;32mI (85669) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85669) web_console: WS frame type=1 len=14[0m
+[0;32mI (85669) web_console: WS recv: 'SET:MTX_BRT:60' (len=14)[0m
+[0;32mI (85679) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:60'[0m
+[0;32mI (85689) RIG: WebSocket command: SET:MTX_BRT:60[0m
+[0;32mI (85689) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 58%[0m
+[0;32mI (85689) web_console: cmd_handler returned successfully[0m
+[0;32mI (85709) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85709) web_console: WS frame type=1 len=14[0m
+[0;32mI (85709) web_console: WS recv: 'SET:MTX_BRT:61' (len=14)[0m
+[0;32mI (85719) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:61'[0m
+[0;32mI (85719) RIG: WebSocket command: SET:MTX_BRT:61[0m
+[0;32mI (85729) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 58%[0m
+[0;32mI (85739) web_console: cmd_handler returned successfully[0m
+[0;32mI (85739) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85749) web_console: WS frame type=1 len=14[0m
+[0;32mI (85749) web_console: WS recv: 'SET:MTX_BRT:62' (len=14)[0m
+[0;32mI (85749) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:62'[0m
+[0;32mI (85759) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 59%[0m
+[0;32mI (85759) RIG: WebSocket command: SET:MTX_BRT:62[0m
+[0;32mI (85779) web_console: cmd_handler returned successfully[0m
+[0;32mI (85779) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85779) web_console: WS frame type=1 len=14[0m
+[0;32mI (85789) web_console: WS recv: 'SET:MTX_BRT:63' (len=14)[0m
+[0;32mI (85789) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:63'[0m
+[0;32mI (85799) RIG: WebSocket command: SET:MTX_BRT:63[0m
+[0;32mI (85809) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 59%[0m
+[0;32mI (85809) web_console: cmd_handler returned successfully[0m
+[0;32mI (85819) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85819) web_console: WS frame type=1 len=14[0m
+[0;32mI (85819) web_console: WS recv: 'SET:MTX_BRT:64' (len=14)[0m
+[0;32mI (85829) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:64'[0m
+[0;32mI (85839) RIG: WebSocket command: SET:MTX_BRT:64[0m
+[0;32mI (85839) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 60%[0m
+[0;32mI (85849) web_console: cmd_handler returned successfully[0m
+[0;32mI (85859) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85859) web_console: WS frame type=1 len=14[0m
+[0;32mI (85859) web_console: WS recv: 'SET:MTX_BRT:65' (len=14)[0m
+[0;32mI (85869) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:65'[0m
+[0;32mI (85869) RIG: WebSocket command: SET:MTX_BRT:65[0m
+[0;32mI (85879) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 60%[0m
+[0;32mI (85889) web_console: cmd_handler returned successfully[0m
+[0;32mI (85899) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85899) web_console: WS frame type=1 len=14[0m
+[0;32mI (85899) web_console: WS recv: 'SET:MTX_BRT:66' (len=14)[0m
+[0;32mI (85909) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:66'[0m
+[0;32mI (85909) RIG: WebSocket command: SET:MTX_BRT:66[0m
+[0;32mI (85919) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 61%[0m
+[0;32mI (85929) web_console: cmd_handler returned successfully[0m
+[0;32mI (85929) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85939) web_console: WS frame type=1 len=14[0m
+[0;32mI (85939) web_console: WS recv: 'SET:MTX_BRT:66' (len=14)[0m
+[0;32mI (85939) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:66'[0m
+[0;32mI (85949) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 62%[0m
+[0;32mI (85949) RIG: WebSocket command: SET:MTX_BRT:66[0m
+[0;32mI (85959) web_console: cmd_handler returned successfully[0m
+[0;32mI (85969) web_console: WS recv attempt, fd=53[0m
+[0;32mI (85969) web_console: WS frame type=1 len=14[0m
+[0;32mI (85979) web_console: WS recv: 'SET:MTX_BRT:67' (len=14)[0m
+[0;32mI (85979) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:67'[0m
+[0;32mI (85989) RIG: WebSocket command: SET:MTX_BRT:67[0m
+[0;32mI (85989) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 63%[0m
+[0;32mI (85999) web_console: cmd_handler returned successfully[0m
+[0;32mI (86029) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 64%[0m
+[0;32mI (86049) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 65%[0m
+[0;32mI (86069) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 66%[0m
+[0;32mI (86069) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86069) web_console: WS frame type=1 len=14[0m
+[0;32mI (86079) web_console: WS recv: 'SET:MTX_BRT:67' (len=14)[0m
+[0;32mI (86079) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:67'[0m
+[0;32mI (86089) RIG: WebSocket command: SET:MTX_BRT:67[0m
+[0;32mI (86089) web_console: cmd_handler returned successfully[0m
+[0;32mI (86099) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86099) web_console: WS frame type=1 len=14[0m
+[0;32mI (86109) web_console: WS recv: 'SET:MTX_BRT:68' (len=14)[0m
+[0;32mI (86109) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:68'[0m
+[0;32mI (86119) RIG: WebSocket command: SET:MTX_BRT:68[0m
+[0;32mI (86129) web_console: cmd_handler returned successfully[0m
+[0;32mI (86129) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86129) web_console: WS frame type=1 len=14[0m
+[0;32mI (86129) web_console: WS recv: 'SET:MTX_BRT:69' (len=14)[0m
+[0;32mI (86139) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:69'[0m
+[0;32mI (86149) RIG: WebSocket command: SET:MTX_BRT:69[0m
+[0;32mI (86139) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 66%[0m
+[0;32mI (86209) web_console: cmd_handler returned successfully[0m
+[0;32mI (86209) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86209) web_console: WS frame type=1 len=14[0m
+[0;32mI (86209) web_console: WS recv: 'SET:MTX_BRT:69' (len=14)[0m
+[0;32mI (86209) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:69'[0m
+[0;32mI (86219) RIG: WebSocket command: SET:MTX_BRT:69[0m
+[0;32mI (86229) web_console: cmd_handler returned successfully[0m
+[0;32mI (86229) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 67%[0m
+[0;32mI (86229) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86239) web_console: WS frame type=1 len=14[0m
+[0;32mI (86249) web_console: WS recv: 'SET:MTX_BRT:70' (len=14)[0m
+[0;32mI (86249) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:70'[0m
+[0;32mI (86259) RIG: WebSocket command: SET:MTX_BRT:70[0m
+[0;32mI (86269) web_console: cmd_handler returned successfully[0m
+[0;32mI (86269) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86269) web_console: WS frame type=1 len=14[0m
+[0;32mI (86279) web_console: WS recv: 'SET:MTX_BRT:70' (len=14)[0m
+[0;32mI (86279) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 67%[0m
+[0;32mI (86279) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:70'[0m
+[0;32mI (86299) RIG: WebSocket command: SET:MTX_BRT:70[0m
+[0;32mI (86299) web_console: cmd_handler returned successfully[0m
+[0;32mI (86309) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86309) web_console: WS frame type=1 len=14[0m
+[0;32mI (86309) web_console: WS recv: 'SET:MTX_BRT:71' (len=14)[0m
+[0;32mI (86319) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:71'[0m
+[0;32mI (86319) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 68%[0m
+[0;32mI (86329) RIG: WebSocket command: SET:MTX_BRT:71[0m
+[0;32mI (86349) web_console: cmd_handler returned successfully[0m
+[0;32mI (86349) web_console: WS recv attempt, fd=53[0m
+[0;32mI (86349) web_console: WS frame type=1 len=14[0m
+[0;32mI (86349) web_console: WS recv: 'SET:MTX_BRT:71' (len=14)[0m
+[0;32mI (86359) web_console: Calling cmd_handler at 0x4200e570 with 'SET:MTX_BRT:71'[0m
+[0;32mI (86359) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 69%[0m
+[0;32mI (86359) RIG: WebSocket command: SET:MTX_BRT:71[0m
+[0;32mI (86379) web_console: cmd_handler returned successfully[0m
+[0;32mI (86359) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (86399) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 69%[0m
+[0;32mI (86419) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 70%[0m
+[0;32mI (86449) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 70%[0m
+[0;32mI (86469) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 71%[0m
+[0;32mI (86489) web_console: Discarded message for page_type=2: CONSOLE:Matrix brightness set to 71%[0m
+[0;32mI (86489) web_console: Sent 39 events, discarded 39 events for page_type=2[0m
+[0;32mI (86489) web_console: Starting event flush to fd=53, page_type=2[0m
+[0;32mI (86499) web_console: Ring buffer empty, no events to send[0m
+[0;32mI (91089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (91949) web_console: Serving /console (2819 bytes)[0m
+[0;32mI (91989) web_console: WS handshake on fd=53, ring buffer has 0 events[0m
+[0;32mI (93039) web_console: WS recv attempt, fd=53[0m
+[0;32mI (93039) web_console: WS frame type=1 len=17[0m
+[0;32mI (93039) web_console: WS recv: 'PAGE_TYPE:console' (len=17)[0m
+[0;32mI (93039) web_console: Page type set to CONSOLE[0m
+[0;32mI (96089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (101089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (106089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (111089) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (116069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (121069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (126069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (131069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (136069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (141069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (146069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (151069) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (151959) wifi:station: 56:72:f2:44:90:2b leave, AID = 1, reason = 8, bss_flags is 33721443, bss:0x3fcc0654[0m
+[0;32mI (151959) wifi:new:<1,0>, old:<1,0>, ap:<1,0>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (151959) wifi:<ba-del>idx:3, tid:0[0m
+[0;32mI (151969) wifi:<ba-del>idx:4, tid:1[0m
+[0;32mI (151969) wifi:<ba-del>idx:5, tid:5[0m
+[0;32mI (151969) wifi:<ba-del>idx:2, tid:6[0m
+[0;32mI (151979) web_console: Station 56:72:f2:44:90:2b left[0m
+[0;32mI (151989) wifi:new:<1,1>, old:<1,0>, ap:<1,1>, sta:<255,255>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (156049) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (161049) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (166049) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (171049) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (176049) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (181049) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;33mW (182949) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (183949) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (183949) web_console: WS recv attempt, fd=53[0m
+[0;33mW (183949) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (183949) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (183959) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;33mW (184449) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;32mI (184449) web_console: WS recv attempt, fd=52[0m
+[0;33mW (184449) httpd_txrx: httpd_sock_err: error in recv : 113[0m
+[0;33mW (184449) httpd_ws: httpd_ws_recv_frame: WS frame is not properly masked.[0m
+[1;31mE (184459) web_console: WS recv failed: ESP_ERR_INVALID_STATE[0m
+[0;32mI (186029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (191029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (196029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (201029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (206029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (211029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (216029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (221029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (226029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (231029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (236029) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (241009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (246009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (251009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (256009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (261009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (266009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (271009) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (275989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (280989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (285989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (290989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (295989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (300989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (305989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (310989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (315989) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (320969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (325969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (330969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (335969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (340969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (345969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (350969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (355969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (360969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m
+[0;32mI (365969) RIG: Mega status: CONTROLLER_OK:DualShock connected.[0m

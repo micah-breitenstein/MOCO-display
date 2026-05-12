@@ -36,6 +36,8 @@ extern const uint8_t landing_html_start[]   asm("_binary_landing_html_start");
 extern const uint8_t landing_html_end[]     asm("_binary_landing_html_end");
 extern const uint8_t timelapse_html_start[] asm("_binary_timelapse_html_start");
 extern const uint8_t timelapse_html_end[]   asm("_binary_timelapse_html_end");
+extern const uint8_t bounce_html_start[]    asm("_binary_bounce_html_start");
+extern const uint8_t bounce_html_end[]      asm("_binary_bounce_html_end");
 extern const uint8_t settings_html_start[]  asm("_binary_settings_html_start");
 extern const uint8_t settings_html_end[]    asm("_binary_settings_html_end");
 
@@ -54,6 +56,7 @@ typedef enum {
     PAGE_TYPE_CONSOLE = 1,
     PAGE_TYPE_SETTINGS = 2,
     PAGE_TYPE_TIMELAPSE = 3,
+    PAGE_TYPE_BOUNCE = 4,
 } page_type_t;
 
 static httpd_handle_t    s_server = NULL;
@@ -145,6 +148,24 @@ static esp_err_t timelapse_handler(httpd_req_t *req)
     esp_err_t ret = httpd_resp_send(req, data, len);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to send timelapse page: %s", esp_err_to_name(ret));
+    }
+    return ret;
+}
+
+/* Bounce page handler */
+static esp_err_t bounce_handler(httpd_req_t *req)
+{
+    const char *data = (const char *)bounce_html_start;
+    size_t      len  = (size_t)(bounce_html_end - bounce_html_start);
+    
+    ESP_LOGI(TAG, "Serving /bounce (%u bytes)", (unsigned)len);
+    
+    httpd_resp_set_type(req, "text/html; charset=utf-8");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    
+    esp_err_t ret = httpd_resp_send(req, data, len);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send bounce page: %s", esp_err_to_name(ret));
     }
     return ret;
 }
@@ -271,6 +292,10 @@ static esp_err_t ws_handler(httpd_req_t *req)
         } else if (strncmp((char *)buf, "PAGE:TIMELAPSE", 14) == 0) {
             s_page_type = PAGE_TYPE_TIMELAPSE;
             ESP_LOGI(TAG, "Page identified as TIMELAPSE, not flushing buffered events (they're preserved for console)");
+            return ESP_OK;
+        } else if (strncmp((char *)buf, "PAGE:BOUNCE", 11) == 0) {
+            s_page_type = PAGE_TYPE_BOUNCE;
+            ESP_LOGI(TAG, "Page identified as BOUNCE, not flushing buffered events (they're preserved for console)");
             return ESP_OK;
         }
         
@@ -493,6 +518,13 @@ static void start_http_server(void)
         .handler = timelapse_handler,
     };
     httpd_register_uri_handler(s_server, &timelapse_uri);
+
+    static const httpd_uri_t bounce_uri = {
+        .uri     = "/bounce",
+        .method  = HTTP_GET,
+        .handler = bounce_handler,
+    };
+    httpd_register_uri_handler(s_server, &bounce_uri);
 
     static const httpd_uri_t settings_uri = {
         .uri     = "/settings",

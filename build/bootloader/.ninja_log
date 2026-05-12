@@ -1,129 +1,315 @@
 # ninja log v6
-4	37	1778307729886741271	esp-idf/log/CMakeFiles/__idf_log.dir/src/noos/util.c.obj	adc5c4b7122f91ff
-7	57	1778307729889609170	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_crc.c.obj	e5ded2e21e3b1096
-5	63	1778307729886892230	esp-idf/log/CMakeFiles/__idf_log.dir/src/util.c.obj	5c94b2ec5502983a
-37	70	1778307729919295882	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_longjmp.S.obj	f6035a9ce535b615
-4	81	1778307729886424393	esp-idf/log/CMakeFiles/__idf_log.dir/src/noos/log_lock.c.obj	51f21092cf82eb06
-8	83	1778307729890700930	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_efuse.c.obj	7b827ebacac6acda
-9	87	1778307729891018474	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_gpio.c.obj	121e9083740c782d
-5	88	1778307729887297026	esp-idf/log/CMakeFiles/__idf_log.dir/src/log_print.c.obj	aabdeee092969726
-7	93	1778307729889770463	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_uart.c.obj	8243a51d0d6441d6
-5	97	1778307729887032898	esp-idf/log/CMakeFiles/__idf_log.dir/src/log_format_text.c.obj	a7bc12e1b24567bf
-6	98	1778307729888478036	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_sys.c.obj	2a9418918096d7e7
-8	98	1778307729889959007	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_spiflash.c.obj	4920d08f172105d
-57	99	1778307729939092384	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_systimer.c.obj	76bf734f46dcae4d
-4	105	1778307729885977014	esp-idf/log/CMakeFiles/__idf_log.dir/src/noos/log_timestamp.c.obj	cedba68221ff1658
-4	107	1778307729886242558	esp-idf/log/CMakeFiles/__idf_log.dir/src/log_timestamp_common.c.obj	81dc6e9fe571e699
-6	109	1778307729888143866	esp-idf/log/CMakeFiles/__idf_log.dir/src/log.c.obj	f94bc859e3b29dbb
-81	112	1778307729963606635	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_cache_writeback_esp32s3.S.obj	fde2305411fbbf8c
-63	113	1778307729945473438	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_wdt.c.obj	38aca9165cb6e449
-70	126	1778307729952084161	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_cache_esp32s2_esp32s3.c.obj	65cf667f4945ccb7
-4	134	1778307729886585270	esp-idf/log/CMakeFiles/__idf_log.dir/src/buffer/log_buffers.c.obj	75d09d12f77b8ed
-94	167	1778307729976056532	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/esp_memory_utils.c.obj	1aefa8b9cb2b8022
-88	168	1778307729970847446	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/esp_cpu_intr.c.obj	a1a9d6ba2c24894d
-97	173	1778307729979662146	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/cpu_region_protect.c.obj	2fe8cb9a0ba44f9e
-109	181	1778307729991280246	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/chip_info.c.obj	f37f4001dc0889f7
-134	182	1778307730016029998	esp-idf/log/liblog.a	b7c07076fb71ad62
-113	184	1778307729995516198	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_table.c.obj	ebd9cb1f8994f806
-87	188	1778307729969863230	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/cpu.c.obj	6e4e96d80653e3fd
-112	189	1778307729994070519	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/esp_err.c.obj	7cd1ce7720216dc1
-126	196	1778307730008579351	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_fields.c.obj	7d98adbd5d3ca493
-83	201	1778307729965181148	esp-idf/esp_common/CMakeFiles/__idf_esp_common.dir/src/esp_err_to_name.c.obj	32c05fd3a0191ed7
-6	208	1778307729888640037	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_print.c.obj	49b6dd03b11bc16e
-98	214	1778307729980853407	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_clk_init.c.obj	4fb86b74521d528
-107	222	1778307729989524439	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_time.c.obj	93c13ec04758d416
-105	254	1778307729987758341	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_sleep.c.obj	2fa7140224672136
-167	257	1778307730049571617	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_rtc_calib.c.obj	2ecae2312925d072
-196	268	1778307730078101527	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_init.c.obj	c0f4a7e9c35120f1
-208	270	1778307730090440799	esp-idf/esp_rom/libesp_rom.a	845ab3e8adbbbcd7
-201	273	1778307730083536240	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_mem.c.obj	f9679ef33a6fa678
-168	275	1778307730049935496	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_utility.c.obj	d753594b1f6e9100
-222	277	1778307730104274417	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_efuse.c.obj	b08dd9102a7faf56
-214	278	1778307730096302808	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random.c.obj	ffe544d244a2db1c
-181	286	1778307730063105441	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_fields.c.obj	fee1f65f3ffaf8c2
-173	288	1778307730055658836	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_api.c.obj	eca964ac64efb2a2
-270	311	1778307730152608787	esp-idf/esp_common/libesp_common.a	7471a15fa425476e
-99	313	1778307729981397703	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_init.c.obj	fbb98d25a42a0d3e
-188	315	1778307730070729631	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common.c.obj	fb7080fcacaaa4ff
-184	320	1778307730066062841	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/efuse_controller/keys/with_key_purposes/esp_efuse_api_key.c.obj	a3f49f071d5af8b1
-258	326	1778307730139930637	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/secure_boot.c.obj	53afcfe72df1f70
-268	334	1778307730150629478	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random_esp32s3.c.obj	5f7598e3249a0db5
-254	337	1778307730136196063	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_encrypt.c.obj	4a216f25aefc4b7e
-98	338	1778307729980511487	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_clk.c.obj	741886934011329a
-189	340	1778307730071751890	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common_loader.c.obj	8f3ac580f051a2d0
-182	346	1778307730064893040	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_utility.c.obj	14e2f22f20fee78f
-287	349	1778307730168957301	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_partitions.c.obj	8e83e0fc4dc34027
-315	387	1778307730197518295	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_loader.c.obj	b709820cb7d9ec70
-275	389	1778307730157847331	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/flash_qio_mode.c.obj	bd1bb76d09d91990
-312	395	1778307730193953389	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_sha.c.obj	e7ec3d9b48684d26
-334	405	1778307730216575957	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_soc.c.obj	e79af9e429e77229
-277	413	1778307730159462303	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash_config_esp32s3.c.obj	7b746c684c5eda16
-326	423	1778307730208133218	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_console_loader.c.obj	ae66edb70acb5f84
-320	426	1778307730202779673	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_console.c.obj	bea442bcd3ab9137
-346	427	1778307730228261057	esp-idf/esp_bootloader_format/CMakeFiles/__idf_esp_bootloader_format.dir/esp_bootloader_desc.c.obj	988fc3fff0064979
-338	428	1778307730220619950	esp-idf/esp_hw_support/libesp_hw_support.a	2831c022fdc5bddb
-340	432	1778307730222644092	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_panic.c.obj	5c7f7955923a8c8c
-349	452	1778307730231530543	esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir/spi_flash_wrap.c.obj	8245990605fb4ada
-313	465	1778307730195064149	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_init.c.obj	607439da162e2c29
-389	487	1778307730271778553	esp-idf/hal/CMakeFiles/__idf_hal.dir/mpu_hal.c.obj	8690fdfdcc8cadd
-387	489	1778307730269856911	esp-idf/hal/CMakeFiles/__idf_hal.dir/hal_utils.c.obj	bdd520fb50113b54
-396	491	1778307730278156774	esp-idf/hal/CMakeFiles/__idf_hal.dir/efuse_hal.c.obj	592ae32365bd166a
-273	495	1778307730155090641	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash.c.obj	da6f71a27a2d1ddc
-337	497	1778307730219227355	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_esp32s3.c.obj	525cd4c2acafe5a2
-433	505	1778307730314952962	esp-idf/soc/CMakeFiles/__idf_soc.dir/dport_access_common.c.obj	aa60d90d449e6827
-427	510	1778307730309151496	esp-idf/soc/CMakeFiles/__idf_soc.dir/lldesc.c.obj	8a076b5192fdee3f
-405	511	1778307730287507145	esp-idf/hal/CMakeFiles/__idf_hal.dir/esp32s3/efuse_hal.c.obj	ba573fe4e86ddb3d
-288	514	1778307730170354355	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp_image_format.c.obj	e06617848a1a2ed0
-428	514	1778307730310680259	esp-idf/esp_system/libesp_system.a	29970d16da244ca7
-452	516	1778307730334295461	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/interrupts.c.obj	ca7b0de6bd52acdc
-465	520	1778307730347635283	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/gpio_periph.c.obj	7f2f177aa60ac7e7
-278	528	1778307730160666730	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_utility.c.obj	501876691dd445a7
-413	530	1778307730295695298	esp-idf/hal/CMakeFiles/__idf_hal.dir/mmu_hal.c.obj	e24ae3b1801ad51f
-489	531	1778307730371463569	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/adc_periph.c.obj	3297b0a0ed57cf2a
-495	534	1778307730377595413	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/gdma_periph.c.obj	c8fdbb19ed9ff6ff
-487	535	1778307730369770513	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/uart_periph.c.obj	3c325b69a86e5adc
-491	537	1778307730373384794	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/dedic_gpio_periph.c.obj	6a5f17068871b51
-514	541	1778307730396164488	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/sdm_periph.c.obj	727f05c18d98c870
-497	548	1778307730379072009	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/spi_periph.c.obj	a50239e6d1e80afc
-510	552	1778307730392081703	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/pcnt_periph.c.obj	cb54b3492ac132ec
-505	558	1778307730387887834	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/ledc_periph.c.obj	84618322422a4fc0
-531	563	1778307730413184758	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/lcd_periph.c.obj	fc5dcce76fe1955c
-423	565	1778307730305110753	esp-idf/hal/CMakeFiles/__idf_hal.dir/cache_hal.c.obj	f6f8a62676e90b72
-511	568	1778307730393592925	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/rmt_periph.c.obj	ee75ab1811e8d0fd
-541	569	1778307730423215135	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/touch_sensor_periph.c.obj	39ac4c7f0109081e
-516	570	1778307730398499800	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/i2s_periph.c.obj	5625d98d5741e858
-514	576	1778307730396814785	esp-idf/efuse/libefuse.a	8854aedd606305d9
-529	577	1778307730410965323	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/temperature_sensor_periph.c.obj	d5b99498a6006146
-548	579	1778307730430188612	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/twai_periph.c.obj	290c81f990ca17d9
-535	581	1778307730417860590	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/mpi_periph.c.obj	cf24c639d2f1a835
-520	581	1778307730402589043	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/i2c_periph.c.obj	f0ddc46ab4011e28
-534	583	1778307730416686246	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/mcpwm_periph.c.obj	fc4b9263d71a39ab
-537	583	1778307730418996724	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/sdmmc_periph.c.obj	3696882a8191261f
-552	590	1778307730434585524	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/wdt_periph.c.obj	d17d84008eba9263
-558	591	1778307730440556158	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/usb_dwc_periph.c.obj	e8472e7dc63cd5e5
-530	592	1778307730412267167	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/timer_periph.c.obj	3c426a3faea133a4
-577	593	1778307730474152695	project_elf_src_esp32s3.c	9098fb8db3dfa70f
-577	593	1778307730474152695	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/project_elf_src_esp32s3.c	9098fb8db3dfa70f
-565	595	1778307730447726928	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/cam_periph.c.obj	9daf07b2c36518b3
-569	601	1778307730451228041	esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/eri.c.obj	43ebd40f71f86785
-563	603	1778307730445443741	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/rtc_io_periph.c.obj	b0b16e1cbca302a2
-569	604	1778307730450906205	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/power_supply_periph.c.obj	80bbfbf1ba692004
-593	613	1778307730475254996	CMakeFiles/bootloader.elf.dir/project_elf_src_esp32s3.c.obj	3f50d481111f715c
-570	614	1778307730452890513	esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/xt_trax.c.obj	9f6f1e1b5ef5c63a
-579	623	1778307730461029333	esp-idf/main/CMakeFiles/__idf_main.dir/bootloader_start.c.obj	a0c4d0f5c5dba340
-576	637	1778307730458190475	esp-idf/bootloader_support/libbootloader_support.a	b5a188a4866f65e8
-637	663	1778307730519602582	esp-idf/esp_bootloader_format/libesp_bootloader_format.a	211bc2d8e25acf8c
-663	688	1778307730545257468	esp-idf/spi_flash/libspi_flash.a	e57c5f0dabe25e26
-688	719	1778307730570568475	esp-idf/hal/libhal.a	ccb336d2e9701486
-426	751	1778307730308608117	esp-idf/micro-ecc/CMakeFiles/__idf_micro-ecc.dir/uECC_verify_antifault.c.obj	e1098fef0029070b
-751	777	1778307730633673221	esp-idf/micro-ecc/libmicro-ecc.a	6a45006d0ba098ec
-777	830	1778307730659070479	esp-idf/soc/libsoc.a	8df44b0c6d4838d0
-830	857	1778307730712890813	esp-idf/xtensa/libxtensa.a	9bef90ecaf6cf8b5
-857	882	1778307730739135287	esp-idf/main/libmain.a	f0880f3d63321bcf
-882	933	1778307730764071958	bootloader.elf	7c7550f37fb3124
-933	1034	1778307730915547874	.bin_timestamp	2ceb6d040ae7d54b
-933	1034	1778307730915547874	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/.bin_timestamp	2ceb6d040ae7d54b
-1034	1072	1778307730916168380	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
-1034	1072	1778307730916168380	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
-4	42	1778307737881239588	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
-4	42	1778307737881239588	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+8	55	1778526899099977760	esp-idf/log/CMakeFiles/__idf_log.dir/src/noos/util.c.obj	adc5c4b7122f91ff
+10	62	1778526899102177025	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_crc.c.obj	e5ded2e21e3b1096
+8	84	1778526899100123636	esp-idf/log/CMakeFiles/__idf_log.dir/src/util.c.obj	5c94b2ec5502983a
+7	94	1778526899099482049	esp-idf/log/CMakeFiles/__idf_log.dir/src/noos/log_lock.c.obj	51f21092cf82eb06
+56	94	1778526899148154325	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_longjmp.S.obj	f6035a9ce535b615
+8	96	1778526899100407055	esp-idf/log/CMakeFiles/__idf_log.dir/src/log_print.c.obj	aabdeee092969726
+11	97	1778526899102949446	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_gpio.c.obj	121e9083740c782d
+11	99	1778526899102726945	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_efuse.c.obj	7b827ebacac6acda
+8	114	1778526899100261345	esp-idf/log/CMakeFiles/__idf_log.dir/src/log_format_text.c.obj	a7bc12e1b24567bf
+9	114	1778526899101347186	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_sys.c.obj	2a9418918096d7e7
+9	118	1778526899101003392	esp-idf/log/CMakeFiles/__idf_log.dir/src/log.c.obj	f94bc859e3b29dbb
+7	119	1778526899099300464	esp-idf/log/CMakeFiles/__idf_log.dir/src/log_timestamp_common.c.obj	81dc6e9fe571e699
+62	124	1778526899154215656	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_systimer.c.obj	76bf734f46dcae4d
+5	130	1778526899098757377	esp-idf/log/CMakeFiles/__idf_log.dir/src/noos/log_timestamp.c.obj	cedba68221ff1658
+10	131	1778526899102386526	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_uart.c.obj	8243a51d0d6441d6
+94	131	1778526899186412367	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_cache_writeback_esp32s3.S.obj	fde2305411fbbf8c
+10	135	1778526899102544402	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_spiflash.c.obj	4920d08f172105d
+8	146	1778526899099764926	esp-idf/log/CMakeFiles/__idf_log.dir/src/buffer/log_buffers.c.obj	75d09d12f77b8ed
+84	166	1778526899176659428	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_wdt.c.obj	38aca9165cb6e449
+114	187	1778526899206426998	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/cpu_region_protect.c.obj	2fe8cb9a0ba44f9e
+99	189	1778526899191673901	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/esp_cpu_intr.c.obj	a1a9d6ba2c24894d
+94	203	1778526899186031656	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_cache_esp32s2_esp32s3.c.obj	65cf667f4945ccb7
+114	203	1778526899206066579	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/esp_memory_utils.c.obj	1aefa8b9cb2b8022
+146	212	1778526899238107413	esp-idf/log/liblog.a	b7c07076fb71ad62
+97	213	1778526899189317927	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/cpu.c.obj	6e4e96d80653e3fd
+96	213	1778526899188218795	esp-idf/esp_common/CMakeFiles/__idf_esp_common.dir/src/esp_err_to_name.c.obj	32c05fd3a0191ed7
+131	213	1778526899223440817	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/chip_info.c.obj	f37f4001dc0889f7
+135	218	1778526899227189842	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/esp_err.c.obj	7cd1ce7720216dc1
+10	221	1778526899101984898	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_print.c.obj	49b6dd03b11bc16e
+166	238	1778526899258178752	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_table.c.obj	ebd9cb1f8994f806
+119	245	1778526899211553448	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_clk_init.c.obj	4fb86b74521d528
+131	273	1778526899222823271	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_time.c.obj	93c13ec04758d416
+221	295	1778526899313581364	esp-idf/esp_rom/libesp_rom.a	845ab3e8adbbbcd7
+187	302	1778526899278923596	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_fields.c.obj	7d98adbd5d3ca493
+130	310	1778526899222490269	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_sleep.c.obj	2fa7140224672136
+245	312	1778526899336750641	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_mem.c.obj	f9679ef33a6fa678
+118	314	1778526899210377148	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_clk.c.obj	741886934011329a
+212	322	1778526899304072511	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_fields.c.obj	fee1f65f3ffaf8c2
+189	328	1778526899281520072	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_rtc_calib.c.obj	2ecae2312925d072
+238	330	1778526899330144431	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_init.c.obj	c0f4a7e9c35120f1
+203	332	1778526899295172452	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32s3/esp_efuse_utility.c.obj	d753594b1f6e9100
+273	336	1778526899365603954	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random.c.obj	ffe544d244a2db1c
+124	343	1778526899216427146	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32s3/rtc_init.c.obj	fbb98d25a42a0d3e
+203	345	1778526899295564955	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_api.c.obj	eca964ac64efb2a2
+213	355	1778526899305229935	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/efuse_controller/keys/with_key_purposes/esp_efuse_api_key.c.obj	a3f49f071d5af8b1
+296	356	1778526899387851225	esp-idf/esp_common/libesp_common.a	7471a15fa425476e
+218	359	1778526899310524095	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common_loader.c.obj	8f3ac580f051a2d0
+302	370	1778526899394011473	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_efuse.c.obj	b08dd9102a7faf56
+213	373	1778526899304759223	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_utility.c.obj	14e2f22f20fee78f
+213	383	1778526899305533353	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common.c.obj	fb7080fcacaaa4ff
+318	409	1778526899410041911	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random_esp32s3.c.obj	5f7598e3249a0db5
+312	414	1778526899404121581	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/secure_boot.c.obj	53afcfe72df1f70
+356	419	1778526899447701408	esp-idf/esp_hw_support/libesp_hw_support.a	2831c022fdc5bddb
+359	428	1778526899451056804	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_loader.c.obj	b709820cb7d9ec70
+336	429	1778526899427973029	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_partitions.c.obj	8e83e0fc4dc34027
+383	439	1778526899475352921	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_soc.c.obj	e79af9e429e77229
+346	441	1778526899437681967	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_sha.c.obj	e7ec3d9b48684d26
+310	452	1778526899402228694	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_encrypt.c.obj	4a216f25aefc4b7e
+373	452	1778526899464929062	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_console_loader.c.obj	ae66edb70acb5f84
+420	462	1778526899511710409	esp-idf/esp_system/libesp_system.a	29970d16da244ca7
+328	466	1778526899419743892	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/flash_qio_mode.c.obj	bd1bb76d09d91990
+370	483	1778526899462645005	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_console.c.obj	bea442bcd3ab9137
+428	488	1778526899520607842	esp-idf/esp_bootloader_format/CMakeFiles/__idf_esp_bootloader_format.dir/esp_bootloader_desc.c.obj	988fc3fff0064979
+414	494	1778526899505883038	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_panic.c.obj	5c7f7955923a8c8c
+330	495	1778526899421787155	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash_config_esp32s3.c.obj	7b746c684c5eda16
+441	502	1778526899533443593	esp-idf/hal/CMakeFiles/__idf_hal.dir/mpu_hal.c.obj	8690fdfdcc8cadd
+439	511	1778526899530773742	esp-idf/hal/CMakeFiles/__idf_hal.dir/hal_utils.c.obj	bdd520fb50113b54
+452	526	1778526899543898870	esp-idf/hal/CMakeFiles/__idf_hal.dir/efuse_hal.c.obj	592ae32365bd166a
+462	527	1778526899553808726	esp-idf/efuse/libefuse.a	8854aedd606305d9
+355	535	1778526899447471281	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_init.c.obj	607439da162e2c29
+429	540	1778526899521672058	esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir/spi_flash_wrap.c.obj	8245990605fb4ada
+452	544	1778526899544302456	esp-idf/hal/CMakeFiles/__idf_hal.dir/esp32s3/efuse_hal.c.obj	ba573fe4e86ddb3d
+494	547	1778526899585801310	esp-idf/soc/CMakeFiles/__idf_soc.dir/lldesc.c.obj	8a076b5192fdee3f
+502	549	1778526899594003614	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/interrupts.c.obj	ca7b0de6bd52acdc
+466	554	1778526899558099296	esp-idf/hal/CMakeFiles/__idf_hal.dir/mmu_hal.c.obj	e24ae3b1801ad51f
+495	554	1778526899587591863	esp-idf/soc/CMakeFiles/__idf_soc.dir/dport_access_common.c.obj	aa60d90d449e6827
+322	557	1778526899414372898	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash.c.obj	da6f71a27a2d1ddc
+511	558	1778526899602996297	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/gpio_periph.c.obj	7f2f177aa60ac7e7
+409	562	1778526899501466634	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32s3/bootloader_esp32s3.c.obj	525cd4c2acafe5a2
+483	570	1778526899574927114	esp-idf/hal/CMakeFiles/__idf_hal.dir/cache_hal.c.obj	f6f8a62676e90b72
+526	581	1778526899618235397	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/uart_periph.c.obj	3c325b69a86e5adc
+528	582	1778526899619717073	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/adc_periph.c.obj	3297b0a0ed57cf2a
+540	584	1778526899632313322	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/gdma_periph.c.obj	c8fdbb19ed9ff6ff
+535	593	1778526899627417040	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/dedic_gpio_periph.c.obj	6a5f17068871b51
+554	599	1778526899646484373	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/sdm_periph.c.obj	727f05c18d98c870
+550	604	1778526899641752259	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/pcnt_periph.c.obj	cb54b3492ac132ec
+554	610	1778526899645954578	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/rmt_periph.c.obj	ee75ab1811e8d0fd
+562	610	1778526899653819754	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/temperature_sensor_periph.c.obj	d5b99498a6006146
+544	611	1778526899636290723	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/spi_periph.c.obj	a50239e6d1e80afc
+547	612	1778526899639433827	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/ledc_periph.c.obj	84618322422a4fc0
+557	612	1778526899649521352	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/i2s_periph.c.obj	5625d98d5741e858
+570	614	1778526899662276851	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/timer_periph.c.obj	3c426a3faea133a4
+581	616	1778526899672967671	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/lcd_periph.c.obj	fc5dcce76fe1955c
+558	618	1778526899649933062	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/i2c_periph.c.obj	f0ddc46ab4011e28
+604	632	1778526899696016655	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/touch_sensor_periph.c.obj	39ac4c7f0109081e
+584	635	1778526899675922566	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/mpi_periph.c.obj	cf24c639d2f1a835
+582	643	1778526899674562307	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/mcpwm_periph.c.obj	fc4b9263d71a39ab
+593	643	1778526899685408378	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/sdmmc_periph.c.obj	3696882a8191261f
+618	643	1778526899732360226	project_elf_src_esp32s3.c	9098fb8db3dfa70f
+618	643	1778526899732360226	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/project_elf_src_esp32s3.c	9098fb8db3dfa70f
+604	645	1778526899696555492	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/twai_periph.c.obj	290c81f990ca17d9
+332	651	1778526899424254546	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_utility.c.obj	501876691dd445a7
+612	655	1778526899704516753	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/power_supply_periph.c.obj	80bbfbf1ba692004
+614	662	1778526899706026012	esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/eri.c.obj	43ebd40f71f86785
+612	662	1778526899704254751	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/cam_periph.c.obj	9daf07b2c36518b3
+610	663	1778526899701993236	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/wdt_periph.c.obj	d17d84008eba9263
+610	663	1778526899702388239	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/usb_dwc_periph.c.obj	e8472e7dc63cd5e5
+611	673	1778526899702724366	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32s3/rtc_io_periph.c.obj	b0b16e1cbca302a2
+617	673	1778526899708717905	esp-idf/xtensa/CMakeFiles/__idf_xtensa.dir/xt_trax.c.obj	9f6f1e1b5ef5c63a
+344	674	1778526899435737538	esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp_image_format.c.obj	e06617848a1a2ed0
+643	681	1778526899735417663	CMakeFiles/bootloader.elf.dir/project_elf_src_esp32s3.c.obj	3f50d481111f715c
+632	691	1778526899724653468	esp-idf/main/CMakeFiles/__idf_main.dir/bootloader_start.c.obj	a0c4d0f5c5dba340
+674	738	1778526899765904487	esp-idf/bootloader_support/libbootloader_support.a	b5a188a4866f65e8
+738	766	1778526899830472992	esp-idf/esp_bootloader_format/libesp_bootloader_format.a	211bc2d8e25acf8c
+488	787	1778526899580522734	esp-idf/micro-ecc/CMakeFiles/__idf_micro-ecc.dir/uECC_verify_antifault.c.obj	e1098fef0029070b
+766	793	1778526899858137798	esp-idf/spi_flash/libspi_flash.a	e57c5f0dabe25e26
+793	834	1778526899885506768	esp-idf/hal/libhal.a	ccb336d2e9701486
+834	861	1778526899926410828	esp-idf/micro-ecc/libmicro-ecc.a	6a45006d0ba098ec
+862	925	1778526899953698214	esp-idf/soc/libsoc.a	8df44b0c6d4838d0
+925	955	1778526900017022878	esp-idf/xtensa/libxtensa.a	9bef90ecaf6cf8b5
+955	983	1778526900046766614	esp-idf/main/libmain.a	f0880f3d63321bcf
+983	1055	1778526900074918965	bootloader.elf	7c7550f37fb3124
+1055	1179	1778526900270172907	.bin_timestamp	2ceb6d040ae7d54b
+1055	1179	1778526900270172907	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/.bin_timestamp	2ceb6d040ae7d54b
+1179	1222	1778526900271163872	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+1179	1222	1778526900271163872	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778526906859810672	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778526906859810672	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	52	1778527465671838402	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	52	1778527465671838402	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778527472050945807	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778527472050945807	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778528090105868620	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778528090105868620	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	48	1778528094481326947	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	48	1778528094481326947	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778528107810359298	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778528107810359298	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778528113671167453	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778528113671167453	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778529133129138037	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778529133129138037	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	46	1778529143377434140	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	46	1778529143377434140	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778530504943419818	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778530504943419818	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778530514818937901	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778530514818937901	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778531196404529658	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778531196404529658	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	42	1778531206710925628	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	42	1778531206710925628	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778531376875233903	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778531376875233903	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778531399007542040	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778531399007542040	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	47	1778531433037791221	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	47	1778531433037791221	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778531443807174017	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778531443807174017	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	45	1778532095164215268	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	45	1778532095164215268	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	41	1778532101372778259	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	41	1778532101372778259	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	49	1778532968654043738	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	49	1778532968654043738	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778532974843414577	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778532974843414577	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778533139109896064	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778533139109896064	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778533144656851421	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778533144656851421	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778534014555438531	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778534014555438531	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	39	1778534020464041454	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	39	1778534020464041454	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	43	1778538043819282857	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	43	1778538043819282857	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778538050005594907	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778538050005594907	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	42	1778538668042569637	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	42	1778538668042569637	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	41	1778538674198271658	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	41	1778538674198271658	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778539337294921998	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778539337294921998	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	38	1778539342935222591	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	38	1778539342935222591	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	43	1778539970287048141	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	43	1778539970287048141	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	38	1778539975827143414	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	38	1778539975827143414	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+10	47	1778542348874229399	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+10	47	1778542348874229399	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778543142141501995	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778543142141501995	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778543148156048231	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778543148156048231	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778543163991270458	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778543163991270458	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778543274423565401	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778543274423565401	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778543280016802354	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778543280016802354	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778544024416792950	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778544024416792950	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544030131839872	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544030131839872	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778544207156158490	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	40	1778544207156158490	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544212983417069	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544212983417069	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544321552309925	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544321552309925	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778544327771914314	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778544327771914314	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	39	1778544338278876581	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	39	1778544338278876581	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544548397864275	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778544548397864275	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778544562801166952	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778544562801166952	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778545373882609928	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778545373882609928	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778546023671558914	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778546023671558914	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778546151963209056	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778546151963209056	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778546174782331047	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778546174782331047	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+9	47	1778547632394605381	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+9	47	1778547632394605381	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778547664177306519	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778547664177306519	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778547687090180440	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778547687090180440	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778547698861030919	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778547698861030919	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	46	1778548906055008353	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	46	1778548906055008353	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778548927511226029	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778548927511226029	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	42	1778549089834806203	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	42	1778549089834806203	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	46	1778549980422107861	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	46	1778549980422107861	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778550002886068270	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778550002886068270	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778550049270838953	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778550049270838953	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+11	80	1778550744185133481	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+11	80	1778550744185133481	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778550831748584224	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778550831748584224	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778550845452819101	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778550845452819101	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778550872901797214	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778550872901797214	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+8	48	1778554714995142568	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+8	48	1778554714995142568	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778555352071932239	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778555352071932239	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778555413431673830	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778555413431673830	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778555825917274181	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778555825917274181	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778555879640309561	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778555879640309561	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778556247779440461	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778556247779440461	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778556290068151936	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	42	1778556290068151936	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778556501979524194	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778556501979524194	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	57	1778556515562457290	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	57	1778556515562457290	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778557352674984395	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	44	1778557352674984395	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778557366383294837	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778557366383294837	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778557379628069142	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778557379628069142	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778557405246743346	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778557405246743346	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778558027315535680	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778558027315535680	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778558103206796287	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778558103206796287	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778558489706829163	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778558489706829163	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778558511838839386	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	42	1778558511838839386	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778558772609918984	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778558772609918984	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778558786220000635	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778558786220000635	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	49	1778558832578678192	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	49	1778558832578678192	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778558912197213172	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778558912197213172	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778558918810006982	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+3	41	1778558918810006982	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778559226607716810	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	43	1778559226607716810	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778559233195343429	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778559233195343429	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778564030819895216	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+5	45	1778564030819895216	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	44	1778564046559414762	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+6	44	1778564046559414762	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778564668948210692	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	43	1778564668948210692	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778564679549701598	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
+4	41	1778564679549701598	/Users/micahbreitenstein/Downloads/to Micah/MOCO-display/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	6e0aeedc02c42a7e
