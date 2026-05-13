@@ -431,8 +431,8 @@ static void web_event_task(void *arg)
                     ring_buf_pop(msg);
                     continue;
                 }
-                /* Filter DRONE_STICK: and DRONE_MODIFIER: messages - only send to dronemode page */
-                if ((strncmp(msg, "DRONE_STICK:", 12) == 0 || strncmp(msg, "DRONE_MODIFIER:", 15) == 0) 
+                /* Filter DRONE_STICK:, DRONE_MODIFIER:, and TRIGGER:MANUAL_DRONE messages - only send to dronemode page */
+                if ((strncmp(msg, "DRONE_STICK:", 12) == 0 || strncmp(msg, "DRONE_MODIFIER:", 15) == 0 || strncmp(msg, "TRIGGER:MANUAL_DRONE", 20) == 0) 
                     && saved_page_type != PAGE_TYPE_DRONEMODE) {
                     /* Dronemode events blocked by non-dronemode page - pop and skip */
                     ring_buf_pop(msg);
@@ -781,7 +781,7 @@ void web_console_log_event(const char *msg)
         
         /* Only notify if this event can be sent to the current page */
         bool is_console_msg = (strncmp(msg, "CONSOLE:", 8) == 0);
-        bool is_dronemode_msg = (strncmp(msg, "DRONE_STICK:", 12) == 0 || strncmp(msg, "DRONE_MODIFIER:", 15) == 0);
+        bool is_dronemode_msg = (strncmp(msg, "DRONE_STICK:", 12) == 0 || strncmp(msg, "DRONE_MODIFIER:", 15) == 0 || strncmp(msg, "TRIGGER:MANUAL_DRONE", 20) == 0);
         bool can_send = (!is_console_msg || (s_page_type == PAGE_TYPE_CONSOLE))
                      && (!is_dronemode_msg || (s_page_type == PAGE_TYPE_DRONEMODE));
         

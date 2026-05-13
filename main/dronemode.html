@@ -104,11 +104,19 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 </div>
 </div>
 <script>
-var ws,leftStick=document.getElementById('leftStick'),rightStick=document.getElementById('rightStick');
-var leftX=document.getElementById('leftX'),leftY=document.getElementById('leftY');
-var rightX=document.getElementById('rightX'),rightY=document.getElementById('rightY');
-var status=document.getElementById('status'),statusText=document.getElementById('statusText');
-var precisionMod=document.getElementById('precisionMod'),boostMod=document.getElementById('boostMod'),cameraMod=document.getElementById('cameraMod');
+var ws;
+var leftStick=document.getElementById('leftStick');
+var rightStick=document.getElementById('rightStick');
+var leftX=document.getElementById('leftX');
+var leftY=document.getElementById('leftY');
+var rightX=document.getElementById('rightX');
+var rightY=document.getElementById('rightY');
+var statusDiv=document.getElementById('status');
+var statusTextDiv=document.getElementById('statusText');
+var precisionMod=document.getElementById('precisionMod');
+var boostMod=document.getElementById('boostMod');
+var cameraMod=document.getElementById('cameraMod');
+console.log('[DRONEMODE] Elements initialized:',{statusDiv:statusDiv,statusTextDiv:statusTextDiv,leftStick:leftStick});
 var droneActive=false,reconnecting=false;
 
 function updateJoystick(stick,xPercent,yPercent,pressed){
@@ -132,10 +140,12 @@ reconnecting=true;
 if(ws){try{ws.close()}catch(e){}}
 ws=new WebSocket('ws://192.168.4.1/ws');
 ws.onopen=function(){
+console.log('[DRONEMODE] WebSocket connected');
 ws.send('PAGE:DRONEMODE');
 reconnecting=false;
-status.classList.add('active');
-statusText.textContent='Connected - waiting for drone mode...';
+statusDiv.classList.add('active');
+statusTextDiv.textContent='Connected';
+console.log('[DRONEMODE] Status set to Connected');
 };
 ws.onmessage=function(e){
 console.log('[WS RX]',e.data);
@@ -157,26 +167,27 @@ updateAxisLabel(rightX,'PAN',pan);
 updateAxisLabel(rightY,'TILT',tilt);
 if(!droneActive){
 droneActive=true;
-status.classList.add('active');
-statusText.textContent='Drone mode active';
+statusDiv.classList.add('active');
+statusTextDiv.textContent='Drone mode active';
+console.log('[DRONEMODE] Status set to Drone mode active (DRONE_STICK)');
 }
 }
 }else if(e.data.startsWith('MODE:DRONE')){
 droneActive=true;
-status.classList.add('active');
-statusText.textContent='Drone mode active';
+statusDiv.classList.add('active');
+statusTextDiv.textContent='Drone mode active';
 }else if(e.data.startsWith('MODE:')&&!e.data.startsWith('MODE:DRONE')){
 droneActive=false;
-status.classList.remove('active');
-statusText.textContent='Drone mode inactive';
+statusDiv.classList.remove('active');
+statusTextDiv.textContent='Drone mode inactive';
 }else if(e.data.indexOf('DRONE MODE ACTIVATED')>=0){
 droneActive=true;
-status.classList.add('active');
-statusText.textContent='Drone mode active';
+statusDiv.classList.add('active');
+statusTextDiv.textContent='Drone mode active';
 }else if(e.data.indexOf('DRONE MODE DEACTIVATED')>=0){
 droneActive=false;
-status.classList.remove('active');
-statusText.textContent='Drone mode inactive';
+statusDiv.classList.remove('active');
+statusTextDiv.textContent='Drone mode inactive';
 updateJoystick(leftStick,0,0,false);
 updateJoystick(rightStick,0,0,false);
 updateAxisLabel(leftX,'SWING',0);
@@ -195,27 +206,40 @@ if(precision!==0){precisionMod.classList.add('active')}else{precisionMod.classLi
 if(boost!==0){boostMod.classList.add('active')}else{boostMod.classList.remove('active')}
 if(!droneActive){
 droneActive=true;
-status.classList.add('active');
-statusText.textContent='Drone mode active';
+statusDiv.classList.add('active');
+statusTextDiv.textContent='Drone mode active';
 }
 }
 }else if(e.data.indexOf('TRIGGER:MANUAL_DRONE')>=0){
+console.log('[DRONEMODE] Camera trigger received');
 cameraMod.classList.add('active');
 setTimeout(function(){cameraMod.classList.remove('active')},420);
 }
 };
 ws.onclose=function(){
-statusText.textContent='Reconnecting...';
-status.classList.remove('active');
+statusTextDiv.textContent='Reconnecting...';
+statusDiv.classList.remove('active');
 droneActive=false;
 setTimeout(function(){reconnecting=false;connect()},2000);
 };
 ws.onerror=function(){
-statusText.textContent='Connection error';
-status.classList.remove('active');
+statusTextDiv.textContent='Connection error';
+statusDiv.classList.remove('active');
 droneActive=false;
 };
 }
+console.log('[DRONEMODE] Attaching camera click handler, cameraMod=',cameraMod);
+cameraMod.addEventListener('click',function(){
+console.log('[DRONEMODE] Camera button clicked!');
+if(ws&&ws.readyState===WebSocket.OPEN){
+console.log('[DRONEMODE] Sending camera trigger command');
+ws.send('SET:TRIGGER:DRONE');
+cameraMod.classList.add('active');
+setTimeout(function(){cameraMod.classList.remove('active')},420);
+}else{
+console.log('[DRONEMODE] Cannot send camera trigger - WebSocket not ready');
+}
+});
 connect();
 </script>
 </body>

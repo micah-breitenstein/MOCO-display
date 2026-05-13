@@ -77,7 +77,7 @@ static const char *TAG = "RIG";
 #define STATUS_UART_PORT UART_NUM_1
 #define STATUS_UART_RX_PIN GPIO_NUM_40
 #define STATUS_UART_TX_PIN GPIO_NUM_41
-#define STATUS_UART_BAUDRATE 230400
+#define STATUS_UART_BAUDRATE 115200
 #define STATUS_UART_BUF_SIZE 2048
 #define STATUS_SIGNAL_TIMEOUT_MS 3500
 #define MODE_MESSAGE_DURATION_MS 1800
@@ -3413,10 +3413,7 @@ static void status_uart_task(void *arg)
             }
         }
 
-        /* Yield to IDLE task every iteration to prevent watchdog timeout */
-        vTaskDelay(pdMS_TO_TICKS(20));
-
-        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(20));
+        int len = uart_read_bytes(STATUS_UART_PORT, &byte, 1, pdMS_TO_TICKS(50));
         if (len <= 0) {
             continue;
         }
@@ -3633,6 +3630,7 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strncmp(line, "TRIGGER:MANUAL_DRONE", 20) == 0) {
+                web_console_log_event(line);  // Broadcast to WebSocket clients
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     if (!emergency_stop_active) {
                         if (current_display_mode != DISPLAY_MODE_DRONE) {
@@ -3869,11 +3867,11 @@ static void status_uart_task(void *arg)
                         || lift_dir != last_logged_lift_dir
                         || pan_dir != last_logged_pan_dir
                         || tilt_dir != last_logged_tilt_dir) {
-                        ESP_LOGI(TAG, "DRONE dir | swing=%s lift=%s pan=%s tilt=%s",
-                                 drone_horiz_dir_to_text(swing_dir),
-                                 drone_vert_dir_to_text(lift_dir),
-                                 drone_horiz_dir_to_text(pan_dir),
-                                 drone_vert_dir_to_text(tilt_dir));
+                        // ESP_LOGI(TAG, "DRONE dir | swing=%s lift=%s pan=%s tilt=%s",
+                        //          drone_horiz_dir_to_text(swing_dir),
+                        //          drone_vert_dir_to_text(lift_dir),
+                        //          drone_horiz_dir_to_text(pan_dir),
+                        //          drone_vert_dir_to_text(tilt_dir));
                         last_logged_swing_dir = swing_dir;
                         last_logged_lift_dir = lift_dir;
                         last_logged_pan_dir = pan_dir;
