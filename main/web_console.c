@@ -38,6 +38,8 @@ extern const uint8_t timelapse_html_start[] asm("_binary_timelapse_html_start");
 extern const uint8_t timelapse_html_end[]   asm("_binary_timelapse_html_end");
 extern const uint8_t bounce_html_start[]    asm("_binary_bounce_html_start");
 extern const uint8_t bounce_html_end[]      asm("_binary_bounce_html_end");
+extern const uint8_t dronemode_html_start[] asm("_binary_dronemode_html_start");
+extern const uint8_t dronemode_html_end[]   asm("_binary_dronemode_html_end");
 extern const uint8_t settings_html_start[]  asm("_binary_settings_html_start");
 extern const uint8_t settings_html_end[]    asm("_binary_settings_html_end");
 
@@ -57,6 +59,7 @@ typedef enum {
     PAGE_TYPE_SETTINGS = 2,
     PAGE_TYPE_TIMELAPSE = 3,
     PAGE_TYPE_BOUNCE = 4,
+    PAGE_TYPE_DRONEMODE = 5,
 } page_type_t;
 
 static httpd_handle_t    s_server = NULL;
@@ -166,6 +169,24 @@ static esp_err_t bounce_handler(httpd_req_t *req)
     esp_err_t ret = httpd_resp_send(req, data, len);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "Failed to send bounce page: %s", esp_err_to_name(ret));
+    }
+    return ret;
+}
+
+/* Drone mode page handler */
+static esp_err_t dronemode_handler(httpd_req_t *req)
+{
+    const char *data = (const char *)dronemode_html_start;
+    size_t      len  = (size_t)(dronemode_html_end - dronemode_html_start);
+    
+    ESP_LOGI(TAG, "Serving /dronemode (%u bytes)", (unsigned)len);
+    
+    httpd_resp_set_type(req, "text/html; charset=utf-8");
+    httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    
+    esp_err_t ret = httpd_resp_send(req, data, len);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to send dronemode page: %s", esp_err_to_name(ret));
     }
     return ret;
 }
@@ -297,6 +318,10 @@ static esp_err_t ws_handler(httpd_req_t *req)
             s_page_type = PAGE_TYPE_BOUNCE;
             ESP_LOGI(TAG, "Page identified as BOUNCE, not flushing buffered events (they're preserved for console)");
             return ESP_OK;
+        } else if (strncmp((char *)buf, "PAGE:DRONEMODE", 14) == 0) {
+            s_page_type = PAGE_TYPE_DRONEMODE;
+            ESP_LOGI(TAG, "Page identified as DRONEMODE, not flushing buffered events (they're preserved for console)");
+            return ESP_OK;
         }
         
         /* Call the registered command handler if available */
@@ -402,8 +427,16 @@ static void web_event_task(void *arg)
             while (ring_buf_peek(msg)) {
                 /* Filter CONSOLE: messages - only send to console page */
                 if (strncmp(msg, "CONSOLE:", 8) == 0 && saved_page_type != PAGE_TYPE_CONSOLE) {
-                    /* Console events blocked by non-console page - stop processing */
-                    break;
+                    /* Console events blocked by non-console page - pop and skip */
+                    ring_buf_pop(msg);
+                    continue;
+                }
+                /* Filter DRONE_STICK: and DRONE_MODIFIER: messages - only send to dronemode page */
+                if ((strncmp(msg, "DRONE_STICK:", 12) == 0 || strncmp(msg, "DRONE_MODIFIER:", 15) == 0) 
+                    && saved_page_type != PAGE_TYPE_DRONEMODE) {
+                    /* Dronemode events blocked by non-dronemode page - pop and skip */
+                    ring_buf_pop(msg);
+                    continue;
                 }
                 
                 /* Message is appropriate for this page - pop and send it */
@@ -431,7 +464,7 @@ static void web_event_task(void *arg)
                 }
                 
                 count++;
-                vTaskDelay(pdMS_TO_TICKS(20));
+                vTaskDelay(pdMS_TO_TICKS(2));
             }
             
             if (count > 0) {
@@ -525,6 +558,13 @@ static void start_http_server(void)
         .handler = bounce_handler,
     };
     httpd_register_uri_handler(s_server, &bounce_uri);
+
+    static const httpd_uri_t dronemode_uri = {
+        .uri     = "/dronemode",
+        .method  = HTTP_GET,
+        .handler = dronemode_handler,
+    };
+    httpd_register_uri_handler(s_server, &dronemode_uri);
 
     static const httpd_uri_t settings_uri = {
         .uri     = "/settings",
@@ -741,7 +781,9 @@ void web_console_log_event(const char *msg)
         
         /* Only notify if this event can be sent to the current page */
         bool is_console_msg = (strncmp(msg, "CONSOLE:", 8) == 0);
-        bool can_send = !is_console_msg || (s_page_type == PAGE_TYPE_CONSOLE);
+        bool is_dronemode_msg = (strncmp(msg, "DRONE_STICK:", 12) == 0 || strncmp(msg, "DRONE_MODIFIER:", 15) == 0);
+        bool can_send = (!is_console_msg || (s_page_type == PAGE_TYPE_CONSOLE))
+                     && (!is_dronemode_msg || (s_page_type == PAGE_TYPE_DRONEMODE));
         
         if (can_send && s_ws_fd >= 0) {
             xSemaphoreGive(s_ring.notify);
@@ -750,7 +792,10 @@ void web_console_log_event(const char *msg)
     
     xSemaphoreGive(s_ring.mutex);
 }
-
+bool web_console_has_client(void)
+{
+    return (s_ws_fd >= 0);
+}
 void web_console_set_cmd_handler(web_console_cmd_handler_t handler)
 {
     ESP_LOGI(TAG, "web_console_set_cmd_handler: handler=%p", handler);

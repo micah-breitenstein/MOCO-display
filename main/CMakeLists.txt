@@ -15,6 +15,7 @@ idf_component_register(
         "landing.html"
         "timelapse.html"
         "bounce.html"
+        "dronemode.html"
         "settings.html"
 )
 

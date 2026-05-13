@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MOCO Jib - Drone Mode</title>
+<style>
+body{margin:0;padding:0;background:#111;color:#fff;font-family:Arial,sans-serif;display:flex;flex-direction:column;height:100vh}
+.header{background:#1a1a1a;border-bottom:2px solid #ff9000;padding:15px 20px;display:flex;align-items:center;justify-content:space-between}
+h1{color:#ff9000;margin:0;font-size:1.5em}
+.nav{display:flex;gap:15px}
+.nav a{color:#aaa;text-decoration:none;padding:5px 10px;border-radius:4px;transition:all .3s}
+.nav a:hover{color:#fff;background:#333}
+.nav a.active{color:#ff9000;background:#222}
+.content{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;align-items:center;gap:30px}
+.status{padding:15px;background:#222;border-left:4px solid #666;border-radius:4px;width:100%;max-width:600px;text-align:center}
+.status.active{border-color:#00e676;background:#1a3a1a}
+.status.active .status-text{color:#00e676}
+.status-text{color:#aaa;font-size:0.95em}
+.joysticks{display:flex;gap:40px;justify-content:center;align-items:center;margin-top:20px;flex-wrap:wrap}
+.joystick-container{display:flex;flex-direction:column;align-items:center;gap:15px}
+.joystick-label{color:#ff9000;font-size:1.1em;font-weight:bold}
+.joystick{position:relative;width:200px;height:200px;background:#1a1a1a;border:3px solid #333;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.joystick-ring{position:absolute;width:180px;height:180px;border:2px solid #444;border-radius:50%}
+.joystick-center{position:absolute;width:10px;height:10px;background:#555;border-radius:50%}
+.joystick-stick{position:absolute;width:40px;height:40px;background:#ff9000;border:3px solid #fff;border-radius:50%;transition:all .05s;cursor:pointer;box-shadow:0 0 15px rgba(255,144,0,0.5)}
+.joystick-stick.pressed{background:#00e676;box-shadow:0 0 20px rgba(0,230,118,0.8)}
+.joystick-crosshair{position:absolute;width:100%;height:100%;pointer-events:none}
+.crosshair-h{position:absolute;top:50%;left:10px;right:10px;height:1px;background:#333;transform:translateY(-50%)}
+.crosshair-v{position:absolute;left:50%;top:10px;bottom:10px;width:1px;background:#333;transform:translateX(-50%)}
+.axis-labels{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:10px}
+.axis-label{color:#aaa;font-size:0.85em;font-family:monospace}
+.axis-label.active{color:#ff9000;font-weight:bold}
+.modifiers{display:flex;gap:20px;padding:20px;background:#1a1a1a;border-radius:8px;border:1px solid #333;flex-wrap:wrap;justify-content:center}
+.modifier{display:flex;flex-direction:column;align-items:center;gap:8px;padding:15px;background:#222;border-radius:6px;min-width:100px}
+.modifier-icon{width:40px;height:40px;background:#333;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5em;transition:all .3s}
+.modifier.active .modifier-icon{background:#00e676;color:#000}
+.modifier-label{color:#aaa;font-size:0.9em}
+.modifier.active .modifier-label{color:#00e676;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>MOCO JIB</h1>
+<div class="nav">
+<a href="/console">Console</a>
+<a href="/settings">Settings</a>
+<a href="/timelapse">Timelapse</a>
+<a href="/bounce">Bounce</a>
+<a href="/dronemode" class="active">Drone Mode</a>
+</div>
+</div>
+<div class="content">
+<div class="status" id="status">
+<div class="status-text" id="statusText">Connecting...</div>
+</div>
+<div class="joysticks">
+<div class="joystick-container">
+<div class="joystick-label">LEFT STICK</div>
+<div class="joystick">
+<div class="joystick-crosshair">
+<div class="crosshair-h"></div>
+<div class="crosshair-v"></div>
+</div>
+<div class="joystick-ring"></div>
+<div class="joystick-center"></div>
+<div class="joystick-stick" id="leftStick"></div>
+</div>
+<div class="axis-labels">
+<div class="axis-label" id="leftX">SWING: 0%</div>
+<div class="axis-label" id="leftY">LIFT: 0%</div>
+</div>
+</div>
+<div class="joystick-container">
+<div class="joystick-label">RIGHT STICK</div>
+<div class="joystick">
+<div class="joystick-crosshair">
+<div class="crosshair-h"></div>
+<div class="crosshair-v"></div>
+</div>
+<div class="joystick-ring"></div>
+<div class="joystick-center"></div>
+<div class="joystick-stick" id="rightStick"></div>
+</div>
+<div class="axis-labels">
+<div class="axis-label" id="rightX">PAN: 0%</div>
+<div class="axis-label" id="rightY">TILT: 0%</div>
+</div>
+</div>
+</div>
+<div class="modifiers">
+<div class="modifier" id="precisionMod">
+<div class="modifier-icon">◇</div>
+<div class="modifier-label">PRECISION</div>
+</div>
+<div class="modifier" id="boostMod">
+<div class="modifier-icon">⚡</div>
+<div class="modifier-label">BOOST</div>
+</div>
+<div class="modifier" id="cameraMod">
+<div class="modifier-icon">📷</div>
+<div class="modifier-label">CAMERA</div>
+</div>
+</div>
+</div>
+<script>
+var ws,leftStick=document.getElementById('leftStick'),rightStick=document.getElementById('rightStick');
+var leftX=document.getElementById('leftX'),leftY=document.getElementById('leftY');
+var rightX=document.getElementById('rightX'),rightY=document.getElementById('rightY');
+var status=document.getElementById('status'),statusText=document.getElementById('statusText');
+var precisionMod=document.getElementById('precisionMod'),boostMod=document.getElementById('boostMod'),cameraMod=document.getElementById('cameraMod');
+var droneActive=false,reconnecting=false;
+
+function updateJoystick(stick,xPercent,yPercent,pressed){
+var maxOffset=80;
+var x=Math.max(-100,Math.min(100,xPercent));
+var y=Math.max(-100,Math.min(100,yPercent));
+var offsetX=(x/100)*maxOffset;
+var offsetY=-(y/100)*maxOffset;
+stick.style.transform='translate('+offsetX+'px,'+offsetY+'px)';
+if(pressed){stick.classList.add('pressed')}else{stick.classList.remove('pressed')}
+}
+
+function updateAxisLabel(label,name,value){
+label.textContent=name+': '+value+'%';
+if(value!==0){label.classList.add('active')}else{label.classList.remove('active')}
+}
+
+function connect(){
+if(reconnecting)return;
+reconnecting=true;
+if(ws){try{ws.close()}catch(e){}}
+ws=new WebSocket('ws://192.168.4.1/ws');
+ws.onopen=function(){
+ws.send('PAGE:DRONEMODE');
+reconnecting=false;
+status.classList.add('active');
+statusText.textContent='Connected - waiting for drone mode...';
+};
+ws.onmessage=function(e){
+console.log('[WS RX]',e.data);
+if(e.data.startsWith('DRONE_STICK:')){
+var payload=e.data.substring(12);
+var parts=payload.split(',');
+if(parts.length>=6){
+var swing=parseInt(parts[0])||0;
+var lift=parseInt(parts[1])||0;
+var pan=parseInt(parts[2])||0;
+var tilt=parseInt(parts[3])||0;
+var leftClick=parseInt(parts[4])||0;
+var rightClick=parseInt(parts[5])||0;
+updateJoystick(leftStick,swing,lift,leftClick!==0);
+updateJoystick(rightStick,pan,tilt,rightClick!==0);
+updateAxisLabel(leftX,'SWING',swing);
+updateAxisLabel(leftY,'LIFT',lift);
+updateAxisLabel(rightX,'PAN',pan);
+updateAxisLabel(rightY,'TILT',tilt);
+if(!droneActive){
+droneActive=true;
+status.classList.add('active');
+statusText.textContent='Drone mode active';
+}
+}
+}else if(e.data.startsWith('MODE:DRONE')){
+droneActive=true;
+status.classList.add('active');
+statusText.textContent='Drone mode active';
+}else if(e.data.startsWith('MODE:')&&!e.data.startsWith('MODE:DRONE')){
+droneActive=false;
+status.classList.remove('active');
+statusText.textContent='Drone mode inactive';
+}else if(e.data.indexOf('DRONE MODE ACTIVATED')>=0){
+droneActive=true;
+status.classList.add('active');
+statusText.textContent='Drone mode active';
+}else if(e.data.indexOf('DRONE MODE DEACTIVATED')>=0){
+droneActive=false;
+status.classList.remove('active');
+statusText.textContent='Drone mode inactive';
+updateJoystick(leftStick,0,0,false);
+updateJoystick(rightStick,0,0,false);
+updateAxisLabel(leftX,'SWING',0);
+updateAxisLabel(leftY,'LIFT',0);
+updateAxisLabel(rightX,'PAN',0);
+updateAxisLabel(rightY,'TILT',0);
+}else if(e.data.startsWith('DRONE_MODIFIER:')){
+var payload=e.data.substring(15);
+var parts=payload.split(',');
+if(parts.length>=2){
+var precisionStr=parts[0].split('=')[1];
+var boostStr=parts[1].split('=')[1];
+var precision=parseInt(precisionStr)||0;
+var boost=parseInt(boostStr)||0;
+if(precision!==0){precisionMod.classList.add('active')}else{precisionMod.classList.remove('active')}
+if(boost!==0){boostMod.classList.add('active')}else{boostMod.classList.remove('active')}
+if(!droneActive){
+droneActive=true;
+status.classList.add('active');
+statusText.textContent='Drone mode active';
+}
+}
+}else if(e.data.indexOf('TRIGGER:MANUAL_DRONE')>=0){
+cameraMod.classList.add('active');
+setTimeout(function(){cameraMod.classList.remove('active')},420);
+}
+};
+ws.onclose=function(){
+statusText.textContent='Reconnecting...';
+status.classList.remove('active');
+droneActive=false;
+setTimeout(function(){reconnecting=false;connect()},2000);
+};
+ws.onerror=function(){
+statusText.textContent='Connection error';
+status.classList.remove('active');
+droneActive=false;
+};
+}
+connect();
+</script>
+</body>
+</html>

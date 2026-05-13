@@ -77,7 +77,7 @@ static const char *TAG = "RIG";
 #define STATUS_UART_PORT UART_NUM_1
 #define STATUS_UART_RX_PIN GPIO_NUM_40
 #define STATUS_UART_TX_PIN GPIO_NUM_41
-#define STATUS_UART_BAUDRATE 115200
+#define STATUS_UART_BAUDRATE 230400
 #define STATUS_UART_BUF_SIZE 2048
 #define STATUS_SIGNAL_TIMEOUT_MS 3500
 #define MODE_MESSAGE_DURATION_MS 1800
@@ -2371,7 +2371,8 @@ static void show_status_on_display(const char *msg, bool is_error)
     if (status_label) {
         lv_obj_add_flag(status_label, LV_OBJ_FLAG_HIDDEN);
     }
-    if (!settings_visible) {
+    /* Only show logo in MANUAL mode when no settings/errors active */
+    if (!settings_visible && current_display_mode == DISPLAY_MODE_MANUAL) {
         if (logo_img_obj) {
             lv_obj_clear_flag(logo_img_obj, LV_OBJ_FLAG_HIDDEN);
         }
@@ -3162,6 +3163,21 @@ static void set_drone_mode_visible(bool visible)
     if (drone_right_arrow_down) { show_joystick_cluster ? lv_obj_clear_flag(drone_right_arrow_down, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_right_arrow_down, LV_OBJ_FLAG_HIDDEN); }
     if (drone_right_arrow_left) { show_joystick_cluster ? lv_obj_clear_flag(drone_right_arrow_left, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_right_arrow_left, LV_OBJ_FLAG_HIDDEN); }
     if (drone_right_arrow_right){ show_joystick_cluster ? lv_obj_clear_flag(drone_right_arrow_right, LV_OBJ_FLAG_HIDDEN): lv_obj_add_flag(drone_right_arrow_right, LV_OBJ_FLAG_HIDDEN); }
+    if (drone_stick_controls_label) {
+        show_joystick_cluster ? lv_obj_clear_flag(drone_stick_controls_label, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_stick_controls_label, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_left_stick_label) {
+        show_joystick_cluster ? lv_obj_clear_flag(drone_left_stick_label, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_left_stick_label, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_left_axis_label) {
+        show_joystick_cluster ? lv_obj_clear_flag(drone_left_axis_label, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_left_axis_label, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_right_stick_label) {
+        show_joystick_cluster ? lv_obj_clear_flag(drone_right_stick_label, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_right_stick_label, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_right_axis_label) {
+        show_joystick_cluster ? lv_obj_clear_flag(drone_right_axis_label, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_right_axis_label, LV_OBJ_FLAG_HIDDEN);
+    }
     if (drone_precision_label) {
         show_modifiers ? lv_obj_clear_flag(drone_precision_label, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_precision_label, LV_OBJ_FLAG_HIDDEN);
     }
@@ -3179,6 +3195,27 @@ static void set_drone_mode_visible(bool visible)
     }
     if (drone_camera_state_box) {
         show_modifiers ? lv_obj_clear_flag(drone_camera_state_box, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_camera_state_box, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_precision_card) {
+        show_modifiers ? lv_obj_clear_flag(drone_precision_card, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_precision_card, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_boost_card) {
+        show_modifiers ? lv_obj_clear_flag(drone_boost_card, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_boost_card, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_camera_card) {
+        show_modifiers ? lv_obj_clear_flag(drone_camera_card, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_camera_card, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_precision_icon) {
+        show_modifiers ? lv_obj_clear_flag(drone_precision_icon, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_precision_icon, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_boost_icon) {
+        show_modifiers ? lv_obj_clear_flag(drone_boost_icon, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_boost_icon, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_camera_icon) {
+        show_modifiers ? lv_obj_clear_flag(drone_camera_icon, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_camera_icon, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (drone_top_divider) {
+        visible ? lv_obj_clear_flag(drone_top_divider, LV_OBJ_FLAG_HIDDEN) : lv_obj_add_flag(drone_top_divider, LV_OBJ_FLAG_HIDDEN);
     }
     if (drone_flowlapse_bar) {
         (visible && flowlapse_active) ? lv_obj_clear_flag(drone_flowlapse_bar, LV_OBJ_FLAG_HIDDEN)
@@ -3394,20 +3431,30 @@ static void status_uart_task(void *arg)
             }
 
             line[line_len] = '\0';
-            if (strncmp(line, "DRONE_STICK:", 12) != 0) {
-                ESP_LOGI(TAG, "Mega status: %s", line);
-                /* Also send to web console for remote monitoring */
-                /* Use longer dedup window for controller heartbeat messages */
-                if (strncmp(line, "CONTROLLER_OK:", 14) == 0) {
-                    /* Controller heartbeat - don't log to web console, just noise */
-                    /* CONTROLLER_ERROR messages still get logged below */
-                } else {
-                    /* All other messages - normal logging */
-                    char evt[280];
-                    snprintf(evt, sizeof(evt), "MEGA: %s", line);
-                    web_console_log_event(evt);
+            
+            /* Filter messages for appropriate destinations */
+            bool is_drone_stick = (strncmp(line, "DRONE_STICK:", 12) == 0);
+            bool is_drone_modifier = (strncmp(line, "DRONE_MODIFIER:", 15) == 0);
+            bool is_controller_ok = (strncmp(line, "CONTROLLER_OK:", 14) == 0);
+            
+            /* DRONE_STICK/DRONE_MODIFIER go to WebSocket only if browser is connected */
+            if (is_drone_stick || is_drone_modifier) {
+                if (web_console_has_client()) {
+                    web_console_log_event(line);
                 }
             }
+            /* Other messages: log to serial and send to console page */
+            else if (!is_controller_ok) {
+                ESP_LOGI(TAG, "Mega status: %s", line);
+                char evt[280];
+                snprintf(evt, sizeof(evt), "CONSOLE:MEGA: %s", line);
+                web_console_log_event(evt);
+            }
+            /* Controller OK heartbeat: just log, don't send to console */
+            else {
+                /* Silent heartbeat - no logging needed */
+            }
+            
             last_status_rx_ms = now_ms;
 
             if (strncmp(line, "EMERGENCY_STOP:ACTIVE", 21) == 0
@@ -3834,76 +3881,76 @@ static void status_uart_task(void *arg)
                     }
 
                     if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
-                        if (!emergency_stop_active && current_display_mode != DISPLAY_MODE_DRONE) {
-                            switch_display_mode(DISPLAY_MODE_DRONE, NULL, now_ms);
-                        }
-                        if (!is_drone_controls_visible()) {
-                            set_drone_mode_visible(true);
-                        }
-                        if (flowlapse_active) {
-                            set_flowlapse_status(false, "FLOWLAPSE READY");
-                            set_flowlapse_progress(0);
-                        }
-
-                        drone_left_stick_pressed = left_stick_click;
-                        drone_right_stick_pressed = right_stick_click;
-
-                        if (swing_value != 0) {
-                            if (drone_swing_display_percent == 0) {
-                                drone_swing_pulse_start_ms = now_ms;
+                        /* Only update drone stick UI if already in drone mode */
+                        if (current_display_mode == DISPLAY_MODE_DRONE) {
+                            if (!is_drone_controls_visible()) {
+                                set_drone_mode_visible(true);
                             }
-                            drone_swing_display_percent = swing_value;
-                        } else if (drone_swing_display_percent != 0
-                                   && now_ms - drone_swing_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
-                            drone_swing_display_percent = 0;
-                        }
-
-                        if (lift_value != 0) {
-                            if (drone_lift_display_percent == 0) {
-                                drone_lift_pulse_start_ms = now_ms;
+                            if (flowlapse_active) {
+                                set_flowlapse_status(false, "FLOWLAPSE READY");
+                                set_flowlapse_progress(0);
                             }
-                            drone_lift_display_percent = lift_value;
-                        } else if (drone_lift_display_percent != 0
-                                   && now_ms - drone_lift_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
-                            drone_lift_display_percent = 0;
-                        }
 
-                        if (pan_value != 0) {
-                            if (drone_pan_display_percent == 0) {
-                                drone_pan_pulse_start_ms = now_ms;
+                            drone_left_stick_pressed = left_stick_click;
+                            drone_right_stick_pressed = right_stick_click;
+
+                            if (swing_value != 0) {
+                                if (drone_swing_display_percent == 0) {
+                                    drone_swing_pulse_start_ms = now_ms;
+                                }
+                                drone_swing_display_percent = swing_value;
+                            } else if (drone_swing_display_percent != 0
+                                       && now_ms - drone_swing_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
+                                drone_swing_display_percent = 0;
                             }
-                            drone_pan_display_percent = pan_value;
-                        } else if (drone_pan_display_percent != 0
-                                   && now_ms - drone_pan_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
-                            drone_pan_display_percent = 0;
-                        }
 
-                        if (tilt_value != 0) {
-                            if (drone_tilt_display_percent == 0) {
-                                drone_tilt_pulse_start_ms = now_ms;
+                            if (lift_value != 0) {
+                                if (drone_lift_display_percent == 0) {
+                                    drone_lift_pulse_start_ms = now_ms;
+                                }
+                                drone_lift_display_percent = lift_value;
+                            } else if (drone_lift_display_percent != 0
+                                       && now_ms - drone_lift_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
+                                drone_lift_display_percent = 0;
                             }
-                            drone_tilt_display_percent = tilt_value;
-                        } else if (drone_tilt_display_percent != 0
-                                   && now_ms - drone_tilt_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
-                            drone_tilt_display_percent = 0;
+
+                            if (pan_value != 0) {
+                                if (drone_pan_display_percent == 0) {
+                                    drone_pan_pulse_start_ms = now_ms;
+                                }
+                                drone_pan_display_percent = pan_value;
+                            } else if (drone_pan_display_percent != 0
+                                       && now_ms - drone_pan_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
+                                drone_pan_display_percent = 0;
+                            }
+
+                            if (tilt_value != 0) {
+                                if (drone_tilt_display_percent == 0) {
+                                    drone_tilt_pulse_start_ms = now_ms;
+                                }
+                                drone_tilt_display_percent = tilt_value;
+                            } else if (drone_tilt_display_percent != 0
+                                       && now_ms - drone_tilt_pulse_start_ms >= DRONE_STICK_MIN_VISIBLE_PULSE_MS) {
+                                drone_tilt_display_percent = 0;
+                            }
+
+                            drone_swing_display_state = (drone_swing_display_percent > 0) ? DRONE_HORIZ_RIGHT
+                                                      : (drone_swing_display_percent < 0) ? DRONE_HORIZ_LEFT
+                                                      : DRONE_HORIZ_NEUTRAL;
+                            drone_lift_display_state = (drone_lift_display_percent > 0) ? DRONE_LIFT_UP
+                                                     : (drone_lift_display_percent < 0) ? DRONE_LIFT_DOWN
+                                                     : DRONE_LIFT_NEUTRAL;
+                            drone_pan_display_state = (drone_pan_display_percent > 0) ? DRONE_HORIZ_RIGHT
+                                                    : (drone_pan_display_percent < 0) ? DRONE_HORIZ_LEFT
+                                                    : DRONE_HORIZ_NEUTRAL;
+                            drone_tilt_display_state = (drone_tilt_display_percent > 0) ? DRONE_TILT_UP
+                                                     : (drone_tilt_display_percent < 0) ? DRONE_TILT_DOWN
+                                                     : DRONE_TILT_NEUTRAL;
+
+                            update_drone_lift_indicator();
+                            update_drone_tilt_indicator();
+                            update_drone_stick_colors();
                         }
-
-                        drone_swing_display_state = (drone_swing_display_percent > 0) ? DRONE_HORIZ_RIGHT
-                                                  : (drone_swing_display_percent < 0) ? DRONE_HORIZ_LEFT
-                                                  : DRONE_HORIZ_NEUTRAL;
-                        drone_lift_display_state = (drone_lift_display_percent > 0) ? DRONE_LIFT_UP
-                                                 : (drone_lift_display_percent < 0) ? DRONE_LIFT_DOWN
-                                                 : DRONE_LIFT_NEUTRAL;
-                        drone_pan_display_state = (drone_pan_display_percent > 0) ? DRONE_HORIZ_RIGHT
-                                                : (drone_pan_display_percent < 0) ? DRONE_HORIZ_LEFT
-                                                : DRONE_HORIZ_NEUTRAL;
-                        drone_tilt_display_state = (drone_tilt_display_percent > 0) ? DRONE_TILT_UP
-                                                 : (drone_tilt_display_percent < 0) ? DRONE_TILT_DOWN
-                                                 : DRONE_TILT_NEUTRAL;
-
-                        update_drone_lift_indicator();
-                        update_drone_tilt_indicator();
-                        update_drone_stick_colors();
                         xSemaphoreGive(lvgl_mux);
                     }
                 }

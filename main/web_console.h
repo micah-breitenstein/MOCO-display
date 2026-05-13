@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 /**
  * web_console.h
  *
@@ -30,6 +32,12 @@ void web_console_init(void);
  * msg is copied; caller does not need to keep it alive.
  */
 void web_console_log_event(const char *msg);
+
+/**
+ * Check if a WebSocket client is currently connected.
+ * Returns true if a browser is connected, false otherwise.
+ */
+bool web_console_has_client(void);
 
 /**
  * Register a callback that is invoked (from the httpd task context) when
