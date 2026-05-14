@@ -792,6 +792,33 @@ void web_console_log_event(const char *msg)
     
     xSemaphoreGive(s_ring.mutex);
 }
+
+void web_console_broadcast_setting(const char *msg)
+{
+    /* Bypass ring buffer - send SETTINGS: messages directly to WebSocket client */
+    if (!msg || s_ws_fd < 0 || !s_server) {
+        return;
+    }
+    
+    ws_work_t *w = malloc(sizeof(ws_work_t));
+    if (!w) {
+        ESP_LOGW(TAG, "Failed to allocate for setting broadcast: %s", msg);
+        return;
+    }
+    
+    w->hd = s_server;
+    w->fd = s_ws_fd;
+    snprintf(w->msg, sizeof(w->msg), "%s", msg);
+    
+    xSemaphoreTake(s_send_sem, pdMS_TO_TICKS(1000));
+    
+    if (httpd_queue_work(s_server, ws_do_send, w) != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to queue setting broadcast: %s", msg);
+        free(w);
+        xSemaphoreGive(s_send_sem);
+    }
+}
+
 bool web_console_has_client(void)
 {
     return (s_ws_fd >= 0);

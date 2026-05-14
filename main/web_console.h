@@ -34,6 +34,13 @@ void web_console_init(void);
 void web_console_log_event(const char *msg);
 
 /**
+ * Broadcast a SETTINGS: message directly to WebSocket clients.
+ * Bypasses the console event ring buffer for immediate delivery.
+ * Thread-safe. msg is copied; caller does not need to keep it alive.
+ */
+void web_console_broadcast_setting(const char *msg);
+
+/**
  * Check if a WebSocket client is currently connected.
  * Returns true if a browser is connected, false otherwise.
  */

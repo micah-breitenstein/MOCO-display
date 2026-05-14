@@ -102,12 +102,12 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 <script>
 var ws,selectedMode=0,running=false;
 var modeNames={1:'Swing Left + Boom Down',2:'Swing Left + Boom Up',3:'Swing Right + Boom Up',4:'Swing Right + Boom Down',5:'Swing Left',6:'Boom Up'};
-function connect(){ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){console.log('WebSocket connected');ws.send('PAGE:TIMELAPSE');send('STATUS_REQUEST')};ws.onmessage=function(e){if(!e.data.startsWith('SETTINGS:')&&(e.data.indexOf('TIMELAPSE')>=0||e.data.indexOf('MODE:')>=0)){updateStatus(e.data)}};ws.onclose=function(){setTimeout(connect,2000)};ws.onerror=function(){setTimeout(connect,2000)}}
+function connect(){ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){console.log('WebSocket connected');ws.send('PAGE:TIMELAPSE');ws.send('STATUS_REQUEST')};ws.onmessage=function(e){if(!e.data.startsWith('SETTINGS:')&&(e.data.indexOf('TIMELAPSE')>=0||e.data.indexOf('MODE:')>=0)){updateStatus(e.data)}};ws.onclose=function(){setTimeout(connect,2000)};ws.onerror=function(){setTimeout(connect,2000)}}
 function send(cmd){if(ws&&ws.readyState===1){ws.send(cmd);console.log('Sent:',cmd)}}
 function selectMode(m){if(running){alert('Stop current timelapse first');return}selectedMode=m;document.getElementById('modalText').textContent='Start Timelapse Mode '+m+': '+modeNames[m]+'?';document.getElementById('modal').className='modal show'}
 function closeModal(){document.getElementById('modal').className='modal';selectedMode=0}
 function confirmStart(){if(selectedMode>0){send('SET:TL_START:'+selectedMode);running=true;updateUI();closeModal()}}
-function stopTimelapse(){if(confirm('Stop timelapse?')){send('SET:TL_STOP:1');running=false;updateUI()}}
+function stopTimelapse(){if(confirm('Stop timelapse?')){send('SET:STOP:1');running=false;updateUI()}}
 function updateUI(){var cards=document.querySelectorAll('.card');cards.forEach(function(c,idx){c.className='card';if(running&&(idx+1)===selectedMode){c.className='card active'}});var stopBtn=document.getElementById('stopBtn');stopBtn.disabled=!running;var status=document.getElementById('status');var statusText=document.getElementById('statusText');if(running&&selectedMode>0){status.className='status active';statusText.textContent='Timelapse running - Mode '+selectedMode+': '+modeNames[selectedMode]}else{status.className='status';statusText.textContent='Ready - Select a timelapse mode below';selectedMode=0}}
 function updateStatus(msg){if(msg.indexOf('MODE:TIMELAPSE')>=0){var match=msg.match(/TIMELAPSE\s+(\d+)/);if(match){var newMode=parseInt(match[1]);if(newMode>=1&&newMode<=6){running=true;selectedMode=newMode;updateUI()}}}else if(msg.indexOf('MODE:MANUAL')>=0||msg.indexOf('MODE:DRONE')>=0||msg.indexOf('MODE:BOUNCE')>=0){if(running){running=false;selectedMode=0;updateUI()}}}
 connect();

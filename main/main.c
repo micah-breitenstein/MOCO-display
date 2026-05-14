@@ -843,7 +843,7 @@ static void broadcast_setting_update(SettingId id)
     
     /* Send as SETTINGS: message for web settings page to parse */
     snprintf(msg, sizeof(msg), "SETTINGS:%s=%d", key, s->value);
-    web_console_log_event(msg);
+    web_console_broadcast_setting(msg);
 }
 
 /* ================================================================
@@ -1284,6 +1284,8 @@ static void editor_dec_cb(lv_event_t *e)
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
+    /* Broadcast setting change to web settings page */
+    broadcast_setting_update(editor_setting_id);
 }
 
 static void editor_inc_cb(lv_event_t *e)
@@ -1309,6 +1311,8 @@ static void editor_inc_cb(lv_event_t *e)
         /* Live preview matrix brightness while editing, like display brightness. */
         send_set_command(editor_setting_id);
     }
+    /* Broadcast setting change to web settings page */
+    broadcast_setting_update(editor_setting_id);
 }
 
 /* Forward declarations for helpers used in editor_done_cb */
@@ -3556,6 +3560,8 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strncmp(line, "CONTROL:", 8) == 0) {
+                /* Broadcast CONTROL: messages to web pages for status tracking */
+                web_console_log_event(line);
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     if (!emergency_stop_active) {
                         const char *control = line + 8;
@@ -3642,6 +3648,8 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strstr(line, "MODE:") != NULL) {
+                /* Broadcast MODE: messages to web pages for status tracking */
+                web_console_log_event(line);
                 const char *mode_msg = strstr(line, "MODE:") + 5;
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     if (!emergency_stop_active) {
