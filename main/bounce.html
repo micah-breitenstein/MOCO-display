@@ -41,9 +41,16 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 .status.active{border-color:#00e676;background:#1a3a1a}
 .status.active .status-text{color:#00e676}
 .status-text{color:#aaa;font-size:0.95em}
+.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:2000}
+.loading-overlay.hidden{display:none}
+.spinner{width:60px;height:60px;border:4px solid #333;border-top:4px solid #ff9000;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+<div class="loading-overlay" id="loadingOverlay">
+<div class="spinner"></div>
+</div>
 <div class="header">
 <h1>MOCO JIB</h1>
 <div class="nav">
@@ -116,18 +123,19 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 </div>
 </div>
 <script>
-var ws,selectedMode=0,running=false,stage=0;
+var ws,selectedMode=0,running=false,stage=0,statusReceived=false,timelapseActive=false;
 var modeNames={1:'Swing Left + Boom Down',2:'Swing Left + Boom Up',3:'Swing Right + Boom Up',4:'Swing Right + Boom Down',5:'Swing Left',6:'Boom Up',7:'Swing Right',8:'Boom Down'};
 var durationSlider=null,durationValue=null,durationControl=null;
-function connect(){ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){console.log('WebSocket connected');ws.send('PAGE:BOUNCE');ws.send('STATUS_REQUEST')};ws.onmessage=function(e){if(!e.data.startsWith('SETTINGS:')&&(e.data.indexOf('BOUNCE')>=0||e.data.indexOf('MODE:')>=0||e.data.indexOf('L3_BOUNCE_ENDPOINT')>=0)){updateStatus(e.data)}};ws.onclose=function(){setTimeout(connect,2000)};ws.onerror=function(){setTimeout(connect,2000)}}
+function hideLoading(){document.getElementById('loadingOverlay').classList.add('hidden')}
+function connect(){ws=new WebSocket('ws://192.168.4.1/ws');ws.onopen=function(){console.log('WebSocket connected');ws.send('PAGE:BOUNCE');ws.send('STATUS_REQUEST');setTimeout(function(){if(!statusReceived)hideLoading()},500)};ws.onmessage=function(e){if(!e.data.startsWith('SETTINGS:')&&(e.data.indexOf('BOUNCE')>=0||e.data.indexOf('MODE:')>=0||e.data.indexOf('L3_BOUNCE_ENDPOINT')>=0)){updateStatus(e.data);if(e.data.indexOf('MODE:')>=0){statusReceived=true;hideLoading()}}};ws.onclose=function(){setTimeout(connect,2000)};ws.onerror=function(){setTimeout(connect,2000)}}
 function send(cmd){if(ws&&ws.readyState===1){ws.send(cmd);console.log('Sent:',cmd)}}
-function selectMode(m){if(running){alert('Stop current bounce first');return}selectedMode=m;document.getElementById('modalText').textContent='Start Bounce Mode '+m+': '+modeNames[m]+'?';document.getElementById('modal').className='modal show'}
+function selectMode(m){if(running){alert('Stop current bounce first');return}if(timelapseActive){alert('Cannot start bounce - timelapse is active. Stop timelapse first.');return}selectedMode=m;document.getElementById('modalText').textContent='Start Bounce Mode '+m+': '+modeNames[m]+'?';document.getElementById('modal').className='modal show'}
 function closeModal(){document.getElementById('modal').className='modal';selectedMode=0}
 function confirmStart(){if(selectedMode>0){send('SET:BOUNCE_START:'+selectedMode);running=true;stage=0;updateUI();closeModal()}}
 function stopBounce(){if(confirm('Stop bounce?')){send('SET:STOP:1');running=false;stage=0;updateUI()}}
 function setDuration(){var dur=parseInt(durationSlider.value);send('SET:BOUNCE_DURATION:'+dur);console.log('Setting bounce duration to '+dur+'ms')}
 function updateUI(){var cards=document.querySelectorAll('.card');cards.forEach(function(c,idx){c.className='card';if(running&&(idx+1)===selectedMode){c.className='card active'}});var stopBtn=document.getElementById('stopBtn');stopBtn.disabled=!running;var status=document.getElementById('status');var statusText=document.getElementById('statusText');if(running&&selectedMode>0){status.className='status active';if(stage===0){statusText.textContent='Bounce Mode '+selectedMode+' - Stage 0: Set range below'}else{statusText.textContent='Bounce running - Mode '+selectedMode+': '+modeNames[selectedMode]}durationControl.style.display=(stage===0)?'block':'none'}else{status.className='status';statusText.textContent='Ready - Select a bounce mode below';selectedMode=0;durationControl.style.display='none'}}
-function updateStatus(msg){if(msg.indexOf('MODE:BOUNCE')>=0){var match=msg.match(/BOUNCE\s+(\d+)/);if(match){var newMode=parseInt(match[1]);if(newMode>=1&&newMode<=8){running=true;selectedMode=newMode;updateUI()}}}else if(msg.indexOf('L3_BOUNCE_ENDPOINT')>=0){stage=1;updateUI();console.log('Bounce stage 1 activated')}else if(msg.indexOf('MODE:MANUAL')>=0||msg.indexOf('MODE:DRONE')>=0||msg.indexOf('MODE:TIMELAPSE')>=0){if(running){running=false;selectedMode=0;stage=0;updateUI()}}}
+function updateStatus(msg){if(msg.indexOf('MODE:BOUNCE')>=0){var match=msg.match(/BOUNCE\s+(\d+)/);if(match){var newMode=parseInt(match[1]);if(newMode>=1&&newMode<=8){running=true;selectedMode=newMode;timelapseActive=false;updateUI()}}}else if(msg.indexOf('MODE:TIMELAPSE')>=0){timelapseActive=true;running=false;selectedMode=0;stage=0;updateUI()}else if(msg.indexOf('L3_BOUNCE_ENDPOINT')>=0){stage=1;updateUI();console.log('Bounce stage 1 activated')}else if(msg.indexOf('MODE:MANUAL')>=0||msg.indexOf('MODE:DRONE')>=0){timelapseActive=false;if(running){running=false;selectedMode=0;stage=0;updateUI()}}}
 window.addEventListener('DOMContentLoaded',function(){durationSlider=document.getElementById('durationSlider');durationValue=document.getElementById('durationValue');durationControl=document.getElementById('durationControl');durationSlider.oninput=function(){durationValue.textContent=durationSlider.value+'ms'}});
 connect();
 </script>
