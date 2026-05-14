@@ -819,6 +819,30 @@ void web_console_broadcast_setting(const char *msg)
     }
 }
 
+esp_err_t web_console_send_immediate(const char *msg)
+{
+    /* Send message immediately without queuing - must be called from httpd task context */
+    if (!msg || s_ws_fd < 0 || !s_server) {
+        return ESP_ERR_INVALID_STATE;
+    }
+    
+    httpd_ws_frame_t frame = {
+        .final      = true,
+        .fragmented = false,
+        .type       = HTTPD_WS_TYPE_TEXT,
+        .payload    = (uint8_t *)msg,
+        .len        = strlen(msg),
+    };
+    
+    /* Send synchronously - we're already in httpd task context */
+    esp_err_t err = httpd_ws_send_frame_async(s_server, s_ws_fd, &frame);
+    if (err != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to send immediate WebSocket frame: %s (msg: %.50s)", 
+                 esp_err_to_name(err), msg);
+    }
+    return err;
+}
+
 bool web_console_has_client(void)
 {
     return (s_ws_fd >= 0);

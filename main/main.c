@@ -103,6 +103,7 @@ typedef enum {
     SGRP_SYSTEM,
     SGRP_TIMELAPSE,
     SGRP_ZEROING,
+    SGRP_TIME,
     SGRP_COUNT,
 } SettingGroup;
 
@@ -111,6 +112,7 @@ static const char *setting_group_names[SGRP_COUNT] = {
     "SYSTEM",
     "TIMELAPSE",
     "ZEROING",
+    "TIME",
 };
 
 typedef enum {
@@ -124,11 +126,14 @@ typedef enum {
     SETTING_HOME_SET,
     SETTING_HOME_GO,
     SETTING_HOME_CLEAR,
+    SETTING_TIME_HOUR,
+    SETTING_TIME_MINUTE,
     SETTING_COUNT,
 } SettingId;
 
 /* Forward declaration for settings broadcast (used before definition) */
 static void broadcast_setting_update(SettingId id);
+static void save_setting_to_nvs(SettingId id);
 
 typedef enum {
     STYPE_INT_RANGE = 0,
@@ -161,10 +166,16 @@ static SettingDef settings[SETTING_COUNT] = {
     [SETTING_HOME_SET]       = { "Set Home",         "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
     [SETTING_HOME_GO]        = { "Go Home",          "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
     [SETTING_HOME_CLEAR]     = { "Clear Home",       "",   SGRP_ZEROING,   STYPE_ACTION,    0,   0,   0,   0,   0,  true,  false },
+    [SETTING_TIME_HOUR]      = { "Hour",             "",   SGRP_TIME,      STYPE_INT_RANGE, 12,  12,  1,   12,  1,  false, false },
+    [SETTING_TIME_MINUTE]    = { "Minute",           "",   SGRP_TIME,      STYPE_INT_RANGE, 0,   0,   0,   59,  1,  false, false },
 };
 
 /* NVS keys for the settings (short for 15-char NVS limit) */
-static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "n_mode", "tl_int", "tl_step", "h_set", "h_go", "h_clr" };
+static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "theme", "n_mode", "tl_int", "tl_step", "h_set", "h_go", "h_clr", "t_hour", "t_min" };
+
+/* ---------- Time tracking ---------- */
+static bool time_is_pm = false;
+static uint32_t last_minute_tick = 0;
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -439,12 +450,39 @@ static void lvgl_task(void *arg)
 {
     (void)arg;
     ESP_LOGI(TAG, "LVGL task started");
+    last_minute_tick = xTaskGetTickCount();
     while (1) {
         if (xSemaphoreTake(lvgl_mux, portMAX_DELAY) == pdTRUE) {
             if (settings_refresh_pending) {
                 settings_refresh_pending = false;
                 refresh_settings_list_if_visible();
             }
+            
+            /* Update time every minute */
+            uint32_t now = xTaskGetTickCount();
+            if ((now - last_minute_tick) >= pdMS_TO_TICKS(60000)) {
+                last_minute_tick = now;
+                settings[SETTING_TIME_MINUTE].value++;
+                if (settings[SETTING_TIME_MINUTE].value >= 60) {
+                    settings[SETTING_TIME_MINUTE].value = 0;
+                    settings[SETTING_TIME_HOUR].value++;
+                    if (settings[SETTING_TIME_HOUR].value > 12) {
+                        settings[SETTING_TIME_HOUR].value = 1;
+                    }
+                    if (settings[SETTING_TIME_HOUR].value == 12) {
+                        time_is_pm = !time_is_pm;
+                    }
+                }
+                save_setting_to_nvs(SETTING_TIME_HOUR);
+                save_setting_to_nvs(SETTING_TIME_MINUTE);
+                broadcast_setting_update(SETTING_TIME_HOUR);
+                broadcast_setting_update(SETTING_TIME_MINUTE);
+                char ampm_msg[64];
+                snprintf(ampm_msg, sizeof(ampm_msg), "SETTINGS:t_ampm=%d", time_is_pm ? 1 : 0);
+                web_console_broadcast_setting(ampm_msg);
+                request_settings_refresh(); /* Refresh ESP display settings menu */
+            }
+            
             uint32_t delay_ms = lv_timer_handler();
             xSemaphoreGive(lvgl_mux);
             if (delay_ms > LVGL_TASK_MAX_DELAY_MS) {
@@ -478,6 +516,11 @@ static void load_settings_from_nvs(void)
         if (nvs_get_i32(h, nvs_keys[i], &v) == ESP_OK) {
             settings[i].value = (int)v;
         }
+    }
+    /* Load time_is_pm */
+    int32_t pm_val;
+    if (nvs_get_i32(h, "t_ampm", &pm_val) == ESP_OK) {
+        time_is_pm = (pm_val != 0);
     }
     nvs_close(h);
 }
@@ -763,6 +806,15 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
     /* SETTINGS_REQUEST — send all current settings to web page */
     if (strncmp(cmd, "SETTINGS_REQUEST", 16) == 0) {
         ESP_LOGI(TAG, "Sending current settings to web");
+        /* Send time settings IMMEDIATELY (synchronous, no queue delay) */
+        char time_msg[96];
+        snprintf(time_msg, sizeof(time_msg), "SETTINGS:t_hour=%d", settings[SETTING_TIME_HOUR].value);
+        web_console_send_immediate(time_msg);
+        snprintf(time_msg, sizeof(time_msg), "SETTINGS:t_min=%d", settings[SETTING_TIME_MINUTE].value);
+        web_console_send_immediate(time_msg);
+        snprintf(time_msg, sizeof(time_msg), "SETTINGS:t_ampm=%d", time_is_pm ? 1 : 0);
+        web_console_send_immediate(time_msg);
+        /* Queue other settings (can tolerate delay) */
         broadcast_setting_update(SETTING_BRIGHTNESS);
         broadcast_setting_update(SETTING_MTX_BRIGHTNESS);
         broadcast_setting_update(SETTING_NIGHT_MODE);
@@ -770,6 +822,52 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         broadcast_setting_update(SETTING_RUMBLE_MUTE);
         broadcast_setting_update(SETTING_TL_INTERVAL);
         broadcast_setting_update(SETTING_TL_STEPDIST);
+        return;
+    }
+    /* Time Hour — handle locally */
+    if (strncmp(cmd, "SET:T_HOUR:", 11) == 0) {
+        int val = atoi(cmd + 11);
+        if (val < 1) val = 1;
+        if (val > 12) val = 12;
+        settings[SETTING_TIME_HOUR].value = val;
+        save_setting_to_nvs(SETTING_TIME_HOUR);
+        broadcast_setting_update(SETTING_TIME_HOUR);
+        last_minute_tick = xTaskGetTickCount(); /* Reset timer when manually set */
+        char msg[64];
+        snprintf(msg, sizeof(msg), "CONSOLE:Time hour set to %d", val);
+        web_console_log_event(msg);
+        return;
+    }
+    /* Time Minute — handle locally */
+    if (strncmp(cmd, "SET:T_MIN:", 10) == 0) {
+        int val = atoi(cmd + 10);
+        if (val < 0) val = 0;
+        if (val > 59) val = 59;
+        settings[SETTING_TIME_MINUTE].value = val;
+        save_setting_to_nvs(SETTING_TIME_MINUTE);
+        broadcast_setting_update(SETTING_TIME_MINUTE);
+        last_minute_tick = xTaskGetTickCount(); /* Reset timer when manually set */
+        char msg[64];
+        snprintf(msg, sizeof(msg), "CONSOLE:Time minute set to %d", val);
+        web_console_log_event(msg);
+        return;
+    }
+    /* Time AM/PM — handle locally */
+    if (strncmp(cmd, "SET:T_AMPM:", 11) == 0) {
+        int val = atoi(cmd + 11);
+        time_is_pm = (val != 0);
+        /* Save to NVS */
+        nvs_handle_t h;
+        if (nvs_open(NVS_NAMESPACE, NVS_READWRITE, &h) == ESP_OK) {
+            nvs_set_i32(h, "t_ampm", time_is_pm ? 1 : 0);
+            nvs_commit(h);
+            nvs_close(h);
+        }
+        char msg[96];
+        snprintf(msg, sizeof(msg), "SETTINGS:t_ampm=%d", time_is_pm ? 1 : 0);
+        web_console_broadcast_setting(msg);
+        snprintf(msg, sizeof(msg), "CONSOLE:Time set to %s", time_is_pm ? "PM" : "AM");
+        web_console_log_event(msg);
         return;
     }
     /* Forward STATUS_REQUEST to MEGA to get current mode/state */
@@ -838,6 +936,8 @@ static void broadcast_setting_update(SettingId id)
     case SETTING_RUMBLE_MUTE:     key = "r_mute"; break;
     case SETTING_TL_INTERVAL:     key = "tl_int"; break;
     case SETTING_TL_STEPDIST:     key = "tl_step"; break;
+    case SETTING_TIME_HOUR:       key = "t_hour"; break;
+    case SETTING_TIME_MINUTE:     key = "t_min"; break;
     default: return;
     }
     

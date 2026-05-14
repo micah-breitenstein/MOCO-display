@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include "esp_err.h"
 
 /**
  * web_console.h
@@ -39,6 +40,14 @@ void web_console_log_event(const char *msg);
  * Thread-safe. msg is copied; caller does not need to keep it alive.
  */
 void web_console_broadcast_setting(const char *msg);
+
+/**
+ * Send a message immediately to the WebSocket client (synchronous).
+ * Bypasses the work queue for instant delivery. Use for time-critical data.
+ * Must be called from httpd task context (e.g., from cmd_handler callback).
+ * Returns ESP_OK on success, error code otherwise.
+ */
+esp_err_t web_console_send_immediate(const char *msg);
 
 /**
  * Check if a WebSocket client is currently connected.
