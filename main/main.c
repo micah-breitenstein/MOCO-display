@@ -175,7 +175,7 @@ static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "t
 
 /* ---------- Time tracking ---------- */
 static bool time_is_pm = false;
-static uint32_t last_minute_tick = 0;
+static int64_t last_minute_us = 0;  /* microseconds from esp_timer */
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -450,7 +450,7 @@ static void lvgl_task(void *arg)
 {
     (void)arg;
     ESP_LOGI(TAG, "LVGL task started");
-    last_minute_tick = xTaskGetTickCount();
+    last_minute_us = esp_timer_get_time();
     while (1) {
         if (xSemaphoreTake(lvgl_mux, portMAX_DELAY) == pdTRUE) {
             if (settings_refresh_pending) {
@@ -458,10 +458,10 @@ static void lvgl_task(void *arg)
                 refresh_settings_list_if_visible();
             }
             
-            /* Update time every minute */
-            uint32_t now = xTaskGetTickCount();
-            if ((now - last_minute_tick) >= pdMS_TO_TICKS(60000)) {
-                last_minute_tick = now;
+            /* Update time every minute using hardware timer (microsecond accurate) */
+            int64_t now_us = esp_timer_get_time();
+            if ((now_us - last_minute_us) >= 60000000LL) {  /* 60 seconds in microseconds */
+                last_minute_us = now_us;
                 settings[SETTING_TIME_MINUTE].value++;
                 if (settings[SETTING_TIME_MINUTE].value >= 60) {
                     settings[SETTING_TIME_MINUTE].value = 0;
@@ -832,7 +832,7 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         settings[SETTING_TIME_HOUR].value = val;
         save_setting_to_nvs(SETTING_TIME_HOUR);
         broadcast_setting_update(SETTING_TIME_HOUR);
-        last_minute_tick = xTaskGetTickCount(); /* Reset timer when manually set */
+        last_minute_us = esp_timer_get_time(); /* Reset timer when manually set */
         char msg[64];
         snprintf(msg, sizeof(msg), "CONSOLE:Time hour set to %d", val);
         web_console_log_event(msg);
@@ -846,7 +846,7 @@ void __attribute__((noinline)) __attribute__((used)) my_websocket_command_receiv
         settings[SETTING_TIME_MINUTE].value = val;
         save_setting_to_nvs(SETTING_TIME_MINUTE);
         broadcast_setting_update(SETTING_TIME_MINUTE);
-        last_minute_tick = xTaskGetTickCount(); /* Reset timer when manually set */
+        last_minute_us = esp_timer_get_time(); /* Reset timer when manually set */
         char msg[64];
         snprintf(msg, sizeof(msg), "CONSOLE:Time minute set to %d", val);
         web_console_log_event(msg);
