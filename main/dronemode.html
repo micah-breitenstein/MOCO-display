@@ -17,6 +17,18 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 .status.active{border-color:#00e676;background:#1a3a1a}
 .status.active .status-text{color:#00e676}
 .status-text{color:#aaa;font-size:0.95em}
+.waypoint-info{padding:15px;background:#1a1a1a;border:2px solid #ff9000;border-radius:8px;width:100%;max-width:600px;text-align:center;display:none}
+.waypoint-info.visible{display:block}
+.waypoint-count{font-size:2.5em;color:#ff9000;font-weight:bold;margin:10px 0}
+.waypoint-label{color:#aaa;font-size:0.9em;text-transform:uppercase}
+.progress-info{padding:10px;background:#222;border-radius:6px;margin-top:10px}
+.progress-text{color:#00e676;font-size:1.1em;font-weight:bold}
+.eta-text{color:#aaa;font-size:0.9em;margin-top:5px}
+.progress-bar-container{width:100%;height:20px;background:#333;border-radius:10px;margin:10px 0;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#ff9000,#00e676);transition:width 0.3s ease;border-radius:10px}
+.control-indicator{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,144,0,0.95);color:#000;padding:30px 50px;border-radius:15px;font-size:2em;font-weight:bold;text-align:center;display:none;z-index:3000;box-shadow:0 0 30px rgba(255,144,0,0.6)}
+.control-indicator.visible{display:block;animation:fadeInOut 0.8s ease}
+@keyframes fadeInOut{0%{opacity:0;transform:translate(-50%,-50%) scale(0.8)}20%{opacity:1;transform:translate(-50%,-50%) scale(1)}80%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0.8)}}
 .joysticks{display:flex;gap:40px;justify-content:center;align-items:center;margin-top:20px;flex-wrap:wrap}
 .joystick-container{display:flex;flex-direction:column;align-items:center;gap:15px}
 .joystick-label{color:#ff9000;font-size:1.1em;font-weight:bold}
@@ -37,9 +49,17 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 .modifier.active .modifier-icon{background:#00e676;color:#000}
 .modifier-label{color:#aaa;font-size:0.9em}
 .modifier.active .modifier-label{color:#00e676;font-weight:bold}
+.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:2000}
+.loading-overlay.hidden{display:none}
+.spinner{width:60px;height:60px;border:4px solid #333;border-top:4px solid #ff9000;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+<div class="loading-overlay" id="loadingOverlay">
+<div class="spinner"></div>
+</div>
+<div class="control-indicator" id="controlIndicator"></div>
 <div class="header">
 <h1>MOCO JIB</h1>
 <div class="nav">
@@ -53,6 +73,17 @@ h1{color:#ff9000;margin:0;font-size:1.5em}
 <div class="content">
 <div class="status" id="status">
 <div class="status-text" id="statusText">Connecting...</div>
+</div>
+<div class="waypoint-info" id="waypointInfo">
+<div class="waypoint-label" id="waypointLabel">Waypoints</div>
+<div class="waypoint-count" id="waypointCount">0/0</div>
+<div class="progress-bar-container" id="progressBarContainer" style="display:none">
+<div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div>
+</div>
+<div class="progress-info" id="progressInfo" style="display:none">
+<div class="progress-text" id="progressText">0%</div>
+<div class="eta-text" id="etaText">ETA: --s</div>
+</div>
 </div>
 <div class="joysticks">
 <div class="joystick-container">
@@ -116,8 +147,37 @@ var statusTextDiv=document.getElementById('statusText');
 var precisionMod=document.getElementById('precisionMod');
 var boostMod=document.getElementById('boostMod');
 var cameraMod=document.getElementById('cameraMod');
+var waypointInfo=document.getElementById('waypointInfo');
+var waypointCount=document.getElementById('waypointCount');
+var waypointLabel=document.getElementById('waypointLabel');
+var progressInfo=document.getElementById('progressInfo');
+var progressText=document.getElementById('progressText');
+var etaText=document.getElementById('etaText');
+var progressBarContainer=document.getElementById('progressBarContainer');
+var progressBarFill=document.getElementById('progressBarFill');
+var controlIndicator=document.getElementById('controlIndicator');
 console.log('[DRONEMODE] Elements initialized:',{statusDiv:statusDiv,statusTextDiv:statusTextDiv,leftStick:leftStick});
-var droneActive=false,reconnecting=false;
+var droneActive=false,reconnecting=false,statusReceived=false;
+var captureStartTime=null;
+var controlIndicatorTimeout=null;
+
+function showControlIndicator(text){
+clearTimeout(controlIndicatorTimeout);
+controlIndicator.textContent=text;
+controlIndicator.classList.add('visible');
+controlIndicatorTimeout=setTimeout(function(){
+controlIndicator.classList.remove('visible');
+},800);
+}
+
+function formatElapsedTime(seconds){
+if(seconds<60)return seconds+'s';
+var mins=Math.floor(seconds/60);
+var secs=seconds%60;
+return mins+'m '+secs+'s';
+}
+
+function hideLoading(){document.getElementById('loadingOverlay').classList.add('hidden')}
 
 function updateJoystick(stick,xPercent,yPercent,pressed){
 var maxOffset=80;
@@ -146,6 +206,7 @@ reconnecting=false;
 statusDiv.classList.add('active');
 statusTextDiv.textContent='Connected';
 console.log('[DRONEMODE] Status set to Connected');
+setTimeout(function(){if(!statusReceived)hideLoading()},500);
 };
 ws.onmessage=function(e){
 console.log('[WS RX]',e.data);
@@ -176,10 +237,14 @@ console.log('[DRONEMODE] Status set to Drone mode active (DRONE_STICK)');
 droneActive=true;
 statusDiv.classList.add('active');
 statusTextDiv.textContent='Drone mode active';
+statusReceived=true;
+hideLoading();
 }else if(e.data.startsWith('MODE:')&&!e.data.startsWith('MODE:DRONE')){
 droneActive=false;
 statusDiv.classList.remove('active');
 statusTextDiv.textContent='Drone mode inactive';
+statusReceived=true;
+hideLoading();
 }else if(e.data.indexOf('DRONE MODE ACTIVATED')>=0){
 droneActive=true;
 statusDiv.classList.add('active');
@@ -214,6 +279,129 @@ statusTextDiv.textContent='Drone mode active';
 console.log('[DRONEMODE] Camera trigger received');
 cameraMod.classList.add('active');
 setTimeout(function(){cameraMod.classList.remove('active')},420);
+}else if(e.data.indexOf('WAYPOINT_COUNT:')>=0){
+var match=e.data.match(/WAYPOINT_COUNT:(\d+)\/(\d+)/);
+if(match){
+var current=parseInt(match[1]);
+var total=parseInt(match[2]);
+waypointCount.textContent=current+'/'+total;
+waypointLabel.textContent='Waypoints Recorded';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}
+}else if(e.data.indexOf('PREVIEW_WAYPOINT:')>=0){
+var match=e.data.match(/PREVIEW_WAYPOINT:(\d+)\/(\d+)/);
+if(match){
+var current=parseInt(match[1]);
+var total=parseInt(match[2]);
+waypointCount.textContent=current+'/'+total;
+waypointLabel.textContent='Preview Waypoint';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}
+}else if(e.data.indexOf('waypoint recorded')>=0){
+var match=e.data.match(/waypoint recorded (\d+)\/(\d+)/);
+if(match){
+var current=parseInt(match[1]);
+var total=parseInt(match[2]);
+waypointCount.textContent=current+'/'+total;
+waypointLabel.textContent='Waypoint Recorded';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}
+}else if(e.data.indexOf('Flowlapse:')>=0&&e.data.indexOf('%')>=0&&e.data.indexOf('ETA')>=0){
+var flowlapseMatch=e.data.match(/Flowlapse:\s*(\d+)%\s*ETA\s*(\d+)s/);
+if(flowlapseMatch){
+var percent=parseInt(flowlapseMatch[1]);
+var eta=parseInt(flowlapseMatch[2]);
+progressText.textContent=percent+'%';
+etaText.textContent='ETA: '+eta+'s';
+progressBarFill.style.width=percent+'%';
+progressInfo.style.display='block';
+progressBarContainer.style.display='block';
+waypointLabel.textContent='Flowlapse Active';
+waypointInfo.classList.add('visible');
+}
+}else if(e.data.indexOf('progress=')>=0&&e.data.indexOf('eta=')>=0){
+var progressMatch=e.data.match(/progress=(\d+)%/);
+var etaMatch=e.data.match(/eta=(\d+)s/);
+var waypointMatch=e.data.match(/waypoint (\d+)\/(\d+)/);
+if(progressMatch&&etaMatch){
+var percent=parseInt(progressMatch[1]);
+var eta=parseInt(etaMatch[1]);
+progressText.textContent=percent+'%';
+etaText.textContent='ETA: '+eta+'s';
+progressBarFill.style.width=percent+'%';
+progressInfo.style.display='block';
+progressBarContainer.style.display='block';
+if(waypointMatch){
+var current=parseInt(waypointMatch[1]);
+var total=parseInt(waypointMatch[2]);
+waypointCount.textContent=current+'/'+total;
+waypointLabel.textContent='Flowlapse Active';
+waypointInfo.classList.add('visible');
+}
+}
+}else if(e.data.indexOf('returning to waypoint 1')>=0){
+waypointLabel.textContent='Returning to Origin';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}else if(e.data.indexOf('return to waypoint 1 complete')>=0){
+waypointLabel.textContent='At Waypoint 1';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}else if(e.data.indexOf('preview started')>=0){
+waypointLabel.textContent='Preview Running';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}else if(e.data.indexOf('preview complete')>=0){
+waypointLabel.textContent='Preview Complete';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+}else if(e.data.indexOf('capture run started')>=0){
+captureStartTime=Math.floor(Date.now()/1000);
+waypointLabel.textContent='Capture Started';
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+progressBarContainer.style.display='none';
+}else if(e.data.indexOf('capture complete')>=0){
+var elapsed='';
+if(captureStartTime!==null){
+var elapsedSeconds=Math.floor(Date.now()/1000)-captureStartTime;
+elapsed=' ('+formatElapsedTime(elapsedSeconds)+')';
+captureStartTime=null;
+}
+waypointLabel.textContent='Capture Complete'+elapsed;
+waypointInfo.classList.add('visible');
+progressInfo.style.display='none';
+progressBarContainer.style.display='none';
+}else if(e.data.indexOf('recording stopped')>=0){
+var recMatch=e.data.match(/(\d+)\/(\d+)/);
+if(recMatch){
+var total=parseInt(recMatch[2]);
+waypointCount.textContent=total+'/'+total;
+waypointLabel.textContent='Recording Complete';
+waypointInfo.classList.add('visible');
+}
+progressInfo.style.display='none';
+progressBarContainer.style.display='none';
+}else if(e.data.indexOf('recording re-armed')>=0||e.data.indexOf('Recording re-armed')>=0){
+waypointCount.textContent='0/0';
+waypointLabel.textContent='Waypoints';
+waypointInfo.classList.remove('visible');
+progressInfo.style.display='none';
+progressBarContainer.style.display='none';
+}else if(e.data.startsWith('CONTROL:')){
+var control=e.data.substring(8);
+if(control==='FOCUS_LEFT'){
+showControlIndicator('FOCUS LEFT');
+}else if(control==='FOCUS_RIGHT'){
+showControlIndicator('FOCUS RIGHT');
+}else if(control==='FOCUS_SPEED_DOWN'){
+showControlIndicator('FOCUS SPEED\nDOWN');
+}else if(control==='FOCUS_SPEED_UP'){
+showControlIndicator('FOCUS SPEED\nUP');
+}
 }
 };
 ws.onclose=function(){

@@ -90,6 +90,7 @@ static const char *TAG = "RIG";
 #define TOUCH_I2C_SCL     GPIO_NUM_48
 #define TOUCH_I2C_FREQ_HZ 400000
 #define TOUCH_FT6336_ADDR 0x38
+#define PCF85063_RTC_ADDR 0x51
 #define LONG_PRESS_MS       500
 #define LONG_PRESS_CLOSE_MS 1000
 
@@ -176,6 +177,7 @@ static const char *nvs_keys[SETTING_COUNT] = { "mtx_brt", "bright", "r_mute", "t
 /* ---------- Time tracking ---------- */
 static bool time_is_pm = false;
 static int64_t last_minute_us = 0;  /* microseconds from esp_timer */
+static bool rtc_available = false;
 
 /* ---------- Settings menu state ---------- */
 static lv_obj_t           *selected_row = NULL;
@@ -198,6 +200,117 @@ static bool    touch_pressed = false;
 static int64_t touch_press_start_us = 0;
 static bool    long_press_fired = false;
 static bool    touch_guard = false;  /* block interaction until finger lift */
+
+/* ================================================================
+ *  PCF85063 RTC Helper Functions
+ * ================================================================ */
+
+/* Convert BCD to decimal */
+static uint8_t bcd_to_dec(uint8_t bcd) {
+    return ((bcd >> 4) * 10) + (bcd & 0x0F);
+}
+
+/* Convert decimal to BCD */
+static uint8_t dec_to_bcd(uint8_t dec) {
+    return ((dec / 10) << 4) | (dec % 10);
+}
+
+/* Read time from PCF85063 RTC */
+static bool rtc_read_time(int *hour, int *minute, bool *is_pm) {
+    if (!touch_i2c_ready || !rtc_available) return false;
+    
+    uint8_t data[3];  /* seconds, minutes, hours */
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (PCF85063_RTC_ADDR << 1) | I2C_MASTER_WRITE, true);
+    i2c_master_write_byte(cmd, 0x04, true);  /* Start at seconds register */
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (PCF85063_RTC_ADDR << 1) | I2C_MASTER_READ, true);
+    i2c_master_read(cmd, data, 3, I2C_MASTER_LAST_NACK);
+    i2c_master_stop(cmd);
+    esp_err_t err = i2c_master_cmd_begin(TOUCH_I2C_PORT, cmd, pdMS_TO_TICKS(50));
+    i2c_cmd_link_delete(cmd);
+    
+    if (err != ESP_OK) return false;
+    
+    /* Parse BCD time (mask off control bits) */
+    uint8_t sec_bcd = data[0] & 0x7F;
+    uint8_t min_bcd = data[1] & 0x7F;
+    uint8_t hour_bcd = data[2] & 0x3F;
+    
+    int hour_24 = bcd_to_dec(hour_bcd);
+    *minute = bcd_to_dec(min_bcd);
+    
+    /* Convert 24-hour to 12-hour format */
+    if (hour_24 == 0) {
+        *hour = 12;
+        *is_pm = false;
+    } else if (hour_24 < 12) {
+        *hour = hour_24;
+        *is_pm = false;
+    } else if (hour_24 == 12) {
+        *hour = 12;
+        *is_pm = true;
+    } else {
+        *hour = hour_24 - 12;
+        *is_pm = true;
+    }
+    
+    ESP_LOGI(TAG, "RTC read: %d:%02d %s", *hour, *minute, *is_pm ? "PM" : "AM");
+    return true;
+}
+
+/* Write time to PCF85063 RTC */
+static bool rtc_write_time(int hour_12, int minute, bool is_pm) {
+    if (!touch_i2c_ready || !rtc_available) return false;
+    
+    /* Convert 12-hour to 24-hour format */
+    int hour_24;
+    if (hour_12 == 12) {
+        hour_24 = is_pm ? 12 : 0;
+    } else {
+        hour_24 = is_pm ? (hour_12 + 12) : hour_12;
+    }
+    
+    uint8_t data[3];
+    data[0] = 0;  /* seconds = 0 */
+    data[1] = dec_to_bcd(minute);
+    data[2] = dec_to_bcd(hour_24);
+    
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (PCF85063_RTC_ADDR << 1) | I2C_MASTER_WRITE, true);
+    i2c_master_write_byte(cmd, 0x04, true);  /* Start at seconds register */
+    i2c_master_write(cmd, data, 3, true);
+    i2c_master_stop(cmd);
+    esp_err_t err = i2c_master_cmd_begin(TOUCH_I2C_PORT, cmd, pdMS_TO_TICKS(50));
+    i2c_cmd_link_delete(cmd);
+    
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "RTC write: %d:%02d %s (24h: %02d:%02d)", hour_12, minute, is_pm ? "PM" : "AM", hour_24, minute);
+    }
+    return (err == ESP_OK);
+}
+
+/* Detect if PCF85063 RTC is present */
+static bool rtc_detect(void) {
+    if (!touch_i2c_ready) return false;
+    
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+    i2c_master_start(cmd);
+    i2c_master_write_byte(cmd, (PCF85063_RTC_ADDR << 1) | I2C_MASTER_WRITE, true);
+    i2c_master_stop(cmd);
+    esp_err_t err = i2c_master_cmd_begin(TOUCH_I2C_PORT, cmd, pdMS_TO_TICKS(50));
+    i2c_cmd_link_delete(cmd);
+    
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "PCF85063 RTC detected at 0x%02X", PCF85063_RTC_ADDR);
+        return true;
+    } else {
+        ESP_LOGW(TAG, "PCF85063 RTC not detected (error: %d)", err);
+        return false;
+    }
+}
 static uint16_t touch_start_x = 0;
 static uint16_t touch_start_y = 0;
 static bool    touch_moved = false;
@@ -458,21 +571,34 @@ static void lvgl_task(void *arg)
                 refresh_settings_list_if_visible();
             }
             
-            /* Update time every minute using hardware timer (microsecond accurate) */
+            /* Update time every minute - sync from RTC if available, else use hardware timer */
             int64_t now_us = esp_timer_get_time();
             if ((now_us - last_minute_us) >= 60000000LL) {  /* 60 seconds in microseconds */
                 last_minute_us = now_us;
-                settings[SETTING_TIME_MINUTE].value++;
-                if (settings[SETTING_TIME_MINUTE].value >= 60) {
-                    settings[SETTING_TIME_MINUTE].value = 0;
-                    settings[SETTING_TIME_HOUR].value++;
-                    if (settings[SETTING_TIME_HOUR].value > 12) {
-                        settings[SETTING_TIME_HOUR].value = 1;
-                    }
-                    if (settings[SETTING_TIME_HOUR].value == 12) {
-                        time_is_pm = !time_is_pm;
+                
+                /* Try to read from RTC for accurate time */
+                int rtc_hour, rtc_minute;
+                bool rtc_is_pm;
+                if (rtc_read_time(&rtc_hour, &rtc_minute, &rtc_is_pm)) {
+                    /* RTC is working - use its time */
+                    settings[SETTING_TIME_HOUR].value = rtc_hour;
+                    settings[SETTING_TIME_MINUTE].value = rtc_minute;
+                    time_is_pm = rtc_is_pm;
+                } else {
+                    /* RTC failed - fall back to incrementing (old behavior) */
+                    settings[SETTING_TIME_MINUTE].value++;
+                    if (settings[SETTING_TIME_MINUTE].value >= 60) {
+                        settings[SETTING_TIME_MINUTE].value = 0;
+                        settings[SETTING_TIME_HOUR].value++;
+                        if (settings[SETTING_TIME_HOUR].value > 12) {
+                            settings[SETTING_TIME_HOUR].value = 1;
+                        }
+                        if (settings[SETTING_TIME_HOUR].value == 12) {
+                            time_is_pm = !time_is_pm;
+                        }
                     }
                 }
+                
                 save_setting_to_nvs(SETTING_TIME_HOUR);
                 save_setting_to_nvs(SETTING_TIME_MINUTE);
                 broadcast_setting_update(SETTING_TIME_HOUR);
@@ -523,6 +649,16 @@ static void load_settings_from_nvs(void)
         time_is_pm = (pm_val != 0);
     }
     nvs_close(h);
+    
+    /* Try to read time from RTC if available (overrides NVS) */
+    int rtc_hour, rtc_minute;
+    bool rtc_is_pm;
+    if (rtc_read_time(&rtc_hour, &rtc_minute, &rtc_is_pm)) {
+        settings[SETTING_TIME_HOUR].value = rtc_hour;
+        settings[SETTING_TIME_MINUTE].value = rtc_minute;
+        time_is_pm = rtc_is_pm;
+        ESP_LOGI(TAG, "Time loaded from RTC: %d:%02d %s", rtc_hour, rtc_minute, rtc_is_pm ? "PM" : "AM");
+    }
 }
 
 static void save_setting_to_nvs(SettingId id)
@@ -1506,6 +1642,17 @@ static void editor_save_cb(lv_event_t *e)
     }
     else if (editor_setting_id == SETTING_LOGO_THEME) {
         apply_theme();
+    }
+    else if (editor_setting_id == SETTING_TIME_HOUR || editor_setting_id == SETTING_TIME_MINUTE) {
+        /* Write time to RTC when user sets it */
+        if (rtc_write_time(settings[SETTING_TIME_HOUR].value, settings[SETTING_TIME_MINUTE].value, time_is_pm)) {
+            ESP_LOGI(TAG, "Time saved to RTC");
+            web_console_log_event("CONSOLE:Time saved to RTC");
+        } else {
+            ESP_LOGW(TAG, "Failed to save time to RTC");
+        }
+        /* Reset the minute timer to avoid immediate increment */
+        last_minute_us = esp_timer_get_time();
     }
     else if (editor_setting_id == SETTING_NIGHT_MODE) {
         /* Night mode: update brightness settings and notify hardware */
@@ -3803,6 +3950,7 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strstr(line, "progress=") != NULL && strstr(line, "eta=") != NULL) {
+                web_console_log_event(line);  /* Broadcast flowlapse progress to web clients */
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     int percent = 0;
                     int eta_sec = 0;
@@ -3829,6 +3977,7 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strstr(line, "WAYPOINT_COUNT:") != NULL) {
+                web_console_log_event(line);  /* Broadcast to web clients */
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     int waypoint_current = 0;
                     int waypoint_total = 0;
@@ -3838,6 +3987,7 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strstr(line, "PREVIEW_WAYPOINT:") != NULL) {
+                web_console_log_event(line);  /* Broadcast to web clients */
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     int waypoint_current = 0;
                     int waypoint_total = 0;
@@ -3866,6 +4016,7 @@ static void status_uart_task(void *arg)
                     xSemaphoreGive(lvgl_mux);
                 }
             } else if (strstr(line, "waypoint recorded") != NULL) {
+                web_console_log_event(line);  /* Broadcast to web clients */
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     int waypoint_current = 0;
                     int waypoint_total = 0;
@@ -3882,7 +4033,9 @@ static void status_uart_task(void *arg)
                        || strstr(line, "capture paused") != NULL
                        || strstr(line, "capture resumed") != NULL
                        || strstr(line, "capture complete") != NULL
-                       || strstr(line, "canceled") != NULL) {
+                       || strstr(line, "canceled") != NULL
+                       || strstr(line, "returning to waypoint") != NULL) {
+                web_console_log_event(line);  /* Broadcast all flowlapse events to web clients */
                 if (xSemaphoreTake(lvgl_mux, pdMS_TO_TICKS(250)) == pdTRUE) {
                     int percent = 0;
                     int eta_sec = 0;
@@ -4106,6 +4259,14 @@ void app_main(void)
         touch_i2c_ready = true;
     }
     ESP_LOGI(TAG, "I2C driver installed, touch_i2c_ready = true");
+    
+    /* Detect PCF85063 RTC */
+    rtc_available = rtc_detect();
+    if (rtc_available) {
+        ESP_LOGI(TAG, "RTC will be used for accurate timekeeping");
+    } else {
+        ESP_LOGI(TAG, "RTC not available - using hardware timer (may drift)");
+    }
 
     ESP_LOGI(TAG, "Initialize SPI bus");
     const spi_bus_config_t buscfg = SH8601_PANEL_BUS_QSPI_CONFIG(
